@@ -1,0 +1,42 @@
+{
+ "kind": "youtube#liveChatMessageListResponse",
+ "etag": "\"hiK4na4zECFv5N13lVUvtaHTVTYcbPrr1271dnlDcS75W128nqkZlTv\"",
+ "nextPageToken": "GPaimtHdmuUCIJi18ez1muUC",
+ "pollingIntervalMillis": 4000,
+ "pageInfo": {
+  "totalResults": 75,
+  "resultsPerPage": 75
+ },
+ "items": [
+  {
+   "kind": "youtube#liveChatMessage",
+   "etag": "\"hiK4na4zECFv5N13lVUvtaHTVTYcbPrr1271dnlDcS75W128nqkZlTv\"",
+   "id": "LCC.Ck7NAO9vS2nHct38SwUnWfkQy5kxNdHJqrL0dYOb3izTAHB74jBnWRccAia8DURhN1h8oT79FH94gMnQ2OTfv5BPev1huOtEfAHjciF8TWsyi9LeJWdOu7HJ4JoFquok7dv6tD9chf6wqpWz",
+   "snippet": {
+    "type": "superChatEvent",
+    "liveChatId": "oQZoCxfO7oUMBf703MdPwXb4c3EwgfI2Po4sL1oBaKbMelkCBiOS5UPOzE62l7hbC249v8wSTXcyEcVFHklmClse41wwiyO97uUyrt",
+    "authorChannelId": "UCZneZy3197k3ErGxVjKFZSg",
+    "publishedAt": "2018-01-01T00:00:00.000Z",
+    "hasDisplayContent": true,
+    "displayMessage": "¥200 from A: \"888\"",
+    "superChatDetails": {
+     "amountMicros": "200000000",
+     "currency": "JPY",
+     "amountDisplayString": "¥200",
+     "userComment": "888",
+     "tier": 2
+    }
+   },
+   "authorDetails": {
+    "channelId": "UCZneZy3197k3ErGxVjKFZSg",
+    "channelUrl": "http://www.youtube.com/channel/UCZneZy3197k3ErGxVjKFZSg",
+    "displayName": "A",
+    "profileImageUrl": "https://yt3.ggpht.com/-Dvb6csYDHb9/AAAAAAAAAAI/AAAAAAAAAAA/Bvb6csYDHb9/s88-c-k-no-mo-rj-c0xffffff/photo.jpg",
+    "isVerified": false,
+    "isChatOwner": false,
+    "isChatSponsor": false,
+    "isChatModerator": false
+   }
+  }
+ ]
+}

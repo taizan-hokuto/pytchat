@@ -1,0 +1,177 @@
+{
+    "response": {
+        "responseContext": {
+            "serviceTrackingParams": [
+                {
+                    "service": "CSI",
+                    "params": [
+                        {
+                            "key": "GetLiveChat_rid",
+                            "value": "0x3eff0db28fc39bbe"
+                        },
+                        {
+                            "key": "c",
+                            "value": "WEB"
+                        },
+                        {
+                            "key": "cver",
+                            "value": "2.20190920.05.01"
+                        },
+                        {
+                            "key": "yt_li",
+                            "value": "0"
+                        }
+                    ]
+                },
+                {
+                    "service": "GFEEDBACK",
+                    "params": [
+                        {
+                            "key": "e",
+                            "value": "23744176,23748146,23788851,23788875,23793834,23804281,23807353,23808952,23828082,23828243,23829333,23832544,23834418,23834656,23835020,23836434,23836965,23837742,23837772,23837993,23838301,23838576,23838576,23838742,23839360,23840216,23841655,23842986,23843288,23843533,23843743,23844780,24630231,9425362,9449243,9466592,9469037,9471235,9474358"
+                        },
+                        {
+                            "key": "logged_in",
+                            "value": "0"
+                        }
+                    ]
+                },
+                {
+                    "service": "GUIDED_HELP",
+                    "params": [
+                        {
+                            "key": "logged_in",
+                            "value": "0"
+                        }
+                    ]
+                },
+                {
+                    "service": "ECATCHER",
+                    "params": [
+                        {
+                            "key": "client.name",
+                            "value": "WEB"
+                        },
+                        {
+                            "key": "client.version",
+                            "value": "2.20190920"
+                        },
+                        {
+                            "key": "innertube.build.changelist",
+                            "value": "270169303"
+                        },
+                        {
+                            "key": "innertube.build.experiments.source_version",
+                            "value": "270377311"
+                        },
+                        {
+                            "key": "innertube.build.label",
+                            "value": "youtube.ytfe.innertube_20190919_5_RC1"
+                        },
+                        {
+                            "key": "innertube.build.timestamp",
+                            "value": "1568942548"
+                        },
+                        {
+                            "key": "innertube.build.variants.checksum",
+                            "value": "392d499f55b5e2c240adde58886a8143"
+                        },
+                        {
+                            "key": "innertube.run.job",
+                            "value": "ytfe-innertube-replica-only.ytfe"
+                        }
+                    ]
+                }
+            ],
+            "webResponseContextExtensionData": {
+                "ytConfigData": {
+                    "csn": "n96GXabRGouFlQTigY2YDg",
+                    "visitorData": "CgtKUldQeGJJRXhkcyifvZvsBQ%3D%3D"
+                }
+            }
+        },
+        "continuationContents": {
+            "liveChatContinuation": {
+                "continuations": [
+                    {
+                        "timedContinuationData": {
+                            "timeoutMs": 5041,
+                            "continuation": "0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCj7hLmSs-PkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1DsuuGSs-PkAli3pNq1k-PkAmgBggEECAEQAIgBAKAB7KDVk7Pj5AI%3D"
+                        }
+                    }
+                ],
+                "actions": [
+                    {
+                        "addChatItemAction": {
+                            "item": {
+                                "liveChatTextMessageRenderer": {
+                                    "message": {
+                                        "runs": [
+                                            {
+                                                "text": "text"
+                                            }
+                                        ]
+                                    },
+                                    "authorName": {
+                                        "simpleText": "name"
+                                    },
+                                    "authorPhoto": {
+                                        "thumbnails": [
+                                            {
+                                                "url": "https://yt3.ggpht.com/-8sLtPu1Hyw0/AAAAAAAAAAI/AAAAAAAAAAA/a_52bWnC0-s/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                                                "width": 32,
+                                                "height": 32
+                                            },
+                                            {
+                                                "url": "https://yt3.ggpht.com/-8sLtPu1Hyw0/AAAAAAAAAAI/AAAAAAAAAAA/a_52bWnC0-s/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                                                "width": 64,
+                                                "height": 64
+                                            }
+                                        ]
+                                    },
+                                    "contextMenuEndpoint": {
+                                        "commandMetadata": {
+                                            "webCommandMetadata": {
+                                                "ignoreNavigation": true
+                                            }
+                                        },
+                                        "liveChatItemContextMenuEndpoint": {
+                                            "params": "Q2pzS09Rb2FRMHRQTkhRMVEzbzBMVkZEUmxweGRrUlJiMlJZV0d0QlVHY1NHME5PYm5OdlVESm1OQzFSUTBaUmRsTlhRVzlrVVZGclJUTlJNeEFBR2pnS0RRb0xhelJMZDBsWFQwdERkalFxSndvWVZVTnZTWEZ1TVZvMWFYaERXbmRqTUVSWFNqZHlTME5uRWd0ck5FdDNTVmRQUzBOMk5DQUNLQUV5R2dvWVZVTnlOVGxXVlY5amRtWnlkVEF0YW1GeWNtUk1NMDEz"
+                                        }
+                                    },
+                                    "id": "CjkKGkNLTzR0NUN6NC1RQ0ZacXZEUW9kWFhrQVBnEhtDTm5zb1AyZjQtUUNGUXZTV0FvZFFRa0UzUTM%3D",
+                                    "timestampUsec": "1569119896722467",
+                                    "authorExternalChannelId": "UCr59VU_cvfru0-jarrdL3Mw",
+                                    "contextMenuAccessibility": {
+                                        "accessibilityData": {
+                                            "label": "コメントの操作"
+                                        }
+                                    }
+                                }
+                            },
+                            "clientId": "CNnsoP2f4-QCFQvSWAodQQkE3Q3"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "endpoint": {
+        "commandMetadata": {
+            "webCommandMetadata": {
+                "url": "/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiPz5-Os-PkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CRwciOs-PkAli3pNq1k-PkAmgBggEECAEQAIgBAKABjbfnjrPj5AI%253D"
+            }
+        },
+        "urlEndpoint": {
+            "url": "/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiPz5-Os-PkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CRwciOs-PkAli3pNq1k-PkAmgBggEECAEQAIgBAKABjbfnjrPj5AI%253D"
+        }
+    },
+    "csn": "n96GXabRGouFlQTigY2YDg",
+    "xsrf_token": "QUFFLUhqbHNNWTF3NFJqc2h3cGE1NE9FWGdaWk5mRlVhUXxBQ3Jtc0tuTWhZNFcyTW1iZnA3ZnFTYUFudVFEUVE0cnFEOVBGcEU1MEh0Zlh4bll1amVmRl9OMkxZV3pKV1ZSbExBeDctTl95NGtBVnJZdlNxeS1KdWVNempEN2N6MHhaU1laV3hnVkZPeHp1OHVDTGVFSGUyOGduT0szbDV5N05LYUZTdzdoTDRwV1VJWndaVjdQVGRjNWVpR0YwUXgtZXc=",
+    "url": "\/live_chat\/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiPz5-Os-PkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CRwciOs-PkAli3pNq1k-PkAmgBggEECAEQAIgBAKABjbfnjrPj5AI%253D",
+    "timing": {
+        "info": {
+            "st": 81
+        }
+    }
+}

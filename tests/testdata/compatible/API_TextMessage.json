@@ -1,0 +1,38 @@
+{
+  "etag": "\"hiK4na4zECFv5N13lVUvtaHTVTYcbPrr1271dnlDcS75W128nqkZlTv\"",
+  "items": [
+    {
+      "authorDetails": {
+        "channelId": "UCZneZy3197k3ErGxVjKFZSg",
+        "channelUrl": "http://www.youtube.com/channel/UCaqLU1hcYAO_nbvsoyfMo_A",
+        "displayName": "A",
+        "isChatModerator": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isVerified": false,
+        "profileImageUrl": "https://yt3.ggpht.com/-Dvb6csYDHb9/AAAAAAAAAAI/AAAAAAAAAAA/Bvb6csYDHb9/s88-c-k-no-mo-rj-c0xffffff/photo.jpg"
+      },
+      "etag": "\"hiK4na4zECFv5N13lVUvtaHTVTYcbPrr1271dnlDcS75W128nqkZlTv\"",
+      "id": "LCC.Ck7NAO9vS2nHct38SwUnWfkQy5kxNdHJqrL0dYOb3izTAHB74jBnWRccAia8DURhN1h8oT79FH94gMnQ2OTfv5BPev1huOtEfAHjciF8TWsyi9LeJWdOu7HJ4JoFquok7dv6tD9chf6wqpWz",
+      "kind": "youtube#liveChatMessage",
+      "snippet": {
+        "authorChannelId": "UCZneZy3197k3ErGxVjKFZSg",
+        "displayMessage": "888",
+        "hasDisplayContent": true,
+        "liveChatId": "oQZoCxfO7oUMBf703MdPwXb4c3EwgfI2Po4sL1oBaKbMelkCBiOS5UPOzE62l7hbC249v8wSTXcyEcVFHklmClse41wwiyO97uUyrt",
+        "publishedAt": "2018-01-01T00:00:00.000Z",
+        "textMessageDetails": {
+          "messageText": "888"
+        },
+        "type": "textMessageEvent"
+      }
+    }
+  ],
+  "kind": "youtube#liveChatMessageListResponse",
+  "nextPageToken": "GPaimtHdmuUCIJi18ez1muUC",
+  "pageInfo": {
+    "resultsPerPage": 74,
+    "totalResults": 74
+  },
+  "pollingIntervalMillis": 7300
+}
