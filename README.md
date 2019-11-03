@@ -5,7 +5,7 @@ pytchat
 pytchat is a python library for fetching youtube live chat.
 
 ## Description
-pytchat is a python library for fetching youtube live chat.
+pytchat is a python library for fetching youtube live chat
 without using youtube api, Selenium or BeautifulSoup.
 
 Other features:
@@ -20,6 +20,7 @@ pip install pytchat
 ```
 
 ## Examples
+### on-demand mode
 ```python
 from pytchat import LiveChat
 
@@ -31,7 +32,7 @@ while chat.is_alive():
         data.tick()
 ```
 
-###callback mode
+### callback mode
 ```python
 from pytchat import LiveChat
 
@@ -46,7 +47,7 @@ def func(chatdata):
         chat.tick()
 ```
 
-###asyncio context:
+### asyncio context:
 ```python
 from pytchat import LiveChatAsync
 import asyncio
@@ -67,7 +68,7 @@ loop.run_until_complete(main())
 ```
 
 
-###yt api compatible processor:
+### yt api compatible processor:
 ```python
 from pytchat import LiveChat, CompatibleProcessor
 
@@ -189,6 +190,7 @@ Structure of author object.
     <td></td>
   </tr>
 </table>
+
 ## Licence
 
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
