@@ -1,11 +1,10 @@
-
 pytchat
 =======
 
 pytchat is a python library for fetching youtube live chat.
 
 ## Description
-pytchat is a python library for fetching youtube live chat.
+pytchat is a python library for fetching youtube live chat
 without using youtube api, Selenium or BeautifulSoup.
 
 Other features:
@@ -15,12 +14,13 @@ Other features:
 instead of web scraping.
 
 ## Install
-```
+```python
 pip install pytchat
 ```
 
 ## Examples
-```
+### on-demand mode
+```python
 from pytchat import LiveChat
 
 chat = LiveChat("G1w62uEMZ74")
@@ -31,12 +31,14 @@ while chat.is_alive():
         data.tick()
 ```
 
-callback mode
-```
+### callback mode
+```python
 from pytchat import LiveChat
+import time
 
 chat = LiveChat("G1w62uEMZ74", callback = func)
 while chat.is_alive():
+    #other background operation here.
     time.sleep(3)
 
 def func(chatdata):
@@ -45,8 +47,8 @@ def func(chatdata):
         chat.tick()
 ```
 
-asyncio context:
-```
+### asyncio context:
+```python
 from pytchat import LiveChatAsync
 import asyncio
 
@@ -66,8 +68,8 @@ loop.run_until_complete(main())
 ```
 
 
-yt api compatible processor:
-```
+### yt api compatible processor:
+```python
 from pytchat import LiveChat, CompatibleProcessor
 
 chat = LiveChat("G1w62uEMZ74", 
@@ -112,6 +114,11 @@ Structure of each item which got from items() function.
     <td>timestamp</td>
     <td>int</td>
     <td>unixtime milliseconds</td>
+  </tr>
+  <tr>
+    <td>datetime</td>
+    <td>str</td>
+    <td></td>
   </tr>
   <tr>
     <td>amountValue</td>
@@ -188,6 +195,7 @@ Structure of author object.
     <td></td>
   </tr>
 </table>
+
 ## Licence
 
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
@@ -195,3 +203,5 @@ Structure of author object.
 ## Author
 
 [taizan-hokuto](https://github.com/taizan-hokuto)
+
+[twitter:@taizan205](https://twitter.com/taizan205)
