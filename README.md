@@ -136,6 +136,11 @@ Structure of each item which got from items() function.
     <td>ex. "USD"</td>
   </tr>
   <tr>
+    <td>bgColor</td>
+    <td>int</td>
+    <td>RGB Int</td>
+  </tr>
+  <tr>
     <td>author</td>
     <td>object</td>
     <td>see below</td>
