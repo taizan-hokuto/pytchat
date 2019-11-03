@@ -7,8 +7,13 @@ package_name = "pytchat"
 
 root_dir = path.abspath(path.dirname(__file__))
 
-def _requires_from_file(filename):
-    return open(filename).read().splitlines()
+def _requirements():
+    return [name.rstrip() for name in open(path.join(root_dir, 'requirements.txt')).readlines()]
+
+def _test_requirements():
+    return [name.rstrip() for name in open(path.join(root_dir, 'requirements_test.txt')).readlines()]
+
+
 
 with open(path.join(root_dir, package_name, '__init__.py')) as f:
     init_text = f.read()
@@ -30,15 +35,15 @@ with open('README.md', encoding='utf-8') as f:
 setup(
     name=package_name,
     packages=find_packages(),
-
     version=version,
-
     url=url,
     author=author,
     author_email=author_email,
     long_description=long_description,
     long_description_content_type='text/markdown',
     license=license,
+    install_requires=_requirements(),
+    tests_require=_test_requirements(),
     description="a python library for fetching youtube live chat.",
     classifiers=[
         'Natural Language :: Japanese',
@@ -52,5 +57,5 @@ setup(
         'License :: OSI Approved :: MIT License',
     ],
     keywords='youtube livechat asyncio',
-    install_requires=_requires_from_file('requirements.txt')
+
 )
