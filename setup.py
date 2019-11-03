@@ -1,6 +1,6 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Command
 from codecs import open
-from os import path
+from os import path, system
 import re
 
 package_name = "pytchat"
@@ -12,7 +12,6 @@ def _requirements():
 
 def _test_requirements():
     return [name.rstrip() for name in open(path.join(root_dir, 'requirements_test.txt')).readlines()]
-
 
 
 with open(path.join(root_dir, package_name, '__init__.py')) as f:
@@ -31,6 +30,18 @@ assert url
 
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
+
+class CleanCommand(Command):
+    """Custom clean command to tidy up the project root."""
+    user_options = []
+    def initialize_options(self):
+        pass
+    def finalize_options(self):
+        pass
+    def run(self):
+        #system('rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info')
+        system('rmdir /Q /S pytchat.egg-info, dist')
+
 
 setup(
     name=package_name,
@@ -57,5 +68,7 @@ setup(
         'License :: OSI Approved :: MIT License',
     ],
     keywords='youtube livechat asyncio',
-
+    cmdclass={
+        'clean': CleanCommand,
+    }
 )

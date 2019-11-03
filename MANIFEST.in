@@ -1,1 +1,4 @@
 include requirements.txt
+include requirements_test.txt
+exclude *.egg-info
+
