@@ -13,6 +13,7 @@ __all__ = ["core_async","core_multithread","processors"]
 from .api import (
     LiveChat,
     LiveChatAsync,
+    ChatProcessor,
     CompatibleProcessor, 
     SimpleDisplayProcessor,
     JsonfileArchiveProcessor
