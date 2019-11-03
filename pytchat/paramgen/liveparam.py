@@ -122,7 +122,7 @@ def _build(video_id, _ts1, _ts2, _ts3, _ts4, _ts5, topchatonly = False):
             )
 
     
-def _times():
+def _times(past_sec):
     
     def unixts_now():
         now = datetime.datetime.now(pytz.utc)
@@ -132,12 +132,18 @@ def _times():
     
     _ts1= n - random.uniform(0,1*3)    
     _ts2= n - random.uniform(0.01,0.99)    
-    _ts3= n - 60+random.uniform(0,1)
+    _ts3= n - past_sec + random.uniform(0,1)
     _ts4= n - random.uniform(10*60,60*60)         
     _ts5= n - random.uniform(0.01,0.99)
     return list(map(lambda x:int(x*1000000),[_ts1,_ts2,_ts3,_ts4,_ts5]))
 
 
-def getparam(video_id):
-    return _build(video_id,*_times())
+def getparam(video_id,past_sec = 60):
+    '''
+    Parameter
+    ---------
+    past_sec : int
+        seconds to load past chat data
+    '''
+    return _build(video_id,*_times(past_sec))
 
