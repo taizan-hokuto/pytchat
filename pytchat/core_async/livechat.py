@@ -1,4 +1,4 @@
-import aiohttp, asyncio, async_timeout
+import aiohttp, asyncio
 import datetime
 import json
 import random

@@ -13,10 +13,14 @@ Other features:
 + Quick fetching of initial chat data by generating continuation params
 instead of web scraping.
 
+For more detailed information, see [wiki](https://github.com/taizan-hokuto/pytchat/wiki)
+
 ## Install
 ```python
 pip install pytchat
 ```
+## Demo
+![demo](https://taizan-hokuto.github.io/statics/demo.gif "demo")
 
 ## Examples
 ### on-demand mode
