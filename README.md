@@ -15,12 +15,12 @@ Other features:
 instead of web scraping.
 
 ## Install
-```
+```python
 pip install pytchat
 ```
 
 ## Examples
-```
+```python
 from pytchat import LiveChat
 
 chat = LiveChat("G1w62uEMZ74")
@@ -31,12 +31,13 @@ while chat.is_alive():
         data.tick()
 ```
 
-callback mode
-```
+###callback mode
+```python
 from pytchat import LiveChat
 
 chat = LiveChat("G1w62uEMZ74", callback = func)
 while chat.is_alive():
+    #other background operation here.
     time.sleep(3)
 
 def func(chatdata):
@@ -45,8 +46,8 @@ def func(chatdata):
         chat.tick()
 ```
 
-asyncio context:
-```
+###asyncio context:
+```python
 from pytchat import LiveChatAsync
 import asyncio
 
@@ -66,8 +67,8 @@ loop.run_until_complete(main())
 ```
 
 
-yt api compatible processor:
-```
+###yt api compatible processor:
+```python
 from pytchat import LiveChat, CompatibleProcessor
 
 chat = LiveChat("G1w62uEMZ74", 
@@ -195,3 +196,5 @@ Structure of author object.
 ## Author
 
 [taizan-hokuto](https://github.com/taizan-hokuto)
+
+[twitter:@taizan205](https://twitter.com/taizan205)
