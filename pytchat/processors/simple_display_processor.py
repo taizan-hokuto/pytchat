@@ -31,7 +31,7 @@ class SimpleDisplayProcessor(ChatProcessor):
                     purchase_amount_text = ''
                 else:
                     root = ( action['addChatItemAction']['item'].get('liveChatPaidMessageRenderer') or 
-                            action['addChatItemAction']['item'].get('liveChatPaidMessageRenderer') )
+                            action['addChatItemAction']['item'].get('liveChatPaidStickerRenderer') )
                     if root:
                         author_name = root['authorName']['simpleText']
                         message = self._parse_message(root.get('message'))
