@@ -16,7 +16,7 @@ class Chatdata:
 
     async def tick_async(self):
         if self.interval == 0:
-            await asyncio.sleep(3)
+            await asyncio.sleep(0.5)
             return
         await asyncio.sleep(self.interval/len(self.items))
 
