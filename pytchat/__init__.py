@@ -2,7 +2,7 @@
 pytchat is a python library for fetching youtube live chat.
 """
 __copyright__    = 'Copyright (C) 2019 taizan-hokuto'
-__version__      = '0.0.1.9'
+__version__      = '0.0.2.0'
 __license__      = 'MIT'
 __author__       = 'taizan-hokuto'
 __author_email__ = '55448286+taizan-hokuto@users.noreply.github.com'
