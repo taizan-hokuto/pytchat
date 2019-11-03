@@ -23,7 +23,7 @@ symbols = {
     "PLN\xa0": {"fxtext": "PLN", "jptext": "ポーランド・ズロチ"},
     "R$": {"fxtext": "BRL", "jptext": "ブラジル・レアル"},
     "RUB\xa0": {"fxtext": "RUB", "jptext": "ロシア・ルーブル"},
-    "SEK\xa0": {"fxtext": "SEK", "jptext": "スウェーデン・クローネ"},
+    "SEK\xa0": {"fxtext": "SEK", "jptext": "スウェーデン・クローナ"},
     "£": {"fxtext": "GBP", "jptext": "英・ポンド"},
     "₩": {"fxtext": "KRW", "jptext": "韓国・ウォン"},
     "€": {"fxtext": "EUR", "jptext": "欧・ユーロ"},
