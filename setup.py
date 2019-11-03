@@ -40,7 +40,7 @@ class CleanCommand(Command):
         pass
     def run(self):
         #system('rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info')
-        system('rmdir /Q /S pytchat.egg-info')
+        system('rmdir /Q /S pytchat.egg-info, dist')
 
 
 setup(
