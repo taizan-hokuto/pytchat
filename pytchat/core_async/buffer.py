@@ -2,7 +2,7 @@
 import asyncio
 class Buffer(asyncio.Queue):
     '''
-    チャットデータを格納するバッファの役割を持つLIFOキュー
+    チャットデータを格納するバッファの役割を持つFIFOキュー
 
     Parameter
     ---------

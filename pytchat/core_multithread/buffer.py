@@ -3,7 +3,7 @@ import queue
 
 class Buffer(queue.Queue):
     '''
-    チャットデータを格納するバッファの役割を持つLIFOキュー
+    チャットデータを格納するバッファの役割を持つFIFOキュー
 
     Parameter
     ---------
