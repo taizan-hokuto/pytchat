@@ -31,16 +31,6 @@ assert url
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
-class CleanCommand(Command):
-    """Custom clean command to tidy up the project root."""
-    user_options = []
-    def initialize_options(self):
-        pass
-    def finalize_options(self):
-        pass
-    def run(self):
-        #system('rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info')
-        system('rmdir /Q /S pytchat.egg-info, dist')
 
 
 setup(
@@ -68,7 +58,5 @@ setup(
         'License :: OSI Approved :: MIT License',
     ],
     keywords='youtube livechat asyncio',
-    cmdclass={
-        'clean': CleanCommand,
-    }
+
 )
