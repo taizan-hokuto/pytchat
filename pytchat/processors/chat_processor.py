@@ -5,11 +5,12 @@ class ChatProcessor:
     '''
     def process(self, chat_components: list):
         '''
-        チャットデータの加工を表すインターフェース
-        Listenerから呼び出される。        
+        チャットデータの加工を表すインターフェース。
+        LiveChatオブジェクトから呼び出される。 
+               
         Parameter
         ----------
-        chat_components: list<component>
+        chat_components: [LIST:component]
             component : dict {
                 "video_id" : str
                     動画ID
