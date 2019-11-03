@@ -17,6 +17,8 @@ instead of web scraping.
 ```python
 pip install pytchat
 ```
+## Demo
+![demo](https://taizan-hokuto.github.io/statics/demo.gif "demo")
 
 ## Examples
 ### on-demand mode
