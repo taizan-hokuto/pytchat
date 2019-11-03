@@ -132,7 +132,7 @@ def _times():
     
     _ts1= n - random.uniform(0,1*3)    
     _ts2= n - random.uniform(0.01,0.99)    
-    _ts3= n - 60*60 + random.uniform(0,1)
+    _ts3= n - 60+random.uniform(0,1)
     _ts4= n - random.uniform(10*60,60*60)         
     _ts5= n - random.uniform(0.01,0.99)
     return list(map(lambda x:int(x*1000000),[_ts1,_ts2,_ts3,_ts4,_ts5]))
