@@ -1,4 +1,3 @@
-
 pytchat
 =======
 
@@ -35,6 +34,7 @@ while chat.is_alive():
 ### callback mode
 ```python
 from pytchat import LiveChat
+import time
 
 chat = LiveChat("G1w62uEMZ74", callback = func)
 while chat.is_alive():
@@ -114,6 +114,11 @@ Structure of each item which got from items() function.
     <td>timestamp</td>
     <td>int</td>
     <td>unixtime milliseconds</td>
+  </tr>
+  <tr>
+    <td>datetime</td>
+    <td>str</td>
+    <td></td>
   </tr>
   <tr>
     <td>amountValue</td>
