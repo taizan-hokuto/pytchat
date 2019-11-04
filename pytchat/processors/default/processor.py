@@ -1,6 +1,9 @@
-from . import parser
 import asyncio
 import time
+from .renderer.textmessage import LiveChatTextMessageRenderer
+from .renderer.paidmessage import LiveChatPaidMessageRenderer
+from .renderer.paidsticker import LiveChatPaidStickerRenderer
+from .renderer.legacypaid import LiveChatLegacyPaidMessageRenderer
 
 
 class Chatdata:
@@ -37,8 +40,40 @@ class DefaultProcessor:
                     if action.get('addChatItemAction') is None: continue
                     if action['addChatItemAction'].get('item') is None: continue
 
-                    chat = parser.parse(action)
+                    chat = self.parse(action)
                     if chat:
                         chatlist.append(chat)
         return Chatdata(chatlist, float(timeout))
   
+
+    def parse(self, sitem):
+
+        action = sitem.get("addChatItemAction")
+        if action:
+            item = action.get("item")
+        if item is None: return None
+        try:
+            renderer = self.get_renderer(item)
+            if renderer == None:
+                return None
+
+            renderer.get_snippet()
+            renderer.get_authordetails()
+        except (KeyError,TypeError,AttributeError) as e:
+            print(f"------{str(type(e))}-{str(e)}----------")
+            print(sitem)
+            return None
+        return renderer        
+
+    def get_renderer(self, item):
+        if item.get("liveChatTextMessageRenderer"):
+            renderer = LiveChatTextMessageRenderer(item)
+        elif item.get("liveChatPaidMessageRenderer"):
+            renderer = LiveChatPaidMessageRenderer(item)
+        elif item.get( "liveChatPaidStickerRenderer"):
+            renderer = LiveChatPaidStickerRenderer(item)
+        elif item.get("liveChatLegacyPaidMessageRenderer"):
+            renderer = LiveChatLegacyPaidMessageRenderer(item)
+        else:
+            renderer = None
+        return renderer
