@@ -60,8 +60,8 @@ class CompatibleProcessor:
             rd["snippet"]       = renderer.get_snippet()
             rd["authorDetails"] = renderer.get_authordetails()
         except (KeyError,TypeError,AttributeError) as e:
-            print(f"------{str(type(e))}-{str(e)}----------")
-            print(sitem)
+            logger.error(f"Error: {str(type(e))}-{str(e)}")
+            logger.error(f"item: {sitem}")
             return None
         
         return rd        
