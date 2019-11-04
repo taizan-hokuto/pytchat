@@ -1,11 +1,14 @@
-from . import parser
+from . parser import Parser
 import json
 import os
 import traceback
 import datetime
 import time
-class CompatibleProcessor():
-    
+
+class CompatibleProcessor:
+    def __init__(self):
+        self.parser = Parser()
+
     def process(self, chat_components: list):
 
         chatlist = []
@@ -26,7 +29,7 @@ class CompatibleProcessor():
                     if action.get('addChatItemAction') is None: continue
                     if action['addChatItemAction'].get('item') is None: continue
 
-                    chat = parser.parse(action)
+                    chat = self.parser.parse(action)
                     if chat:
                         chatlist.append(chat)
         ret["pollingIntervalMillis"] = int(timeout*1000)
