@@ -45,17 +45,17 @@ def _nval(val):
     buf += val.to_bytes(1,'big')
     return buf
 
-def get(video_id, pos = 0, topchatonly = False):
+def get(video_id, seektime = 0, topchatonly = False):
     switch_01 = b'\x04' if topchatonly else b'\x01'
 
 
-    if pos<0:
-        raise ValueError('pos is 0 or positive number.')
-    if pos == 0:  
+    if seektime<0:
+        raise ValueError('seektime is 0 or positive number.')
+    if seektime == 0:  
         times =_nval(1)
         switch = b'\x04'       
     else:
-        times =_nval(int(pos*1000000))
+        times =_nval(int(seektime*1000000))
         switch = b'\x03'
     header_magic= b'\xA2\x9D\xB0\xD3\x04'
     sep_0       = b'\x1A'
@@ -95,34 +95,5 @@ def get(video_id, pos = 0, topchatonly = False):
                 ).decode()
             )
 
-import requests
-import json
-from .. core_multithread.parser import Parser
-if __name__=='__main__':
-    headers = {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36'}
 
-    #"sirpY2XUktI"
-    # print(_gen_vid("KeytykF37jY"))
-    param = get("OzBmHAOA2rA",pos = 0)
-    # target = "op2w0wRyGjxDZzhhRFFvTFMyVjVkSGxyUmpNM2Fsa2FFLXFvM2JrQkRRb0xTMlY1ZEhsclJqTTNhbGtnQVElM0QlM0QoATAAOABAAEgEUhwIABAAGAAgACoOc3RhdGljY2hlY2tzdW1AAFgDYAFoAHIECAEQAHgA"
-    print(param)
-    # if param == target:
-    #     print('ok')
-    # else:
-    #     print('ng')
-    #     print(target)
-    #     for i,t in enumerate(target):
-    #         if(param[i]!=t):
-    #             print('^',end = '')
-    #         else:
-    #             print(' ',end = '')
-    url=f"https://www.youtube.com/live_chat_replay/get_live_chat_replay?continuation={param}&pbj=1"
-    print(url)
-    resp = requests.Session().get(url,headers = headers)
-    print(resp)
-    jsn = json.loads(resp.text)
-    print(jsn)
-    parser = Parser()
-    metadata , chatdata = parser.parse(jsn)
-    print(chatdata[0])
+
