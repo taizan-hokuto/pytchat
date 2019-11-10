@@ -10,7 +10,7 @@ def test_arcparam_0(mocker):
 
 
 def test_arcparam_1(mocker):
-    param = arcparam.get("01234567890", pos = 100000)
+    param = arcparam.get("01234567890", seektime = 100000)
     assert "op2w0wR3GjxDZzhhRFFvTE1ERXlNelExTmpjNE9UQWFFLXFvM2JrQkRRb0xNREV5TXpRMU5qYzRPVEFnQVElM0QlM0QogNDbw_QCMAA4AEAASANSHAgAEAAYACAAKg5zdGF0aWNjaGVja3N1bUAAWANgAWgAcgQIARAAeAA%3D" == param
 
 def test_arcparam_2(mocker):
@@ -19,7 +19,7 @@ def test_arcparam_2(mocker):
     resp = requests.Session().get(url,headers = config.headers)
     jsn = json.loads(resp.text)
     parser = Parser()
-    metadata , chatdata = parser.parse(jsn)
+    _ , chatdata = parser.parse(jsn)
     test_id = chatdata[0]["replayChatItemAction"]["actions"][0]["addChatItemAction"]["item"]["liveChatTextMessageRenderer"]["id"]
     print(test_id)
     assert "CjoKGkNMYXBzZTdudHVVQ0Zjc0IxZ0FkTnFnQjVREhxDSnlBNHV2bnR1VUNGV0dnd2dvZDd3NE5aZy0w" == test_id
