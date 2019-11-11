@@ -3,7 +3,6 @@ import datetime
 import json
 import random
 import signal
-import threading
 import time
 import traceback
 import urllib.parse

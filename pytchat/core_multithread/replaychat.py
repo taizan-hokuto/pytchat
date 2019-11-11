@@ -3,11 +3,11 @@ import datetime
 import json
 import random
 import signal
-import threading
 import time
 import traceback
 import urllib.parse
 from concurrent.futures import CancelledError, ThreadPoolExecutor
+from queue import Queue
 from .buffer import Buffer
 from .replayparser import Parser
 from .. import config
@@ -83,8 +83,10 @@ class ReplayChat:
         self._direct_mode = direct_mode
         self._is_alive   = True
         self._parser = Parser()
+        self._pauser = Queue()
+        self._pauser.put_nowait(None)
+       
         self._setup()
-
         if not ReplayChat._setup_finished:
             ReplayChat._setup_finished = True
             if interruptable:
@@ -156,6 +158,12 @@ class ReplayChat:
         try:
             with requests.Session() as session:
                 while(continuation and self._is_alive):
+                    if self._pauser.empty():
+                        #pauseが呼ばれて_pauserが空状態のときは一時停止する
+                        self._pauser.get()
+                        #resumeが呼ばれて_pauserにitemが入ったら再開する
+                        #直後に_pauserにitem(None)を入れてブロックを防ぐ
+                        self._pauser.put_nowait(None)
                     livechat_json = (
                       self._get_livechat_json(continuation, session, headers)
                     )
@@ -243,6 +251,18 @@ class ReplayChat:
             return  self.processor.process(items)
         raise IllegalFunctionCall(
             "既にcallbackを登録済みのため、get()は実行できません。")
+
+    def pause(self):
+        '''チャット取得を一時停止する。'''
+        if not self._pauser.empty():
+            self._pauser.get()
+
+
+    def resume(self):
+        '''チャット取得を再開する。'''
+        if self._pauser.empty():
+            self._pauser.put_nowait(None)
+        
 
     def is_alive(self):
         return self._is_alive
