@@ -72,7 +72,7 @@ loop.run_until_complete(main())
 ```
 
 
-### yt api compatible processor:
+### youtube api compatible processor:
 ```python
 from pytchat import LiveChat, CompatibleProcessor
 
