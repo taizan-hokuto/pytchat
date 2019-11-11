@@ -10,7 +10,7 @@ import urllib.parse
 from aiohttp.client_exceptions import ClientConnectorError
 from concurrent.futures import CancelledError
 from .buffer import Buffer
-from .parser import Parser
+from ..parser import Parser
 from .. import config
 from .. import mylogger
 from ..exceptions  import ChatParseException,IllegalFunctionCall
@@ -81,7 +81,7 @@ class LiveChatAsync:
         self._exception_handler = exception_handler
         self._direct_mode = direct_mode
         self._is_alive   = True
-
+        self._parser = Parser()
         self._setup()
         
         if not LiveChatAsync._setup_finished:
@@ -164,7 +164,7 @@ class LiveChatAsync:
                     livechat_json = (await 
                       self._get_livechat_json(continuation, session, headers)
                     )
-                    metadata, chatdata =  Parser.parse( livechat_json )
+                    metadata, chatdata =  self._parser.parse( livechat_json )
                     timeout = metadata['timeoutMs']/1000
                     chat_component = {
                         "video_id" : self.video_id,

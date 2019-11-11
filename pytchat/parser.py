@@ -1,7 +1,7 @@
 import json
-from .. import config
-from .. import mylogger
-from .. exceptions import ( 
+from . import config
+from . import mylogger
+from . exceptions import ( 
     ResponseContextError, 
     NoContentsException, 
     NoContinuationsException )
@@ -11,8 +11,7 @@ logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
 
 
 class Parser:
-    @classmethod
-    def parse(cls, jsn):
+    def parse(self, jsn):
         if jsn is None: 
             return {'timeoutMs':0,'continuation':None},[]
         if jsn['response']['responseContext'].get('errors'):

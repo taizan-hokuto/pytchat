@@ -182,14 +182,10 @@ class ReplayChat:
                             )
                     else:
                         self._buffer.put(chat_component)
-                    #次のchatを取得するまでsleepする
                     diff_time = timeout - (time.time()-time_mark)
                     if diff_time < 0 : diff_time=0
                     time.sleep(diff_time)        
-                    #次のチャットデータのcontinuationパラメータを取り出す。
                     continuation = metadata.get('continuation')  
-    
-                    #whileループ先頭に戻る
         except ChatParseException as e:
             logger.error(f"{str(e)}（動画ID:\"{self.video_id}\"）")
             return            
@@ -253,13 +249,10 @@ class ReplayChat:
             "既にcallbackを登録済みのため、get()は実行できません。")
 
     def pause(self):
-        '''チャット取得を一時停止する。'''
         if not self._pauser.empty():
             self._pauser.get()
 
-
     def resume(self):
-        '''チャット取得を再開する。'''
         if self._pauser.empty():
             self._pauser.put_nowait(None)
         

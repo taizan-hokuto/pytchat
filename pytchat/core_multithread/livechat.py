@@ -8,7 +8,7 @@ import traceback
 import urllib.parse
 from concurrent.futures import CancelledError, ThreadPoolExecutor
 from .buffer import Buffer
-from .parser import Parser
+from ..parser import Parser
 from .. import config
 from .. import mylogger
 from ..exceptions  import ChatParseException,IllegalFunctionCall
