@@ -1,7 +1,7 @@
 import json
-from . import config
-from . import mylogger
-from . exceptions import ( 
+from .. import config
+from .. import mylogger
+from .. exceptions import ( 
     ResponseContextError, 
     NoContentsException, 
     NoContinuationsException )

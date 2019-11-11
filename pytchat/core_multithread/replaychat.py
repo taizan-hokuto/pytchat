@@ -9,7 +9,7 @@ import urllib.parse
 from concurrent.futures import CancelledError, ThreadPoolExecutor
 from queue import Queue
 from .buffer import Buffer
-from .replayparser import Parser
+from ..parser.replay import Parser
 from .. import config
 from .. import mylogger
 from ..exceptions  import ChatParseException,IllegalFunctionCall
