@@ -122,7 +122,7 @@ class ReplayChatAsync:
         else:
             listen_task.add_done_callback(self._done_callback)
 
-    def _startlisten(self):
+    async def _startlisten(self):
         """最初のcontinuationパラメータを取得し、
         _listenループのタスクを作成し開始する
         """
@@ -237,7 +237,7 @@ class ReplayChatAsync:
             data = self.processor.process(items)
             await callback(data)
 
-    def get(self):
+    async def get(self):
         """ bufferからデータを取り出し、processorに投げ、
         加工済みのチャットデータを返す。
         
