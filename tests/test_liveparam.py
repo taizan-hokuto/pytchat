@@ -1,7 +1,4 @@
 import pytest
-from pytchat.core_multithread.parser import Parser
-import pytchat.config as config
-import requests, json
 from pytchat.paramgen import liveparam
 
 def test_liveparam_0(mocker):

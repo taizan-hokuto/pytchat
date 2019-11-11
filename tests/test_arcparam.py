@@ -1,5 +1,5 @@
 import pytest
-from pytchat.core_multithread.parser import Parser
+from pytchat.parser.replay import Parser
 import pytchat.config as config
 import requests, json
 from pytchat.paramgen import arcparam
@@ -20,7 +20,7 @@ def test_arcparam_2(mocker):
     jsn = json.loads(resp.text)
     parser = Parser()
     _ , chatdata = parser.parse(jsn)
-    test_id = chatdata[0]["replayChatItemAction"]["actions"][0]["addChatItemAction"]["item"]["liveChatTextMessageRenderer"]["id"]
+    test_id = chatdata[0]["addChatItemAction"]["item"]["liveChatTextMessageRenderer"]["id"]
     print(test_id)
     assert "CjoKGkNMYXBzZTdudHVVQ0Zjc0IxZ0FkTnFnQjVREhxDSnlBNHV2bnR1VUNGV0dnd2dvZDd3NE5aZy0w" == test_id
     

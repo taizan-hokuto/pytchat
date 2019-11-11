@@ -1,7 +1,7 @@
 import json
 import pytest
 import asyncio,aiohttp
-from pytchat.core_async.parser import Parser
+from pytchat.parser.live import Parser
 from pytchat.processors.compatible.processor import CompatibleProcessor
 from pytchat.exceptions import (
     NoLivechatRendererException,NoYtinitialdataException,
@@ -12,13 +12,15 @@ from pytchat.processors.compatible.renderer.paidmessage import LiveChatPaidMessa
 from pytchat.processors.compatible.renderer.paidsticker import LiveChatPaidStickerRenderer
 from pytchat.processors.compatible.renderer.legacypaid import LiveChatLegacyPaidMessageRenderer
 
+parser = Parser()
+
 def test_textmessage(mocker):
     '''api互換processorのテスト：通常テキストメッセージ'''
     processor = CompatibleProcessor()
 
     _json = _open_file("tests/testdata/compatible/textmessage.json")
 
-    _, chatdata = Parser.parse(json.loads(_json))
+    _, chatdata = parser.parse(json.loads(_json))
     data = {
         "video_id" : "",
         "timeout" : 7,
@@ -55,7 +57,7 @@ def test_newsponcer(mocker):
 
     _json = _open_file("tests/testdata/compatible/newSponsor.json")
 
-    _, chatdata = Parser.parse(json.loads(_json))
+    _, chatdata = parser.parse(json.loads(_json))
     data = {
         "video_id" : "",
         "timeout" : 7,
@@ -91,7 +93,7 @@ def test_superchat(mocker):
 
     _json = _open_file("tests/testdata/compatible/superchat.json")
 
-    _, chatdata = Parser.parse(json.loads(_json))
+    _, chatdata = parser.parse(json.loads(_json))
     data = {
         "video_id" : "",
         "timeout" : 7,

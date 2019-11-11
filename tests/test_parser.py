@@ -1,5 +1,5 @@
 import pytest
-from pytchat.core_async.parser import Parser
+from pytchat.parser.live import Parser
 import json
 import asyncio,aiohttp
 from aioresponses import aioresponses
@@ -11,7 +11,7 @@ from pytchat.exceptions import (
 def _open_file(path):
     with open(path,mode ='r',encoding = 'utf-8') as f:
         return f.read()
-
+parser = Parser()
 
 @aioresponses()
 def test_finishedlive(*mock):
@@ -21,7 +21,7 @@ def test_finishedlive(*mock):
     _text = json.loads(_text)
 
     try:    
-        Parser.parse(_text)
+        parser.parse(_text)
         assert False
     except NoContentsException:
         assert True
@@ -34,7 +34,7 @@ def test_parsejson(*mock):
     _text = json.loads(_text)
 
     try:    
-        Parser.parse(_text)
+        parser.parse(_text)
         jsn = _text
         timeout = jsn["response"]["continuationContents"]["liveChatContinuation"]["continuations"][0]["timedContinuationData"]["timeoutMs"]
         continuation = jsn["response"]["continuationContents"]["liveChatContinuation"]["continuations"][0]["timedContinuationData"]["continuation"]
