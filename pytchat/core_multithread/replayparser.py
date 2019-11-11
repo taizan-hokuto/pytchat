@@ -12,7 +12,6 @@ logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
 
 class Parser:
     def parse(self, jsn):
-        #print(jsn)
         if jsn is None: 
             return {'timeoutMs':0,'continuation':None},[]
         if jsn['response']['responseContext'].get('errors'):
@@ -33,14 +32,13 @@ class Parser:
                 metadata = cont.get(unknown)
         
         actions = contents['liveChatContinuation'].get('actions')
+        if actions is None:
+            raise NoContentsException('チャットデータを取得できませんでした。')
         interval = self.get_interval(actions)
         metadata.setdefault("timeoutMs",interval)
-        print(metadata["continuation"])
-
         chatdata = []
         for action in actions:
             chatdata.append(action["replayChatItemAction"]["actions"][0])
-        #print(chatdata)
         return metadata, chatdata
 
     def get_interval(self, actions: list):
@@ -48,9 +46,6 @@ class Parser:
             return 0
         start = int(actions[0]["replayChatItemAction"]["videoOffsetTimeMsec"])
         last = int(actions[-1]["replayChatItemAction"]["videoOffsetTimeMsec"])
-        print((last - start)/1000)
-        if (last - start) > 60*20*1000:
-            return 60000
         return (last - start)
 
 
