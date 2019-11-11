@@ -92,8 +92,9 @@ class ReplayChatAsync:
             else:
                 self._set_exception_handler(exception_handler)
             if interruptable:
-                signal.signal(signal.SIGINT,  (lambda a, b:  
-                (ReplayChatAsync.shutdown(None,signal.SIGINT,b))
+                signal.signal(signal.SIGINT,
+                  (lambda a, b:asyncio.create_task(  
+                  ReplayChatAsync.shutdown(None,signal.SIGINT,b))
                 ))
 
     def _setup(self):
@@ -276,7 +277,7 @@ class ReplayChatAsync:
         self._is_alive = False
         if self._direct_mode == False:
             #bufferにダミーオブジェクトを入れてis_alive()を判定させる
-            self._buffer.put({'chatdata':'','timeout':1}) 
+            self._buffer.put_nowait({'chatdata':'','timeout':1}) 
         logger.info(f'終了しました:[{self.video_id}]')
   
     @classmethod
