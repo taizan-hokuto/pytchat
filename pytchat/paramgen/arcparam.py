@@ -5,6 +5,16 @@ import math
 import random
 import urllib.parse
 
+'''
+Generate continuation parameter of youtube replay chat.
+
+Author: taizan-hokuto (2019)
+
+ver 0.0.1 2019.10.05
+
+if you use/copy this module 
+please tell me -> https://twitter.com/taizan205
+'''
 
 def _gen_vid(video_id):
     """generate video_id parameter.
@@ -45,11 +55,24 @@ def _nval(val):
     buf += val.to_bytes(1,'big')
     return buf
 
+
+def _tzparity(video_id,times):
+    t=0
+    for i,s in enumerate(video_id):
+        ss = ord(s)
+        if(ss % 2 == 0):
+            t += ss*(12-i)
+        else:
+            t ^= ss*i
+
+    return ((times^t) % 2).to_bytes(1,'big')
+
+
 def get(video_id, seektime = 0, topchatonly = False):
     switch_01 = b'\x04' if topchatonly else b'\x01'
 
 
-    if seektime<0:
+    if seektime < 0:
         raise ValueError('seektime is 0 or positive number.')
     if seektime == 0:  
         times =_nval(1)
@@ -57,6 +80,8 @@ def get(video_id, seektime = 0, topchatonly = False):
     else:
         times =_nval(int(seektime*1000000))
         switch = b'\x03'
+    parity = _tzparity(video_id, seektime)
+
     header_magic= b'\xA2\x9D\xB0\xD3\x04'
     sep_0       = b'\x1A'
     vid         = _gen_vid(video_id)
@@ -66,9 +91,8 @@ def get(video_id, seektime = 0, topchatonly = False):
     sep_2       = b'\x52\x1C\x08\x00\x10\x00\x18\x00\x20\x00'
     chkstr      = b'\x2A\x0E\x73\x74\x61\x74\x69\x63\x63\x68\x65\x63\x6B\x73\x75\x6D\x40'
     sep_3       = b'\x00\x58\x03\x60'
-    sep_4       = b'\x68\x00\x72\x04\x08'
-    sep_5       = b'\x10\x00\x78\x00'
-
+    sep_4       = b'\x68'+parity+b'\x72\x04\x08'
+    sep_5       = b'\x10'+parity+b'\x78\x00'
     body = [
         sep_0,
         _nval(len(vid)),
