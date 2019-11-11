@@ -13,13 +13,13 @@ class Chatdata:
     
     def tick(self):
         if self.interval == 0:
-            time.sleep(3)
+            time.sleep(1)
             return
         time.sleep(self.interval/len(self.items))
 
     async def tick_async(self):
         if self.interval == 0:
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(1)
             return
         await asyncio.sleep(self.interval/len(self.items))
 
