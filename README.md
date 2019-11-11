@@ -45,10 +45,10 @@ while chat.is_alive():
     #other background operation here.
     time.sleep(3)
 
-def func(chatdata):
-    for c in chatdata.items:
+def func(data):
+    for c in data.items:
         print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
-        chat.tick()
+        data.tick()
 ```
 
 ### asyncio context:
@@ -62,10 +62,10 @@ async def main():
         #other background operation here.
         await asyncio.sleep(3)
 
-async def func(chat)
-    for c in chat.items:
+async def func(data)
+    for c in data.items:
         print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
-        await chat.tick_async()
+        await data.tick_async()
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
