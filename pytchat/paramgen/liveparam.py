@@ -7,12 +7,9 @@ import urllib.parse
 '''
 Generate continuation parameter of youtube live chat.
 
-Author: taizan-hokuto (2019)
-
+Author: taizan-hokuto (2019) @taizan205
+https://twitter.com/taizan205
 ver 0.0.1 2019.10.05
-
-if you use/copy this module 
-please tell me -> https://twitter.com/taizan205
 '''
 def _gen_vid(video_id):
     """generate video_id parameter.
