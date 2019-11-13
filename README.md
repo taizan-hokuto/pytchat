@@ -62,7 +62,7 @@ async def main():
         #other background operation here.
         await asyncio.sleep(3)
 
-async def func(data)
+async def func(data):
     for c in data.items:
         print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
         await data.tick_async()
@@ -89,7 +89,30 @@ while chat.is_alive():
             time.sleep(polling/len(data["items"]))
 
 ```
+### replay:
+```python
+from pytchat import ReplayChatAsync
+import asyncio
 
+async def main():
+    chat = ReplayChatAsync("G1w62uEMZ74", seektime = 1000, callback = func)
+    while chat.is_alive():
+        #other background operation here.
+        await asyncio.sleep(3)
+
+async def func(data):
+    for count in range(0,len(data.items)):
+        c= data.items[count]
+        if count!=len(data.items):
+            tick=data.items[count+1].timestamp -data.items[count].timestamp
+        else:
+            tick=0
+        print(f"<{c.timestampText}> [{c.author.name}]-{c.message} {c.amountString}")
+        await asyncio.sleep(tick/1000)
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
+```
 
 ## Chatdata Structure of Default Processor
 Structure of each item which got from items() function.
@@ -122,7 +145,11 @@ Structure of each item which got from items() function.
   <tr>
     <td>datetime</td>
     <td>str</td>
-    <td></td>
+    <td>ex. "2019-10-10 12:34:56"</td>
+  </tr>
+    <td>timestampText</td>
+    <td>str</td>
+    <td>elapsed time. (ex. "1:02:27")</td>
   </tr>
   <tr>
     <td>amountValue</td>
@@ -137,7 +164,7 @@ Structure of each item which got from items() function.
   <tr>
     <td>currency</td>
     <td>str</td>
-    <td>ISO 4217 currency codes (ex. "USD")</td>
+    <td><a href="https://en.wikipedia.org/wiki/ISO_4217">ISO 4217 currency codes</a> (ex. "USD")</td>
   </tr>
   <tr>
     <td>bgColor</td>
