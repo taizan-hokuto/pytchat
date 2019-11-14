@@ -13,7 +13,7 @@ Other features:
 + Quick fetching of initial chat data by generating continuation params
 instead of web scraping.
 
-より詳細な説明は [wiki](https://github.com/taizan-hokuto/pytchat/wiki) をご参照ください。
+For more detailed information, see [wiki](https://github.com/taizan-hokuto/pytchat/wiki).
 
 ## Install
 ```python
