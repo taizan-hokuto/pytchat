@@ -1,6 +1,6 @@
 import pytest
-from pytchat.core_async.parser import Parser as AsyncParser
-from pytchat.core_multithread.parser import Parser as ThreadParser
+from pytchat.parser.live import Parser
+
 import json
 import asyncio,aiohttp
 

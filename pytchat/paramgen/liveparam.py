@@ -1,11 +1,16 @@
 from base64 import urlsafe_b64encode as b64enc
 from functools import reduce
 import calendar, datetime, pytz
-import math
 import random
 import urllib.parse
 
+'''
+Generate continuation parameter of youtube live chat.
 
+Author: taizan-hokuto (2019) @taizan205
+
+ver 0.0.1 2019.10.05
+'''
 def _gen_vid(video_id):
     """generate video_id parameter.
     Parameter
@@ -39,6 +44,17 @@ def _gen_vid(video_id):
         b64enc(reduce(lambda x, y: x+y, item)).decode()
     ).encode()
 
+def _tzparity(video_id,times):
+    t=0
+    for i,s in enumerate(video_id):
+        ss = ord(s)
+        if(ss % 2 == 0):
+            t += ss*(12-i)
+        else:
+            t ^= ss*i
+
+    return ((times^t) % 2).to_bytes(1,'big')
+
 def _nval(val):
     """convert value to byte array"""
     if val<0: raise ValueError
@@ -53,15 +69,16 @@ def _nval(val):
 def _build(video_id, _ts1, _ts2, _ts3, _ts4, _ts5, topchatonly = False):
     #_short_type2
     switch_01 = b'\x04' if topchatonly else b'\x01'
-    header_magic= b'\xD2\x87\xCC\xC8\x03'
+    parity = _tzparity(video_id, _ts1^_ts2^_ts3^_ts4^_ts5)
 
+    header_magic= b'\xD2\x87\xCC\xC8\x03'
     sep_0       = b'\x1A'
     vid         = _gen_vid(video_id)
     time_tag    = b'\x28'
     timestamp1  = _nval(_ts1)
     sep_1       = b'\x30\x00\x38\x00\x40\x02\x4A'
     un_len      = b'\x2B'
-    sep_2       = b'\x08\x00\x10\x00\x18\x00\x20\x00'
+    sep_2       = b'\x08'+parity+b'\x10\x00\x18\x00\x20\x00'
     chkstr      = b'\x2A\x0E\x73\x74\x61\x74\x69\x63\x63\x68\x65\x63\x6B\x73\x75\x6D'
     sep_3       = b'\x3A\x00\x40\x00\x4A'
     sep_4_len   = b'\x02'

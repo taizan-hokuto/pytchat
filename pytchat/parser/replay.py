@@ -11,8 +11,7 @@ logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
 
 
 class Parser:
-    @classmethod
-    def parse(cls, jsn):
+    def parse(self, jsn):
         if jsn is None: 
             return {'timeoutMs':0,'continuation':None},[]
         if jsn['response']['responseContext'].get('errors'):
@@ -26,15 +25,28 @@ class Parser:
         cont = contents['liveChatContinuation']['continuations'][0]
         if cont is None:
             raise NoContinuationsException('Continuationがありません。')
-        metadata = (cont.get('invalidationContinuationData')  or
-                    cont.get('timedContinuationData')         or
-                    cont.get('reloadContinuationData')
-                    )
+        metadata = cont.get('liveChatReplayContinuationData')
         if metadata is None:
             unknown = list(cont.keys())[0]
             if unknown:
-                logger.error(f"Received unknown continuation type:{unknown}")
                 metadata = cont.get(unknown)
-        metadata.setdefault('timeoutMs', 10000)
-        chatdata = contents['liveChatContinuation'].get('actions')
+        
+        actions = contents['liveChatContinuation'].get('actions')
+        if actions is None:
+            raise NoContentsException('チャットデータを取得できませんでした。')
+        interval = self.get_interval(actions)
+        metadata.setdefault("timeoutMs",interval)
+        chatdata = []
+        for action in actions:
+            chatdata.append(action["replayChatItemAction"]["actions"][0])
         return metadata, chatdata
+
+    def get_interval(self, actions: list):
+        if actions is None:
+            return 0
+        start = int(actions[0]["replayChatItemAction"]["videoOffsetTimeMsec"])
+        last = int(actions[-1]["replayChatItemAction"]["videoOffsetTimeMsec"])
+        return (last - start)
+
+
+

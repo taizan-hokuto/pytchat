@@ -3,28 +3,26 @@ import datetime
 import json
 import random
 import signal
-import threading
 import time
 import traceback
 import urllib.parse
 from aiohttp.client_exceptions import ClientConnectorError
 from concurrent.futures import CancelledError
+from queue import Queue
 from .buffer import Buffer
-from ..parser.live import Parser
+from ..parser.replay import Parser
 from .. import config
 from .. import mylogger
 from ..exceptions  import ChatParseException,IllegalFunctionCall
-from ..paramgen    import liveparam
+from ..paramgen    import arcparam
 from ..processors.default.processor import DefaultProcessor
 
 logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
 MAX_RETRY = 10
 headers = config.headers
 
-
-
-class LiveChatAsync:
-    '''asyncio(aiohttp)を利用してYouTubeのライブ配信のチャットデータを取得する。
+class ReplayChatAsync:
+    ''' aiohttpを利用してYouTubeのライブ配信のチャットデータを取得する
 
     Parameter
     ---------
@@ -48,31 +46,33 @@ class LiveChatAsync:
     done_callback : func
         listener終了時に呼び出すコールバック。
 
-    exception_handler : func
-        例外を処理する関数
-
     direct_mode : bool
         Trueの場合、bufferを使わずにcallbackを呼ぶ。
         Trueの場合、callbackの設定が必須
         (設定していない場合IllegalFunctionCall例外を発生させる）  
-          
+
     Attributes
     ---------
+    _executor : ThreadPoolExecutor
+        チャットデータ取得ループ（_listen）用のスレッド
+
     _is_alive : bool
-        チャット取得を停止するためのフラグ
+        チャット取得を終了したか
     '''
 
     _setup_finished = False
 
     def __init__(self, video_id,
+                seektime =0,
                 processor = DefaultProcessor(),
-                buffer = None,
+                buffer = Buffer(maxsize = 20),
                 interruptable = True,
                 callback = None,
                 done_callback = None,
                 exception_handler = None,
-                direct_mode = False): 
+                direct_mode = False):
         self.video_id  = video_id
+        self.seektime= seektime
         self.processor = processor
         self._buffer = buffer
         self._callback = callback
@@ -81,20 +81,22 @@ class LiveChatAsync:
         self._direct_mode = direct_mode
         self._is_alive   = True
         self._parser = Parser()
+        self._pauser = Queue()
+        self._pauser.put_nowait(None)
         self._setup()
-        
-        if not LiveChatAsync._setup_finished:
-            LiveChatAsync._setup_finished = True
+
+        if not ReplayChatAsync._setup_finished:
+            ReplayChatAsync._setup_finished = True
             if exception_handler == None:
                 self._set_exception_handler(self._handle_exception)
             else:
                 self._set_exception_handler(exception_handler)
             if interruptable:
-                signal.signal(signal.SIGINT,  
-                    (lambda a, b:asyncio.create_task(
-                    LiveChatAsync.shutdown(None,signal.SIGINT,b))
+                signal.signal(signal.SIGINT,
+                  (lambda a, b:asyncio.create_task(  
+                  ReplayChatAsync.shutdown(None,signal.SIGINT,b))
                 ))
- 
+
     def _setup(self):
         #direct modeがTrueでcallback未設定の場合例外発生。
         if self._direct_mode:
@@ -123,7 +125,7 @@ class LiveChatAsync:
 
     async def _startlisten(self):
         """最初のcontinuationパラメータを取得し、
-        _listenループを開始する
+        _listenループのタスクを作成し開始する
         """
         initial_continuation = await self._get_initial_continuation()
         if initial_continuation is None:
@@ -131,11 +133,11 @@ class LiveChatAsync:
             logger.debug(f"[{self.video_id}]No initial continuation.")
             return
         await self._listen(initial_continuation)
-
+   
     async def _get_initial_continuation(self):
         ''' チャットデータ取得に必要な最初のcontinuationを取得する。'''
         try:    
-            initial_continuation = liveparam.getparam(self.video_id)
+            initial_continuation = arcparam.get(self.video_id,self.seektime)
         except ChatParseException as e:
             self.terminate()
             logger.debug(f"[{self.video_id}]Error:{str(e)}")
@@ -149,8 +151,8 @@ class LiveChatAsync:
 
     async def _listen(self, continuation):
         ''' continuationに紐付いたチャットデータを取得し
-        チャットデータを格納、
-        次のcontinuaitonを取得してループする。
+        にチャットデータを格納、
+        次のcontinuaitonを取得してループする
 
         Parameter
         ---------
@@ -160,7 +162,13 @@ class LiveChatAsync:
         try:
             async with aiohttp.ClientSession() as session:
                 while(continuation and self._is_alive):
-                    livechat_json = (await 
+                    if self._pauser.empty():
+                        #pauseが呼ばれて_pauserが空状態のときは一時停止する
+                        await self._pauser.get()
+                        #resumeが呼ばれて_pauserにitemが入ったら再開する
+                        #直後に_pauserにitem(None)を入れてブロックを防ぐ
+                        self._pauser.put_nowait(None)
+                    livechat_json = (await
                       self._get_livechat_json(continuation, session, headers)
                     )
                     metadata, chatdata =  self._parser.parse( livechat_json )
@@ -178,10 +186,11 @@ class LiveChatAsync:
                     else:
                         await self._buffer.put(chat_component)
                     diff_time = timeout - (time.time()-time_mark)
-                    await asyncio.sleep(diff_time)        
-                    continuation = metadata.get('continuation')     
+                    if diff_time < 0 : diff_time=0
+                    await asyncio.sleep(diff_time)       
+                    continuation = metadata.get('continuation')  
         except ChatParseException as e:
-            logger.info(f"{str(e)}（video_id:\"{self.video_id}\"）")
+            logger.error(f"{str(e)}（動画ID:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
             logger.error(f"{traceback.format_exc(limit = -1)}")
@@ -197,7 +206,7 @@ class LiveChatAsync:
         livechat_json = None
         status_code = 0
         url =(
-            f"https://www.youtube.com/live_chat/get_live_chat?"
+            f"https://www.youtube.com/live_chat_replay/get_live_chat_replay?"
             f"continuation={continuation}&pbj=1")
         for _ in range(MAX_RETRY + 1):
             async with session.get(url ,headers = headers) as resp:
@@ -214,7 +223,7 @@ class LiveChatAsync:
                     f"Exceeded retry count. status_code={status_code}")
             return None
         return livechat_json
-
+  
     async def _callback_loop(self,callback):
         """ コンストラクタでcallbackを指定している場合、バックグラウンドで
         callbackに指定された関数に一定間隔でチャットデータを投げる。        
@@ -242,6 +251,15 @@ class LiveChatAsync:
         raise IllegalFunctionCall(
             "既にcallbackを登録済みのため、get()は実行できません。")
 
+    def pause(self):
+        if not self._pauser.empty():
+            self._pauser.get()
+
+    def resume(self):
+        if self._pauser.empty():
+            self._pauser.put_nowait(None)
+        
+
     def is_alive(self):
         return self._is_alive
 
@@ -261,7 +279,7 @@ class LiveChatAsync:
             #bufferにダミーオブジェクトを入れてis_alive()を判定させる
             self._buffer.put_nowait({'chatdata':'','timeout':1}) 
         logger.info(f'終了しました:[{self.video_id}]')
- 
+  
     @classmethod
     def _set_exception_handler(cls, handler):
         loop = asyncio.get_event_loop()
@@ -287,12 +305,3 @@ class LiveChatAsync:
         await asyncio.gather(*tasks,return_exceptions=True)
         loop = asyncio.get_event_loop()
         loop.stop()
-
-
-
-  
-    
-
-
-
-

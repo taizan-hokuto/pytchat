@@ -3,13 +3,12 @@ import datetime
 import json
 import random
 import signal
-import threading
 import time
 import traceback
 import urllib.parse
 from concurrent.futures import CancelledError, ThreadPoolExecutor
 from .buffer import Buffer
-from .parser import Parser
+from ..parser.live import Parser
 from .. import config
 from .. import mylogger
 from ..exceptions  import ChatParseException,IllegalFunctionCall

@@ -13,6 +13,11 @@ class BaseRenderer:
         self.id = self.renderer.get('id')
         timestampUsec = int(self.renderer.get("timestampUsec",0))
         self.timestamp = int(timestampUsec/1000)
+        tst = self.renderer.get("timestampText")
+        if tst:
+            self.timestampText = tst.get("simpleText")
+        else:
+            self.timestampText = ""
         self.datetime = self.get_datetime(timestampUsec)
         self.message = self.get_message(self.renderer)
         self.id =  self.renderer.get('id')
