@@ -29,6 +29,9 @@ class ReplayChatAsync:
     video_id : str
         動画ID
 
+    seektime : int
+        リプレイするチャットデータの開始時間（秒）
+
     processor : ChatProcessor
         チャットデータを加工するオブジェクト
 
@@ -63,7 +66,7 @@ class ReplayChatAsync:
     _setup_finished = False
 
     def __init__(self, video_id,
-                seektime =0,
+                seektime = 0,
                 processor = DefaultProcessor(),
                 buffer = Buffer(maxsize = 20),
                 interruptable = True,
@@ -72,7 +75,7 @@ class ReplayChatAsync:
                 exception_handler = None,
                 direct_mode = False):
         self.video_id  = video_id
-        self.seektime= seektime
+        self.seektime = seektime
         self.processor = processor
         self._buffer = buffer
         self._callback = callback

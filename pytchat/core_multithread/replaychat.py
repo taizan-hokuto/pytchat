@@ -30,6 +30,9 @@ class ReplayChat:
     video_id : str
         動画ID
 
+    seektime : int
+        リプレイするチャットデータの開始時間（秒）
+
     processor : ChatProcessor
         チャットデータを加工するオブジェクト
 
@@ -65,7 +68,7 @@ class ReplayChat:
     #チャット監視中のListenerのリスト
     _listeners= []
     def __init__(self, video_id,
-                seektime =0,
+                seektime = 0,
                 processor = DefaultProcessor(),
                 buffer = Buffer(maxsize = 20),
                 interruptable = True,
@@ -74,7 +77,7 @@ class ReplayChat:
                 direct_mode = False
                 ):
         self.video_id  = video_id
-        self.seektime= seektime
+        self.seektime = seektime
         self.processor = processor
         self._buffer = buffer
         self._callback = callback
