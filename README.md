@@ -202,12 +202,12 @@ Structure of author object.
   </tr>
   <tr>
     <td>imageUrl</td>
-    <td></td>
+    <td>str</td>
     <td></td>
   </tr>
   <tr>
     <td>badgeUrl</td>
-    <td></td>
+    <td>str</td>
     <td></td>
   </tr>
   <tr>
