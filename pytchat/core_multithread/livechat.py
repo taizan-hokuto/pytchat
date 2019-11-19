@@ -57,7 +57,7 @@ class LiveChat:
         チャットデータ取得ループ（_listen）用のスレッド
 
     _is_alive : bool
-        チャット取得を終了したか
+        チャット取得を停止するためのフラグ
     '''
 
     _setup_finished = False
@@ -142,7 +142,7 @@ class LiveChat:
 
     def _listen(self, continuation):
         ''' continuationに紐付いたチャットデータを取得し
-        にチャットデータを格納、
+        BUfferにチャットデータを格納、
         次のcontinuaitonを取得してループする
 
         Parameter
@@ -157,7 +157,6 @@ class LiveChat:
                       self._get_livechat_json(continuation, session, headers)
                     )
                     metadata, chatdata =  self._parser.parse( livechat_json )
-                    #チャットデータを含むコンポーネントを組み立ててbufferに投入する
                     timeout = metadata['timeoutMs']/1000
                     chat_component = {
                         "video_id" : self.video_id,
@@ -171,16 +170,12 @@ class LiveChat:
                             )
                     else:
                         self._buffer.put(chat_component)
-                    #次のchatを取得するまでsleepする
                     diff_time = timeout - (time.time()-time_mark)
                     if diff_time < 0 : diff_time=0
                     time.sleep(diff_time)        
-                    #次のチャットデータのcontinuationパラメータを取り出す。
                     continuation = metadata.get('continuation')  
-    
-                    #whileループ先頭に戻る
         except ChatParseException as e:
-            logger.error(f"{str(e)}（動画ID:\"{self.video_id}\"）")
+            logger.info(f"{str(e)}（video_id:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
             logger.error(f"{traceback.format_exc(limit = -1)}")

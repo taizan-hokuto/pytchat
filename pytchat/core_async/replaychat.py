@@ -21,8 +21,10 @@ logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
 MAX_RETRY = 10
 headers = config.headers
 
+
+
 class ReplayChatAsync:
-    ''' aiohttpを利用してYouTubeのライブ配信のチャットデータを取得する
+    '''asyncio(aiohttp)を利用してYouTubeのチャットデータを取得する。
 
     Parameter
     ---------
@@ -49,6 +51,9 @@ class ReplayChatAsync:
     done_callback : func
         listener終了時に呼び出すコールバック。
 
+    exception_handler : func
+        例外を処理する関数
+
     direct_mode : bool
         Trueの場合、bufferを使わずにcallbackを呼ぶ。
         Trueの場合、callbackの設定が必須
@@ -56,11 +61,8 @@ class ReplayChatAsync:
 
     Attributes
     ---------
-    _executor : ThreadPoolExecutor
-        チャットデータ取得ループ（_listen）用のスレッド
-
     _is_alive : bool
-        チャット取得を終了したか
+        チャット取得を停止するためのフラグ
     '''
 
     _setup_finished = False
@@ -68,7 +70,7 @@ class ReplayChatAsync:
     def __init__(self, video_id,
                 seektime = 0,
                 processor = DefaultProcessor(),
-                buffer = Buffer(maxsize = 20),
+                buffer = None,
                 interruptable = True,
                 callback = None,
                 done_callback = None,
@@ -154,8 +156,8 @@ class ReplayChatAsync:
 
     async def _listen(self, continuation):
         ''' continuationに紐付いたチャットデータを取得し
-        にチャットデータを格納、
-        次のcontinuaitonを取得してループする
+        Bufferにチャットデータを格納、
+        次のcontinuaitonを取得してループする。
 
         Parameter
         ---------
@@ -189,11 +191,10 @@ class ReplayChatAsync:
                     else:
                         await self._buffer.put(chat_component)
                     diff_time = timeout - (time.time()-time_mark)
-                    if diff_time < 0 : diff_time=0
                     await asyncio.sleep(diff_time)       
                     continuation = metadata.get('continuation')  
         except ChatParseException as e:
-            logger.error(f"{str(e)}（動画ID:\"{self.video_id}\"）")
+            logger.info(f"{str(e)}（video_id:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
             logger.error(f"{traceback.format_exc(limit = -1)}")
