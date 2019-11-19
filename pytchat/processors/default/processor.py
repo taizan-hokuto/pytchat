@@ -40,20 +40,20 @@ class DefaultProcessor:
                     if action.get('addChatItemAction') is None: continue
                     if action['addChatItemAction'].get('item') is None: continue
 
-                    chat = self.parse(action)
+                    chat = self._parse(action)
                     if chat:
                         chatlist.append(chat)
         return Chatdata(chatlist, float(timeout))
   
 
-    def parse(self, sitem):
+    def _parse(self, sitem):
 
         action = sitem.get("addChatItemAction")
         if action:
             item = action.get("item")
         if item is None: return None
         try:
-            renderer = self.get_renderer(item)
+            renderer = self._get_renderer(item)
             if renderer == None:
                 return None
 
@@ -65,7 +65,7 @@ class DefaultProcessor:
             return None
         return renderer        
 
-    def get_renderer(self, item):
+    def _get_renderer(self, item):
         if item.get("liveChatTextMessageRenderer"):
             renderer = LiveChatTextMessageRenderer(item)
         elif item.get("liveChatPaidMessageRenderer"):
