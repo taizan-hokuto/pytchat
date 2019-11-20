@@ -168,10 +168,10 @@ class ReplayChatAsync:
             async with aiohttp.ClientSession() as session:
                 while(continuation and self._is_alive):
                     if self._pauser.empty():
-                        #pauseが呼ばれて_pauserが空状態のときは一時停止する
+                        #pause
                         await self._pauser.get()
-                        #resumeが呼ばれて_pauserにitemが入ったら再開する
-                        #直後に_pauserにitem(None)を入れてブロックを防ぐ
+                        #resume
+                        #prohibit from blockng by putting None into _pauser.
                         self._pauser.put_nowait(None)
                     livechat_json = (await
                       self._get_livechat_json(continuation, session, headers)

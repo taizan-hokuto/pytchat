@@ -4,7 +4,9 @@ from .renderer.textmessage import LiveChatTextMessageRenderer
 from .renderer.paidmessage import LiveChatPaidMessageRenderer
 from .renderer.paidsticker import LiveChatPaidStickerRenderer
 from .renderer.legacypaid import LiveChatLegacyPaidMessageRenderer
-
+from ... import config
+from ... import mylogger
+logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
 
 class Chatdata:
     def __init__(self,chatlist:list, timeout:float):
@@ -60,8 +62,7 @@ class DefaultProcessor:
             renderer.get_snippet()
             renderer.get_authordetails()
         except (KeyError,TypeError,AttributeError) as e:
-            print(f"------{str(type(e))}-{str(e)}----------")
-            print(sitem)
+            logger.error(f"{str(type(e))}-{str(e)} sitem:{str(sitem)}")
             return None
         return renderer        
 
