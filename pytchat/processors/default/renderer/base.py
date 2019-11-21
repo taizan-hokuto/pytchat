@@ -20,6 +20,7 @@ class BaseRenderer:
             self.timestampText = ""
         self.datetime = self.get_datetime(timestampUsec)
         self.message = self.get_message(self.renderer)
+        self.messageEx = self.get_message_ex(self.renderer)
         self.id =  self.renderer.get('id')
         self.amountValue= 0.0
         self.amountString = ""
@@ -52,6 +53,19 @@ class BaseRenderer:
                             message += r['emoji'].get('shortcuts',[''])[0]
                         else:
                             message += r.get('text','')
+        return message
+
+    def get_message_ex(self,renderer):
+        message = []
+        if renderer.get("message"):
+            runs=renderer["message"].get("runs")
+            if runs:
+                for r in runs:
+                    if r:
+                        if r.get('emoji'):
+                            message.append(r['emoji']['image']['thumbnails'][1].get('url'))
+                        else:
+                            message.append(r.get('text',''))
         return message
 
     def get_badges(self,renderer):
