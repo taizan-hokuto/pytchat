@@ -138,6 +138,11 @@ Structure of each item which got from items() function.
     <td>emojis are represented by ":(shortcut text):"</td>
   </tr>
   <tr>
+    <td>messageEx</td>
+    <td>str</td>
+    <td>list of message texts and emoji URLs.</td>
+  </tr>
+  <tr>
     <td>timestamp</td>
     <td>int</td>
     <td>unixtime milliseconds</td>
@@ -149,7 +154,7 @@ Structure of each item which got from items() function.
   </tr>
     <td>timestampText</td>
     <td>str</td>
-    <td>elapsed time. (ex. "1:02:27")</td>
+    <td>elapsed time. (ex. "1:02:27") *Replay Only.</td>
   </tr>
   <tr>
     <td>amountValue</td>
@@ -193,7 +198,7 @@ Structure of author object.
   <tr>
     <td>channelId</td>
     <td>str</td>
-    <td></td>
+    <td>*chatter's channel ID. NOT author's channel ID.</td>
   </tr>
   <tr>
     <td>channelUrl</td>
