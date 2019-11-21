@@ -198,7 +198,7 @@ Structure of author object.
   <tr>
     <td>channelId</td>
     <td>str</td>
-    <td>*chatter's channel ID. NOT author's channel ID.</td>
+    <td>*chatter's channel ID. NOT broadcasting video's channel ID.</td>
   </tr>
   <tr>
     <td>channelUrl</td>
