@@ -21,13 +21,18 @@ logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
 MAX_RETRY = 10
 headers = config.headers
 
+
+
 class ReplayChatAsync:
-    ''' aiohttpを利用してYouTubeのライブ配信のチャットデータを取得する
+    '''asyncio(aiohttp)を利用してYouTubeのチャットデータを取得する。
 
     Parameter
     ---------
     video_id : str
         動画ID
+
+    seektime : int
+        リプレイするチャットデータの開始時間（秒）
 
     processor : ChatProcessor
         チャットデータを加工するオブジェクト
@@ -46,6 +51,9 @@ class ReplayChatAsync:
     done_callback : func
         listener終了時に呼び出すコールバック。
 
+    exception_handler : func
+        例外を処理する関数
+
     direct_mode : bool
         Trueの場合、bufferを使わずにcallbackを呼ぶ。
         Trueの場合、callbackの設定が必須
@@ -53,26 +61,23 @@ class ReplayChatAsync:
 
     Attributes
     ---------
-    _executor : ThreadPoolExecutor
-        チャットデータ取得ループ（_listen）用のスレッド
-
     _is_alive : bool
-        チャット取得を終了したか
+        チャット取得を停止するためのフラグ
     '''
 
     _setup_finished = False
 
     def __init__(self, video_id,
-                seektime =0,
+                seektime = 0,
                 processor = DefaultProcessor(),
-                buffer = Buffer(maxsize = 20),
+                buffer = None,
                 interruptable = True,
                 callback = None,
                 done_callback = None,
                 exception_handler = None,
                 direct_mode = False):
         self.video_id  = video_id
-        self.seektime= seektime
+        self.seektime = seektime
         self.processor = processor
         self._buffer = buffer
         self._callback = callback
@@ -151,8 +156,8 @@ class ReplayChatAsync:
 
     async def _listen(self, continuation):
         ''' continuationに紐付いたチャットデータを取得し
-        にチャットデータを格納、
-        次のcontinuaitonを取得してループする
+        Bufferにチャットデータを格納、
+        次のcontinuaitonを取得してループする。
 
         Parameter
         ---------
@@ -163,10 +168,10 @@ class ReplayChatAsync:
             async with aiohttp.ClientSession() as session:
                 while(continuation and self._is_alive):
                     if self._pauser.empty():
-                        #pauseが呼ばれて_pauserが空状態のときは一時停止する
+                        #pause
                         await self._pauser.get()
-                        #resumeが呼ばれて_pauserにitemが入ったら再開する
-                        #直後に_pauserにitem(None)を入れてブロックを防ぐ
+                        #resume
+                        #prohibit from blocking by putting None into _pauser.
                         self._pauser.put_nowait(None)
                     livechat_json = (await
                       self._get_livechat_json(continuation, session, headers)
@@ -186,11 +191,10 @@ class ReplayChatAsync:
                     else:
                         await self._buffer.put(chat_component)
                     diff_time = timeout - (time.time()-time_mark)
-                    if diff_time < 0 : diff_time=0
                     await asyncio.sleep(diff_time)       
                     continuation = metadata.get('continuation')  
         except ChatParseException as e:
-            logger.error(f"{str(e)}（動画ID:\"{self.video_id}\"）")
+            logger.info(f"{str(e)}（video_id:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
             logger.error(f"{traceback.format_exc(limit = -1)}")

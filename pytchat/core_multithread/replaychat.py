@@ -30,6 +30,9 @@ class ReplayChat:
     video_id : str
         動画ID
 
+    seektime : int
+        リプレイするチャットデータの開始時間（秒）
+
     processor : ChatProcessor
         チャットデータを加工するオブジェクト
 
@@ -65,7 +68,7 @@ class ReplayChat:
     #チャット監視中のListenerのリスト
     _listeners= []
     def __init__(self, video_id,
-                seektime =0,
+                seektime = 0,
                 processor = DefaultProcessor(),
                 buffer = Buffer(maxsize = 20),
                 interruptable = True,
@@ -74,7 +77,7 @@ class ReplayChat:
                 direct_mode = False
                 ):
         self.video_id  = video_id
-        self.seektime= seektime
+        self.seektime = seektime
         self.processor = processor
         self._buffer = buffer
         self._callback = callback
@@ -159,16 +162,15 @@ class ReplayChat:
             with requests.Session() as session:
                 while(continuation and self._is_alive):
                     if self._pauser.empty():
-                        #pauseが呼ばれて_pauserが空状態のときは一時停止する
+                        #pause
                         self._pauser.get()
-                        #resumeが呼ばれて_pauserにitemが入ったら再開する
-                        #直後に_pauserにitem(None)を入れてブロックを防ぐ
+                        #resume
+                        #prohibit from blocking by putting None into _pauser.
                         self._pauser.put_nowait(None)
                     livechat_json = (
                       self._get_livechat_json(continuation, session, headers)
                     )
                     metadata, chatdata =  self._parser.parse( livechat_json )
-                    #チャットデータを含むコンポーネントを組み立ててbufferに投入する
                     timeout = metadata['timeoutMs']/1000
                     chat_component = {
                         "video_id" : self.video_id,

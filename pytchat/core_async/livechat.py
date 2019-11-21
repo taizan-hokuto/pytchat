@@ -3,7 +3,6 @@ import datetime
 import json
 import random
 import signal
-import threading
 import time
 import traceback
 import urllib.parse
@@ -123,7 +122,7 @@ class LiveChatAsync:
 
     async def _startlisten(self):
         """最初のcontinuationパラメータを取得し、
-        _listenループを開始する
+        _listenループのタスクを作成し開始する
         """
         initial_continuation = await self._get_initial_continuation()
         if initial_continuation is None:
@@ -287,12 +286,3 @@ class LiveChatAsync:
         await asyncio.gather(*tasks,return_exceptions=True)
         loop = asyncio.get_event_loop()
         loop.stop()
-
-
-
-  
-    
-
-
-
-

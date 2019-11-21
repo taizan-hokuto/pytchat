@@ -17,7 +17,7 @@ def get_logger(modname,mode=logging.DEBUG):
     logger.addHandler(handler1)
     #create handler2 for recording log file
     if mode <= logging.DEBUG:
-        handler2 = logging.FileHandler(filename="log.txt")
+        handler2 = logging.FileHandler(filename="log.txt", encoding='utf-8')
         handler2.setLevel(logging.ERROR)
         handler2.setFormatter(my_formatter)
 
