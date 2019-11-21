@@ -171,7 +171,7 @@ class ReplayChatAsync:
                         #pause
                         await self._pauser.get()
                         #resume
-                        #prohibit from blockng by putting None into _pauser.
+                        #prohibit from blocking by putting None into _pauser.
                         self._pauser.put_nowait(None)
                     livechat_json = (await
                       self._get_livechat_json(continuation, session, headers)

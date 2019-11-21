@@ -165,13 +165,12 @@ class ReplayChat:
                         #pause
                         self._pauser.get()
                         #resume
-                        #prohibit from blockng by putting None into _pauser.
+                        #prohibit from blocking by putting None into _pauser.
                         self._pauser.put_nowait(None)
                     livechat_json = (
                       self._get_livechat_json(continuation, session, headers)
                     )
                     metadata, chatdata =  self._parser.parse( livechat_json )
-                    #チャットデータを含むコンポーネントを組み立ててbufferに投入する
                     timeout = metadata['timeoutMs']/1000
                     chat_component = {
                         "video_id" : self.video_id,
