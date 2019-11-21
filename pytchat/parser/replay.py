@@ -36,9 +36,7 @@ class Parser:
             raise NoContentsException('チャットデータを取得できませんでした。')
         interval = self.get_interval(actions)
         metadata.setdefault("timeoutMs",interval)
-        chatdata = []
-        for action in actions:
-            chatdata.append(action["replayChatItemAction"]["actions"][0])
+        chatdata = [action["replayChatItemAction"]["actions"][0] for action in actions]
         return metadata, chatdata
 
     def get_interval(self, actions: list):
