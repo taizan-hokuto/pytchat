@@ -40,11 +40,11 @@ while chat.is_alive():
 from pytchat import LiveChat
 import time
 
-chat = LiveChat("G1w62uEMZ74", callback = func)
-while chat.is_alive():
-    #other background operation here.
-    time.sleep(3)
-
+def main()
+    chat = LiveChat("G1w62uEMZ74", callback = func)
+    #other background operation.
+   
+#callback function is automatically called periodically.
 def func(data):
     for c in data.items:
         print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
@@ -58,10 +58,9 @@ import asyncio
 
 async def main():
     chat = LiveChatAsync("G1w62uEMZ74", callback = func)
-    while chat.is_alive():
-        #other background operation here.
-        await asyncio.sleep(3)
+    #other background operation.
 
+#callback function is automatically called periodically.
 async def func(data):
     for c in data.items:
         print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
@@ -96,10 +95,9 @@ import asyncio
 
 async def main():
     chat = ReplayChatAsync("G1w62uEMZ74", seektime = 1000, callback = func)
-    while chat.is_alive():
         #other background operation here.
-        await asyncio.sleep(3)
 
+#callback function is automatically called periodically.
 async def func(data):
     for count in range(0,len(data.items)):
         c= data.items[count]
@@ -107,15 +105,15 @@ async def func(data):
             tick=data.items[count+1].timestamp -data.items[count].timestamp
         else:
             tick=0
-        print(f"<{c.timestampText}> [{c.author.name}]-{c.message} {c.amountString}")
+        print(f"<{c.elapsedTime}> [{c.author.name}]-{c.message} {c.amountString}")
         await asyncio.sleep(tick/1000)
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
 ```
 
-## Chatdata Structure of Default Processor
-Structure of each item which got from items() function.
+## Structure of Default Processor
+Each item can be got with items() function.
 <table>
   <tr>
     <th>name</th>
@@ -152,7 +150,7 @@ Structure of each item which got from items() function.
     <td>str</td>
     <td>ex. "2019-10-10 12:34:56"</td>
   </tr>
-    <td>timestampText</td>
+    <td>elapsedTime</td>
     <td>str</td>
     <td>elapsed time. (ex. "1:02:27") *Replay Only.</td>
   </tr>
