@@ -15,9 +15,9 @@ class BaseRenderer:
         self.timestamp = int(timestampUsec/1000)
         tst = self.renderer.get("timestampText")
         if tst:
-            self.timestampText = tst.get("simpleText")
+            self.elapsedTime = tst.get("simpleText")
         else:
-            self.timestampText = ""
+            self.elapsedTime = ""
         self.datetime = self.get_datetime(timestampUsec)
         self.message = self.get_message(self.renderer)
         self.messageEx = self.get_message_ex(self.renderer)
