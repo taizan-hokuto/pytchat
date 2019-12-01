@@ -112,8 +112,8 @@ loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
 ```
 
-## Chatdata Structure of Default Processor
-Structure of each item which got from items() function.
+## Structure of Default Processor
+Each item can be got with items() function.
 <table>
   <tr>
     <th>name</th>
