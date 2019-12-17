@@ -12,6 +12,31 @@ logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
 
 class Parser:
     def parse(self, jsn):
+        """
+        このparse関数はReplayChat._listen() 関数から定期的に呼び出される。
+        引数jsnはYoutubeから取得したアーカイブ済みチャットデータの生JSONであり、
+        このparse関数によって与えられたJSONを以下に分割して返す。
+         + timeout (次のチャットデータ取得までのインターバル)
+         + chat data（チャットデータ本体）
+         + continuation （次のチャットデータ取得に必要となるパラメータ）.
+        
+        ライブ配信のチャットとアーカイブ済み動画のチャットは構造が若干異なっているが、
+        ライブチャットと同じデータ形式に変換することにより、
+        同じprocessorでライブとリプレイどちらでも利用できるようにしている。
+
+        Parameter
+        ----------
+        + jsn : dict
+            + Youtubeから取得したチャットデータのJSONオブジェクト。
+              （pythonの辞書形式に変換済みの状態で渡される）
+
+        Returns
+        -------
+        + metadata : dict
+            + チャットデータに付随するメタデータ。timeout、 動画ID、continuationパラメータで構成される。           
+        + chatdata : list[dict]
+            + チャットデータ本体のリスト。
+        """
         if jsn is None: 
             return {'timeoutMs':0,'continuation':None},[]
         if jsn['response']['responseContext'].get('errors'):
@@ -36,6 +61,8 @@ class Parser:
             raise NoContentsException('チャットデータを取得できませんでした。')
         interval = self.get_interval(actions)
         metadata.setdefault("timeoutMs",interval)
+        """アーカイブ済みチャットはライブチャットと構造が異なっているため、以下の行により
+        ライブチャットと同じ形式にそろえる"""
         chatdata = [action["replayChatItemAction"]["actions"][0] for action in actions]
         return metadata, chatdata
 
