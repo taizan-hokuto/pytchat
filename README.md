@@ -42,7 +42,9 @@ import time
 
 def main()
     chat = LiveChat("G1w62uEMZ74", callback = func)
-    #other background operation.
+    while chat.is_alive():
+      time.sleep(3)
+      #other background operation.
    
 #callback function is automatically called periodically.
 def func(data):
@@ -58,7 +60,9 @@ import asyncio
 
 async def main():
     chat = LiveChatAsync("G1w62uEMZ74", callback = func)
-    #other background operation.
+    while chat.is_alive():
+      await asyncio.sleep(3)
+      #other background operation.
 
 #callback function is automatically called periodically.
 async def func(data):
