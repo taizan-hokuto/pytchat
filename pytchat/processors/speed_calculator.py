@@ -3,6 +3,7 @@ speedmeter.py
 チャットの勢いを算出するChatProcessor
 Calculate speed of chat.
 """
+import calendar, datetime, pytz
 
 class RingQueue:
     """
@@ -20,7 +21,7 @@ class RingQueue:
         キュー内に余裕があるか。キュー内のアイテム個数が、キューの最大個数未満であればTrue。
     """
 
-    def __init__(self,capacity):    
+    def __init__(self, capacity = 10):    
         """
         コンストラクタ
         
@@ -30,13 +31,15 @@ class RingQueue:
                      格納時に最大個数を超える場合は一番古いアイテムから
                      上書きする。
         """
+        if capacity <= 0:
+            raise ValueError
         self.items = list()
         self.capacity = capacity
         self.first_pos = 0
         self.last_pos = 0
         self.mergin = True
 
-    def put(self,item):
+    def put(self, item):
         """
         引数itemに指定されたアイテムをこのキューに格納する。
         キューの最大個数を超える場合は、一番古いアイテムの位置に上書きする。
@@ -81,9 +84,11 @@ class SpeedCalculator(RingQueue):
     ----------
         格納するチャットブロックの数
     """
-    def __init__(self, capacity,video_id):
+
+    def __init__(self, capacity, video_id):
         super().__init__(capacity)
         self.video_id=video_id
+        self.speed = 0
 
     def process(self, chat_components: list):
         if chat_components:
@@ -92,8 +97,9 @@ class SpeedCalculator(RingQueue):
                 chatdata = component.get('chatdata')
              
                 if chatdata is None:
-                    return
-                self.calc(chatdata)
+                    return self.speed
+                self.speed = self.calc(chatdata)
+                return self.speed
 
     def _value(self):
         
@@ -131,8 +137,23 @@ class SpeedCalculator(RingQueue):
         return timestamp
 
     def calc(self,actions):
-        if len(actions)==0:
-            return None
+
+        def empty_data():
+            '''
+            データがない場合にゼロのデータをリングキューに入れる
+            '''
+            timestamp_now =  calendar.timegm(datetime.datetime.
+            now(pytz.utc).utctimetuple())
+            self.put({
+                'chat_count':0,
+                'starttime':int(timestamp_now),
+                'endtime':int(timestamp_now)
+            })
+            return self._value()
+
+        if actions is None or len(actions)==0:
+            return empty_data
+           
         #actions内の時刻データを持つチャットデータの数（tickerは除く）
         counter=0        
         #actions内の最初のチャットデータの時刻
@@ -160,13 +181,12 @@ class SpeedCalculator(RingQueue):
 
         #チャット速度用のデータをリングキューに送る
         if starttime is None or endtime is None:
-            return None
+            return empty_data
+            
         self.put({
             'chat_count':counter,
-            #'timestamp':int(time.time()),
             'starttime':int(starttime/1000000),
             'endtime':int(endtime/1000000)
         })
 
         return self._value()
-        #print({'chat_count':counter,'timestamp':time.time()})
