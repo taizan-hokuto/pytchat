@@ -99,7 +99,7 @@ import asyncio
 
 async def main():
     chat = ReplayChatAsync("G1w62uEMZ74", seektime = 1000, callback = func)
-      while chat.is_alive():
+    while chat.is_alive():
         await asyncio.sleep(3)
         #other background operation here.
 
