@@ -4,7 +4,7 @@ speedmeter.py
 Calculate speed of chat.
 """
 import calendar, datetime, pytz
-
+from .chat_processor import ChatProcessor
 class RingQueue:
     """
     リング型キュー
@@ -77,7 +77,7 @@ class RingQueue:
     def item_count(self):
         return len(self.items)
         
-class SpeedCalculator(RingQueue):
+class SpeedCalculator(ChatProcessor, RingQueue):
     """
     チャットの勢いを計算するクラス
     Parameter
