@@ -1,0 +1,42 @@
+{
+  "timing": {
+    "info": {
+      "st": 164
+    }
+  },
+  "csn": "",
+  "response": {
+    "responseContext": {
+    },
+    "continuationContents": {
+      "liveChatContinuation": {
+        "continuations": [{
+          "timedContinuationData": {
+            "timeoutMs": 10000,
+            "continuation": "continuation"
+          }
+        }],
+        "actions": [{
+          "addChatItemAction": {
+            "liveChatPlaceholderItemRenderer": {
+              "id": "",
+              "timestampUsec": "1500000000000000"
+            }
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatPlaceholderItemRenderer": {
+                "id": "",                
+                "timestampUsec": "1500000030000000"
+
+              }
+            }
+          }
+        }
+      ]}
+    }
+  }
+}
+    

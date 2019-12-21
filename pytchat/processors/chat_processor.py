@@ -10,14 +10,14 @@ class ChatProcessor:
                
         Parameter
         ----------
-        chat_components: [LIST:component]
+        chat_components: List[component]
             component : dict {
                 "video_id" : str
                     動画ID
                 "timeout"  : int
                     次のチャットの再読み込みまでの時間(秒）
-                "chatdata" : list<object>
-                    チャットデータ（actions）のリスト
+                "chatdata" : List[dict]
+                    チャットデータのリスト
             }
         '''
         pass

@@ -2,7 +2,7 @@
 pytchat is a python library for fetching youtube live chat without using yt api, Selenium, or BeautifulSoup.
 """
 __copyright__    = 'Copyright (C) 2019 taizan-hokuto'
-__version__      = '0.0.3.6'
+__version__      = '0.0.3.7'
 __license__      = 'MIT'
 __author__       = 'taizan-hokuto'
 __author_email__ = '55448286+taizan-hokuto@users.noreply.github.com'
@@ -18,5 +18,6 @@ from .api import (
     ChatProcessor,
     CompatibleProcessor, 
     SimpleDisplayProcessor,
-    JsonfileArchiveProcessor
+    JsonfileArchiveProcessor,
+    SpeedCalculator
     )

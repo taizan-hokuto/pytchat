@@ -4,6 +4,7 @@ from .renderer.textmessage import LiveChatTextMessageRenderer
 from .renderer.paidmessage import LiveChatPaidMessageRenderer
 from .renderer.paidsticker import LiveChatPaidStickerRenderer
 from .renderer.legacypaid import LiveChatLegacyPaidMessageRenderer
+from .. chat_processor import ChatProcessor
 from ... import config
 from ... import mylogger
 logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
@@ -25,7 +26,7 @@ class Chatdata:
             return
         await asyncio.sleep(self.interval/len(self.items))
 
-class DefaultProcessor:
+class DefaultProcessor(ChatProcessor):
     def process(self, chat_components: list):
 
         chatlist = []

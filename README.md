@@ -8,7 +8,7 @@ pytchat is a python library for fetching youtube live chat
 without using youtube api, Selenium or BeautifulSoup.
 
 Other features:
-+ Customizable chat data processors including yt api compatible one.
++ Customizable chat data processors including youtube api compatible one.
 + Available on asyncio context. 
 + Quick fetching of initial chat data by generating continuation params
 instead of web scraping.
@@ -29,10 +29,10 @@ from pytchat import LiveChat
 
 chat = LiveChat("G1w62uEMZ74")
 while chat.is_alive():
-    data = chat.get()
-    for c in data.items:
-        print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
-        data.tick()
+  data = chat.get()
+  for c in data.items:
+    print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
+    data.tick()
 ```
 
 ### callback mode
@@ -41,16 +41,16 @@ from pytchat import LiveChat
 import time
 
 def main()
-    chat = LiveChat("G1w62uEMZ74", callback = func)
-    while chat.is_alive():
-      time.sleep(3)
-      #other background operation.
+  chat = LiveChat("G1w62uEMZ74", callback = func)
+  while chat.is_alive():
+    time.sleep(3)
+    #other background operation.
    
 #callback function is automatically called periodically.
 def func(data):
-    for c in data.items:
-        print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
-        data.tick()
+  for c in data.items:
+    print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
+    data.tick()
 ```
 
 ### asyncio context:
@@ -59,16 +59,16 @@ from pytchat import LiveChatAsync
 import asyncio
 
 async def main():
-    chat = LiveChatAsync("G1w62uEMZ74", callback = func)
-    while chat.is_alive():
-      await asyncio.sleep(3)
-      #other background operation.
+  chat = LiveChatAsync("G1w62uEMZ74", callback = func)
+  while chat.is_alive():
+    await asyncio.sleep(3)
+    #other background operation.
 
 #callback function is automatically called periodically.
 async def func(data):
-    for c in data.items:
-        print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
-        await data.tick_async()
+  for c in data.items:
+    print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
+    await data.tick_async()
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
@@ -80,16 +80,16 @@ loop.run_until_complete(main())
 from pytchat import LiveChat, CompatibleProcessor
 
 chat = LiveChat("G1w62uEMZ74", 
-     processor = CompatibleProcessor() )
+  processor = CompatibleProcessor() )
 
 while chat.is_alive():
-    data = chat.get()
-    polling = data["pollingIntervalMillis"]/1000
-    for c in data["items"]:
-        if c.get("snippet"):
-            print(f"[{c['authorDetails']['displayName']}]"
-                    f"-{c['snippet']['displayMessage']}")
-            time.sleep(polling/len(data["items"]))
+  data = chat.get()
+  polling = data["pollingIntervalMillis"]/1000
+  for c in data["items"]:
+    if c.get("snippet"):
+      print(f"[{c['authorDetails']['displayName']}]"
+            f"-{c['snippet']['displayMessage']}")
+      time.sleep(polling/len(data["items"]))
 
 ```
 ### replay:
@@ -98,21 +98,21 @@ from pytchat import ReplayChatAsync
 import asyncio
 
 async def main():
-    chat = ReplayChatAsync("G1w62uEMZ74", seektime = 1000, callback = func)
-    while chat.is_alive():
-        await asyncio.sleep(3)
-        #other background operation here.
+  chat = ReplayChatAsync("G1w62uEMZ74", seektime = 1000, callback = func)
+  while chat.is_alive():
+    await asyncio.sleep(3)
+    #other background operation here.
 
 #callback function is automatically called periodically.
 async def func(data):
-    for count in range(0,len(data.items)):
-        c= data.items[count]
-        if count!=len(data.items):
-            tick=data.items[count+1].timestamp -data.items[count].timestamp
-        else:
-            tick=0
-        print(f"<{c.elapsedTime}> [{c.author.name}]-{c.message} {c.amountString}")
-        await asyncio.sleep(tick/1000)
+  for count in range(0,len(data.items)):
+    c= data.items[count]
+    if count!=len(data.items):
+      tick=data.items[count+1].timestamp -data.items[count].timestamp
+    else:
+      tick=0
+      print(f"<{c.elapsedTime}> [{c.author.name}]-{c.message} {c.amountString}")
+      await asyncio.sleep(tick/1000)
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
