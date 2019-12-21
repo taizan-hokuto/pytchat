@@ -18,5 +18,6 @@ from .api import (
     ChatProcessor,
     CompatibleProcessor, 
     SimpleDisplayProcessor,
-    JsonfileArchiveProcessor
+    JsonfileArchiveProcessor,
+    SpeedCalculator
     )
