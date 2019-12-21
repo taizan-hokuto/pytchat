@@ -21,7 +21,7 @@ class RingQueue:
         キュー内に余裕があるか。キュー内のアイテム個数が、キューの最大個数未満であればTrue。
     """
 
-    def __init__(self, capacity = 10):    
+    def __init__(self, capacity):    
         """
         コンストラクタ
         
@@ -82,29 +82,29 @@ class SpeedCalculator(ChatProcessor, RingQueue):
     チャットの勢いを計算するクラス
     Parameter
     ----------
+    capacity : int
         格納するチャットブロックの数
     """
 
-    def __init__(self, capacity, video_id):
+    def __init__(self, capacity = 10):
         super().__init__(capacity)
-        self.video_id=video_id
         self.speed = 0
 
     def process(self, chat_components: list):
+        chatdata = []
         if chat_components:
             for component in chat_components:
-                
-                chatdata = component.get('chatdata')
-             
-                if chatdata is None:
-                    return self.speed
-                self.speed = self.calc(chatdata)
-                return self.speed
+                if component.get("chatdata"):
+                    chatdata.extend(component.get("chatdata"))
 
-    def _value(self):
-        
+            self._put_chatdata(chatdata)
+            self.speed = self._calc_speed()
+        return self.speed
+                
+
+    def _calc_speed(self):
         """
-        ActionsQueue内のチャットデータリストから、
+        RingQueue内のチャットデータリストから、
         チャット速度を計算して返す
 
         Return
@@ -123,24 +123,19 @@ class SpeedCalculator(ChatProcessor, RingQueue):
         except IndexError:
             return 0
 
-    def _get_timestamp(self, action :dict):
+    def _put_chatdata(self,actions):
         """
-        チャットデータのtimestampUsecを読み取る
-        liveChatTickerSponsorItemRenderer等のtickerデータは時刻格納位置が
-        異なるため、時刻データなしとして扱う
+        チャットデータからタイムスタンプを読み取り、RingQueueに投入する。
+        Parameter
+        ---------
+        actions : List[dict]
+            チャットデータ(addChatItemAction) のリスト
         """
-        try:
-            item = action['addChatItemAction']['item']
-            timestamp = int(item[list(item.keys())[0]]['timestampUsec'])
-        except (KeyError,TypeError):
-            return None
-        return timestamp
-
-    def calc(self,actions):
-
-        def empty_data():
+        def _put_emptydata():
             '''
-            データがない場合にゼロのデータをリングキューに入れる
+            enqueue empty data when no chat data.
+            Return: int
+                speed value after enqueueing empty data
             '''
             timestamp_now =  calendar.timegm(datetime.datetime.
             now(pytz.utc).utctimetuple())
@@ -149,10 +144,21 @@ class SpeedCalculator(ChatProcessor, RingQueue):
                 'starttime':int(timestamp_now),
                 'endtime':int(timestamp_now)
             })
-            return self._value()
+
+        def _get_timestamp(action :dict):
+            """
+            チャットデータのtimestampUsecを読み取る
+            """
+            try:
+                item = action['addChatItemAction']['item']
+                timestamp = int(item[list(item.keys())[0]]['timestampUsec'])
+            except (KeyError,TypeError):
+                return None
+            return timestamp
 
         if actions is None or len(actions)==0:
-            return empty_data
+            _put_emptydata()
+            return 
            
         #actions内の時刻データを持つチャットデータの数（tickerは除く）
         counter=0        
@@ -163,7 +169,7 @@ class SpeedCalculator(ChatProcessor, RingQueue):
         
         for action in actions:
             #チャットデータからtimestampUsecを読み取る
-            gettime = self._get_timestamp(action)
+            gettime = _get_timestamp(action)
             
             #時刻のないデータだった場合は次の行のデータで読み取り試行
             if gettime is None:
@@ -177,11 +183,12 @@ class SpeedCalculator(ChatProcessor, RingQueue):
             endtime = gettime
         
             #チャットの数をインクリメント
-            counter+=1
+            counter += 1
 
         #チャット速度用のデータをリングキューに送る
         if starttime is None or endtime is None:
-            return empty_data
+            _put_emptydata()
+            return 
             
         self.put({
             'chat_count':counter,
@@ -189,4 +196,3 @@ class SpeedCalculator(ChatProcessor, RingQueue):
             'endtime':int(endtime/1000000)
         })
 
-        return self._value()

@@ -1,0 +1,24 @@
+{
+  "timing": {
+    "info": {
+      "st": 164
+    }
+  },
+  "csn": "",
+  "response": {
+    "responseContext": {
+    },
+    "continuationContents": {
+      "liveChatContinuation": {
+        "continuations": [{
+          "timedContinuationData": {
+            "timeoutMs": 10000,
+            "continuation": "continuation"
+          }
+        }]
+      }
+    }
+  }
+}
+    
+
