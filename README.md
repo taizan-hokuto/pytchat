@@ -111,8 +111,8 @@ async def func(data):
       tick=data.items[count+1].timestamp -data.items[count].timestamp
     else:
       tick=0
-      print(f"<{c.elapsedTime}> [{c.author.name}]-{c.message} {c.amountString}")
-      await asyncio.sleep(tick/1000)
+    print(f"<{c.elapsedTime}> [{c.author.name}]-{c.message} {c.amountString}")
+    await asyncio.sleep(tick/1000)
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
