@@ -154,26 +154,26 @@ Each item can be got with items() function.
   <tr>
     <td>datetime</td>
     <td>str</td>
-    <td>ex. "2019-10-10 12:34:56"</td>
+    <td>e.g. "2019-10-10 12:34:56"</td>
   </tr>
     <td>elapsedTime</td>
     <td>str</td>
-    <td>elapsed time. (ex. "1:02:27") *Replay Only.</td>
+    <td>elapsed time. (e.g. "1:02:27") *Replay Only.</td>
   </tr>
   <tr>
     <td>amountValue</td>
     <td>float</td>
-    <td>ex. 1,234.0</td>
+    <td>e.g. 1,234.0</td>
   </tr>
   <tr>
     <td>amountString</td>
     <td>str</td>
-    <td>ex. "$ 1,234"</td>
+    <td>e.g. "$ 1,234"</td>
   </tr>
   <tr>
     <td>currency</td>
     <td>str</td>
-    <td><a href="https://en.wikipedia.org/wiki/ISO_4217">ISO 4217 currency codes</a> (ex. "USD")</td>
+    <td><a href="https://en.wikipedia.org/wiki/ISO_4217">ISO 4217 currency codes</a> (e.g. "USD")</td>
   </tr>
   <tr>
     <td>bgColor</td>
@@ -202,7 +202,7 @@ Structure of author object.
   <tr>
     <td>channelId</td>
     <td>str</td>
-    <td>*chatter's channel ID. NOT broadcasting video's channel ID.</td>
+    <td>*chatter's channel ID.</td>
   </tr>
   <tr>
     <td>channelUrl</td>
