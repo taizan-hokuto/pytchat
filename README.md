@@ -101,6 +101,7 @@ while chat.is_alive():
 from pytchat import ReplayChat
 
 def main():
+  #seektime (seconds): start position of chat.
   chat = ReplayChat("ojes5ULOqhc", seektime = 60*30)
   while chat.is_alive():
     data = chat.get()
