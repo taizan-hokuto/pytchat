@@ -11,7 +11,6 @@ from concurrent.futures import CancelledError
 from .buffer import Buffer
 from ..parser.live import Parser
 from .. import config
-from .. import mylogger
 from ..exceptions  import ChatParseException,IllegalFunctionCall
 from ..paramgen    import liveparam
 from ..processors.default.processor import DefaultProcessor

@@ -6,7 +6,6 @@ from .renderer.paidsticker import LiveChatPaidStickerRenderer
 from .renderer.legacypaid import LiveChatLegacyPaidMessageRenderer
 from .. chat_processor import ChatProcessor
 from ... import config
-from ... import mylogger
 logger = config.logger(__name__)
 
 class Chatdata:

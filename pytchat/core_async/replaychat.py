@@ -12,7 +12,6 @@ from queue import Queue
 from .buffer import Buffer
 from ..parser.replay import Parser
 from .. import config
-from .. import mylogger
 from ..exceptions  import ChatParseException,IllegalFunctionCall
 from ..paramgen    import arcparam
 from ..processors.default.processor import DefaultProcessor

@@ -6,7 +6,6 @@ This module is parser of live chat JSON.
 
 import json
 from .. import config
-from .. import mylogger
 from .. exceptions import ( 
     ResponseContextError, 
     NoContentsException, 
