@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages, Command
-from codecs import open
-from os import path, system
+#from codecs import open as open_c
+from os import path, system, remove, rename
 import re
 
 package_name = "pytchat"
@@ -28,6 +28,16 @@ assert author
 assert author_email
 assert url
 
+
+
+with open('README.MD', 'r', encoding='utf-8') as f:
+    txt = f.read()
+
+with open('README1.MD', 'w', encoding='utf-8', newline='\n') as f:
+    f.write(txt)
+    
+remove("README.MD")
+rename("README1.MD","README.MD")
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
