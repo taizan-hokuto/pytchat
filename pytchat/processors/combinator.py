@@ -33,7 +33,7 @@ class Combinator(ChatProcessor):
         -------
             Tuple of chat data processed by each chat processor.
         '''
-        return tuple([processor.process(chat_components)
-            for processor in self.processors])
+        return tuple(processor.process(chat_components)
+            for processor in self.processors)
             
 
