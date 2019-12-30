@@ -19,5 +19,6 @@ from .api import (
     CompatibleProcessor, 
     SimpleDisplayProcessor,
     JsonfileArchiveProcessor,
-    SpeedCalculator
-    )
+    SpeedCalculator,
+    DummyProcessor
+)
