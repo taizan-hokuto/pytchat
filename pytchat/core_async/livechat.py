@@ -15,6 +15,7 @@ from .. import mylogger
 from ..exceptions  import ChatParseException,IllegalFunctionCall
 from ..paramgen    import liveparam
 from ..processors.default.processor import DefaultProcessor
+from ..processors.combinator import Combinator
 
 logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
 MAX_RETRY = 10
@@ -72,7 +73,10 @@ class LiveChatAsync:
                 exception_handler = None,
                 direct_mode = False): 
         self.video_id  = video_id
-        self.processor = processor
+        if isinstance(processor, tuple):
+            self.processor = Combinator(processor)
+        else:
+            self.processor = processor
         self._buffer = buffer
         self._callback = callback
         self._done_callback = done_callback
