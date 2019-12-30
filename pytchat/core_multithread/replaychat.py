@@ -17,7 +17,7 @@ from ..paramgen    import arcparam
 from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
 
-logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
+logger = config.logger(__name__)
 MAX_RETRY = 10
 headers = config.headers
 

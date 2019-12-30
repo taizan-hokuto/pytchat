@@ -9,3 +9,4 @@ from .processors.simple_display_processor import SimpleDisplayProcessor
 from .processors.jsonfile_archive_processor import JsonfileArchiveProcessor
 from .processors.speed_calculator import SpeedCalculator
 from .processors.dummy_processor import DummyProcessor
+from . import config
