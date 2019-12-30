@@ -27,7 +27,7 @@ pip install pytchat
 ```python
 from pytchat import LiveChat
 
-chat = LiveChat("G1w62uEMZ74")
+chat = LiveChat("rsHWP7IjMiw")
 while chat.is_alive():
   data = chat.get()
   for c in data.items:
@@ -40,17 +40,17 @@ while chat.is_alive():
 from pytchat import LiveChat
 import time
 
-def main()
-  chat = LiveChat("G1w62uEMZ74", callback = func)
-  while chat.is_alive():
-    time.sleep(3)
-    #other background operation.
-   
-#callback function is automatically called periodically.
-def func(data):
+#callback function is automatically called.
+def display(data):
   for c in data.items:
     print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
     data.tick()
+
+#entry point
+chat = LiveChat("rsHWP7IjMiw", callback = display)
+while chat.is_alive():
+  time.sleep(3)
+  #other background operation.
 ```
 
 ### asyncio context:
@@ -59,63 +59,56 @@ from pytchat import LiveChatAsync
 import asyncio
 
 async def main():
-  chat = LiveChatAsync("G1w62uEMZ74", callback = func)
+  chat = LiveChatAsync("rsHWP7IjMiw", callback = func)
   while chat.is_alive():
     await asyncio.sleep(3)
     #other background operation.
 
-#callback function is automatically called periodically.
+#callback function is automatically called.
 async def func(data):
   for c in data.items:
     print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
     await data.tick_async()
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+try:
+  loop = asyncio.get_event_loop()
+  loop.run_until_complete(main())
+except CancelledError:
+  pass
 ```
 
 
 ### youtube api compatible processor:
 ```python
 from pytchat import LiveChat, CompatibleProcessor
+import time
 
-chat = LiveChat("G1w62uEMZ74", 
+chat = LiveChat("rsHWP7IjMiw", 
   processor = CompatibleProcessor() )
 
 while chat.is_alive():
   data = chat.get()
-  polling = data["pollingIntervalMillis"]/1000
-  for c in data["items"]:
-    if c.get("snippet"):
+  polling = data['pollingIntervalMillis']/1000
+  for c in data['items']:
+    if c.get('snippet'):
       print(f"[{c['authorDetails']['displayName']}]"
             f"-{c['snippet']['displayMessage']}")
-      time.sleep(polling/len(data["items"]))
+      time.sleep(polling/len(data['items']))
 
 ```
 ### replay:
 ```python
-from pytchat import ReplayChatAsync
-import asyncio
+from pytchat import ReplayChat
 
-async def main():
-  chat = ReplayChatAsync("G1w62uEMZ74", seektime = 1000, callback = func)
-  while chat.is_alive():
-    await asyncio.sleep(3)
-    #other background operation here.
+def main():
+  chat = ReplayChat("ojes5ULOqhc", seektime = 60*30)
+  while True:
+    data = chat.get()
+    for c in data.items:
+      print(f"{c.elapsedTime} [{c.author.name}]-{c.message} {c.amountString}")
+      data.tick()
 
-#callback function is automatically called periodically.
-async def func(data):
-  for count in range(0,len(data.items)):
-    c= data.items[count]
-    if count!=len(data.items):
-      tick=data.items[count+1].timestamp -data.items[count].timestamp
-    else:
-      tick=0
-    print(f"<{c.elapsedTime}> [{c.author.name}]-{c.message} {c.amountString}")
-    await asyncio.sleep(tick/1000)
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+main()
 ```
 
 ## Structure of Default Processor

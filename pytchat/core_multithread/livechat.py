@@ -16,10 +16,9 @@ from ..paramgen    import liveparam
 from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
 
-logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
-MAX_RETRY = 10
+logger = config.logger(__name__)
 headers = config.headers
-
+MAX_RETRY = 10
 
 
 class LiveChat:

@@ -13,7 +13,7 @@ from .. exceptions import (
     NoContinuationsException )
 
 
-logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
+logger = config.logger(__name__)
 
 
 class Parser:
