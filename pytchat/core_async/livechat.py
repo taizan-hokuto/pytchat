@@ -11,15 +11,14 @@ from concurrent.futures import CancelledError
 from .buffer import Buffer
 from ..parser.live import Parser
 from .. import config
-from .. import mylogger
 from ..exceptions  import ChatParseException,IllegalFunctionCall
 from ..paramgen    import liveparam
 from ..processors.default.processor import DefaultProcessor
+from ..processors.combinator import Combinator
 
-logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
-MAX_RETRY = 10
+logger = config.logger(__name__)
 headers = config.headers
-
+MAX_RETRY = 10
 
 
 class LiveChatAsync:
@@ -72,7 +71,10 @@ class LiveChatAsync:
                 exception_handler = None,
                 direct_mode = False): 
         self.video_id  = video_id
-        self.processor = processor
+        if isinstance(processor, tuple):
+            self.processor = Combinator(processor)
+        else:
+            self.processor = processor
         self._buffer = buffer
         self._callback = callback
         self._done_callback = done_callback
@@ -148,7 +150,7 @@ class LiveChatAsync:
 
     async def _listen(self, continuation):
         ''' continuationに紐付いたチャットデータを取得し
-        チャットデータを格納、
+        Bufferにチャットデータを格納、
         次のcontinuaitonを取得してループする。
 
         Parameter
@@ -180,9 +182,11 @@ class LiveChatAsync:
                     await asyncio.sleep(diff_time)        
                     continuation = metadata.get('continuation')     
         except ChatParseException as e:
-            logger.info(f"{str(e)}（video_id:\"{self.video_id}\"）")
+            self.terminate()
+            logger.error(f"{str(e)}（video_id:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
+            self.terminate()
             logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
@@ -211,6 +215,7 @@ class LiveChatAsync:
         else:
             logger.error(f"[{self.video_id}]"
                     f"Exceeded retry count. status_code={status_code}")
+            self.terminate()
             return None
         return livechat_json
 

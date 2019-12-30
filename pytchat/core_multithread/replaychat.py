@@ -11,15 +11,14 @@ from queue import Queue
 from .buffer import Buffer
 from ..parser.replay import Parser
 from .. import config
-from .. import mylogger
 from ..exceptions  import ChatParseException,IllegalFunctionCall
 from ..paramgen    import arcparam
 from ..processors.default.processor import DefaultProcessor
+from ..processors.combinator import Combinator
 
-logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
-MAX_RETRY = 10
+logger = config.logger(__name__)
 headers = config.headers
-
+MAX_RETRY = 10
 
 
 class ReplayChat:
@@ -61,7 +60,7 @@ class ReplayChat:
         チャットデータ取得ループ（_listen）用のスレッド
 
     _is_alive : bool
-        チャット取得を終了したか
+        チャット取得を停止するためのフラグ
     '''
 
     _setup_finished = False
@@ -70,7 +69,7 @@ class ReplayChat:
     def __init__(self, video_id,
                 seektime = 0,
                 processor = DefaultProcessor(),
-                buffer = Buffer(maxsize = 20),
+                buffer = None,
                 interruptable = True,
                 callback = None,
                 done_callback = None,
@@ -78,7 +77,10 @@ class ReplayChat:
                 ):
         self.video_id  = video_id
         self.seektime = seektime
-        self.processor = processor
+        if isinstance(processor, tuple):
+            self.processor = Combinator(processor)
+        else:
+            self.processor = processor
         self._buffer = buffer
         self._callback = callback
         self._done_callback = done_callback
@@ -90,6 +92,7 @@ class ReplayChat:
         self._pauser.put_nowait(None)
        
         self._setup()
+
         if not ReplayChat._setup_finished:
             ReplayChat._setup_finished = True
             if interruptable:
@@ -150,7 +153,7 @@ class ReplayChat:
 
     def _listen(self, continuation):
         ''' continuationに紐付いたチャットデータを取得し
-        にチャットデータを格納、
+        BUfferにチャットデータを格納、
         次のcontinuaitonを取得してループする
 
         Parameter
@@ -189,9 +192,11 @@ class ReplayChat:
                     time.sleep(diff_time)        
                     continuation = metadata.get('continuation')  
         except ChatParseException as e:
-            logger.error(f"{str(e)}（動画ID:\"{self.video_id}\"）")
+            self.terminate()
+            logger.error(f"{str(e)}（video_id:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
+            self.terminate()
             logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
@@ -220,6 +225,7 @@ class ReplayChat:
         else:
             logger.error(f"[{self.video_id}]"
                     f"Exceeded retry count. status_code={status_code}")
+            self.terminate()
             return None
         return livechat_json
   
@@ -266,7 +272,7 @@ class ReplayChat:
         '''Listener終了時のコールバック'''
         try: 
             self.terminate()
-        except CancelledError:
+        except RuntimeError:
             logger.debug(f'[{self.video_id}]cancelled:{sender}')
 
     def terminate(self):
@@ -277,7 +283,7 @@ class ReplayChat:
         if self._direct_mode == False:
             #bufferにダミーオブジェクトを入れてis_alive()を判定させる
             self._buffer.put({'chatdata':'','timeout':1}) 
-        logger.info(f'終了しました:[{self.video_id}]')
+        logger.info(f'[{self.video_id}]終了しました')
   
     @classmethod
     def shutdown(cls, event, sig = None, handler=None):

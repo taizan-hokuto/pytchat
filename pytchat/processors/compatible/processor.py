@@ -5,9 +5,8 @@ from .renderer.paidmessage import LiveChatPaidMessageRenderer
 from .renderer.paidsticker import LiveChatPaidStickerRenderer
 from .renderer.legacypaid import LiveChatLegacyPaidMessageRenderer
 from .. chat_processor import ChatProcessor
-from ... import mylogger
 from ... import config
-logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
+logger = config.logger(__name__)
 
 class CompatibleProcessor(ChatProcessor):
 

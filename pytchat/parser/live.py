@@ -6,14 +6,13 @@ This module is parser of live chat JSON.
 
 import json
 from .. import config
-from .. import mylogger
 from .. exceptions import ( 
     ResponseContextError, 
     NoContentsException, 
     NoContinuationsException )
 
 
-logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
+logger = config.logger(__name__)
 
 
 class Parser:
@@ -59,7 +58,7 @@ class Parser:
         if metadata is None:
             unknown = list(cont.keys())[0]
             if unknown:
-                logger.error(f"Received unknown continuation type:{unknown}")
+                logger.debug(f"Received unknown continuation type:{unknown}")
                 metadata = cont.get(unknown)
         metadata.setdefault('timeoutMs', 10000)
         chatdata = contents['liveChatContinuation'].get('actions')

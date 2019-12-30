@@ -12,12 +12,12 @@ from queue import Queue
 from .buffer import Buffer
 from ..parser.replay import Parser
 from .. import config
-from .. import mylogger
 from ..exceptions  import ChatParseException,IllegalFunctionCall
 from ..paramgen    import arcparam
 from ..processors.default.processor import DefaultProcessor
+from ..processors.combinator import Combinator
 
-logger = mylogger.get_logger(__name__,mode=config.LOGGER_MODE)
+logger = config.logger(__name__)
 MAX_RETRY = 10
 headers = config.headers
 
@@ -78,7 +78,10 @@ class ReplayChatAsync:
                 direct_mode = False):
         self.video_id  = video_id
         self.seektime = seektime
-        self.processor = processor
+        if isinstance(processor, tuple):
+            self.processor = Combinator(processor)
+        else:
+            self.processor = processor
         self._buffer = buffer
         self._callback = callback
         self._done_callback = done_callback
@@ -194,13 +197,15 @@ class ReplayChatAsync:
                     await asyncio.sleep(diff_time)       
                     continuation = metadata.get('continuation')  
         except ChatParseException as e:
-            logger.info(f"{str(e)}（video_id:\"{self.video_id}\"）")
+            logger.error(f"{str(e)}（video_id:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
             logger.error(f"{traceback.format_exc(limit = -1)}")
+            self.terminate()
             return
         
         logger.debug(f"[{self.video_id}]チャット取得を終了しました。")
+        self.terminate()
 
     async def _get_livechat_json(self, continuation, session, headers):
         '''
@@ -282,7 +287,7 @@ class ReplayChatAsync:
         if self._direct_mode == False:
             #bufferにダミーオブジェクトを入れてis_alive()を判定させる
             self._buffer.put_nowait({'chatdata':'','timeout':1}) 
-        logger.info(f'終了しました:[{self.video_id}]')
+        logger.info(f'[{self.video_id}]終了しました')
   
     @classmethod
     def _set_exception_handler(cls, handler):
