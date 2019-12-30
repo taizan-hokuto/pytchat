@@ -65,7 +65,7 @@ class LiveChat:
     _listeners= []
     def __init__(self, video_id,
                 processor = DefaultProcessor(),
-                buffer = Buffer(maxsize = 20),
+                buffer = None,
                 interruptable = True,
                 callback = None,
                 done_callback = None,
@@ -145,8 +145,8 @@ class LiveChat:
 
     def _listen(self, continuation):
         ''' continuationに紐付いたチャットデータを取得し
-        BUfferにチャットデータを格納、
-        次のcontinuaitonを取得してループする
+        Bufferにチャットデータを格納、
+        次のcontinuaitonを取得してループする。
 
         Parameter
         ---------
@@ -178,9 +178,11 @@ class LiveChat:
                     time.sleep(diff_time)        
                     continuation = metadata.get('continuation')  
         except ChatParseException as e:
-            logger.info(f"{str(e)}（video_id:\"{self.video_id}\"）")
+            self.terminate()
+            logger.error(f"{str(e)}（video_id:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
+            self.terminate()
             logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
@@ -209,6 +211,7 @@ class LiveChat:
         else:
             logger.error(f"[{self.video_id}]"
                     f"Exceeded retry count. status_code={status_code}")
+            self.terminate()
             return None
         return livechat_json
   
@@ -257,18 +260,10 @@ class LiveChat:
         if self._direct_mode == False:
             #bufferにダミーオブジェクトを入れてis_alive()を判定させる
             self._buffer.put({'chatdata':'','timeout':1}) 
-        logger.info(f'終了しました:[{self.video_id}]')
+        logger.info(f'[{self.video_id}]終了しました')
   
     @classmethod
     def shutdown(cls, event, sig = None, handler=None):
         logger.debug("シャットダウンしています")
         for t in LiveChat._listeners:
             t._is_alive = False
-
-
-
-    
-
-
-
-

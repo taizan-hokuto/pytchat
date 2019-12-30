@@ -18,9 +18,8 @@ from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
 
 logger = config.logger(__name__)
-MAX_RETRY = 10
 headers = config.headers
-
+MAX_RETRY = 10
 
 
 class LiveChatAsync:
@@ -152,7 +151,7 @@ class LiveChatAsync:
 
     async def _listen(self, continuation):
         ''' continuationに紐付いたチャットデータを取得し
-        チャットデータを格納、
+        Bufferにチャットデータを格納、
         次のcontinuaitonを取得してループする。
 
         Parameter
@@ -184,9 +183,11 @@ class LiveChatAsync:
                     await asyncio.sleep(diff_time)        
                     continuation = metadata.get('continuation')     
         except ChatParseException as e:
-            logger.info(f"{str(e)}（video_id:\"{self.video_id}\"）")
+            self.terminate()
+            logger.error(f"{str(e)}（video_id:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
+            self.terminate()
             logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
@@ -215,6 +216,7 @@ class LiveChatAsync:
         else:
             logger.error(f"[{self.video_id}]"
                     f"Exceeded retry count. status_code={status_code}")
+            self.terminate()
             return None
         return livechat_json
 
