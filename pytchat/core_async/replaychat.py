@@ -198,13 +198,15 @@ class ReplayChatAsync:
                     await asyncio.sleep(diff_time)       
                     continuation = metadata.get('continuation')  
         except ChatParseException as e:
-            logger.info(f"{str(e)}（video_id:\"{self.video_id}\"）")
+            logger.error(f"{str(e)}（video_id:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
             logger.error(f"{traceback.format_exc(limit = -1)}")
+            self.terminate()
             return
         
         logger.debug(f"[{self.video_id}]チャット取得を終了しました。")
+        self.terminate()
 
     async def _get_livechat_json(self, continuation, session, headers):
         '''
@@ -286,7 +288,7 @@ class ReplayChatAsync:
         if self._direct_mode == False:
             #bufferにダミーオブジェクトを入れてis_alive()を判定させる
             self._buffer.put_nowait({'chatdata':'','timeout':1}) 
-        logger.info(f'終了しました:[{self.video_id}]')
+        logger.info(f'[{self.video_id}]終了しました')
   
     @classmethod
     def _set_exception_handler(cls, handler):

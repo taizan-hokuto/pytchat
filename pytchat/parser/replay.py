@@ -9,7 +9,6 @@ from .. exceptions import (
 
 logger = config.logger(__name__)
 
-
 class Parser:
     def parse(self, jsn):
         """
@@ -53,12 +52,13 @@ class Parser:
         metadata = cont.get('liveChatReplayContinuationData')
         if metadata is None:
             unknown = list(cont.keys())[0]
-            if unknown:
+            if unknown != "playerSeekContinuationData":
+                logger.debug(f"Received unknown continuation type:{unknown}")
                 metadata = cont.get(unknown)
-        
         actions = contents['liveChatContinuation'].get('actions')
         if actions is None:
-            raise NoContentsException('チャットデータを取得できませんでした。')
+            #後続のチャットデータなし
+            return {"continuation":None,"timeout":0,"chatdata":[]}
         interval = self.get_interval(actions)
         metadata.setdefault("timeoutMs",interval)
         """アーカイブ済みチャットはライブチャットと構造が異なっているため、以下の行により

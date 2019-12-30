@@ -59,7 +59,7 @@ class Parser:
         if metadata is None:
             unknown = list(cont.keys())[0]
             if unknown:
-                logger.error(f"Received unknown continuation type:{unknown}")
+                logger.debug(f"Received unknown continuation type:{unknown}")
                 metadata = cont.get(unknown)
         metadata.setdefault('timeoutMs', 10000)
         chatdata = contents['liveChatContinuation'].get('actions')

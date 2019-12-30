@@ -9,7 +9,7 @@ def download(url):
         json.dump(html.json(),f,ensure_ascii=False)
 
 
-def save(data,filename):
-    with open(str(datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
-                            )+filename,mode ='w',encoding='utf-8') as f:
+def save(data,filename,extention):
+    with open(filename+"_"+(datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
+                            )+extention,mode ='w',encoding='utf-8') as f:
         f.writelines(data)
