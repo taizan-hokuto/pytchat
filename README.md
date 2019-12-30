@@ -102,7 +102,7 @@ from pytchat import ReplayChat
 
 def main():
   chat = ReplayChat("ojes5ULOqhc", seektime = 60*30)
-  while True:
+  while chat.is_alive():
     data = chat.get()
     for c in data.items:
       print(f"{c.elapsedTime} [{c.author.name}]-{c.message} {c.amountString}")
