@@ -56,6 +56,7 @@ while chat.is_alive():
 ### asyncio context:
 ```python
 from pytchat import LiveChatAsync
+from concurrent.futures import CancelledError
 import asyncio
 
 async def main():
