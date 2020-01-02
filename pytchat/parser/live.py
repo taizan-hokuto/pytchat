@@ -29,7 +29,6 @@ class Parser:
         return contents
 
     def parse(self, contents):
-        util.save(json.dumps(contents,ensure_ascii=False,indent=2),"v:\\~\\test_",".json")
         """
         このparse関数はLiveChat._listen() 関数から定期的に呼び出される。
         引数jsnはYoutubeから取得したチャットデータの生JSONであり、
