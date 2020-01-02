@@ -9,7 +9,8 @@ from .. import config
 from .. exceptions import ( 
     ResponseContextError, 
     NoContentsException, 
-    NoContinuationsException )
+    NoContinuationsException,
+    ChatParseException )
 
 
 logger = config.logger(__name__)
@@ -22,7 +23,7 @@ class Parser:
 
     def get_contents(self, jsn):
         if jsn is None: 
-            return {'timeoutMs':0,'continuation':None},[]
+            raise ChatParseException('Called with none JSON object.')
         if jsn['response']['responseContext'].get('errors'):
             raise ResponseContextError('The video_id would be wrong, or video is deleted or private.')
         contents=jsn['response'].get('continuationContents')
