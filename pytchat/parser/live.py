@@ -31,11 +31,8 @@ class Parser:
     def parse(self, contents):
         """
         このparse関数はLiveChat._listen() 関数から定期的に呼び出される。
-        引数jsnはYoutubeから取得したチャットデータの生JSONであり、
-        このparse関数によって与えられたJSONを以下に分割して返す。
-         + timeout (次のチャットデータ取得までのインターバル)
-         + chat data（チャットデータ本体）
-         + continuation （次のチャットデータ取得に必要となるパラメータ）.
+        引数contentsはYoutubeから取得したチャットデータの生JSONであり、
+        与えられたJSONをチャットデータとメタデータに分割して返す。
 
         Parameter
         ----------
@@ -45,19 +42,17 @@ class Parser:
 
         Returns
         -------
-        + metadata : dict
-            + チャットデータに付随するメタデータ。timeout、 動画ID、continuationパラメータで構成される。           
+        tuple:
+        + metadata : dict　 チャットデータに付随するメタデータ
+         + timeout
+         + video_id
+         + continuation           
         + chatdata : list[dict]
-            + チャットデータ本体のリスト。
+        　　　 チャットデータ本体のリスト。
         """
-        # if jsn is None: 
-        #     return {'timeoutMs':0,'continuation':None},[]
-        # if jsn['response']['responseContext'].get('errors'):
-        #     raise ResponseContextError('動画に接続できません。'
-        # '動画IDが間違っているか、動画が削除／非公開の可能性があります。')
-        # contents=jsn['response'].get('continuationContents')
-        '''配信が終了した場合、もしくはチャットデータが取得できない場合'''
+
         if contents is None:
+            '''配信が終了した場合、もしくはチャットデータが取得できない場合'''
             raise NoContentsException('チャットデータを取得できませんでした。')
 
         cont = contents['liveChatContinuation']['continuations'][0]
@@ -65,7 +60,8 @@ class Parser:
             raise NoContinuationsException('No Continuation')
         metadata = (cont.get('invalidationContinuationData')  or
                     cont.get('timedContinuationData')         or
-                    cont.get('reloadContinuationData')
+                    cont.get('reloadContinuationData')        or
+                    cont.get('liveChatReplayContinuationData')
                     )
         if metadata is None:
             unknown = list(cont.keys())[0]

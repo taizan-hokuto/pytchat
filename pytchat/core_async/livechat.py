@@ -199,7 +199,6 @@ class LiveChatAsync:
           -------
             'contents' dict which includes metadata & chatdata.
         '''
-
         livechat_json = (await 
             self._get_livechat_json(continuation, session, headers)
         )
