@@ -88,7 +88,6 @@ class LiveChatAsync:
         self._pauser = Queue()
         self._pauser.put_nowait(None)
         self._setup()
-        #self._paramgen = liveparam
         self._first_fetch = True
         self._fetch_url = "live_chat/get_live_chat?continuation="
         if not LiveChatAsync._setup_finished:
@@ -213,7 +212,7 @@ class LiveChatAsync:
                 self._parser.mode = 'REPLAY'
                 self._fetch_url = ("live_chat_replay/"  
                     "get_live_chat_replay?continuation=")
-                continuation = arcparam.getparam(self.video_id)
+                continuation = arcparam.getparam(self.video_id, self.seektime)
                 livechat_json = (await  self._get_livechat_json(
                     continuation, session, headers))
                 contents = self._parser.get_contents(livechat_json)
@@ -222,9 +221,8 @@ class LiveChatAsync:
 
     async def _get_livechat_json(self, continuation, session, headers):
         '''
-        チャットデータが格納されたjsonデータを取得する。
+        Get json which includes chat data.
         '''
-
         continuation = urllib.parse.quote(continuation)
         livechat_json = None
         status_code = 0
