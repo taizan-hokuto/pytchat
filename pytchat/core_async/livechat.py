@@ -158,11 +158,9 @@ class LiveChatAsync:
                         self._pauser.put_nowait(None)
                         if self._parser.mode == 'LIVE':
                             continuation = liveparam.getparam(self.video_id,3)
-                    livechat_json = (await 
-                      self._get_livechat_json(continuation, session, headers)
-                    )
-                    contents = await self._get_contents(livechat_json, session, headers)
-                    metadata, chatdata =  self._parser.parse( contents )
+                    contents = await self._get_contents(
+                        continuation, session, headers)
+                    metadata, chatdata =  self._parser.parse(contents)
 
                     timeout = metadata['timeoutMs']/1000
                     chat_component = {
@@ -192,7 +190,7 @@ class LiveChatAsync:
         logger.debug(f"[{self.video_id}]チャット取得を終了しました。")
         self.terminate()
 
-    async def _get_contents(self, livechat_json, session, headers):
+    async def _get_contents(self, continuation, session, headers):
         '''Get 'contents' dict from livechat json.
            If contents is None at first fetching, 
            try to fetch archive chat data.
@@ -201,6 +199,10 @@ class LiveChatAsync:
           -------
             'contents' dict which includes metadata & chatdata.
         '''
+
+        livechat_json = (await 
+            self._get_livechat_json(continuation, session, headers)
+        )
         contents = self._parser.get_contents(livechat_json)
         if self._first_fetch:
             if contents is None:
