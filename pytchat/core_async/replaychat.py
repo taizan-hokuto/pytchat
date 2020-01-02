@@ -136,7 +136,7 @@ class ReplayChatAsync:
         """最初のcontinuationパラメータを取得し、
         _listenループのタスクを作成し開始する
         """
-        initial_continuation = arcparam.get(self.video_id,self.seektime)
+        initial_continuation = arcparam.getparam(self.video_id, self.seektime)
         await self._listen(initial_continuation)
    
     async def _listen(self, continuation):
@@ -159,7 +159,7 @@ class ReplayChatAsync:
                           prohibit from blocking by putting None into _pauser.
                         '''
                         self._pauser.put_nowait(None)
-                        #continuation= arcparam.get(self.video_id)
+                        #when replay, not reacquire continuation param
                     livechat_json = (await
                       self._get_livechat_json(continuation, session, headers)
                     )

@@ -65,7 +65,7 @@ def _tzparity(video_id,times):
     return ((times^t) % 2).to_bytes(1,'big')
 
 
-def get(video_id, seektime = 0, topchatonly = False):
+def _build(video_id, seektime, topchatonly = False):
     switch_01 = b'\x04' if topchatonly else b'\x01'
 
 
@@ -116,5 +116,11 @@ def get(video_id, seektime = 0, topchatonly = False):
                 ).decode()
             )
 
-
-
+def getparam(video_id, seektime = 0):
+    '''
+    Parameter
+    ---------
+    seektime : int
+        seconds to load past chat data
+    '''
+    return _build(video_id, seektime)

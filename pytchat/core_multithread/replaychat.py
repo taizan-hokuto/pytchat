@@ -139,7 +139,7 @@ class ReplayChat:
     def _get_initial_continuation(self):
         ''' チャットデータ取得に必要な最初のcontinuationを取得する。'''
         try:    
-            initial_continuation = arcparam.get(self.video_id,self.seektime)
+            initial_continuation = arcparam.getparam(self.video_id,self.seektime)
         except ChatParseException as e:
             self.terminate()
             logger.debug(f"[{self.video_id}]Error:{str(e)}")
