@@ -18,8 +18,9 @@ from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
 
 logger = config.logger(__name__)
-MAX_RETRY = 10
 headers = config.headers
+MAX_RETRY = 10
+
 
 
 
@@ -178,11 +179,12 @@ class ReplayChatAsync:
                     await asyncio.sleep(diff_time)       
                     continuation = metadata.get('continuation')  
         except ChatParseException as e:
+            self.terminate()
             logger.error(f"{str(e)}（video_id:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
-            logger.error(f"{traceback.format_exc(limit = -1)}")
             self.terminate()
+            logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
         logger.debug(f"[{self.video_id}]チャット取得を終了しました。")
