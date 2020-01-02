@@ -21,7 +21,7 @@ def test_finishedlive(*mock):
     _text = json.loads(_text)
 
     try:    
-        parser.parse(_text)
+        parser.parse(parser.get_contents(_text))
         assert False
     except NoContentsException:
         assert True
@@ -34,7 +34,7 @@ def test_parsejson(*mock):
     _text = json.loads(_text)
 
     try:    
-        parser.parse(_text)
+        parser.parse(parser.get_contents(_text))
         jsn = _text
         timeout = jsn["response"]["continuationContents"]["liveChatContinuation"]["continuations"][0]["timedContinuationData"]["timeoutMs"]
         continuation = jsn["response"]["continuationContents"]["liveChatContinuation"]["continuations"][0]["timedContinuationData"]["continuation"]

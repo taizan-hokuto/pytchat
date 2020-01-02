@@ -13,7 +13,7 @@ from .buffer import Buffer
 from ..parser.live import Parser
 from .. import config
 from ..exceptions  import ChatParseException,IllegalFunctionCall
-from ..paramgen    import liveparam, arcparam
+from ..paramgen    import liveparam
 from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
 
@@ -88,9 +88,7 @@ class LiveChatAsync:
         self._pauser = Queue()
         self._pauser.put_nowait(None)
         self._setup()
-        #self._paramgen = liveparam
-        self._first_fetch = True
-        self._fetch_url = "live_chat/get_live_chat?continuation="
+        
         if not LiveChatAsync._setup_finished:
             LiveChatAsync._setup_finished = True
             if exception_handler == None:
@@ -156,26 +154,11 @@ class LiveChatAsync:
                           prohibit from blocking by putting None into _pauser.
                         '''
                         self._pauser.put_nowait(None)
-                        if self._parser.mode == 'LIVE':
-                            continuation = liveparam.getparam(self.video_id,3)
+                        continuation= liveparam.getparam(self.video_id,3)
                     livechat_json = (await 
                       self._get_livechat_json(continuation, session, headers)
                     )
-                    contents = self._parser.get_contents(livechat_json)
-                    '''switch live or replay'''
-                    if self._first_fetch:
-                        if contents is None:
-                            self._parser.mode = 'REPLAY'
-                            self._fetch_url = ("live_chat_replay/"  
-                                "get_live_chat_replay?continuation=")
-                            continuation = arcparam.getparam(self.video_id)
-                            livechat_json = (await  self._get_livechat_json(
-                                continuation, session, headers))
-                            contents = self._parser.get_contents(livechat_json)
-                        self._first_fetch = False
-
-                    metadata, chatdata =  self._parser.parse( contents )
-
+                    metadata, chatdata =  self._parser.parse( livechat_json )
                     timeout = metadata['timeoutMs']/1000
                     chat_component = {
                         "video_id" : self.video_id,
@@ -208,12 +191,12 @@ class LiveChatAsync:
         '''
         チャットデータが格納されたjsonデータを取得する。
         '''
-
         continuation = urllib.parse.quote(continuation)
         livechat_json = None
         status_code = 0
         url =(
-            f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1")
+            f"https://www.youtube.com/live_chat/get_live_chat?"
+            f"continuation={continuation}&pbj=1")
         for _ in range(MAX_RETRY + 1):
             async with session.get(url ,headers = headers) as resp:
                 try:
