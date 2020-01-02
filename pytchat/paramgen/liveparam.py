@@ -155,7 +155,7 @@ def _times(past_sec):
     return list(map(lambda x:int(x*1000000),[_ts1,_ts2,_ts3,_ts4,_ts5]))
 
 
-def getparam(video_id,past_sec = 60):
+def getparam(video_id,past_sec = 0):
     '''
     Parameter
     ---------

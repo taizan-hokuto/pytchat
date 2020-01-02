@@ -8,7 +8,7 @@ import traceback
 import urllib.parse
 from aiohttp.client_exceptions import ClientConnectorError
 from concurrent.futures import CancelledError
-from queue import Queue
+from asyncio import Queue
 from .buffer import Buffer
 from ..parser.live import Parser
 from .. import config
@@ -148,11 +148,13 @@ class LiveChatAsync:
             async with aiohttp.ClientSession() as session:
                 while(continuation and self._is_alive):
                     if self._pauser.empty():
-                        #pause
+                        '''pause'''
                         await self._pauser.get()
-                        #resume
-                        #prohibit from blocking by putting None into _pauser.
+                        '''resume:
+                          prohibit from blocking by putting None into _pauser.
+                        '''
                         self._pauser.put_nowait(None)
+                        continuation= liveparam.getparam(self.video_id)
                     livechat_json = (await 
                       self._get_livechat_json(continuation, session, headers)
                     )
@@ -239,14 +241,17 @@ class LiveChatAsync:
             "既にcallbackを登録済みのため、get()は実行できません。")
 
     def pause(self):
+        if self._callback is None:
+            return
         if not self._pauser.empty():
-            self._pauser.get()
+            self._pauser.get_nowait()
 
     def resume(self):
+        if self._callback is None:
+            return
         if self._pauser.empty():
             self._pauser.put_nowait(None)
         
-
     def is_alive(self):
         return self._is_alive
 
@@ -270,12 +275,10 @@ class LiveChatAsync:
     @classmethod
     def _set_exception_handler(cls, handler):
         loop = asyncio.get_event_loop()
-        #default handler: cls._handle_exception
         loop.set_exception_handler(handler)
     
     @classmethod
     def _handle_exception(cls, loop, context):
-        #msg = context.get("exception", context["message"])
         if not isinstance(context["exception"],CancelledError):
             logger.error(f"Caught exception: {context}")
         loop= asyncio.get_event_loop()
