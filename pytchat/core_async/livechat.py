@@ -218,7 +218,6 @@ class LiveChatAsync:
             async with session.get(url ,headers = headers) as resp:
                 try:
                     text = await resp.text()
-                    status_code = resp.status
                     livechat_json = json.loads(text)
                     break
                 except (ClientConnectorError,json.JSONDecodeError) :

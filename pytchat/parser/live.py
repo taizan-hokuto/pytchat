@@ -16,8 +16,6 @@ logger = config.logger(__name__)
 
 from .. import util
 class Parser:
-    URL_LIVE = "live_chat/get_live_chat?continuation="
-    URL_REPLAY = "live_chat_replay/get_live_chat_replay?continuation="
 
     def __init__(self):
         self.mode = 'LIVE'
