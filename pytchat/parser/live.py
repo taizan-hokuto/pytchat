@@ -65,10 +65,14 @@ class Parser:
                     cont.get('liveChatReplayContinuationData')
                     )
         if metadata is None:
+            if cont.get("playerSeekContinuationData"):
+                raise ChatParseException('Finished chat data')
             unknown = list(cont.keys())[0]
             if unknown:
                 logger.debug(f"Received unknown continuation type:{unknown}")
                 metadata = cont.get(unknown)
+            else:
+                raise ChatParseException('Cannot extract continuation data')
         return self._create_data(metadata, contents)
 
     def _create_data(self, metadata, contents):    

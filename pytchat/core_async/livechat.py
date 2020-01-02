@@ -169,16 +169,15 @@ class LiveChatAsync:
                     await asyncio.sleep(diff_time)        
                     continuation = metadata.get('continuation')     
         except ChatParseException as e:
-            self.terminate()
-            logger.error(f"{str(e)}（video_id:\"{self.video_id}\"）")
+            #self.terminate()
+            logger.debug(f"[{self.video_id}]{str(e)}")
             return            
         except (TypeError , json.JSONDecodeError) :
-            self.terminate()
+            #self.terminate()
             logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
         logger.debug(f"[{self.video_id}]finished fetching chat.")
-        self.terminate()
 
     async def _check_pause(self, continuation):
         if self._pauser.empty():
@@ -268,6 +267,9 @@ class LiveChatAsync:
             return  self.processor.process(items)
         raise IllegalFunctionCall(
             "既にcallbackを登録済みのため、get()は実行できません。")
+
+    def get_mode(self):
+        return self._parser.mode
 
     def pause(self):
         if self._callback is None:
