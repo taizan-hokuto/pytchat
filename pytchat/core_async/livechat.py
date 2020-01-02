@@ -107,7 +107,7 @@ class LiveChatAsync:
         if self._direct_mode:
             if self._callback is None:
                 raise IllegalFunctionCall(
-                    "direct_mode=Trueの場合callbackの設定が必須です。")
+                    "When direct_mode=True, callback parameter is required.")
         else:
             #direct modeがFalseでbufferが未設定ならばデフォルトのbufferを作成
             if self._buffer is None:
@@ -129,21 +129,20 @@ class LiveChatAsync:
             listen_task.add_done_callback(self._done_callback)
 
     async def _startlisten(self):
-        """最初のcontinuationパラメータを取得し、
-        _listenループのタスクを作成し開始する
+        """Fetch first continuation parameter,
+        create and start _listen loop.
         """
         initial_continuation = liveparam.getparam(self.video_id,3)
         await self._listen(initial_continuation)
 
     async def _listen(self, continuation):
-        ''' continuationに紐付いたチャットデータを取得し
-        Bufferにチャットデータを格納、
-        次のcontinuaitonを取得してループする。
+        ''' Fetch chat data and store them into buffer,
+        get next continuaiton parameter and loop.
 
         Parameter
         ---------
         continuation : str
-            次のチャットデータ取得に必要なパラメータ
+            parameter for next chat data
         '''
         try:
             async with aiohttp.ClientSession() as session:
@@ -178,7 +177,7 @@ class LiveChatAsync:
             logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
-        logger.debug(f"[{self.video_id}]チャット取得を終了しました。")
+        logger.debug(f"[{self.video_id}]finished fetching chat.")
         self.terminate()
 
     async def _check_pause(self, continuation):
@@ -300,7 +299,7 @@ class LiveChatAsync:
         if self._direct_mode == False:
             #bufferにダミーオブジェクトを入れてis_alive()を判定させる
             self._buffer.put_nowait({'chatdata':'','timeout':1}) 
-        logger.info(f'[{self.video_id}]終了しました')
+        logger.info(f'[{self.video_id}]finished.')
  
     @classmethod
     def _set_exception_handler(cls, handler):
@@ -316,12 +315,12 @@ class LiveChatAsync:
 
     @classmethod
     async def shutdown(cls, event, sig = None, handler=None):
-        logger.debug("シャットダウンしています")
+        logger.debug("shutdown...")
         tasks = [t for t in asyncio.all_tasks() if t is not
         asyncio.current_task()]
         [task.cancel() for task in tasks]
 
-        logger.debug(f"残っているタスクを終了しています")
+        logger.debug(f"complete remaining tasks...")
         await asyncio.gather(*tasks,return_exceptions=True)
         loop = asyncio.get_event_loop()
         loop.stop()
