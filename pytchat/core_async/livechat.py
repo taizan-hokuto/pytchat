@@ -154,7 +154,7 @@ class LiveChatAsync:
                           prohibit from blocking by putting None into _pauser.
                         '''
                         self._pauser.put_nowait(None)
-                        continuation= liveparam.getparam(self.video_id)
+                        continuation= liveparam.getparam(self.video_id,3)
                     livechat_json = (await 
                       self._get_livechat_json(continuation, session, headers)
                     )
@@ -185,6 +185,7 @@ class LiveChatAsync:
             return
         
         logger.debug(f"[{self.video_id}]チャット取得を終了しました。")
+        self.terminate()
 
     async def _get_livechat_json(self, continuation, session, headers):
         '''
@@ -209,7 +210,6 @@ class LiveChatAsync:
         else:
             logger.error(f"[{self.video_id}]"
                     f"Exceeded retry count. status_code={status_code}")
-            self.terminate()
             return None
         return livechat_json
 
