@@ -135,28 +135,9 @@ class ReplayChatAsync:
         """最初のcontinuationパラメータを取得し、
         _listenループのタスクを作成し開始する
         """
-        initial_continuation = await self._get_initial_continuation()
-        if initial_continuation is None:
-            self.terminate()
-            logger.debug(f"[{self.video_id}]No initial continuation.")
-            return
+        initial_continuation = arcparam.get(self.video_id,self.seektime)
         await self._listen(initial_continuation)
    
-    async def _get_initial_continuation(self):
-        ''' チャットデータ取得に必要な最初のcontinuationを取得する。'''
-        try:    
-            initial_continuation = arcparam.get(self.video_id,self.seektime)
-        except ChatParseException as e:
-            self.terminate()
-            logger.debug(f"[{self.video_id}]Error:{str(e)}")
-            return
-        except KeyError:
-            logger.debug(f"[{self.video_id}]KeyError:"
-                         f"{traceback.format_exc(limit = -1)}")
-            self.terminate()
-            return
-        return initial_continuation
-
     async def _listen(self, continuation):
         ''' continuationに紐付いたチャットデータを取得し
         Bufferにチャットデータを格納、
