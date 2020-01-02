@@ -7,7 +7,7 @@ class Combinator(ChatProcessor):
 
     For example:
         [constructor]
-        chat = LiveChat("video_id", processor = ( Processor1(), Processor2(), Processor3() )
+        chat = LiveChat("video_id", processor = ( Processor1(), Processor2(), Processor3() ) )
         
         [receive return values]
         ret1, ret2, ret3 = chat.get()
@@ -33,7 +33,7 @@ class Combinator(ChatProcessor):
         -------
             Tuple of chat data processed by each chat processor.
         '''
-        return tuple([processor.process(chat_components)
-            for processor in self.processors])
+        return tuple(processor.process(chat_components)
+            for processor in self.processors)
             
 
