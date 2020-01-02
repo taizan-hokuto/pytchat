@@ -161,19 +161,7 @@ class LiveChatAsync:
                     livechat_json = (await 
                       self._get_livechat_json(continuation, session, headers)
                     )
-                    contents = self._parser.get_contents(livechat_json)
-                    '''switch live or replay'''
-                    if self._first_fetch:
-                        if contents is None:
-                            self._parser.mode = 'REPLAY'
-                            self._fetch_url = ("live_chat_replay/"  
-                                "get_live_chat_replay?continuation=")
-                            continuation = arcparam.getparam(self.video_id)
-                            livechat_json = (await  self._get_livechat_json(
-                                continuation, session, headers))
-                            contents = self._parser.get_contents(livechat_json)
-                        self._first_fetch = False
-
+                    contents = await self._get_contents(livechat_json, session, headers)
                     metadata, chatdata =  self._parser.parse( contents )
 
                     timeout = metadata['timeoutMs']/1000
@@ -203,6 +191,29 @@ class LiveChatAsync:
         
         logger.debug(f"[{self.video_id}]チャット取得を終了しました。")
         self.terminate()
+
+    async def _get_contents(self, livechat_json, session, headers):
+        '''Get 'contents' dict from livechat json.
+           If contents is None at first fetching, 
+           try to fetch archive chat data.
+
+          Return:
+          -------
+            'contents' dict which includes metadata & chatdata.
+        '''
+        contents = self._parser.get_contents(livechat_json)
+        if self._first_fetch:
+            if contents is None:
+                '''Try to fetch archive chat data.'''
+                self._parser.mode = 'REPLAY'
+                self._fetch_url = ("live_chat_replay/"  
+                    "get_live_chat_replay?continuation=")
+                continuation = arcparam.getparam(self.video_id)
+                livechat_json = (await  self._get_livechat_json(
+                    continuation, session, headers))
+                contents = self._parser.get_contents(livechat_json)
+            self._first_fetch = False
+        return contents
 
     async def _get_livechat_json(self, continuation, session, headers):
         '''
