@@ -131,7 +131,7 @@ class LiveChatAsync:
         """最初のcontinuationパラメータを取得し、
         _listenループのタスクを作成し開始する
         """
-        initial_continuation = liveparam.getparam(self.video_id)
+        initial_continuation = liveparam.getparam(self.video_id,3)
         await self._listen(initial_continuation)
 
     async def _listen(self, continuation):
