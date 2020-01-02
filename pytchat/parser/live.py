@@ -54,7 +54,7 @@ class Parser:
 
         if contents is None:
             '''配信が終了した場合、もしくはチャットデータが取得できない場合'''
-            raise NoContentsException('チャットデータを取得できませんでした。')
+            raise NoContentsException('Chat data stream is empty.')
 
         cont = contents['liveChatContinuation']['continuations'][0]
         if cont is None:
