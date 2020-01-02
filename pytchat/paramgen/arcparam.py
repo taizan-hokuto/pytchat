@@ -121,6 +121,7 @@ def getparam(video_id, seektime = 0):
     Parameter
     ---------
     seektime : int
-        seconds to load past chat data
+        unit:seconds
+        start position of fetching chat data.
     '''
     return _build(video_id, seektime)
