@@ -149,15 +149,7 @@ class LiveChatAsync:
         try:
             async with aiohttp.ClientSession() as session:
                 while(continuation and self._is_alive):
-                    if self._pauser.empty():
-                        '''pause'''
-                        await self._pauser.get()
-                        '''resume:
-                          prohibit from blocking by putting None into _pauser.
-                        '''
-                        self._pauser.put_nowait(None)
-                        if self._parser.mode == 'LIVE':
-                            continuation = liveparam.getparam(self.video_id,3)
+                    continuation = await self._check_pause(continuation)
                     contents = await self._get_contents(
                         continuation, session, headers)
                     metadata, chatdata =  self._parser.parse(contents)
@@ -189,6 +181,18 @@ class LiveChatAsync:
         
         logger.debug(f"[{self.video_id}]チャット取得を終了しました。")
         self.terminate()
+
+    async def _check_pause(self, continuation):
+        if self._pauser.empty():
+            '''pause'''
+            await self._pauser.get()
+            '''resume:
+                prohibit from blocking by putting None into _pauser.
+            '''
+            self._pauser.put_nowait(None)
+            if self._parser.mode == 'LIVE':
+                continuation = liveparam.getparam(self.video_id,3)
+        return continuation
 
     async def _get_contents(self, continuation, session, headers):
         '''Get 'contents' dict from livechat json.
