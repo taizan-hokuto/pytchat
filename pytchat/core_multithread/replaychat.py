@@ -6,6 +6,7 @@ import signal
 import time
 import traceback
 import urllib.parse
+import warnings
 from concurrent.futures import CancelledError, ThreadPoolExecutor
 from queue import Queue
 from .buffer import Buffer
@@ -22,7 +23,15 @@ MAX_RETRY = 10
 
 
 class ReplayChat:
-    ''' スレッドプールを利用してYouTubeのライブ配信のチャットデータを取得する
+    '''
+    ### -----------------------------------------------------------
+    ### [Warning] ReplayChat is integrated into LiveChat.
+    ### This class is deprecated and will be removed at v0.0.5.0.
+    ### ReplayChatはLiveChatに統合しました。
+    ### このクラスはv0.0.5.0で廃止予定です。
+    ### -----------------------------------------------------------
+
+     スレッドプールを利用してYouTubeのライブ配信のチャットデータを取得する
 
     Parameter
     ---------
@@ -64,8 +73,10 @@ class ReplayChat:
     '''
 
     _setup_finished = False
+
     #チャット監視中のListenerのリスト
     _listeners= []
+
     def __init__(self, video_id,
                 seektime = 0,
                 processor = DefaultProcessor(),
@@ -75,6 +86,12 @@ class ReplayChat:
                 done_callback = None,
                 direct_mode = False
                 ):
+
+        warnings.warn(""
+        f"\n{'-'*60}\n[WARNING] ReplayChat is integrated into LiveChat.\n"
+        f"{' '*5}This is deprecated and will be removed at v0.0.5.0.\n"
+        f"{'-'*60}\n"
+        )
         self.video_id  = video_id
         self.seektime = seektime
         if isinstance(processor, tuple):
