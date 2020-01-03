@@ -6,6 +6,7 @@ import signal
 import time
 import traceback
 import urllib.parse
+import warnings
 from aiohttp.client_exceptions import ClientConnectorError
 from concurrent.futures import CancelledError
 from asyncio import Queue
@@ -25,7 +26,15 @@ MAX_RETRY = 10
 
 
 class ReplayChatAsync:
-    '''asyncio(aiohttp)を利用してYouTubeのチャットデータを取得する。
+    '''
+    ### -----------------------------------------------------------
+    ### [Warning] ReplayChatAsync is integrated into LiveChatAsync.
+    ### This class is deprecated and will be removed at v0.0.5.0.
+    ### ReplayChatAsyncはLiveChatAsyncに統合しました。
+    ### このクラスはv0.0.5.0で廃止予定です。
+    ### -----------------------------------------------------------
+
+    asyncio(aiohttp)を利用してYouTubeのチャットデータを取得する。
 
     Parameter
     ---------
@@ -77,6 +86,12 @@ class ReplayChatAsync:
                 done_callback = None,
                 exception_handler = None,
                 direct_mode = False):
+
+        warnings.warn(""
+            f"\n{'-'*60}\n[WARNING] ReplayChatAsync is integrated "
+            f"into LiveChatAsync.\n{' '*5} This is deprecated and will"
+            f" be removed at v0.0.5.0.\n{'-'*60}\n"
+        )
         self.video_id  = video_id
         self.seektime = seektime
         if isinstance(processor, tuple):
