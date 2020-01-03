@@ -70,10 +70,11 @@ def _build(video_id, seektime, topchatonly = False):
 
 
     if seektime < 0:
-        raise ValueError('seektime is 0 or positive number.')
+        times =_nval(0)
+        switch = b'\x04'       
     if seektime == 0:  
         times =_nval(1)
-        switch = b'\x04'       
+        switch = b'\x03'       
     else:
         times =_nval(int(seektime*1000000))
         switch = b'\x03'
@@ -88,8 +89,8 @@ def _build(video_id, seektime, topchatonly = False):
     sep_2       = b'\x52\x1C\x08\x00\x10\x00\x18\x00\x20\x00'
     chkstr      = b'\x2A\x0E\x73\x74\x61\x74\x69\x63\x63\x68\x65\x63\x6B\x73\x75\x6D\x40'
     sep_3       = b'\x00\x58\x03\x60'
-    sep_4       = b'\x68'+parity+b'\x72\x04\x08'
-    sep_5       = b'\x10'+parity+b'\x78\x00'
+    sep_4       = b'\x68' + parity + b'\x72\x04\x08'
+    sep_5       = b'\x10' + parity + b'\x78\x00'
     body = [
         sep_0,
         _nval(len(vid)),
