@@ -5,16 +5,16 @@ import requests, json
 from pytchat.paramgen import arcparam
 
 def test_arcparam_0(mocker):
-    param = arcparam.get("01234567890")
+    param = arcparam.getparam("01234567890")
     assert "op2w0wRyGjxDZzhhRFFvTE1ERXlNelExTmpjNE9UQWFFLXFvM2JrQkRRb0xNREV5TXpRMU5qYzRPVEFnQVElM0QlM0QoATAAOABAAEgEUhwIABAAGAAgACoOc3RhdGljY2hlY2tzdW1AAFgDYAFoAXIECAEQAXgA" == param
 
 
 def test_arcparam_1(mocker):
-    param = arcparam.get("01234567890", seektime = 100000)
+    param = arcparam.getparam("01234567890", seektime = 100000)
     assert "op2w0wR3GjxDZzhhRFFvTE1ERXlNelExTmpjNE9UQWFFLXFvM2JrQkRRb0xNREV5TXpRMU5qYzRPVEFnQVElM0QlM0QogNDbw_QCMAA4AEAASANSHAgAEAAYACAAKg5zdGF0aWNjaGVja3N1bUAAWANgAWgBcgQIARABeAA%3D" == param
 
 def test_arcparam_2(mocker):
-    param = arcparam.get("SsjCnHOk-Sk")
+    param = arcparam.getparam("SsjCnHOk-Sk")
     url=f"https://www.youtube.com/live_chat_replay/get_live_chat_replay?continuation={param}&pbj=1"
     resp = requests.Session().get(url,headers = config.headers)
     jsn = json.loads(resp.text)

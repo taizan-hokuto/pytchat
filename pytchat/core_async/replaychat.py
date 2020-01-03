@@ -8,7 +8,7 @@ import traceback
 import urllib.parse
 from aiohttp.client_exceptions import ClientConnectorError
 from concurrent.futures import CancelledError
-from queue import Queue
+from asyncio import Queue
 from .buffer import Buffer
 from ..parser.replay import Parser
 from .. import config
@@ -18,8 +18,9 @@ from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
 
 logger = config.logger(__name__)
-MAX_RETRY = 10
 headers = config.headers
+MAX_RETRY = 10
+
 
 
 
@@ -135,28 +136,9 @@ class ReplayChatAsync:
         """最初のcontinuationパラメータを取得し、
         _listenループのタスクを作成し開始する
         """
-        initial_continuation = await self._get_initial_continuation()
-        if initial_continuation is None:
-            self.terminate()
-            logger.debug(f"[{self.video_id}]No initial continuation.")
-            return
+        initial_continuation = arcparam.getparam(self.video_id, self.seektime)
         await self._listen(initial_continuation)
    
-    async def _get_initial_continuation(self):
-        ''' チャットデータ取得に必要な最初のcontinuationを取得する。'''
-        try:    
-            initial_continuation = arcparam.get(self.video_id,self.seektime)
-        except ChatParseException as e:
-            self.terminate()
-            logger.debug(f"[{self.video_id}]Error:{str(e)}")
-            return
-        except KeyError:
-            logger.debug(f"[{self.video_id}]KeyError:"
-                         f"{traceback.format_exc(limit = -1)}")
-            self.terminate()
-            return
-        return initial_continuation
-
     async def _listen(self, continuation):
         ''' continuationに紐付いたチャットデータを取得し
         Bufferにチャットデータを格納、
@@ -171,11 +153,13 @@ class ReplayChatAsync:
             async with aiohttp.ClientSession() as session:
                 while(continuation and self._is_alive):
                     if self._pauser.empty():
-                        #pause
+                        '''pause'''
                         await self._pauser.get()
-                        #resume
-                        #prohibit from blocking by putting None into _pauser.
+                        '''resume:
+                          prohibit from blocking by putting None into _pauser.
+                        '''
                         self._pauser.put_nowait(None)
+                        #when replay, not reacquire continuation param
                     livechat_json = (await
                       self._get_livechat_json(continuation, session, headers)
                     )
@@ -197,11 +181,12 @@ class ReplayChatAsync:
                     await asyncio.sleep(diff_time)       
                     continuation = metadata.get('continuation')  
         except ChatParseException as e:
+            self.terminate()
             logger.error(f"{str(e)}（video_id:\"{self.video_id}\"）")
             return            
         except (TypeError , json.JSONDecodeError) :
-            logger.error(f"{traceback.format_exc(limit = -1)}")
             self.terminate()
+            logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
         logger.debug(f"[{self.video_id}]チャット取得を終了しました。")
@@ -261,14 +246,17 @@ class ReplayChatAsync:
             "既にcallbackを登録済みのため、get()は実行できません。")
 
     def pause(self):
+        if self._callback is None:
+            return
         if not self._pauser.empty():
-            self._pauser.get()
+            self._pauser.get_nowait()
 
     def resume(self):
+        if self._callback is None:
+            return
         if self._pauser.empty():
             self._pauser.put_nowait(None)
         
-
     def is_alive(self):
         return self._is_alive
 
@@ -292,12 +280,10 @@ class ReplayChatAsync:
     @classmethod
     def _set_exception_handler(cls, handler):
         loop = asyncio.get_event_loop()
-        #default handler: cls._handle_exception
         loop.set_exception_handler(handler)
     
     @classmethod
     def _handle_exception(cls, loop, context):
-        #msg = context.get("exception", context["message"])
         if not isinstance(context["exception"],CancelledError):
             logger.error(f"Caught exception: {context}")
         loop= asyncio.get_event_loop()
