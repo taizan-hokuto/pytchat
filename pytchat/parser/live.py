@@ -1,7 +1,7 @@
 """
 pytchat.parser.live
 ~~~~~~~~~~~~~~~~~~~
-This module is parser of live chat JSON.
+Parser of live chat JSON.
 """
 
 import json
@@ -15,11 +15,12 @@ from .. exceptions import (
 
 logger = config.logger(__name__)
 
-from .. import util
 class Parser:
 
-    def __init__(self):
-        self.mode = 'LIVE'
+    __slots__ = ['is_replay']
+    
+    def __init__(self, is_replay): 
+        self.is_replay = is_replay
 
     def get_contents(self, jsn):
         if jsn is None: 
@@ -31,29 +32,23 @@ class Parser:
 
     def parse(self, contents):
         """
-        このparse関数はLiveChat._listen() 関数から定期的に呼び出される。
-        引数contentsはYoutubeから取得したチャットデータの生JSONであり、
-        与えられたJSONをチャットデータとメタデータに分割して返す。
-
         Parameter
         ----------
         + contents : dict
-            + Youtubeから取得したチャットデータのJSONオブジェクト。
-              （pythonの辞書形式に変換済みの状態で渡される）
+            + JSON of chat data from YouTube.
 
         Returns
         -------
         tuple:
-        + metadata : dict　 チャットデータに付随するメタデータ
+        + metadata : dict
          + timeout
          + video_id
          + continuation           
-        + chatdata : list[dict]
-        　　　 チャットデータ本体のリスト。
+        + chatdata : List[dict]
         """
 
         if contents is None:
-            '''配信が終了した場合、もしくはチャットデータが取得できない場合'''
+            '''Broadcasting end or cannot fetch chat stream'''
             raise NoContentsException('Chat data stream is empty.')
 
         cont = contents['liveChatContinuation']['continuations'][0]
@@ -76,15 +71,16 @@ class Parser:
         return self._create_data(metadata, contents)
 
     def _create_data(self, metadata, contents):    
-        chatdata = contents['liveChatContinuation'].get('actions')
-        if self.mode == 'LIVE':    
-            metadata.setdefault('timeoutMs', 10000)
-        else:
-            interval = self._get_interval(chatdata)
+        actions = contents['liveChatContinuation'].get('actions')
+        if self.is_replay:    
+            interval = self._get_interval(actions)
             metadata.setdefault("timeoutMs",interval)
-            """アーカイブ済みチャットはライブチャットと構造が異なっているため、以下の行により
-            ライブチャットと同じ形式にそろえる"""
-            chatdata = [action["replayChatItemAction"]["actions"][0] for action in chatdata]
+            """Archived chat has different structures than live chat, 
+            so make it the same format."""
+            chatdata = [action["replayChatItemAction"]["actions"][0] for action in actions]
+        else:
+            metadata.setdefault('timeoutMs', 10000)
+            chatdata = actions
         return metadata, chatdata
 
     def _get_interval(self, actions: list):

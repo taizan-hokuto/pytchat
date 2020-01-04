@@ -30,6 +30,11 @@ class LiveChatAsync:
     video_id : str
         動画ID
 
+    seektime : int
+        （ライブチャット取得時は無視）
+        取得開始するアーカイブ済みチャットの経過時間(秒）
+        マイナス値を指定した場合は、配信開始前のチャットも取得する。
+
     processor : ChatProcessor
         チャットデータを加工するオブジェクト
 
@@ -53,7 +58,11 @@ class LiveChatAsync:
     direct_mode : bool
         Trueの場合、bufferを使わずにcallbackを呼ぶ。
         Trueの場合、callbackの設定が必須
-        (設定していない場合IllegalFunctionCall例外を発生させる）  
+        (設定していない場合IllegalFunctionCall例外を発生させる）
+    
+    force_replay : bool  
+        Trueの場合、ライブチャットが取得できる場合であっても
+        強制的にアーカイブ済みチャットを取得する。
           
     Attributes
     ---------
@@ -71,7 +80,9 @@ class LiveChatAsync:
                 callback = None,
                 done_callback = None,
                 exception_handler = None,
-                direct_mode = False): 
+                direct_mode = False,
+                force_replay = False
+                ): 
         self.video_id  = video_id
         self.seektime = seektime
         if isinstance(processor, tuple):
@@ -84,7 +95,8 @@ class LiveChatAsync:
         self._exception_handler = exception_handler
         self._direct_mode = direct_mode
         self._is_alive   = True
-        self._parser = Parser()
+        self._is_replay = force_replay
+        self._parser = Parser(is_replay = self._is_replay)
         self._pauser = Queue()
         self._pauser.put_nowait(None)
         self._setup()
@@ -187,7 +199,7 @@ class LiveChatAsync:
                 prohibit from blocking by putting None into _pauser.
             '''
             self._pauser.put_nowait(None)
-            if self._parser.mode == 'LIVE':
+            if not self._is_replay:
                 continuation = liveparam.getparam(self.video_id,3)
         return continuation
 
@@ -205,9 +217,9 @@ class LiveChatAsync:
         )
         contents = self._parser.get_contents(livechat_json)
         if self._first_fetch:
-            if contents is None:
+            if contents is None or self._is_replay:
                 '''Try to fetch archive chat data.'''
-                self._parser.mode = 'REPLAY'
+                self._parser.is_replay = True
                 self._fetch_url = ("live_chat_replay/"  
                     "get_live_chat_replay?continuation=")
                 continuation = arcparam.getparam(self.video_id, self.seektime)
@@ -268,8 +280,8 @@ class LiveChatAsync:
         raise IllegalFunctionCall(
             "既にcallbackを登録済みのため、get()は実行できません。")
 
-    def get_mode(self):
-        return self._parser.mode
+    def is_replay(self):
+        return self._is_replay
 
     def pause(self):
         if self._callback is None:
@@ -300,7 +312,7 @@ class LiveChatAsync:
         self._is_alive = False
         if self._direct_mode == False:
             #bufferにダミーオブジェクトを入れてis_alive()を判定させる
-            self._buffer.put_nowait({'chatdata':'','timeout':1}) 
+            self._buffer.put_nowait({'chatdata':'','timeout':0}) 
         logger.info(f'[{self.video_id}]finished.')
  
     @classmethod
