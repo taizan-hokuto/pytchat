@@ -52,33 +52,18 @@ def _nval(val):
     buf += val.to_bytes(1,'big')
     return buf
 
-
-def _tzparity(video_id,times):
-    t=0
-    for i,s in enumerate(video_id):
-        ss = ord(s)
-        if(ss % 2 == 0):
-            t += ss*(12-i)
-        else:
-            t ^= ss*i
-
-    return ((times^t) % 2).to_bytes(1,'big')
-
-
 def _build(video_id, seektime, topchatonly = False):
     switch_01 = b'\x04' if topchatonly else b'\x01'
-
-
     if seektime < 0:
         times =_nval(0)
         switch = b'\x04'       
-    if seektime == 0:  
+    elif seektime == 0:  
         times =_nval(1)
         switch = b'\x03'       
     else:
         times =_nval(int(seektime*1000000))
         switch = b'\x03'
-    parity = _tzparity(video_id, seektime)
+    parity = b'\x00'
 
     header_magic= b'\xA2\x9D\xB0\xD3\x04'
     sep_0       = b'\x1A'
