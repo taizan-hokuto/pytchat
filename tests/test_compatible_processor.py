@@ -12,7 +12,7 @@ from pytchat.processors.compatible.renderer.paidmessage import LiveChatPaidMessa
 from pytchat.processors.compatible.renderer.paidsticker import LiveChatPaidStickerRenderer
 from pytchat.processors.compatible.renderer.legacypaid import LiveChatLegacyPaidMessageRenderer
 
-parser = Parser()
+parser = Parser(is_replay=False)
 
 def test_textmessage(mocker):
     '''api互換processorのテスト：通常テキストメッセージ'''

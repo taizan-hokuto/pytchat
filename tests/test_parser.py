@@ -11,7 +11,7 @@ from pytchat.exceptions import (
 def _open_file(path):
     with open(path,mode ='r',encoding = 'utf-8') as f:
         return f.read()
-parser = Parser()
+parser = Parser(is_replay = False)
 
 @aioresponses()
 def test_finishedlive(*mock):
