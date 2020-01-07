@@ -177,11 +177,9 @@ class LiveChat:
                     time.sleep(diff_time if diff_time > 0 else 0)        
                     continuation = metadata.get('continuation')  
         except ChatParseException as e:
-            #self.terminate()
             logger.debug(f"[{self.video_id}]{str(e)}")
             return            
         except (TypeError , json.JSONDecodeError) :
-            #self.terminate()
             logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
