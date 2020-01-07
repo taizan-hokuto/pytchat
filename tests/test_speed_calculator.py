@@ -9,7 +9,7 @@ from pytchat.exceptions import (
 
 from pytchat.processors.speed_calculator import SpeedCalculator
 
-parser = Parser()
+parser = Parser(is_replay =False)
 
 def test_speed_1(mocker):
     '''test speed calculation with normal json.
@@ -21,7 +21,7 @@ def test_speed_1(mocker):
 
     _json = _open_file("tests/testdata/speed/speedtest_normal.json")
 
-    _, chatdata = parser.parse(json.loads(_json))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
     data = {
         "video_id" : "",
         "timeout" : 10,
@@ -37,7 +37,7 @@ def test_speed_2(mocker):
 
     _json = _open_file("tests/testdata/speed/speedtest_undefined.json")
 
-    _, chatdata = parser.parse(json.loads(_json))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
     data = {
         "video_id" : "",
         "timeout" : 10,
@@ -53,7 +53,7 @@ def test_speed_3(mocker):
 
     _json = _open_file("tests/testdata/speed/speedtest_empty.json")
 
-    _, chatdata = parser.parse(json.loads(_json))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
     data = {
         "video_id" : "",
         "timeout" : 10,

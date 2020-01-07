@@ -12,7 +12,7 @@ from pytchat.processors.compatible.renderer.paidmessage import LiveChatPaidMessa
 from pytchat.processors.compatible.renderer.paidsticker import LiveChatPaidStickerRenderer
 from pytchat.processors.compatible.renderer.legacypaid import LiveChatLegacyPaidMessageRenderer
 
-parser = Parser()
+parser = Parser(is_replay=False)
 
 def test_textmessage(mocker):
     '''api互換processorのテスト：通常テキストメッセージ'''
@@ -20,7 +20,7 @@ def test_textmessage(mocker):
 
     _json = _open_file("tests/testdata/compatible/textmessage.json")
 
-    _, chatdata = parser.parse(json.loads(_json))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
     data = {
         "video_id" : "",
         "timeout" : 7,
@@ -57,7 +57,7 @@ def test_newsponcer(mocker):
 
     _json = _open_file("tests/testdata/compatible/newSponsor.json")
 
-    _, chatdata = parser.parse(json.loads(_json))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
     data = {
         "video_id" : "",
         "timeout" : 7,
@@ -93,7 +93,7 @@ def test_superchat(mocker):
 
     _json = _open_file("tests/testdata/compatible/superchat.json")
 
-    _, chatdata = parser.parse(json.loads(_json))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
     data = {
         "video_id" : "",
         "timeout" : 7,

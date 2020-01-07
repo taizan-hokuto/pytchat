@@ -46,11 +46,12 @@ def display(data):
     print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
     data.tick()
 
-#entry point
-chat = LiveChat("rsHWP7IjMiw", callback = display)
-while chat.is_alive():
-  time.sleep(3)
-  #other background operation.
+if __name__ == '__main__':
+  chat = LiveChat("rsHWP7IjMiw", callback = display)
+  while chat.is_alive():
+    #other background operation.
+    time.sleep(3)
+
 ```
 
 ### asyncio context:
@@ -62,8 +63,8 @@ import asyncio
 async def main():
   chat = LiveChatAsync("rsHWP7IjMiw", callback = func)
   while chat.is_alive():
-    await asyncio.sleep(3)
     #other background operation.
+    await asyncio.sleep(3)
 
 #callback function is automatically called.
 async def func(data):
@@ -71,11 +72,12 @@ async def func(data):
     print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
     await data.tick_async()
 
-try:
-  loop = asyncio.get_event_loop()
-  loop.run_until_complete(main())
-except CancelledError:
-  pass
+if __name__ == '__main__':
+  try:
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+  except CancelledError:
+    pass
 ```
 
 
@@ -97,9 +99,12 @@ while chat.is_alive():
       time.sleep(polling/len(data['items']))
 
 ```
-### replay:
+### replay: 
+If specified video is not live,
+automatically try to fetch archived chat data.
+
 ```python
-from pytchat import ReplayChat
+from pytchat import LiveChat
 
 def main():
   #seektime (seconds): start position of chat.
@@ -110,7 +115,8 @@ def main():
       print(f"{c.elapsedTime} [{c.author.name}]-{c.message} {c.amountString}")
       data.tick()
 
-main()
+if __name__ == '__main__':
+  main()
 ```
 
 ## Structure of Default Processor

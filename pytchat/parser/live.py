@@ -1,7 +1,7 @@
 """
 pytchat.parser.live
 ~~~~~~~~~~~~~~~~~~~
-This module is parser of live chat JSON.
+Parser of live chat JSON.
 """
 
 import json
@@ -9,57 +9,83 @@ from .. import config
 from .. exceptions import ( 
     ResponseContextError, 
     NoContentsException, 
-    NoContinuationsException )
+    NoContinuationsException,
+    ChatParseException )
 
 
 logger = config.logger(__name__)
 
-
 class Parser:
-    def parse(self, jsn):
-        """
-        このparse関数はLiveChat._listen() 関数から定期的に呼び出される。
-        引数jsnはYoutubeから取得したチャットデータの生JSONであり、
-        このparse関数によって与えられたJSONを以下に分割して返す。
-         + timeout (次のチャットデータ取得までのインターバル)
-         + chat data（チャットデータ本体）
-         + continuation （次のチャットデータ取得に必要となるパラメータ）.
 
+    __slots__ = ['is_replay']
+    
+    def __init__(self, is_replay): 
+        self.is_replay = is_replay
+
+    def get_contents(self, jsn):
+        if jsn is None: 
+            raise ChatParseException('Called with none JSON object.')
+        if jsn['response']['responseContext'].get('errors'):
+            raise ResponseContextError('The video_id would be wrong, or video is deleted or private.')
+        contents=jsn['response'].get('continuationContents')
+        return contents
+
+    def parse(self, contents):
+        """
         Parameter
         ----------
-        + jsn : dict
-            + Youtubeから取得したチャットデータのJSONオブジェクト。
-              （pythonの辞書形式に変換済みの状態で渡される）
+        + contents : dict
+            + JSON of chat data from YouTube.
 
         Returns
         -------
+        tuple:
         + metadata : dict
-            + チャットデータに付随するメタデータ。timeout、 動画ID、continuationパラメータで構成される。           
-        + chatdata : list[dict]
-            + チャットデータ本体のリスト。
+         + timeout
+         + video_id
+         + continuation           
+        + chatdata : List[dict]
         """
-        if jsn is None: 
-            return {'timeoutMs':0,'continuation':None},[]
-        if jsn['response']['responseContext'].get('errors'):
-            raise ResponseContextError('動画に接続できません。'
-        '動画IDが間違っているか、動画が削除／非公開の可能性があります。')
-        contents=jsn['response'].get('continuationContents')
-        #配信が終了した場合、もしくはチャットデータが取得できない場合
+
         if contents is None:
-            raise NoContentsException('チャットデータを取得できませんでした。')
+            '''Broadcasting end or cannot fetch chat stream'''
+            raise NoContentsException('Chat data stream is empty.')
 
         cont = contents['liveChatContinuation']['continuations'][0]
         if cont is None:
-            raise NoContinuationsException('Continuationがありません。')
+            raise NoContinuationsException('No Continuation')
         metadata = (cont.get('invalidationContinuationData')  or
                     cont.get('timedContinuationData')         or
-                    cont.get('reloadContinuationData')
+                    cont.get('reloadContinuationData')        or
+                    cont.get('liveChatReplayContinuationData')
                     )
         if metadata is None:
+            if cont.get("playerSeekContinuationData"):
+                raise ChatParseException('Finished chat data')
             unknown = list(cont.keys())[0]
             if unknown:
                 logger.debug(f"Received unknown continuation type:{unknown}")
                 metadata = cont.get(unknown)
-        metadata.setdefault('timeoutMs', 10000)
-        chatdata = contents['liveChatContinuation'].get('actions')
+            else:
+                raise ChatParseException('Cannot extract continuation data')
+        return self._create_data(metadata, contents)
+
+    def _create_data(self, metadata, contents):    
+        actions = contents['liveChatContinuation'].get('actions')
+        if self.is_replay:    
+            interval = self._get_interval(actions)
+            metadata.setdefault("timeoutMs",interval)
+            """Archived chat has different structures than live chat, 
+            so make it the same format."""
+            chatdata = [action["replayChatItemAction"]["actions"][0] for action in actions]
+        else:
+            metadata.setdefault('timeoutMs', 10000)
+            chatdata = actions
         return metadata, chatdata
+
+    def _get_interval(self, actions: list):
+        if actions is None:
+            return 0
+        start = int(actions[0]["replayChatItemAction"]["videoOffsetTimeMsec"])
+        last = int(actions[-1]["replayChatItemAction"]["videoOffsetTimeMsec"])
+        return (last - start)

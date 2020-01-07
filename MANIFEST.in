@@ -1,3 +1,7 @@
 include requirements.txt
 include requirements_test.txt
-
+prune testrun*.py
+prune log.txt
+prune quote.txt
+prune .gitignore
+prun tests
