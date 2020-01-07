@@ -1,5 +1,5 @@
 """
-speedmeter.py
+speed_calculator.py
 チャットの勢いを算出するChatProcessor
 Calculate speed of chat.
 """

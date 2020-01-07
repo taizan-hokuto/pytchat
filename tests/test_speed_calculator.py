@@ -9,7 +9,7 @@ from pytchat.exceptions import (
 
 from pytchat.processors.speed_calculator import SpeedCalculator
 
-parser = Parser()
+parser = Parser(is_replay =False)
 
 def test_speed_1(mocker):
     '''test speed calculation with normal json.
