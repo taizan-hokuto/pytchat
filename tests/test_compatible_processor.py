@@ -124,6 +124,21 @@ def test_superchat(mocker):
     assert "LCC." in ret["items"][0]["id"] 
     assert ret["items"][0]["snippet"]["type"]=="superChatEvent"
 
+def test_unregistered_currency(mocker):
+    processor = CompatibleProcessor()
+
+    _json = _open_file("tests/testdata/unregistered_currency.json")
+
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+
+    data = {
+        "video_id" : "",
+        "timeout" : 7,
+        "chatdata" : chatdata
+    }
+    ret = processor.process([data])
+    assert ret["items"][0]["snippet"]["superChatDetails"]["currency"] == "[UNREGISTERD]"
+
 
 def _open_file(path):
     with open(path,mode ='r',encoding = 'utf-8') as f:
