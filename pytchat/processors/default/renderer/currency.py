@@ -33,5 +33,6 @@ symbols = {
     "ARS\xa0": {"fxtext": "ARS", "jptext": "アルゼンチン・ペソ"},
     "CLP\xa0": {"fxtext": "CLP", "jptext": "チリ・ペソ"},
     "NOK\xa0": {"fxtext": "NOK", "jptext": "ノルウェー・クローネ"},
-    "BAM\xa0": {"fxtext": "BAM", "jptext": "ボスニア・兌換マルカ"}
+    "BAM\xa0": {"fxtext": "BAM", "jptext": "ボスニア・兌換マルカ"},
+    "SGD\xa0": {"fxtext": "SGD", "jptext": "シンガポール・ドル"}
 }
