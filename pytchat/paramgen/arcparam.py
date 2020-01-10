@@ -52,8 +52,8 @@ def _nval(val):
     buf += val.to_bytes(1,'big')
     return buf
 
-def _build(video_id, seektime, topchatonly = False):
-    switch_01 = b'\x04' if topchatonly else b'\x01'
+def _build(video_id, seektime, topchat_only):
+    switch_01 = b'\x04' if topchat_only else b'\x01'
     if seektime < 0:
         times =_nval(0)
         switch = b'\x04'       
@@ -102,12 +102,14 @@ def _build(video_id, seektime, topchatonly = False):
                 ).decode()
             )
 
-def getparam(video_id, seektime = 0):
+def getparam(video_id, seektime = 0, topchat_only = False):
     '''
     Parameter
     ---------
     seektime : int
         unit:seconds
         start position of fetching chat data.
+    topchat_only : bool
+        if True, fetch only 'top chat'
     '''
-    return _build(video_id, seektime)
+    return _build(video_id, seektime, topchat_only)

@@ -63,6 +63,9 @@ class LiveChatAsync:
     force_replay : bool  
         Trueの場合、ライブチャットが取得できる場合であっても
         強制的にアーカイブ済みチャットを取得する。
+    
+    topchat_only : bool
+        Trueの場合、上位チャットのみ取得する。
           
     Attributes
     ---------
@@ -81,7 +84,8 @@ class LiveChatAsync:
                 done_callback = None,
                 exception_handler = None,
                 direct_mode = False,
-                force_replay = False
+                force_replay = False,
+                topchat_only = False
                 ): 
         self.video_id  = video_id
         self.seektime = seektime
@@ -102,6 +106,7 @@ class LiveChatAsync:
         self._setup()
         self._first_fetch = True
         self._fetch_url = "live_chat/get_live_chat?continuation="
+        self._topchat_only = topchat_only
         if not LiveChatAsync._setup_finished:
             LiveChatAsync._setup_finished = True
             if exception_handler == None:
@@ -200,7 +205,8 @@ class LiveChatAsync:
             '''
             self._pauser.put_nowait(None)
             if not self._is_replay:
-                continuation = liveparam.getparam(self.video_id,3)
+                continuation = liveparam.getparam(
+                    self.video_id, 3, self._topchat_only)
         return continuation
 
     async def _get_contents(self, continuation, session, headers):
@@ -222,7 +228,8 @@ class LiveChatAsync:
                 self._parser.is_replay = True
                 self._fetch_url = ("live_chat_replay/"  
                     "get_live_chat_replay?continuation=")
-                continuation = arcparam.getparam(self.video_id, self.seektime)
+                continuation = arcparam.getparam(
+                    self.video_id, self.seektime, self._topchat_only)
                 livechat_json = (await  self._get_livechat_json(
                     continuation, session, headers))
                 contents = self._parser.get_contents(livechat_json)
