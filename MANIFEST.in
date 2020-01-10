@@ -4,4 +4,3 @@ prune testrun*.py
 prune log.txt
 prune quote.txt
 prune .gitignore
-prun tests
