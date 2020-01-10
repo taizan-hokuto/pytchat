@@ -54,7 +54,7 @@ setup(
     long_description_content_type='text/markdown',
     license=license,
     install_requires=_requirements(),
-    tests_require=_test_requirements(),
+    #tests_require=_test_requirements(),
     description="a python library for fetching youtube live chat.",
     classifiers=[
         'Natural Language :: Japanese',

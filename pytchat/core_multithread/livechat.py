@@ -60,6 +60,9 @@ class LiveChat:
         Trueの場合、ライブチャットが取得できる場合であっても
         強制的にアーカイブ済みチャットを取得する。
 
+    topchat_only : bool
+        Trueの場合、上位チャットのみ取得する。
+        
     Attributes
     ---------
     _executor : ThreadPoolExecutor
@@ -80,7 +83,8 @@ class LiveChat:
                 callback = None,
                 done_callback = None,
                 direct_mode = False,
-                force_replay = False
+                force_replay = False,
+                topchat_only  = False
                 ):
         self.video_id  = video_id
         self.seektime = seektime
@@ -100,8 +104,8 @@ class LiveChat:
         self._pauser.put_nowait(None)
         self._setup()
         self._first_fetch = True
-        self._fetch_url = "live_chat/get_live_chat?continuation="
-
+        self._fetch_url = "live_chat/get_live_chat?continuation=",
+        self._topchat_only = topchat_only
         if not LiveChat._setup_finished:
             LiveChat._setup_finished = True
             if interruptable:

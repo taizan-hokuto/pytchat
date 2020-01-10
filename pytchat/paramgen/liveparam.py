@@ -66,9 +66,9 @@ def _nval(val):
     buf += val.to_bytes(1,'big')
     return buf
 
-def _build(video_id, _ts1, _ts2, _ts3, _ts4, _ts5, topchatonly = False):
+def _build(video_id, _ts1, _ts2, _ts3, _ts4, _ts5, topchat_only):
     #_short_type2
-    switch_01 = b'\x04' if topchatonly else b'\x01'
+    switch_01 = b'\x04' if topchat_only else b'\x01'
     parity = _tzparity(video_id, _ts1^_ts2^_ts3^_ts4^_ts5)
 
     header_magic= b'\xD2\x87\xCC\xC8\x03'
@@ -155,12 +155,14 @@ def _times(past_sec):
     return list(map(lambda x:int(x*1000000),[_ts1,_ts2,_ts3,_ts4,_ts5]))
 
 
-def getparam(video_id,past_sec = 0):
+def getparam(video_id, past_sec = 0, topchat_only = False):
     '''
     Parameter
     ---------
     past_sec : int
         seconds to load past chat data
+    topchat_only : bool
+        if True, fetch only 'top chat'
     '''
-    return _build(video_id,*_times(past_sec))
+    return _build(video_id,*_times(past_sec),topchat_only)
 
