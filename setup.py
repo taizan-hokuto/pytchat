@@ -45,7 +45,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name=package_name,
-    packages=find_packages(),
+    packages=find_packages(exclude=['*log.txt','*tests']),
     version=version,
     url=url,
     author=author,
