@@ -26,7 +26,8 @@ class Parser:
         if jsn is None: 
             raise ChatParseException('Called with none JSON object.')
         if jsn['response']['responseContext'].get('errors'):
-            raise ResponseContextError('The video_id would be wrong, or video is deleted or private.')
+            raise ResponseContextError('The video_id would be wrong,'
+                'or video is deleted or private.')
         contents=jsn['response'].get('continuationContents')
         return contents
 
@@ -77,7 +78,8 @@ class Parser:
             metadata.setdefault("timeoutMs",interval)
             """Archived chat has different structures than live chat, 
             so make it the same format."""
-            chatdata = [action["replayChatItemAction"]["actions"][0] for action in actions]
+            chatdata = [action["replayChatItemAction"]["actions"][0]
+                for action in actions]
         else:
             metadata.setdefault('timeoutMs', 10000)
             chatdata = actions
