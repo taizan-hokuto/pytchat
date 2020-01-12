@@ -104,7 +104,7 @@ class LiveChat:
         self._pauser.put_nowait(None)
         self._setup()
         self._first_fetch = True
-        self._fetch_url = "live_chat/get_live_chat?continuation=",
+        self._fetch_url = "live_chat/get_live_chat?continuation="
         self._topchat_only = topchat_only
         if not LiveChat._setup_finished:
             LiveChat._setup_finished = True
@@ -218,8 +218,7 @@ class LiveChat:
             if contents is None or self._is_replay:
                 '''Try to fetch archive chat data.'''
                 self._parser.is_replay = True
-                self._fetch_url = ("live_chat_replay/"  
-                    "get_live_chat_replay?continuation=")
+                self._fetch_url = "live_chat_replay/get_live_chat_replay?continuation="
                 continuation = arcparam.getparam(self.video_id, self.seektime)
                 livechat_json = ( self._get_livechat_json(
                     continuation, session, headers))
@@ -234,8 +233,7 @@ class LiveChat:
         continuation = urllib.parse.quote(continuation)
         livechat_json = None
         status_code = 0
-        url =(
-           f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1")
+        url =f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1"
         for _ in range(MAX_RETRY + 1):
             with session.get(url ,headers = headers) as resp:
                 try:
