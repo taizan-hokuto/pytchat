@@ -13,6 +13,16 @@ def _requirements():
 def _test_requirements():
     return [name.rstrip() for name in open(path.join(root_dir, 'requirements_test.txt')).readlines()]
 
+txt= ''
+with open('README.MD', 'r', encoding='utf-8') as f:
+    txt = f.read()
+
+with open('README1.MD', 'w', encoding='utf-8', newline='\n') as f:
+    f.write(txt)
+    
+remove("README.MD")
+rename("README1.MD","README.MD")
+
 with open(path.join(root_dir, package_name, '__init__.py')) as f:
     init_text = f.read()
     version = re.search(r'__version__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
@@ -29,14 +39,7 @@ assert url
 
 
 
-with open('README.MD', 'r', encoding='utf-8') as f:
-    txt = f.read()
 
-with open('README1.MD', 'w', encoding='utf-8', newline='\n') as f:
-    f.write(txt)
-    
-remove("README.MD")
-rename("README1.MD","README.MD")
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
