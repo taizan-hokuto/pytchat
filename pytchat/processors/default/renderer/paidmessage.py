@@ -10,13 +10,9 @@ class LiveChatPaidMessageRenderer(BaseRenderer):
 
     def get_snippet(self):
         super().get_snippet()
-
-        self.author.name = self.renderer["authorName"]["simpleText"]
-
         amountDisplayString, symbol, amount =(
             self.get_amountdata(self.renderer)
         )
-        self.message = self.get_message(self.renderer)
         self.amountValue= amount
         self.amountString = amountDisplayString
         self.currency= currency.symbols[symbol]["fxtext"] if currency.symbols.get(symbol) else symbol
