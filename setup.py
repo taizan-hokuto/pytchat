@@ -13,7 +13,7 @@ def _requirements():
 def _test_requirements():
     return [name.rstrip() for name in open(path.join(root_dir, 'requirements_test.txt')).readlines()]
 
-shutil.rmtree('build/')
+
 shutil.rmtree('dist/')
 
 with open(path.join(root_dir, package_name, '__init__.py')) as f:
