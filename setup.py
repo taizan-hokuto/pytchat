@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages, Command
 #from codecs import open as open_c
 from os import path, system, remove, rename, removedirs
-import re, shutil
+import re
 
 package_name = "pytchat"
 
@@ -12,9 +12,6 @@ def _requirements():
 
 def _test_requirements():
     return [name.rstrip() for name in open(path.join(root_dir, 'requirements_test.txt')).readlines()]
-
-
-shutil.rmtree('dist/')
 
 with open(path.join(root_dir, package_name, '__init__.py')) as f:
     init_text = f.read()
