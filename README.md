@@ -27,7 +27,7 @@ pip install pytchat
 ```python
 from pytchat import LiveChat
 
-chat = LiveChat("rsHWP7IjMiw")
+chat = LiveChat("DSGyEsJ17cI")
 while chat.is_alive():
   data = chat.get()
   for c in data.items:
@@ -47,7 +47,7 @@ def display(data):
     data.tick()
 
 if __name__ == '__main__':
-  chat = LiveChat("rsHWP7IjMiw", callback = display)
+  chat = LiveChat("DSGyEsJ17cI", callback = display)
   while chat.is_alive():
     #other background operation.
     time.sleep(3)
@@ -61,7 +61,7 @@ from concurrent.futures import CancelledError
 import asyncio
 
 async def main():
-  chat = LiveChatAsync("rsHWP7IjMiw", callback = func)
+  chat = LiveChatAsync("DSGyEsJ17cI", callback = func)
   while chat.is_alive():
     #other background operation.
     await asyncio.sleep(3)
@@ -86,7 +86,7 @@ if __name__ == '__main__':
 from pytchat import LiveChat, CompatibleProcessor
 import time
 
-chat = LiveChat("rsHWP7IjMiw", 
+chat = LiveChat("DSGyEsJ17cI", 
   processor = CompatibleProcessor() )
 
 while chat.is_alive():
@@ -108,7 +108,8 @@ from pytchat import LiveChat
 
 def main():
   #seektime (seconds): start position of chat.
-  chat = ReplayChat("ojes5ULOqhc", seektime = 60*30)
+  chat = LiveChat("ojes5ULOqhc", seektime = 60*30)
+  print('Replay from 30:00')
   while chat.is_alive():
     data = chat.get()
     for c in data.items:
