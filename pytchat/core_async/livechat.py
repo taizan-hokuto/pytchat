@@ -109,9 +109,7 @@ class LiveChatAsync:
         self._topchat_only = topchat_only
         if not LiveChatAsync._setup_finished:
             LiveChatAsync._setup_finished = True
-            if exception_handler == None:
-                self._set_exception_handler(self._handle_exception)
-            else:
+            if exception_handler:
                 self._set_exception_handler(exception_handler)
             if interruptable:
                 signal.signal(signal.SIGINT,  
@@ -321,18 +319,6 @@ class LiveChatAsync:
             self._buffer.put_nowait({'chatdata':'','timeout':0}) 
         logger.info(f'[{self.video_id}]finished.')
  
-    @classmethod
-    def _set_exception_handler(cls, handler):
-        loop = asyncio.get_event_loop()
-        loop.set_exception_handler(handler)
-    
-    @classmethod
-    def _handle_exception(cls, loop, context):
-        if not isinstance(context["exception"],CancelledError):
-            logger.error(f"Caught exception: {context}")
-        loop= asyncio.get_event_loop()
-        loop.create_task(cls.shutdown(None,None,None))
-
     @classmethod
     async def shutdown(cls, event, sig = None, handler=None):
         logger.debug("shutdown...")

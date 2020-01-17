@@ -59,7 +59,6 @@ class BaseRenderer:
 
 
     def get_badges(self,renderer):
-        #print(json.dumps(renderer,ensure_ascii=False,indent=2))
         isVerified = False
         isChatOwner = False
         isChatSponsor = False
