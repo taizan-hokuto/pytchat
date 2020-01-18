@@ -5,15 +5,11 @@ Parser of live chat JSON.
 """
 
 import json
-from .. import config
 from .. exceptions import ( 
     ResponseContextError, 
     NoContentsException, 
     NoContinuationsException,
     ChatParseException )
-
-
-logger = config.logger(__name__)
 
 class Parser:
 
@@ -65,8 +61,7 @@ class Parser:
                 raise ChatParseException('Finished chat data')
             unknown = list(cont.keys())[0]
             if unknown:
-                logger.debug(f"Received unknown continuation type:{unknown}")
-                metadata = cont.get(unknown)
+                raise ChatParseException(f"Received unknown continuation type:{unknown}")
             else:
                 raise ChatParseException('Cannot extract continuation data')
         return self._create_data(metadata, contents)

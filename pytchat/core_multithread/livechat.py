@@ -16,7 +16,6 @@ from ..paramgen    import liveparam, arcparam
 from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
 
-logger = config.logger(__name__)
 headers = config.headers
 MAX_RETRY = 10
 
@@ -74,7 +73,9 @@ class LiveChat:
 
     _setup_finished = False
     #チャット監視中のListenerのリスト
-    _listeners= []
+    _listeners = []
+    _logger = config.logger(__name__)
+
     def __init__(self, video_id,
                 seektime = 0,
                 processor = DefaultProcessor(),
@@ -84,7 +85,8 @@ class LiveChat:
                 done_callback = None,
                 direct_mode = False,
                 force_replay = False,
-                topchat_only  = False
+                topchat_only  = False,
+                logger = config.logger(__name__)
                 ):
         self.video_id  = video_id
         self.seektime = seektime
@@ -106,6 +108,8 @@ class LiveChat:
         self._first_fetch = True
         self._fetch_url = "live_chat/get_live_chat?continuation="
         self._topchat_only = topchat_only
+        self._logger = logger
+        LiveChat._logger = logger
         if not LiveChat._setup_finished:
             LiveChat._setup_finished = True
             if interruptable:
@@ -115,7 +119,6 @@ class LiveChat:
         LiveChat._listeners.append(self)
 
     def _setup(self):
-        #logger.debug("setup")
         #direct modeがTrueでcallback未設定の場合例外発生。
         if self._direct_mode:
             if self._callback is None:
@@ -181,13 +184,13 @@ class LiveChat:
                     time.sleep(diff_time if diff_time > 0 else 0)        
                     continuation = metadata.get('continuation')  
         except ChatParseException as e:
-            logger.debug(f"[{self.video_id}]{str(e)}")
+            self._logger.debug(f"[{self.video_id}]{str(e)}")
             return            
         except (TypeError , json.JSONDecodeError) :
-            logger.error(f"{traceback.format_exc(limit = -1)}")
+            self._logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
-        logger.debug(f"[{self.video_id}]finished fetching chat.")
+        self._logger.debug(f"[{self.video_id}]finished fetching chat.")
 
     def _check_pause(self, continuation):
         if self._pauser.empty():
@@ -244,7 +247,7 @@ class LiveChat:
                     time.sleep(1)
                     continue
         else:
-            logger.error(f"[{self.video_id}]"
+            self._logger.error(f"[{self.video_id}]"
                     f"Exceeded retry count. status_code={status_code}")
             return None
         return livechat_json
@@ -299,7 +302,7 @@ class LiveChat:
         try: 
             self.terminate()
         except CancelledError:
-            logger.debug(f'[{self.video_id}]cancelled:{sender}')
+            self._logger.debug(f'[{self.video_id}]cancelled:{sender}')
 
     def terminate(self):
         '''
@@ -309,10 +312,10 @@ class LiveChat:
         if self._direct_mode == False:
             #bufferにダミーオブジェクトを入れてis_alive()を判定させる
             self._buffer.put({'chatdata':'','timeout':0}) 
-        logger.info(f'[{self.video_id}]finished.')
+        self._logger.info(f'[{self.video_id}]finished.')
   
     @classmethod
     def shutdown(cls, event, sig = None, handler=None):
-        logger.debug("shutdown...")
+        cls._logger.debug("shutdown...")
         for t in LiveChat._listeners:
             t._is_alive = False

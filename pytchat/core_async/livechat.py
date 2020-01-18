@@ -17,7 +17,6 @@ from ..paramgen    import liveparam, arcparam
 from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
 
-logger = config.logger(__name__)
 headers = config.headers
 MAX_RETRY = 10
 
@@ -74,6 +73,7 @@ class LiveChatAsync:
     '''
 
     _setup_finished = False
+    _logger = config.logger(__name__)
 
     def __init__(self, video_id,
                 seektime = 0,
@@ -85,7 +85,8 @@ class LiveChatAsync:
                 exception_handler = None,
                 direct_mode = False,
                 force_replay = False,
-                topchat_only = False
+                topchat_only = False,
+                logger = config.logger(__name__),
                 ): 
         self.video_id  = video_id
         self.seektime = seektime
@@ -107,6 +108,9 @@ class LiveChatAsync:
         self._first_fetch = True
         self._fetch_url = "live_chat/get_live_chat?continuation="
         self._topchat_only = topchat_only
+        self._logger = logger
+        LiveChatAsync._logger = logger
+
         if not LiveChatAsync._setup_finished:
             LiveChatAsync._setup_finished = True
             if exception_handler:
@@ -185,14 +189,14 @@ class LiveChatAsync:
                     continuation = metadata.get('continuation')     
         except ChatParseException as e:
             #self.terminate()
-            logger.debug(f"[{self.video_id}]{str(e)}")
+            self._logger.debug(f"[{self.video_id}]{str(e)}")
             return            
         except (TypeError , json.JSONDecodeError) :
             #self.terminate()
-            logger.error(f"{traceback.format_exc(limit = -1)}")
+            self._logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
-        logger.debug(f"[{self.video_id}]finished fetching chat.")
+        self._logger.debug(f"[{self.video_id}]finished fetching chat.")
 
     async def _check_pause(self, continuation):
         if self._pauser.empty():
@@ -252,7 +256,7 @@ class LiveChatAsync:
                     await asyncio.sleep(1)
                     continue
         else:
-            logger.error(f"[{self.video_id}]"
+            self._logger.error(f"[{self.video_id}]"
                     f"Exceeded retry count. status_code={status_code}")
             return None
         return livechat_json
@@ -307,7 +311,7 @@ class LiveChatAsync:
         try: 
             self.terminate()
         except CancelledError:
-            logger.debug(f'[{self.video_id}]cancelled:{sender}')
+            self._logger.debug(f'[{self.video_id}]cancelled:{sender}')
 
     def terminate(self):
         '''
@@ -317,7 +321,7 @@ class LiveChatAsync:
         if self._direct_mode == False:
             #bufferにダミーオブジェクトを入れてis_alive()を判定させる
             self._buffer.put_nowait({'chatdata':'','timeout':0}) 
-        logger.info(f'[{self.video_id}]finished.')
+        self._logger.info(f'[{self.video_id}]finished.')
  
     @classmethod
     def _set_exception_handler(cls, handler):
@@ -326,12 +330,12 @@ class LiveChatAsync:
     
     @classmethod
     async def shutdown(cls, event, sig = None, handler=None):
-        logger.debug("shutdown...")
+        cls._logger.debug("shutdown...")
         tasks = [t for t in asyncio.all_tasks() if t is not
         asyncio.current_task()]
         [task.cancel() for task in tasks]
 
-        logger.debug(f"complete remaining tasks...")
+        cls._logger.debug(f"complete remaining tasks...")
         await asyncio.gather(*tasks,return_exceptions=True)
         loop = asyncio.get_event_loop()
         loop.stop()

@@ -3,21 +3,21 @@ import logging
 import datetime
 
 
-def get_logger(modname,mode=logging.DEBUG):
+def get_logger(modname,loglevel=logging.DEBUG):
     logger = getLogger(modname)
-    if mode == None:
+    if loglevel == None:
         logger.addHandler(NullHandler())
         return logger
-    logger.setLevel(mode)
+    logger.setLevel(loglevel)
     #create handler1 for showing info
     handler1 = StreamHandler()
     my_formatter  = MyFormatter()
     handler1.setFormatter(my_formatter)
 
-    handler1.setLevel(mode) 
+    handler1.setLevel(loglevel) 
     logger.addHandler(handler1)
     #create handler2 for recording log file
-    if mode <= logging.DEBUG:
+    if loglevel <= logging.DEBUG:
         handler2 = FileHandler(filename="log.txt", encoding='utf-8')
         handler2.setLevel(logging.ERROR)
         handler2.setFormatter(my_formatter)
