@@ -61,7 +61,7 @@ class DefaultProcessor(ChatProcessor):
 
             renderer.get_snippet()
             renderer.get_authordetails()
-        except (KeyError,TypeError,AttributeError) as e:
+        except (KeyError,TypeError) as e:
             logger.error(f"{str(type(e))}-{str(e)} sitem:{str(sitem)}")
             return None
         return renderer        

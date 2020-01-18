@@ -7,13 +7,16 @@ pytchat is a python library for fetching youtube live chat.
 pytchat is a python library for fetching youtube live chat
 without using youtube api, Selenium or BeautifulSoup.
 
+pytchatはAPIを使わずにYouTubeチャットを取得するための軽量pythonライブラリです。
+
 Other features:
 + Customizable chat data processors including youtube api compatible one.
 + Available on asyncio context. 
 + Quick fetching of initial chat data by generating continuation params
 instead of web scraping.
 
-For more detailed information, see [wiki](https://github.com/taizan-hokuto/pytchat/wiki).
+For more detailed information, see [wiki](https://github.com/taizan-hokuto/pytchat/wiki). <br>
+より詳細な解説は[wiki](https://github.com/taizan-hokuto/pytchat/wiki/Home-:)を参照してください。
 
 ## Install
 ```python
@@ -26,13 +29,17 @@ pip install pytchat
 ### on-demand mode
 ```python
 from pytchat import LiveChat
+livechat = LiveChat(video_id = "Zvp1pJpie4I")
 
-chat = LiveChat("DSGyEsJ17cI")
-while chat.is_alive():
-  data = chat.get()
-  for c in data.items:
-    print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
-    data.tick()
+while livechat.is_alive():
+  try:
+    chatdata = livechat.get()
+    for c in chatdata.items:
+        print(f"{c.datetime} [{c.author.name}]- {c.message}")
+        chatdata.tick()
+  except KeyboardInterrupt:
+    livechat.terminate()
+    break
 ```
 
 ### callback mode
@@ -40,17 +47,21 @@ while chat.is_alive():
 from pytchat import LiveChat
 import time
 
-#callback function is automatically called.
-def display(data):
-  for c in data.items:
-    print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
-    data.tick()
+def main():
+  livechat = LiveChat(video_id = "Zvp1pJpie4I", callback = disp)
+  while livechat.is_alive():
+    #other background operation.
+    time.sleep(1)
+  livechat.terminate()
+
+#callback function (automatically called)
+def disp(chatdata):
+    for c in chatdata.items:
+        print(f"{c.datetime} [{c.author.name}]- {c.message}")
+        chatdata.tick()
 
 if __name__ == '__main__':
-  chat = LiveChat("DSGyEsJ17cI", callback = display)
-  while chat.is_alive():
-    #other background operation.
-    time.sleep(3)
+  main()
 
 ```
 
@@ -61,16 +72,16 @@ from concurrent.futures import CancelledError
 import asyncio
 
 async def main():
-  chat = LiveChatAsync("DSGyEsJ17cI", callback = func)
-  while chat.is_alive():
+  livechat = LiveChatAsync("Zvp1pJpie4I", callback = func)
+  while livechat.is_alive():
     #other background operation.
     await asyncio.sleep(3)
 
 #callback function is automatically called.
-async def func(data):
-  for c in data.items:
+async def func(chatdata):
+  for c in chatdata.items:
     print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
-    await data.tick_async()
+    await chatdata.tick_async()
 
 if __name__ == '__main__':
   try:
@@ -86,18 +97,20 @@ if __name__ == '__main__':
 from pytchat import LiveChat, CompatibleProcessor
 import time
 
-chat = LiveChat("DSGyEsJ17cI", 
+chat = LiveChat("Zvp1pJpie4I", 
   processor = CompatibleProcessor() )
 
 while chat.is_alive():
-  data = chat.get()
-  polling = data['pollingIntervalMillis']/1000
-  for c in data['items']:
-    if c.get('snippet'):
-      print(f"[{c['authorDetails']['displayName']}]"
-            f"-{c['snippet']['displayMessage']}")
-      time.sleep(polling/len(data['items']))
-
+  try:
+    data = chat.get()
+    polling = data['pollingIntervalMillis']/1000
+    for c in data['items']:
+      if c.get('snippet'):
+        print(f"[{c['authorDetails']['displayName']}]"
+              f"-{c['snippet']['displayMessage']}")
+        time.sleep(polling/len(data['items']))
+  except KeyboardInterrupt:
+    chat.terminate()
 ```
 ### replay: 
 If specified video is not live,
@@ -110,18 +123,21 @@ def main():
   #seektime (seconds): start position of chat.
   chat = LiveChat("ojes5ULOqhc", seektime = 60*30)
   print('Replay from 30:00')
-  while chat.is_alive():
-    data = chat.get()
-    for c in data.items:
-      print(f"{c.elapsedTime} [{c.author.name}]-{c.message} {c.amountString}")
-      data.tick()
+  try:
+    while chat.is_alive():
+      data = chat.get()
+      for c in data.items:
+        print(f"{c.elapsedTime} [{c.author.name}]-{c.message} {c.amountString}")
+        data.tick()
+  except KeyboardInterrupt:
+    chat.terminate()
 
 if __name__ == '__main__':
   main()
 ```
 
 ## Structure of Default Processor
-Each item can be got with items() function.
+Each item can be got with `items` function.
 <table>
   <tr>
     <th>name</th>

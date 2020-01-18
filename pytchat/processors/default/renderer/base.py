@@ -1,5 +1,4 @@
 from datetime import datetime
-
 class Author:
     pass
 class BaseRenderer:
@@ -67,16 +66,17 @@ class BaseRenderer:
         badges=renderer.get("authorBadges")
         if badges:
             for badge in badges:
-                author_type  = badge["liveChatAuthorBadgeRenderer"]["accessibility"]["accessibilityData"]["label"]
-                if author_type == '確認済み':
-                    isVerified = True
-                if author_type == '所有者':
-                    isChatOwner = True
-                if 'メンバー' in author_type:
+                if badge["liveChatAuthorBadgeRenderer"].get("icon"):
+                    author_type  = badge["liveChatAuthorBadgeRenderer"]["icon"]["iconType"]
+                    if author_type == 'VERIFIED':
+                        isVerified = True
+                    if author_type == 'OWNER':
+                        isChatOwner = True
+                    if author_type == 'MODERATOR':
+                        isChatModerator = True
+                if badge["liveChatAuthorBadgeRenderer"].get("customThumbnail"):
                     isChatSponsor = True
                     self.get_badgeurl(badge)
-                if author_type == 'モデレーター':
-                    isChatModerator = True
         return isVerified, isChatOwner, isChatSponsor, isChatModerator
     
 
