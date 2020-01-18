@@ -109,9 +109,7 @@ class LiveChatAsync:
         self._topchat_only = topchat_only
         if not LiveChatAsync._setup_finished:
             LiveChatAsync._setup_finished = True
-            if exception_handler == None:
-                self._set_exception_handler(self._handle_exception)
-            else:
+            if exception_handler:
                 self._set_exception_handler(exception_handler)
             if interruptable:
                 signal.signal(signal.SIGINT,  
