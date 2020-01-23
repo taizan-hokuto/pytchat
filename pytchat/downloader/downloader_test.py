@@ -45,10 +45,12 @@ def get_init_offset_ms(dics: dict):
     n = 0
     while(True):
         init_offset_ms = dics["response"]["continuationContents"]["liveChatContinuation"]["actions"][n].get("replayChatItemAction")['videoOffsetTimeMsec']
+
         if init_offset_ms is None:
             n += 1
             continue
         else:
+
             return int(init_offset_ms)
 
 def get_last_offset_ms(dics: dict):
@@ -65,7 +67,7 @@ def get_last_offset_ms(dics: dict):
 async def _dl(session,queue, next_url, absolute_start,duration,pbar_pos,is_lastpiece,dl_end):
     async with async_timeout.timeout(1000):
         chat_data = []
-        #print('absolute',absolute_start,'duration',duration,'pos',pbar_pos)
+        print('absolute',absolute_start,'duration',duration,'pos',pbar_pos)
         dlerror=False
         first = True
         rqerr=0
@@ -83,26 +85,28 @@ async def _dl(session,queue, next_url, absolute_start,duration,pbar_pos,is_lastp
                     next_url =f"{REPLAY_URL}{continuation}&pbj=1"
 
                     init_offset_ms = get_init_offset_ms(dics)
+
                     last_offset_ms = get_last_offset_ms(dics)
+
                     length_ms      = last_offset_ms - init_offset_ms
                     #print(f'[{pbar_pos}] length_ms = {length_ms}, total={last_offset_ms}')
                     if length_ms < 0:
                         raise Exception('length_ms < 0')
                     queue.put(length_ms)
                     if first:
-                        #print(dics["response"]["continuationContents"]["liveChatContinuation"]["actions"][0])
-                        #with open(str(pbar_pos)+'FIRST') as f:
-                        #    f.writelines(dics)##############################
+                        print(f"[{pbar_pos}]Init_offset:",init_offset_ms)
+                        #save(pbar_pos,'FIRST',init_offset_ms,last_offset_ms,dics)##############################
                         if pbar_pos > 0:
                             #print(f'Reset dl_end[{pbar_pos - 1}]:{dl_end[pbar_pos - 1]} -> {init_offset_ms} ({init_offset_ms-dl_end[pbar_pos - 1]})')
                             dl_end[pbar_pos - 1] = init_offset_ms
                         first = False
-                    #print(dics["response"]["continuationContents"]["liveChatContinuation"]["actions"][0])
+
                     chat_data.extend(dics["response"]["continuationContents"]["liveChatContinuation"]["actions"])
                     #print(chat_data)
                     if (last_offset_ms >= dl_end[pbar_pos]) and not(is_lastpiece):
                         #save(pbar_pos,'LAST ',init_offset_ms,last_offset_ms,dics)###############################
                         #print(f'break:pbar_pos ={pbar_pos}')
+                        print(f"[{pbar_pos}]last_offset",last_offset_ms)
                         queue.put('quit')
                         break
 
@@ -211,7 +215,8 @@ def _combine(chatblocks):
         if len(chatblocks[0])>0:
             lastline=chatblocks[0][-1]
             #lastline_id = dictquery.getid_replay(json.loads(lastline))
-            lastline_id = dictquery.getid_replay(lastline)
+            lastline_offsettime = dictquery.get_offsettime(lastline)
+            print('lastline_offsettime',lastline_offsettime)
         else: return None
         for i in range(1,len(chatblocks)):
             f=chatblocks[i]
@@ -225,23 +230,23 @@ def _combine(chatblocks):
                 #末尾が直前のデータの末尾行と等しい（ダウンロードタイミングが異なると
                 #trackingParamsが一致しないためidで判定）
                 #if dictquery.getid_replay(json.loads(line)) == lastline_id:
-                if dictquery.getid_replay(line) == lastline_id:
+                if dictquery.get_offsettime(line) > lastline_offsettime:
                     #共通行が見つかったので、共通行以降を結合する
-                    #print(f'[{i}][{row}]Find common line {lastline_id}')
-                    chatblocks[0].extend(f[row+1:])
+                    print(f'[{i}][{row}]Find common line {lastline_offsettime}')
+                    chatblocks[0].extend(f[row:])
                     break
                 if line =='error':
                     logger.error(f'Error file was saved.: piece:{str(i)}')
                     return['error']
             else:#forの途中でbreakが発生しなかった場合ここに飛ぶ
                 #ファイルの結合点（共通ライン）の発見に失敗
-                logger.error(f'Missing common line.: piece:{str(i-1)}->{str(i)} lastline_id= {lastline_id}')
+                logger.error(f'Missing common line.: piece:{str(i-1)}->{str(i)} lastline_id= {lastline_offsettime}')
                 return ['combination failed']#---------------------------------test
             #最終行のデータを更新する
             lastline = f[-1]
             #dic_lastline=json.loads(lastline)
             dic_lastline=lastline
-            lastline_id = dictquery.getid_replay(dic_lastline)
+            lastline_offsettime = dictquery.get_offsettime(dic_lastline)
             #print(f'[{i}]lastline_id:{lastline_id}')
         print(f"length:{len(chatblocks[0])}")
         return chatblocks[0]
@@ -285,6 +290,15 @@ def download(movie_id, duration, divisions):
     #プログレスバーのプロセスを終了させるためQueueにNoneを送る
     queue.put(None)
     #分割DLされたチャットデータを結合して返す
-
     return _combine(chatlist)
+
+def check():
+    #先頭のブロックから、offsettimeを調べる
+    #offsettimeが等しい場合はIDを調べ、ＩＤも一致していたら、
+    #比較元以下を連結対象から外す
+    for  i in range(0,len(blocks)-1):
+        if (offset(i)==offset(i+1)):
+            if(id(i)==id(i+1)):
+                discard(i+1)
+
  

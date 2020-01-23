@@ -41,3 +41,8 @@ def getid_realtime(item):
 
 def get_timestamp_realtime(item):
         return list((list(item.values())[0])['item'].values())[0]['timestampUsec']
+
+
+def get_offsettime(item):
+        #return item['replayChatItemAction']["actions"][0]["videoOffsetTimeMsec"]
+        return item['replayChatItemAction']["videoOffsetTimeMsec"]
