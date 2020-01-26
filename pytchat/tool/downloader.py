@@ -250,3 +250,25 @@ class Downloader:
                 .remove_duplicate_tail()
                 .combine()
         )
+    
+def check_duplicate(blocks):
+    
+    def is_same_offset(index):
+        offset_0 = parser.get_offset(blocks[index])
+        offset_1 = parser.get_offset(blocks[index+1])
+        return (offset_0 == offset_1)
+
+    def is_same_id(index):
+        id_0 = parser.get_id(blocks[index])
+        id_1 = parser.get_id(blocks[index+1])
+        return (id_0 == id_1)
+
+    def is_same_type(index):
+        type_0 = parser.get_type(blocks[index])
+        type_1 = parser.get_type(blocks[index+1])
+        return (type_0 == type_1)
+    ret =[]
+    for i in range(len(blocks)-1):
+        if  ( is_same_offset(i) and is_same_id(i) and is_same_type(i) ):
+            ret.append(blocks[i])
+    return ret
