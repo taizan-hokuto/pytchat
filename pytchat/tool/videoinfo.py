@@ -28,7 +28,9 @@ class VideoInfo:
         return {
             "duration": int(renderer["videoDurationSeconds"]),
             "title" : [''.join(run["text"]) for run in renderer["title"]["runs"]][0],
-            "channelId" : renderer["videoDetails"]["embeddedPlayerOverlayVideoDetailsRenderer"]["channelThumbnailEndpoint"]["channelThumbnailEndpoint"]["urlEndpoint"]["urlEndpoint"]["url"][9:]
+            "channelId" : renderer["videoDetails"]["embeddedPlayerOverlayVideoDetailsRenderer"]["channelThumbnailEndpoint"]["channelThumbnailEndpoint"]["urlEndpoint"]["urlEndpoint"]["url"][9:],
+            "authorProfileImage" : renderer["videoDetails"]["embeddedPlayerOverlayVideoDetailsRenderer"]["channelThumbnail"]["thumbnails"][0]["url"],
+            "thumbnail" : renderer["defaultThumbnail"]["thumbnails"][2]["url"]
         }
 
     def get(self,item):
