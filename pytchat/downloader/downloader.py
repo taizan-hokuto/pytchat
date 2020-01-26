@@ -65,24 +65,28 @@ class Downloader:
         async def _create_block(session, pos, seektime):
             continuation = arcparam.getparam(
                 self.video_id, seektime = seektime)
+            
             url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
             async with session.get(url, headers = headers) as resp:
                 text = await resp.text()
             next_continuation, actions = parser.parse(json.loads(text))
-            first = parser.get_offset(actions[0])
-            last = parser.get_offset(actions[-1])
-            if self.callback:
-                self.callback(actions,last-first)
-            return Block(
-                pos = pos,
-                continuation = next_continuation,
-                chat_data = actions,
-                first = first,
-                last = last
-            )
+            if actions:
+                first = parser.get_offset(actions[0])
+                last = parser.get_offset(actions[-1])
+                if self.callback:
+                    self.callback(actions,last-first)
+                return Block(
+                    pos = pos,
+                    continuation = next_continuation,
+                    chat_data = actions,
+                    first = first,
+                    last = last
+                )
+
         loop = asyncio.get_event_loop()
-        self.blocks = loop.run_until_complete(
+        result = loop.run_until_complete(
             _get_blocks(self.duration, self.div))
+        self.blocks = [block for block in result if block]
         return self  
 
     def remove_duplicate_head(self):
