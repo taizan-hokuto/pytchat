@@ -49,10 +49,9 @@ def get_offset(item):
     return int(item['replayChatItemAction']["videoOffsetTimeMsec"])
 
 def get_id(item):
-    #return list((list(item['replayChatItemAction']["actions"][0].values())[0])['item'].values())[0]['id']
-    return list(item['replayChatItemAction']['actions'][0]['addChatItemAction']['item'].values())[0]['id']
+    return list((list(item['replayChatItemAction']["actions"][0].values())[0])['item'].values())[0].get('id')
 
 def get_type(item):
-    return list(item['replayChatItemAction']["actions"][0]['addChatItemAction']['item'].keys())[0]
+    return list((list(item['replayChatItemAction']["actions"][0].values())[0])['item'].keys())[0]
 
 

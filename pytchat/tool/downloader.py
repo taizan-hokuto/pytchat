@@ -149,18 +149,18 @@ class Downloader:
         self.blocks = ret
         return self
 
-    def download_each_block(self):
+    def download_blocks(self):
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(self._dl_block())
+        loop.run_until_complete(self._dl_allocate())
         return self
 
-    async def _dl_block(self):
-        futures = []
+    async def _dl_allocate(self):
+        tasks = []
         async with aiohttp.ClientSession() as session:
-            futures = [self._dl_chunk(session, block) for block in self.blocks]
-            return await asyncio.gather(*futures,return_exceptions=True)    
+            tasks = [self._dl_task(session, block) for block in self.blocks]
+            return await asyncio.gather(*tasks,return_exceptions=True)    
 
-    async def _dl_chunk(self, session, block:Block):
+    async def _dl_task(self, session, block:Block):
         if (block.temp_last != -1 and
             block.last > block.temp_last):
             return 
@@ -246,7 +246,7 @@ class Downloader:
                 .remove_duplicate_head()
                 .set_temporary_last()
                 .remove_overwrap()
-                .download_each_block()
+                .download_blocks()
                 .remove_duplicate_tail()
                 .combine()
         )
