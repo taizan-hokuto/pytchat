@@ -25,11 +25,12 @@ class Block:
         self.chat_data = chat_data
 
 class Downloader:
-    def __init__(self, video_id,duration,div):
+    def __init__(self, video_id, duration, div, callback=None):
         self.video_id = video_id
         self.duration = duration
         self.div = div
         self.blocks = []
+        self.callback = callback
 
 
     def ready_blocks(self):
@@ -58,26 +59,30 @@ class Downloader:
         async def _get_blocks(duration,div):
             async with aiohttp.ClientSession() as session:
                 futures = [_create_block(session, pos, seektime)
-                    for pos, seektime in enumerate(_divide(-1, duration , div))]
+                    for pos, seektime in enumerate(_divide(-1, duration, div))]
                 return await asyncio.gather(*futures,return_exceptions=True)
 
         async def _create_block(session, pos, seektime):
-            continuation = arcparam.getparam(self.video_id, seektime = seektime)
+            continuation = arcparam.getparam(
+                self.video_id, seektime = seektime)
             url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
             async with session.get(url, headers = headers) as resp:
                 text = await resp.text()
             next_continuation, actions = parser.parse(json.loads(text))
+            first = parser.get_offset(actions[0])
+            last = parser.get_offset(actions[-1])
+            if self.callback:
+                self.callback(actions,last-first)
             return Block(
                 pos = pos,
                 continuation = next_continuation,
                 chat_data = actions,
-                first = parser.get_offset(actions[0]),
-                last = parser.get_offset(actions[-1])
+                first = first,
+                last = last
             )
-            
-
         loop = asyncio.get_event_loop()
-        self.blocks = loop.run_until_complete(_get_blocks(self.duration, self.div))
+        self.blocks = loop.run_until_complete(
+            _get_blocks(self.duration, self.div))
         return self  
 
     def remove_duplicate_head(self):
@@ -103,7 +108,6 @@ class Downloader:
         ret.append(blocks[-1])
         self.blocks = ret
         return self
-
 
     def set_temporary_last(self):
         for i in range(len(self.blocks)-1):
@@ -172,6 +176,9 @@ class Downloader:
             if actions:
                 block.chat_data.extend(actions)
                 last = get_last_offset(actions)
+                first = parser.get_offset(actions[0])
+                if self.callback:
+                    self.callback(actions,last-first)
                 if block.temp_last != -1:
                     if last > block.temp_last:
                         block.last = last
