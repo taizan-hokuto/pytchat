@@ -270,3 +270,17 @@ def check_duplicate(blocks):
         if  ( is_same_offset(i) and is_same_id(i) and is_same_type(i) ):
             ret.append(blocks[i])
     return ret
+
+def download(video_id, div = 20, callback=None, processor = None):
+    duration = 0
+    try:
+        duration = videoinfo(video_id).get("duration")
+    except InvalidVideoIdException:
+        raise
+
+    if duration == 0:
+        print("video is live.")
+        return 
+    
+    dlr = Downloader(video_id,duration,div,callback)
+    return dlr.download()
