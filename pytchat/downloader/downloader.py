@@ -128,22 +128,19 @@ class Downloader:
         jmp = False
         ret.append(blocks[0])
         while a < len(blocks)-2:
-
             while is_overwrap(a,b):
                 b+=1
                 if b == len(blocks)-1:
-                    jmp=True    
+                    jmp = True    
                     break
             if jmp: break
             if b-a == 1:
-                ret.append(blocks[b])
                 a = b
-                b+=1
-                continue
             else:
-                ret.append(blocks[b-1])
-                a=b-1
-                b=a+1
+                a = b-1
+            ret.append(blocks[a])
+            b = a+1
+
         ret.append(blocks[-1])
         self.blocks = ret
         return self
