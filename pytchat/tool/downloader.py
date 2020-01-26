@@ -123,16 +123,13 @@ class Downloader:
         blocks = self.blocks
         if len(blocks) == 1 : return self
 
-        def is_overwrap(a, b):
-            return (blocks[a].last > blocks[b].first)
-        
         ret = []
         a = 0
         b = 1
         jmp = False
         ret.append(blocks[0])
         while a < len(blocks)-2:
-            while is_overwrap(a,b):
+            while blocks[a].last > blocks[b].first:
                 b+=1
                 if b == len(blocks)-1:
                     jmp = True    
