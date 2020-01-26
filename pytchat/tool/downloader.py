@@ -162,10 +162,6 @@ class Downloader:
         if (block.temp_last != -1 and
             block.last > block.temp_last):
             return 
-
-        def get_last_offset(actions):
-            return parser.get_offset(actions[-1])
-
         continuation = block.continuation
         while continuation:
             url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
@@ -174,7 +170,7 @@ class Downloader:
             continuation, actions = parser.parse(json.loads(text))
             if actions:
                 block.chat_data.extend(actions)
-                last = get_last_offset(actions)
+                last = parser.get_offset(actions[-1])
                 first = parser.get_offset(actions[0])
                 if self.callback:
                     self.callback(actions,last-first)
