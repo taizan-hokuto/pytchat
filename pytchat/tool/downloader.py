@@ -261,6 +261,7 @@ def check_duplicate(blocks):
         type_0 = parser.get_type(blocks[index])
         type_1 = parser.get_type(blocks[index+1])
         return (type_0 == type_1)
+        
     ret =[]
     for i in range(len(blocks)-1):
         if  ( is_same_offset(i) and is_same_id(i) and is_same_type(i) ):
@@ -273,10 +274,7 @@ def download(video_id, div = 20, callback=None, processor = None):
         duration = videoinfo(video_id).get("duration")
     except InvalidVideoIdException:
         raise
-
     if duration == 0:
         print("video is live.")
         return 
-    
-    dlr = Downloader(video_id,duration,div,callback)
-    return dlr.download()
+    return Downloader(video_id, duration, div, callback).download()
