@@ -1,6 +1,6 @@
 from base64 import urlsafe_b64encode as b64enc
 from functools import reduce
-import calendar, datetime, pytz
+import time
 import random
 import urllib.parse
 
@@ -141,11 +141,7 @@ def _build(video_id, _ts1, _ts2, _ts3, _ts4, _ts5, topchat_only):
     
 def _times(past_sec):
     
-    def unixts_now():
-        now = datetime.datetime.now(pytz.utc)
-        return calendar.timegm(now.utctimetuple())
-
-    n = unixts_now()
+    n = int(time.time())
     
     _ts1= n - random.uniform(0,1*3)    
     _ts2= n - random.uniform(0.01,0.99)    

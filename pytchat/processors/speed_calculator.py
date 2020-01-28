@@ -3,7 +3,7 @@ speed_calculator.py
 チャットの勢いを算出するChatProcessor
 Calculate speed of chat.
 """
-import calendar, datetime, pytz
+import time
 from .chat_processor import ChatProcessor
 class RingQueue:
     """
@@ -143,8 +143,7 @@ class SpeedCalculator(ChatProcessor, RingQueue):
             '''
             チャットデータがない場合に空のデータをキューに投入する。
             '''
-            timestamp_now =  calendar.timegm(datetime.datetime.
-            now(pytz.utc).utctimetuple())
+            timestamp_now =  int(time.time())
             self.put({
                 'chat_count':0,
                 'starttime':int(timestamp_now),
