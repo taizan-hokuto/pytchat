@@ -73,7 +73,6 @@ class LiveChatAsync:
     '''
 
     _setup_finished = False
-    _logger = config.logger(__name__)
 
     def __init__(self, video_id,
                 seektime = 0,
@@ -249,8 +248,7 @@ class LiveChatAsync:
         continuation = urllib.parse.quote(continuation)
         livechat_json = None
         status_code = 0
-        url =(
-            f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1")
+        url =f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1"
         for _ in range(MAX_RETRY + 1):
             async with session.get(url ,headers = headers) as resp:
                 try:

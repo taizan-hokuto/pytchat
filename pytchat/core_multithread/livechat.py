@@ -74,7 +74,6 @@ class LiveChat:
     _setup_finished = False
     #チャット監視中のListenerのリスト
     _listeners = []
-    _logger = config.logger(__name__)
 
     def __init__(self, video_id,
                 seektime = 0,
@@ -222,9 +221,15 @@ class LiveChat:
                 '''Try to fetch archive chat data.'''
                 self._parser.is_replay = True
                 self._fetch_url = "live_chat_replay/get_live_chat_replay?continuation="
-                continuation = arcparam.getparam(self.video_id, self.seektime)
+                continuation = arcparam.getparam(
+                    self.video_id, self.seektime, self._topchat_only)
                 livechat_json = ( self._get_livechat_json(
                     continuation, session, headers))
+                reload_continuation = self._parser.reload_continuation(
+                    self._parser.get_contents(livechat_json))
+                if reload_continuation:
+                    livechat_json = (self._get_livechat_json(
+                        reload_continuation, session, headers))
                 contents = self._parser.get_contents(livechat_json)
             self._first_fetch = False
         return contents
