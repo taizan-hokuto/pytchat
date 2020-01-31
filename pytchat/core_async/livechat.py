@@ -233,6 +233,11 @@ class LiveChatAsync:
                     self.video_id, self.seektime, self._topchat_only)
                 livechat_json = (await  self._get_livechat_json(
                     continuation, session, headers))
+                reload_continuation = self._parser.reload_continuation(
+                    self._parser.get_contents(livechat_json))
+                if reload_continuation:
+                    livechat_json = (await  self._get_livechat_json(
+                        reload_continuation, session, headers))
                 contents = self._parser.get_contents(livechat_json)
             self._first_fetch = False
         return contents

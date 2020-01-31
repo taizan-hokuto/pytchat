@@ -66,6 +66,23 @@ class Parser:
                 raise ChatParseException('Cannot extract continuation data')
         return self._create_data(metadata, contents)
 
+    def reload_continuation(self, contents):
+        """
+        When `seektime = 0` or seektime is abbreviated , 
+        check if fetched chat json has no chat data. 
+        If so, try to fetch playerSeekContinuationData. 
+        This function must be run only first fetching.
+        """
+        cont = contents['liveChatContinuation']['continuations'][0]
+        if cont.get("liveChatReplayContinuationData"):
+            #chat data exist.
+            return None
+        #chat data do not exist, get playerSeekContinuationData.
+        init_cont = cont.get("playerSeekContinuationData")
+        if init_cont:
+            return init_cont.get("continuation")
+        raise ChatParseException('Finished chat data')
+
     def _create_data(self, metadata, contents):    
         actions = contents['liveChatContinuation'].get('actions')
         if self.is_replay:    
