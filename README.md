@@ -16,7 +16,7 @@ Other features:
 instead of web scraping.
 
 For more detailed information, see [wiki](https://github.com/taizan-hokuto/pytchat/wiki). <br>
-より詳細な解説は[wiki](https://github.com/taizan-hokuto/pytchat/wiki/Home-:)を参照してください。
+より詳細な解説は[wiki](https://github.com/taizan-hokuto/pytchat/wiki/Home_jp)を参照してください。
 
 ## Install
 ```python
