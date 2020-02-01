@@ -26,12 +26,12 @@ class VideoInfo:
             raise InvalidVideoIdException("動画IDが無効です。")
         renderer = (json.loads(response))["embedPreview"]["thumbnailPreviewRenderer"]
         return {
-            "duration": int(renderer["videoDurationSeconds"]),
-            "title" : [''.join(run["text"]) for run in renderer["title"]["runs"]][0],
-            "channelId" : renderer["videoDetails"]["embeddedPlayerOverlayVideoDetailsRenderer"]["channelThumbnailEndpoint"]["channelThumbnailEndpoint"]["urlEndpoint"]["urlEndpoint"]["url"][9:],
-            "authorProfileImage" : renderer["videoDetails"]["embeddedPlayerOverlayVideoDetailsRenderer"]["channelThumbnail"]["thumbnails"][0]["url"],
-            "thumbnail" : renderer["defaultThumbnail"]["thumbnails"][2]["url"],
-            "movingThumbnail" : renderer["movingThumbnail"]["thumbnails"][0]["url"]
+            "duration": int(renderer["videoDurationSeconds"]) if renderer.get("videoDurationSeconds") else 0,
+            "title" : [''.join(run["text"]) for run in renderer["title"]["runs"]][0] if renderer.get("title") else None,
+            "channelId" : renderer["videoDetails"]["embeddedPlayerOverlayVideoDetailsRenderer"]["channelThumbnailEndpoint"]["channelThumbnailEndpoint"]["urlEndpoint"]["urlEndpoint"]["url"][9:] if renderer.get("videoDetails") else None,
+            "authorProfileImage" : renderer["videoDetails"]["embeddedPlayerOverlayVideoDetailsRenderer"]["channelThumbnail"]["thumbnails"][0]["url"] if renderer.get("videoDetails") else None,
+            "thumbnail" : renderer["defaultThumbnail"]["thumbnails"][2]["url"] if renderer.get("defaultThumbnail") else None,
+            "movingThumbnail" : renderer["movingThumbnail"]["thumbnails"][0]["url"] if renderer.get("movingThumbnail") else None
         }
 
     def get(self,item):
