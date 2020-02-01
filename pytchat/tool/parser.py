@@ -5,7 +5,6 @@ from .. exceptions import (
     NoContentsException, 
     NoContinuationsException )
 
-
 logger = config.logger(__name__)
 
 def parse(jsn):
@@ -27,7 +26,6 @@ def parse(jsn):
         raise ResponseContextError('動画に接続できません。'
     '動画IDが間違っているか、動画が削除／非公開の可能性があります。')
     contents=jsn['response'].get('continuationContents')
-    #配信が終了した場合、もしくはチャットデータが取得できない場合
     if contents is None:
         raise NoContentsException('チャットデータを取得できませんでした。')
 
@@ -41,17 +39,16 @@ def parse(jsn):
         return continuation, actions
     return None, []
 
-    # if actions is None:
-    #     return {"continuation":None,"chatdata":[]}
-    
 
 def get_offset(item):
     return int(item['replayChatItemAction']["videoOffsetTimeMsec"])
 
 def get_id(item):
-    return list((list(item['replayChatItemAction']["actions"][0].values())[0])['item'].values())[0].get('id')
+    return list((list(item['replayChatItemAction']["actions"][0].values()
+                )[0])['item'].values())[0].get('id')
 
 def get_type(item):
-    return list((list(item['replayChatItemAction']["actions"][0].values())[0])['item'].keys())[0]
+    return list((list(item['replayChatItemAction']["actions"][0].values()
+                )[0])['item'].keys())[0]
 
 

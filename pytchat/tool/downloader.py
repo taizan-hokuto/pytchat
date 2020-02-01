@@ -3,13 +3,15 @@ import aiohttp
 import json
 import traceback
 from urllib.parse import quote
-
 from . import parser
 from . import videoinfo
+from . dlworker import DownloadWorker
+from . duplcheck import duplicate_head, duplicate_tail, overwrap
 from .. import config
 from .. import util
 from .. paramgen import arcparam
 from ..exceptions import InvalidVideoIdException
+
 logger = config.logger(__name__)
 headers=config.headers
 
@@ -91,27 +93,7 @@ class Downloader:
         return self  
 
     def remove_duplicate_head(self):
-        blocks = self.blocks
-
-        def is_same_offset(index):
-            return (blocks[index].first == blocks[index+1].first)
-
-        def is_same_id(index):
-            id_0 = parser.get_id(blocks[index].chat_data[0])
-            id_1 = parser.get_id(blocks[index+1].chat_data[0])
-            return (id_0 == id_1)
-
-        def is_same_type(index):
-            type_0 = parser.get_type(blocks[index].chat_data[0])
-            type_1 = parser.get_type(blocks[index+1].chat_data[0])
-            return (type_0 == type_1)
-
-        ret = []
-        [ret.append(blocks[i]) for i in range(len(blocks)-1)
-            if (len(blocks[i].chat_data)>0 and 
-            not ( is_same_offset(i) and is_same_id(i) and is_same_type(i)))]
-        ret.append(blocks[-1])
-        self.blocks = ret
+        self.blocks = duplicate_head(self.blocks)
         return self
 
     def set_temporary_last(self):
@@ -121,118 +103,49 @@ class Downloader:
         return self
 
     def remove_overwrap(self):
-        blocks = self.blocks
-        if len(blocks) == 1 : return self
-
-        ret = []
-        a = 0
-        b = 1
-        jmp = False
-        ret.append(blocks[0])
-        while a < len(blocks)-2:
-            while blocks[a].last > blocks[b].first:
-                b+=1
-                if b == len(blocks)-1:
-                    jmp = True    
-                    break
-            if jmp: break
-            if b-a == 1:
-                a = b
-            else:
-                a = b-1
-            ret.append(blocks[a])
-            b = a+1
-
-        ret.append(blocks[-1])
-        self.blocks = ret
+        self.blocks = overwrap(self.blocks)
         return self
 
     def download_blocks(self):
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(self._dl_allocate())
+        loop.run_until_complete(self._dl_distribute())
         return self
 
-    async def _dl_allocate(self):
-        tasks = []
+    async def _dl_distribute(self):
+        workers = [
+            DownloadWorker(
+                dl=self.dl_func,
+                block = block,
+                blocklist= self.blocks
+            )
+            for pos,block in enumerate(self.blocks)
+        ]
         async with aiohttp.ClientSession() as session:
-            tasks = [self._dl_task(session, block) for block in self.blocks]
+            tasks = [worker.run(session) for worker in workers]
             return await asyncio.gather(*tasks,return_exceptions=True)    
 
-    async def _dl_task(self, session, block:Block):
-        if (block.temp_last != -1 and
-            block.last > block.temp_last):
-            return 
-        continuation = block.continuation
-        while continuation:
-            url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
-            async with session.get(url,headers = config.headers) as resp:
-                text = await resp.text()
-            continuation, actions = parser.parse(json.loads(text))
-            if actions:
-                block.chat_data.extend(actions)
-                last = parser.get_offset(actions[-1])
-                first = parser.get_offset(actions[0])
-                if self.callback:
-                    self.callback(actions,last-first)
-                if block.temp_last != -1:
-                    if last > block.temp_last:
-                        block.last = last
-                        break
-                else:
-                    block.last = last
-
+    async def dl_func(self,continuation,session):
+        url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
+        async with session.get(url,headers = config.headers) as resp:
+            text = await resp.text()
+        continuation, actions = parser.parse(json.loads(text))
+        if actions:
+            last = parser.get_offset(actions[-1])
+            first = parser.get_offset(actions[0])
+            if self.callback:
+                self.callback(actions,last-first)
+            return actions,continuation,last
+        return continuation, [], None
+    
     def remove_duplicate_tail(self):
-        blocks = self.blocks
-        if len(blocks) == 1 : return self
-
-        def is_same_offset(index):
-            return (blocks[index-1].last == blocks[index].last)
-
-        def is_same_id(index):
-            id_0 = parser.get_id(blocks[index-1].chat_data[-1])
-            id_1 = parser.get_id(blocks[index].chat_data[-1])
-            return (id_0 == id_1)
-
-        def is_same_type(index):
-            type_0 = parser.get_type(blocks[index-1].chat_data[-1])
-            type_1 = parser.get_type(blocks[index].chat_data[-1])
-            return (type_0 == type_1)
-
-        ret = []
-        ret.append(blocks[0])
-        [ret.append(blocks[i]) for i in range(1,len(blocks)-1)
-            if not ( is_same_offset(i) and is_same_id(i) and is_same_type(i) )]
-        ret.append(self.blocks[-1])
-        self.blocks = ret
+        self.blocks = duplicate_tail(self.blocks)
         return self
 
     def combine(self):
-        line = ''
-        try:
-            if len(self.blocks[0].chat_data)>0:
-                lastline=self.blocks[0].chat_data[-1]
-                lastline_offset = parser.get_offset(lastline)
-            else: return None
-            for i in range(1,len(self.blocks)):
-                f=self.blocks[i].chat_data
-                if len(f)==0:
-                    logger.error(f'zero size piece.:{str(i)}')
-                    continue
-                for row in range(len(f)):
-                    line = f[row]
-                    if parser.get_offset(line) > lastline_offset:
-                        self.blocks[0].chat_data.extend(f[row:])
-                        break
-                else:
-                    logger.error(
-                        f'Missing connection.: pos:{str(i-1)}->{str(i)}'
-                        f' lastline_offset= {lastline_offset}')
-                lastline_offset = parser.get_offset( f[-1])
-            return self.blocks[0].chat_data
-        except Exception as e:
-            logger.error(f"{type(e)} {str(e)} {line}")
-            traceback.print_exc()
-            
+        ret = []
+        for block in self.blocks:
+            ret.extend(block.chat_data) 
+        return ret
 
     def download(self):
         return (
@@ -245,28 +158,6 @@ class Downloader:
                 .combine()
         )
     
-def check_duplicate(blocks):
-    
-    def is_same_offset(index):
-        offset_0 = parser.get_offset(blocks[index])
-        offset_1 = parser.get_offset(blocks[index+1])
-        return (offset_0 == offset_1)
-
-    def is_same_id(index):
-        id_0 = parser.get_id(blocks[index])
-        id_1 = parser.get_id(blocks[index+1])
-        return (id_0 == id_1)
-
-    def is_same_type(index):
-        type_0 = parser.get_type(blocks[index])
-        type_1 = parser.get_type(blocks[index+1])
-        return (type_0 == type_1)
-        
-    ret =[]
-    for i in range(len(blocks)-1):
-        if  ( is_same_offset(i) and is_same_id(i) and is_same_type(i) ):
-            ret.append(blocks[i])
-    return ret
 
 def download(video_id, div = 20, callback=None, processor = None):
     duration = 0
