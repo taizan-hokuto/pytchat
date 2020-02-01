@@ -1,11 +1,10 @@
 from . import parser
 
 class DownloadWorker:
-    def __init__(self, dl, block, blocklist):
-        self.block  = block
-        self.blocklist = blocklist
-        self.dl = dl
-
+    def __init__(self, fetch, block):
+        self.block = block
+        self.fetch = fetch
+        
     async def run(self,session):
         temp_last = self.block.temp_last
         self.block.chat_data, continuation = self.cut(
@@ -14,7 +13,7 @@ class DownloadWorker:
             self.block.last,
             temp_last )
         while continuation:
-            data, cont, fetched_last = await self.dl(continuation, session)
+            data, cont, fetched_last = await self.fetch(continuation, session)
             data, continuation = self.cut(data, cont, fetched_last, temp_last)
             self.block.chat_data.extend(data)
         
