@@ -52,7 +52,6 @@ def duplicate_head(blocks):
                 and
             type_0 == type_1
         )
-
     ret = [blocks[i] for i in range(len(blocks)-1)
         if (len(blocks[i].chat_data)>0 and 
         not is_duplicate_head(i) )]
@@ -75,9 +74,9 @@ def duplicate_tail(blocks):
             type_0 == type_1
         )
 
-    ret = [blocks[i] for i in range(0,len(blocks)-1)
+    ret = [blocks[i] for i in range(0,len(blocks))
         if i == 0 or not  is_duplicate_tail(i) ]
-    ret.append(blocks[-1])
+    #ret.append(blocks[-1])
     return ret
 
 def overwrap(blocks):
@@ -103,3 +102,9 @@ def overwrap(blocks):
         b = a+1
     ret.append(blocks[-1])
     return ret
+
+def _dump(blocks):
+    print(__name__)
+    print(f"----------        first         last   temp_last {'':>3}---")
+    for i,block in enumerate(blocks):
+        print(f"block[{i:3}]   {block.first:>10}   {block.last:>10}  {block.temp_last:>10}")

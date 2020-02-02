@@ -2,15 +2,15 @@ from . import parser
 
 class DownloadWorker:
     """
-    DownloadWorker : associates a download session with a block.
+    DownloadWorker associates a download session with a block.
 
     Parameter
     ----------
-    fetch : func
+    fetch :
         download function of asyncdl
 
-    block : Block
-        chunk of chat_data
+    block :
+        Block object that includes chat_data
     """
     def __init__(self, fetch, block):
         self.block = block

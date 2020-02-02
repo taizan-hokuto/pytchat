@@ -13,12 +13,23 @@ headers = config.headers
 REPLAY_URL = "https://www.youtube.com/live_chat_replay/" \
              "get_live_chat_replay?continuation="
 
-def _divide(start, end, count):
-    min_interval = 120
-    if (not isinstance(start,int) or 
-        not isinstance(end,int) or 
-        not isinstance(count,int)):
-        raise ValueError("start/end/count must be int")
+def _split(start, end, count, min_interval = 120):
+    """
+    Split section from `start` to `end` into `count` pieces,
+    and returns the beginning of each piece. 
+    The `count` is adjusted so that the length of each piece
+    is no smaller than `min_interval`.
+
+    Returns:
+    --------
+    List of the beginning position of each piece.
+    """
+    
+    if not (isinstance(start,int) or isinstance(start,float)) or \
+       not (isinstance(end,int) or isinstance(end,float)):
+        raise ValueError("start/end must be int or float")
+    if not isinstance(count,int):
+        raise ValueError("count must be int")
     if start>end:
         raise ValueError("end must be equal to or greater than start.")
     if count<1:
@@ -39,7 +50,7 @@ def ready_blocks(video_id, duration, div, callback):
     async def _get_blocks( video_id, duration, div, callback):
         async with aiohttp.ClientSession() as session:
             futures = [_create_block(session, video_id, pos, seektime, callback)
-                for pos, seektime in enumerate(_divide(-1, duration, div))]
+                for pos, seektime in enumerate(_split(-1, duration, div))]
             return await asyncio.gather(*futures,return_exceptions=True)
 
     async def _create_block(session, video_id, pos, seektime, callback):

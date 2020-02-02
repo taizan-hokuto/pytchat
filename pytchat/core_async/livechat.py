@@ -73,7 +73,6 @@ class LiveChatAsync:
     '''
 
     _setup_finished = False
-    _logger = config.logger(__name__)
 
     def __init__(self, video_id,
                 seektime = 0,

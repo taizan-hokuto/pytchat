@@ -74,7 +74,6 @@ class LiveChat:
     _setup_finished = False
     #チャット監視中のListenerのリスト
     _listeners = []
-    _logger = config.logger(__name__)
 
     def __init__(self, video_id,
                 seektime = 0,
