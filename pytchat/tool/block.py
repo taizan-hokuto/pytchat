@@ -7,7 +7,8 @@ class Block:
         index of this block on block list.
 
     first : int :
-        videoOffsetTimeMs of chat_data[0]
+        videoOffsetTimeMs of the first chat_data 
+        (chat_data[0])
         
     last : int :
         videoOffsetTimeMs of the last chat_data.

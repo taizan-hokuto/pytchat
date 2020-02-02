@@ -55,7 +55,6 @@ class Downloader:
         return (
             self.ready_blocks()
                 .remove_duplicate_head()
-#                .set_temporary_last()
                 .remove_overwrap()
                 .set_temporary_last()
                 .download_blocks()
