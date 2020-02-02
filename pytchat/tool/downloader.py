@@ -1,8 +1,3 @@
-import asyncio
-import aiohttp
-import json
-import traceback
-from urllib.parse import quote
 from . import asyncdl
 from . import parser
 from . import videoinfo
@@ -10,7 +5,6 @@ from . block import Block
 from . duplcheck import duplicate_head, duplicate_tail, overwrap
 from .. import config
 from .. exceptions import InvalidVideoIdException
-from .. paramgen import arcparam
 
 logger = config.logger(__name__)
 headers=config.headers
@@ -20,8 +14,8 @@ class Downloader:
         self.video_id = video_id
         self.duration = duration
         self.div = div
-        self.blocks = []
         self.callback = callback
+        self.blocks = []
 
     def ready_blocks(self):
         result = asyncdl.ready_blocks(

@@ -13,28 +13,28 @@ headers = config.headers
 REPLAY_URL = "https://www.youtube.com/live_chat_replay/" \
              "get_live_chat_replay?continuation="
 
+def _divide(start, end, count):
+    min_interval = 120
+    if (not isinstance(start,int) or 
+        not isinstance(end,int) or 
+        not isinstance(count,int)):
+        raise ValueError("start/end/count must be int")
+    if start>end:
+        raise ValueError("end must be equal to or greater than start.")
+    if count<1:
+        raise ValueError("count must be equal to or greater than 1.")
+    if (end-start)/count < min_interval:
+        count = int((end-start)/min_interval) 
+        if count == 0 : count = 1
+    interval= (end-start)/count 
+    
+    if count == 1:
+        return [start]
+    return sorted(list(set([int(start+interval*j)
+        for j in range(count) ])))
+
 def ready_blocks(video_id, duration, div, callback):
     if div <= 0: raise ValueError
-
-    def _divide(start, end, count):
-        min_interval = 120
-        if (not isinstance(start,int) or 
-            not isinstance(end,int) or 
-            not isinstance(count,int)):
-            raise ValueError("start/end/count must be int")
-        if start>end:
-            raise ValueError("end must be equal to or greater than start.")
-        if count<1:
-            raise ValueError("count must be equal to or greater than 1.")
-        if (end-start)/count < min_interval:
-            count = int((end-start)/min_interval) 
-            if count == 0 : count = 1
-        interval= (end-start)/count 
-        
-        if count == 1:
-            return [start]
-        return sorted(list(set([int(start+interval*j)
-            for j in range(count) ])))
 
     async def _get_blocks( video_id, duration, div, callback):
         async with aiohttp.ClientSession() as session:
@@ -70,7 +70,7 @@ def ready_blocks(video_id, duration, div, callback):
 
 def download_chunk(callback, blocks):
 
-    async def _dl_distribute():
+    async def _allocate_workers():
         workers = [
             DownloadWorker(
                 fetch = _fetch,
@@ -85,16 +85,15 @@ def download_chunk(callback, blocks):
     async def _fetch(continuation,session):
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
         async with session.get(url,headers = config.headers) as resp:
-            text = await resp.text()
-        continuation, actions = parser.parse(json.loads(text))
+            chat_json = await resp.text()
+        continuation, actions = parser.parse(json.loads(chat_json))
         if actions:
             last = parser.get_offset(actions[-1])
             first = parser.get_offset(actions[0])
             if callback:
-                callback(actions,last-first)
-            return actions,continuation,last
+                callback(actions, last - first)
+            return actions, continuation, last
         return continuation, [], None
     
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(
-        _dl_distribute())
+    loop.run_until_complete(_allocate_workers())

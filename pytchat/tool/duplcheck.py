@@ -3,16 +3,16 @@ from . import parser
 def check_duplicate(chatdata):
     max_range = len(chatdata)-1 
     tbl_offset = [None] * max_range
-    tbl_id =[None] * max_range
-    tbl_type=[None] * max_range
+    tbl_id = [None] * max_range
+    tbl_type = [None] * max_range
 
-    def create_table(chatdata,max_range):
+    def create_table(chatdata, max_range):
         for i in range(max_range):
             tbl_offset[i] = parser.get_offset(chatdata[i])
             tbl_id[i] = parser.get_id(chatdata[i]) 
             tbl_type[i] = parser.get_type(chatdata[i])
 
-    def is_duplicate(i,j):
+    def is_duplicate(i, j):
         return ( 
             tbl_offset[i] == tbl_offset[j]
                 and
