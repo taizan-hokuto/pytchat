@@ -1,6 +1,5 @@
 from . import asyncdl
 from . import parser
-from . block import Block
 from . duplcheck import duplicate_head, duplicate_tail, overwrap
 from . videoinfo import VideoInfo
 from .. import config
@@ -11,6 +10,12 @@ headers=config.headers
 
 class Downloader:
     def __init__(self, video_id, duration, div, callback):
+        if not isinstance(div ,int) or div < 1:
+            raise ValueError('div must be positive integer.')
+        elif div > 10:
+            div = 10
+        if not isinstance(duration ,int) or duration < 1:
+            raise ValueError('duration must be positive integer.')
         self.video_id = video_id
         self.duration = duration
         self.div = div
@@ -29,8 +34,9 @@ class Downloader:
 
     def set_temporary_last(self):
         for i in range(len(self.blocks)-1):
-            self.blocks[i].temp_last = self.blocks[i+1].first
-        self.blocks[-1].temp_last = -1
+            self.blocks[i].end = self.blocks[i+1].first
+        self.blocks[-1].end = self.duration*1000
+        self.blocks[-1].is_last =True
         return self
 
     def remove_overwrap(self):
@@ -38,7 +44,7 @@ class Downloader:
         return self
 
     def download_blocks(self):
-        asyncdl.download_chunk(self.callback, self.blocks)
+        asyncdl.download_chunk(self.callback, self.blocks, self.video_id)
         return self
 
     def remove_duplicate_tail(self):
@@ -62,7 +68,7 @@ class Downloader:
                 .combine()
         )
 
-def download(video_id, div = 20, callback=None, processor = None):
+def download(video_id, div = 1, callback = None, processor = None):
     duration = 0
     try:
         duration = VideoInfo(video_id).get("duration")
@@ -70,5 +76,5 @@ def download(video_id, div = 20, callback=None, processor = None):
         raise
     if duration == 0:
         print("video is live.")
-        return 
+        return []
     return Downloader(video_id, duration, div, callback).download()

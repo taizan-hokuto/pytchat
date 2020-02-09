@@ -12,6 +12,11 @@ def _open_file(path):
     with open(path,mode ='r',encoding = 'utf-8') as f:
         return f.read()
 
+def load_chatdata(filename):
+        return parser.parse(
+            json.loads(_open_file("tests/testdata/dl_duplcheck/head/"+filename))
+        )[1]
+
 def test_overwrap(mocker):
     """
     test overwrap data 
@@ -22,12 +27,12 @@ def test_overwrap(mocker):
 
     """
     blocks = (
-        Block(0,     0, 38771, "",[]),     
-        Block(1,  9890, 38771, "",[]), 
-        Block(2, 20244, 45146, "",[]), 
-        Block(3, 32476, 60520, "",[]), 
-        Block(4, 41380, 62875, "",[]), 
-        Block(5, 52568, 62875, "",[])
+        Block(first = 0,last= 38771, chat_data = load_chatdata("dp0-0.json")),     
+        Block(first = 9890,last= 38771, chat_data = load_chatdata("dp0-1.json")), 
+        Block(first = 20244,last= 45146, chat_data = load_chatdata("dp0-2.json")), 
+        Block(first = 32476,last= 60520, chat_data = load_chatdata("dp0-3.json")), 
+        Block(first = 41380,last= 62875, chat_data = load_chatdata("dp0-4.json")), 
+        Block(first = 52568,last= 62875, chat_data = load_chatdata("dp0-5.json"))
     )
     result = duplcheck.overwrap(blocks)
     assert len(result) == 3
@@ -50,18 +55,15 @@ def test_duplicate_head(mocker):
 
         result    : [0] , [3] , [5] 
     """
-    def load_chatdata(filename):
-        return parser.parse(
-            json.loads(_open_file("tests/testdata/dl_duplcheck/head/"+filename))
-        )[1]
+
 
     blocks = (
-        Block(0,     0,  2500, "",load_chatdata("dp0-0.json")),     
-        Block(1,     0, 38771, "",load_chatdata("dp0-1.json")), 
-        Block(2,     0, 45146, "",load_chatdata("dp0-2.json")), 
-        Block(3, 20244, 60520, "",load_chatdata("dp0-3.json")), 
-        Block(4, 20244, 62875, "",load_chatdata("dp0-4.json")), 
-        Block(5, 52568, 62875, "",load_chatdata("dp0-5.json"))
+        Block(first = 0, last = 2500, chat_data = load_chatdata("dp0-0.json")),     
+        Block(first = 0, last =38771, chat_data = load_chatdata("dp0-1.json")), 
+        Block(first = 0, last =45146, chat_data = load_chatdata("dp0-2.json")), 
+        Block(first = 20244, last =60520, chat_data = load_chatdata("dp0-3.json")), 
+        Block(first = 20244, last =62875, chat_data = load_chatdata("dp0-4.json")), 
+        Block(first = 52568, last =62875, chat_data = load_chatdata("dp0-5.json"))
     )
     _dump(blocks)
     result = duplcheck.duplicate_head(blocks)
@@ -86,18 +88,14 @@ def test_duplicate_tail(mocker):
 
         result    : [0] , [2] , [4] 
     """
-    def load_chatdata(filename):
-        return parser.parse(
-            json.loads(_open_file("tests/testdata/dl_duplcheck/head/"+filename))
-        )[1]
 
     blocks = (
-        Block(0,     0,  2500, "",load_chatdata("dp0-0.json")),     
-        Block(1,  1500,  2500, "",load_chatdata("dp0-1.json")), 
-        Block(2, 10000, 45146, "",load_chatdata("dp0-2.json")), 
-        Block(3, 20244, 45146, "",load_chatdata("dp0-3.json")), 
-        Block(4, 20244, 62875, "",load_chatdata("dp0-4.json")), 
-        Block(5, 52568, 62875, "",load_chatdata("dp0-5.json"))
+        Block(first = 0,last = 2500, chat_data=load_chatdata("dp0-0.json")),     
+        Block(first = 1500,last = 2500, chat_data=load_chatdata("dp0-1.json")), 
+        Block(first = 10000,last = 45146, chat_data=load_chatdata("dp0-2.json")), 
+        Block(first = 20244,last = 45146, chat_data=load_chatdata("dp0-3.json")), 
+        Block(first = 20244,last = 62875, chat_data=load_chatdata("dp0-4.json")), 
+        Block(first = 52568,last = 62875, chat_data=load_chatdata("dp0-5.json"))
     )
 
     result = duplcheck.duplicate_tail(blocks)

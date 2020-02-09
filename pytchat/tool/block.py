@@ -17,7 +17,7 @@ class Block:
 
         this value increases as fetching chatdata progresses.
 
-    temp_last : int :
+    end : int :
         target videoOffsetTimeMs of last chat data for download,
         equals to first videoOffsetTimeMs of next block.
         when download worker reaches this offset, stop downloading.
@@ -25,32 +25,35 @@ class Block:
     continuation : str :
         continuation param of last chat data.
 
-    chat_data : List 
+    chat_data : list 
+
+    done : bool :
+        whether this block has been downloaded.
+    
+    remaining : int :
+        remaining data to download.
+        equals end - last.
+    
+    is_last : bool :
+        whether this block is the last one in blocklist.
+
+    splitting : bool :
+        whether this block is in the process of splitting.
+        while True, this block is excluded from duplicate split procedure.
     """
-    def __init__(self, pos=0, first=0, last=0,
-                continuation='', chat_data=[]):
-        self.pos = pos
+    
+    __slots__ = ['first','last','end','continuation','chat_data','remaining',
+        'done','is_last','splitting']
+
+    def __init__(self,  first = 0, last = 0, end = 0,
+                continuation = '', chat_data = [], is_last = False,
+                splitting = False):
         self.first = first
         self.last = last
-        self.temp_last = 0
+        self.end = end
         self.continuation = continuation
         self.chat_data = chat_data
-    
-    def start(self):
-        chats, cont = self._cut(self.chat_data, self.continuation, self.last)
-        self.chat_data = chats
-        return cont
-
-    def fill(self, chats, cont, fetched_last):
-        chats, cont = self._cut(chats, cont, fetched_last)
-        self.chat_data.extend(chats)
-        return cont
-
-    def _cut(self, chats, cont, fetched_last):
-        if fetched_last < self.temp_last or self.temp_last == -1:
-            return chats, cont
-        for i, line in enumerate(chats):
-            line_offset = parser.get_offset(line)
-            if line_offset >= self.temp_last:
-                self.last = line_offset
-                return chats[:i], None
+        self.done = False
+        self.remaining = self.end- self.last
+        self.is_last = is_last
+        self.splitting = splitting

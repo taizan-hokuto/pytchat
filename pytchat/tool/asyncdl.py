@@ -49,9 +49,9 @@ def ready_blocks(video_id, duration, div, callback):
 
     async def _get_blocks( video_id, duration, div, callback):
         async with aiohttp.ClientSession() as session:
-            futures = [_create_block(session, video_id, pos, seektime, callback)
+            tasks = [_create_block(session, video_id, pos, seektime, callback)
                 for pos, seektime in enumerate(_split(-1, duration, div))]
-            return await asyncio.gather(*futures,return_exceptions=True)
+            return await asyncio.gather(*tasks)
 
     async def _create_block(session, video_id, pos, seektime, callback):
         continuation = arcparam.getparam(
@@ -67,7 +67,6 @@ def ready_blocks(video_id, duration, div, callback):
             if callback:
                 callback(actions,last-first)
             return Block(
-                pos = pos,
                 continuation = next_continuation,
                 chat_data = actions,
                 first = first,
@@ -79,19 +78,22 @@ def ready_blocks(video_id, duration, div, callback):
         _get_blocks(video_id, duration, div, callback))
     return result
 
-def download_chunk(callback, blocks):
+def download_chunk(callback, blocks, video_id):
 
     async def _allocate_workers():
         workers = [
             DownloadWorker(
                 fetch = _fetch,
-                block = block
+                block = block,
+                blocks = blocks,
+                video_id = video_id
+
             )
-            for block in blocks
+            for i,block in enumerate(blocks)
         ]
         async with aiohttp.ClientSession() as session:
             tasks = [worker.run(session) for worker in workers]
-            return await asyncio.gather(*tasks,return_exceptions=True)    
+            return await asyncio.gather(*tasks)    
 
     async def _fetch(continuation,session):
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
@@ -103,8 +105,8 @@ def download_chunk(callback, blocks):
             first = parser.get_offset(actions[0])
             if callback:
                 callback(actions, last - first)
-            return actions, continuation, last
-        return continuation, [], None
+            return actions, continuation, first, last
+        return [], continuation, None, None
     
     loop = asyncio.get_event_loop()
     loop.run_until_complete(_allocate_workers())

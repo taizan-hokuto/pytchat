@@ -55,8 +55,6 @@ def check_duplicate_offset(chatdata):
             tbl_offset[i] == tbl_offset[j]
                  and
             tbl_id[i] == tbl_id[j]
-            #     and
-            # tbl_type[i] == tbl_type[j]
         )
 
     print("creating table...")
@@ -76,6 +74,12 @@ def duplicate_head(blocks):
     if len(blocks) == 1 : return blocks
 
     def is_duplicate_head(index):
+
+        if len(blocks[index].chat_data) == 0:
+            return True
+        elif len(blocks[index+1].chat_data) == 0:
+            return False
+        
         id_0 = parser.get_id(blocks[index].chat_data[0])
         id_1 = parser.get_id(blocks[index+1].chat_data[0])
         type_0 = parser.get_type(blocks[index].chat_data[0])
@@ -97,6 +101,12 @@ def duplicate_tail(blocks):
     if len(blocks) == 1 : return blocks    
 
     def is_duplicate_tail(index):
+
+        if len(blocks[index].chat_data) == 0:
+            return True
+        elif len(blocks[index-1].chat_data) == 0:
+            return False
+  
         id_0 = parser.get_id(blocks[index-1].chat_data[-1])
         id_1 = parser.get_id(blocks[index].chat_data[-1])
         type_0 = parser.get_type(blocks[index-1].chat_data[-1])
@@ -140,6 +150,6 @@ def overwrap(blocks):
 
 def _dump(blocks):
     print(__name__)
-    print(f"----------        first         last   temp_last {'':>3}---")
+    print(f"----------        first         last   end {'':>3}---")
     for i,block in enumerate(blocks):
-        print(f"block[{i:3}]   {block.first:>10}   {block.last:>10}  {block.temp_last:>10}")
+        print(f"block[{i:3}]   {block.first:>10}   {block.last:>10}  {block.end:>10}")
