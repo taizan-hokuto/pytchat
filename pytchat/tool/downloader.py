@@ -1,8 +1,8 @@
 from . import asyncdl
 from . import parser
-from . import videoinfo
 from . block import Block
 from . duplcheck import duplicate_head, duplicate_tail, overwrap
+from . videoinfo import VideoInfo
 from .. import config
 from .. exceptions import InvalidVideoIdException
 
@@ -65,7 +65,7 @@ class Downloader:
 def download(video_id, div = 20, callback=None, processor = None):
     duration = 0
     try:
-        duration = videoinfo(video_id).get("duration")
+        duration = VideoInfo(video_id).get("duration")
     except InvalidVideoIdException:
         raise
     if duration == 0:

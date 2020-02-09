@@ -37,6 +37,41 @@ def check_duplicate(chatdata):
         for i in range(max_range) for j in range(i+1,max_range) 
         if is_duplicate(i,j)]
 
+
+def check_duplicate_offset(chatdata):
+    max_range = len(chatdata)
+    tbl_offset = [None] * max_range
+    tbl_id = [None] * max_range
+    tbl_type = [None] * max_range
+
+    def create_table(chatdata, max_range):
+        for i in range(max_range):
+            tbl_offset[i] = parser.get_offset(chatdata[i])
+            tbl_id[i] = parser.get_id(chatdata[i]) 
+            tbl_type[i] = parser.get_type(chatdata[i])
+
+    def is_duplicate(i, j):
+        return ( 
+            tbl_offset[i] == tbl_offset[j]
+                 and
+            tbl_id[i] == tbl_id[j]
+            #     and
+            # tbl_type[i] == tbl_type[j]
+        )
+
+    print("creating table...")
+    create_table(chatdata,max_range)
+    print("searching duplicate data...")
+
+    return [{
+                "index" : i, "id" : tbl_id[i],
+                "offsetTime" : tbl_offset[i],
+                "type:" : tbl_type[i]
+                
+            }
+        for i in range(max_range-1)
+        if is_duplicate(i,i+1)]
+
 def duplicate_head(blocks):
     if len(blocks) == 1 : return blocks
 
