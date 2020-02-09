@@ -77,4 +77,10 @@ def download(video_id, div = 1, callback = None, processor = None):
     if duration == 0:
         print("video is live.")
         return []
-    return Downloader(video_id, duration, div, callback).download()
+    data = Downloader(video_id, duration, div, callback).download()
+    if processor is None:
+        return data
+    return processor.process(
+        [{'video_id':None,'timeout':1,'chatdata' : [action
+        ["replayChatItemAction"]["actions"][0] for action in data]}]
+    )
