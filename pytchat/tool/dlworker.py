@@ -40,7 +40,7 @@ class DownloadWorker:
             if fetched_first is None:
                 break
             if self.source_block:
-                continuation = after_dividing_process(
+                continuation = split_fill(
                     self.source_block, self.block, chats, new_cont, 
                     fetched_first, fetched_last)
                 self.source_block = None
@@ -107,7 +107,7 @@ def bottom_cut(chats, last) -> list:
             break
     return chats
             
-def after_dividing_process(source_block, block,  chats, new_cont, 
+def split_fill(source_block, block,  chats, new_cont, 
     fetched_first, fetched_last):
     if fetched_last <= source_block.last:
         return None
@@ -129,16 +129,16 @@ def after_dividing_process(source_block, block,  chats, new_cont,
     return continuation
 
 def initial_fill(block):
-    chats, cont = _cut(block, block.chat_data, block.continuation, block.last)
+    chats, cont = get_chats(block, block.chat_data, block.continuation, block.last)
     block.chat_data = chats
     return cont
 
 def fill(block, chats, cont, fetched_last):
-    chats, cont = _cut(block, chats, cont, fetched_last)
+    chats, cont = get_chats(block, chats, cont, fetched_last)
     block.chat_data.extend(chats)
     return cont
 
-def _cut(block, chats, cont, fetched_last):
+def get_chats(block, chats, cont, fetched_last):
     block.last = fetched_last
     if fetched_last < block.end or block.is_last:
         block.last = fetched_last
