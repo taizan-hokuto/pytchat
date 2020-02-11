@@ -58,9 +58,18 @@ def ready_blocks(video_id, duration, div, callback):
             video_id, seektime = seektime)
         
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
-        async with session.get(url, headers = headers) as resp:
-            text = await resp.text()
-        next_continuation, actions = parser.parse(json.loads(text))
+        for _ in range(3):
+            try:
+                async with session.get(url, headers = headers) as resp:
+                    text = await resp.text()
+                next_continuation, actions = parser.parse(json.loads(text))
+            except json.JSONDecodeError:
+                print("JSONDecodeError occured")
+                await asyncio.sleep(1)
+                continue
+            break
+        else:
+            raise json.JSONDecodeError
         if actions:
             first = parser.get_offset(actions[0])
             last = parser.get_offset(actions[-1])
@@ -97,8 +106,17 @@ def download_chunk(callback, blocks, video_id):
 
     async def _fetch(continuation,session):
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
-        async with session.get(url,headers = config.headers) as resp:
-            chat_json = await resp.text()
+        for _ in range(3):
+            try:
+                async with session.get(url,headers = config.headers) as resp:
+                    chat_json = await resp.text()
+            except json.JSONDecodeError:
+                print("JSONDecodeError occured")
+                await asyncio.sleep(1)
+                continue
+            break
+        else:
+            raise json.JSONDecodeError
         continuation, actions = parser.parse(json.loads(chat_json))
         if actions:
             last = parser.get_offset(actions[-1])

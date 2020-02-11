@@ -59,7 +59,7 @@ def check_duplicate_offset(chatdata):
 
     print("creating table...")
     create_table(chatdata,max_range)
-    print("searching duplicate data...")
+    print("searching duplicate offset data...")
 
     return [{
                 "index" : i, "id" : tbl_id[i],
@@ -121,7 +121,6 @@ def duplicate_tail(blocks):
 
     ret = [blocks[i] for i in range(0,len(blocks))
         if i == 0 or not  is_duplicate_tail(i) ]
-    #ret.append(blocks[-1])
     return ret
 
 def overwrap(blocks):

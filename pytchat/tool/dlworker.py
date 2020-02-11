@@ -11,7 +11,7 @@ class DownloadWorker:
         download function of asyncdl
 
     block : Block :
-        Block object that includes chat_data
+        Block object associated with this worker 
     
     blocks : list :
         List of Block(s)
@@ -19,7 +19,7 @@ class DownloadWorker:
     video_id : str :
 
     source_block : Block :
-        the block from which current downloading block is splitted 
+        the Block from which current downloading block is splitted 
     """
     __slots__ = ['fetch', 'block', 'blocks', 'video_id', 'source_block']
 
@@ -54,7 +54,7 @@ class DownloadWorker:
 
 def get_new_block(worker) -> Block:
     worker.block.done = True
-    index,undone_block = get_undone_block(worker.blocks)
+    index,undone_block = search_undone_block(worker.blocks)
     if undone_block is None:
         return Block(continuation = None)
     mean = (undone_block.end + undone_block.last)/2
@@ -70,7 +70,16 @@ def get_new_block(worker) -> Block:
     worker.blocks.insert(index+1,new_block)
     return new_block
 
-def get_undone_block(blocks) -> (int, Block):
+def search_undone_block(blocks) -> (int, Block):
+    """
+    Returns 
+    --------
+    ret_index : int :
+        index of Block download not completed in blocks .
+    
+    ret_block : Block :
+        Block download not completed.
+    """
     max_remaining = 0
     ret_block = None
     ret_index = 0
@@ -85,7 +94,7 @@ def get_undone_block(blocks) -> (int, Block):
     return ret_index, ret_block
 
 def top_cut(chats, last) -> list:
-    for i,chat in enumerate(chats):
+    for i, chat in enumerate(chats):
         if parser.get_offset(chat) > last:
             return chats[i:]
     return []
@@ -111,7 +120,7 @@ def after_dividing_process(source_block, block,  chats, new_cont,
     if fetched_first < source_block.last:
         chats = top_cut(chats, source_block.last)
         block.first = source_block.last
-    if block.end<fetched_last:
+    if block.end < fetched_last:
         chats = bottom_cut(chats, block.end)
         block.last = block.end
         continuation = None
@@ -139,6 +148,6 @@ def _cut(block, chats, cont, fetched_last):
         line_offset = parser.get_offset(line)
         if line_offset >= block.end:
             block.last = line_offset
-            block.remaining=0
-            block.done=True
+            block.remaining = 0
+            block.done = True
             return chats[:i], None
