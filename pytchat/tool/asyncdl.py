@@ -8,6 +8,7 @@ from . dlworker import DownloadWorker
 from .. paramgen import arcparam
 from .. import config 
 from urllib.parse import quote
+from concurrent.futures import CancelledError
 
 headers = config.headers
 REPLAY_URL = "https://www.youtube.com/live_chat_replay/" \
@@ -127,4 +128,24 @@ def download_chunk(callback, blocks, video_id):
         return [], continuation, None, None
     
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(_allocate_workers())
+    try:
+        loop.run_until_complete(_allocate_workers())
+    except CancelledError:
+        pass
+
+
+async def shutdown():
+    print("\nshutdown...")
+    tasks = [t for t in asyncio.all_tasks()
+         if t is not asyncio.current_task()]
+    for task in tasks:
+        task.cancel()
+        try:
+            await task
+        except asyncio.CancelledError:
+            pass
+
+def cancel():
+    loop = asyncio.get_event_loop()
+    loop.create_task(shutdown())
+    
