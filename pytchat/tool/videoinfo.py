@@ -31,6 +31,7 @@ class VideoInfo:
             "channelId" : renderer["videoDetails"]["embeddedPlayerOverlayVideoDetailsRenderer"]["channelThumbnailEndpoint"]["channelThumbnailEndpoint"]["urlEndpoint"]["urlEndpoint"]["url"][9:] if renderer.get("videoDetails") else None,
             "authorProfileImage" : renderer["videoDetails"]["embeddedPlayerOverlayVideoDetailsRenderer"]["channelThumbnail"]["thumbnails"][0]["url"] if renderer.get("videoDetails") else None,
             "thumbnail" : renderer["defaultThumbnail"]["thumbnails"][2]["url"] if renderer.get("defaultThumbnail") else None,
+            "channelName" : renderer["videoDetails"]["embeddedPlayerOverlayVideoDetailsRenderer"]["expandedRenderer"]["embeddedPlayerOverlayVideoDetailsExpandedRenderer"]["title"]["runs"][0]["text"] if renderer.get("videoDetails") else None,
             "movingThumbnail" : renderer["movingThumbnail"]["thumbnails"][0]["url"] if renderer.get("movingThumbnail") else None
         }
 
