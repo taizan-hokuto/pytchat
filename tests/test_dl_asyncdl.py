@@ -1,19 +1,19 @@
 import aiohttp
 import asyncio
 import json
-from pytchat.tool import parser
+from pytchat.tool.download import parser
 import sys
 import time
 from aioresponses import aioresponses
 from concurrent.futures import CancelledError
-from pytchat.tool import asyncdl
+from pytchat.tool.download import asyncdl
 
 def _open_file(path):
     with open(path,mode ='r',encoding = 'utf-8') as f:
         return f.read()
 
 
-def test_asyncdl_split(mocker):
+def test_asyncdl_split():
 
     ret = asyncdl._split(0,1000,1)
     assert ret == [0]

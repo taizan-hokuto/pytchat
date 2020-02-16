@@ -1,6 +1,6 @@
 import json
-from .. import config
-from .. exceptions import ( 
+from ... import config
+from ... exceptions import ( 
     ResponseContextError, 
     NoContentsException, 
     NoContinuationsException )
@@ -23,15 +23,15 @@ def parse(jsn):
     if jsn is None: 
         raise ValueError("parameter JSON is None")
     if jsn['response']['responseContext'].get('errors'):
-        raise ResponseContextError('動画に接続できません。'
-    '動画IDが間違っているか、動画が削除／非公開の可能性があります。')
+        raise ResponseContextError(
+    'video_id is invalid or private/deleted.')
     contents=jsn['response'].get('continuationContents')
     if contents is None:
-        raise NoContentsException('チャットデータを取得できませんでした。')
+        raise NoContentsException('No chat data.')
 
     cont = contents['liveChatContinuation']['continuations'][0]
     if cont is None:
-        raise NoContinuationsException('Continuationがありません。')
+        raise NoContinuationsException('No Continuation')
     metadata = cont.get('liveChatReplayContinuationData')
     if metadata:
         continuation = metadata.get("continuation")

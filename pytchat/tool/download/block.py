@@ -1,12 +1,10 @@
 from . import parser
 class Block:
-    """Block object represents virtual chunk of chatdata.
+    """Block object represents something like a box 
+    to join chunk of chatdata.
 
     Parameter:
     ---------
-    pos : int :
-        index of this block on block list.
-
     first : int :
         videoOffsetTimeMs of the first chat_data 
         (chat_data[0])
@@ -37,23 +35,23 @@ class Block:
     is_last : bool :
         whether this block is the last one in blocklist.
 
-    splitting : bool :
-        whether this block is in the process of splitting.
+    during_split : bool :
+        whether this block is in the process of during_split.
         while True, this block is excluded from duplicate split procedure.
     """
     
     __slots__ = ['first','last','end','continuation','chat_data','remaining',
-        'done','is_last','splitting']
+        'done','is_last','during_split']
 
-    def __init__(self,  first = 0, last = 0, end = 0,
+    def __init__(self, first = 0, last = 0, end = 0,
                 continuation = '', chat_data = [], is_last = False,
-                splitting = False):
+                during_split = False):
         self.first = first
         self.last = last
         self.end = end
         self.continuation = continuation
         self.chat_data = chat_data
         self.done = False
-        self.remaining = self.end- self.last
+        self.remaining = self.end - self.last
         self.is_last = is_last
-        self.splitting = splitting
+        self.during_split = during_split

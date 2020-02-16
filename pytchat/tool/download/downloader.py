@@ -1,9 +1,9 @@
 from . import asyncdl
+from . import duplcheck 
 from . import parser
-from . duplcheck import duplicate_head, duplicate_tail, overwrap
-from . videoinfo import VideoInfo
-from .. import config
-from .. exceptions import InvalidVideoIdException
+from .. videoinfo import VideoInfo
+from ... import config
+from ... exceptions import InvalidVideoIdException
 
 logger = config.logger(__name__)
 headers=config.headers
@@ -22,36 +22,36 @@ class Downloader:
         self.callback = callback
         self.blocks = []
 
-    def ready_blocks(self):
-        result = asyncdl.ready_blocks(
+    def _ready_blocks(self):
+        blocks = asyncdl.ready_blocks(
             self.video_id, self.duration, self.div, self.callback)
-        self.blocks = [block for block in result if block]
+        self.blocks = [block for block in blocks if block]
         return self  
 
-    def remove_duplicate_head(self):
-        self.blocks = duplicate_head(self.blocks)
+    def _remove_duplicate_head(self):
+        self.blocks = duplcheck.remove_duplicate_head(self.blocks)
         return self
 
-    def set_temporary_last(self):
+    def _set_block_end(self):
         for i in range(len(self.blocks)-1):
             self.blocks[i].end = self.blocks[i+1].first
         self.blocks[-1].end = self.duration*1000
         self.blocks[-1].is_last =True
         return self
 
-    def remove_overwrap(self):
-        self.blocks = overwrap(self.blocks)
+    def _remove_overlap(self):
+        self.blocks = duplcheck.remove_overlap(self.blocks)
         return self
 
-    def download_blocks(self):
-        asyncdl.download_chunk(self.callback, self.blocks, self.video_id)
+    def _download_blocks(self):
+        asyncdl.download_patch(self.callback, self.blocks, self.video_id)
         return self
 
-    def remove_duplicate_tail(self):
-        self.blocks = duplicate_tail(self.blocks)
+    def _remove_duplicate_tail(self):
+        self.blocks = duplcheck.remove_duplicate_tail(self.blocks)
         return self
 
-    def combine(self):
+    def _combine(self):
         ret = []
         for block in self.blocks:
             ret.extend(block.chat_data) 
@@ -59,13 +59,13 @@ class Downloader:
 
     def download(self):
         return (
-            self.ready_blocks()
-                .remove_duplicate_head()
-                .remove_overwrap()
-                .set_temporary_last()
-                .download_blocks()
-                .remove_duplicate_tail()
-                .combine()
+            self._ready_blocks()
+                ._remove_duplicate_head()
+                ._set_block_end()
+                ._remove_overlap()
+                ._download_blocks()
+                ._remove_duplicate_tail()
+                ._combine()
         )
 
 def download(video_id, div = 1, callback = None, processor = None):
