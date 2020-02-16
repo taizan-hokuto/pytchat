@@ -23,6 +23,8 @@ def test_split_0():
     """
     Normal case
 
+    ~~~~~~ before ~~~~~~
+
      @parent_block  (# = already downloaded)
     
      first    last                                     end
@@ -31,18 +33,21 @@ def test_split_0():
 
      @child_block
     
-     first = last = 0                                  end=parent_end
-     ---------------------------------------------------|
+     first = last = 0                                  end (=parent_end)
+       |                                                |
     
 
      @fetched patch
                             |-- patch --|
     
      
-                             |
-                             |
-                             V 
+                            |
+                            |
+                            V 
+
+    ~~~~~~ after ~~~~~~
     
+
      @parent_block
     
      first    last         end (after split)   
@@ -83,20 +88,20 @@ def test_split_1():
     ~~~~~~ before ~~~~~~
 
                           patch.first
-      first                  |   last                  end
+      first                 |    last                  end
        |####################|#####|---------------------|
                             ^
      @child_block
-     first = last = 0                                  end=parent_end
-     ---------------------------------------------------|
+     first = last = 0                                  end (=parent_end)
+       |                                                |
      
      @fetched patch
                             |-- patch --|
     
      
-                             |
-                             |
-                             V 
+                            |
+                            |
+                            V 
     
     ~~~~~~ after ~~~~~~
 
@@ -135,8 +140,8 @@ def test_split_2():
        |########------------------------------|
     
      @child_block
-     first = last = 0                        end=parent_end
-     -----------------------------------------|
+     first = last = 0                        end (=parent_end)
+       |                                      |
     
     continuation:succeed from patch
     
@@ -144,9 +149,9 @@ def test_split_2():
                             |-------- patch --------|
     
      
-                             |
-                             |
-                             V 
+                            |
+                            |
+                            V 
 
     ~~~~~~ after ~~~~~~
 
@@ -196,23 +201,23 @@ def test_split_none():
        |####################|###################|-------|
                             ^
      @child_block
-     first = last = 0                                  end=parent_end
-     ---------------------------------------------------|
+     first = last = 0                                  end (=parent_end)
+       |                                                |
      
      @fetched patch
                             |-- patch --|
                                       patch.last < parent_block.last                       .
      
-                             |
-                             |
-                             V 
+                            |
+                            |
+                            V 
     
     ~~~~~~ after ~~~~~~
 
      @parent_block
      first                       last           end (before split)
        |########################################|-------|
-                                                              .
+
      @child_block
                                            
                             ............    -> discard all data.

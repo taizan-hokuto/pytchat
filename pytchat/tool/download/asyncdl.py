@@ -1,4 +1,3 @@
-
 import aiohttp
 import asyncio
 import json
@@ -105,7 +104,7 @@ def download_patch(callback, blocks, video_id):
             if callback:
                 callback(actions, last - first)
             return Patch(actions, continuation, first, last)
-        return Patch()
+        return Patch(continuation = continuation)
     """
     allocate workers and assign blocks.
     """   

@@ -22,7 +22,6 @@ def fill(block:Block, patch:Patch):
         if line_offset < block_end:
             break
         patch.chats.pop()
-        
     set_patch(block, patch._replace(
         continuation = None,
         last = line_offset
@@ -34,15 +33,16 @@ def fill(block:Block, patch:Patch):
 
 def split(parent_block:Block, child_block:Block, patch:Patch):
     parent_block.during_split = False
-    """patch overlaps with parent_block"""
     if patch.first <= parent_block.last:
+        ''' When patch overlaps with parent_block,
+        discard this block. '''
         child_block.continuation = None
         ''' Leave child_block.during_split == True 
-         to exclude from during_split sequence.'''
+         to exclude from during_split sequence. '''
         return    
     child_block.during_split = False
-    child_block.first=patch.first
-    parent_block.end =patch.first
+    child_block.first = patch.first
+    parent_block.end = patch.first
     fill(child_block, patch)
     
 

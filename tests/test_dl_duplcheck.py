@@ -66,7 +66,7 @@ def test_duplicate_head():
                     [4] , [5]  -> append  [4]
                     append [5]
 
-        result    : [0] , [3] , [5] 
+        result    : [2] , [4] , [5] 
     """
 
     #chat data offsets are ignored.
