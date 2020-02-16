@@ -41,3 +41,6 @@ class IllegalFunctionCall(Exception):
     get()を呼び出した場合の例外
     '''
     pass
+
+class InvalidVideoIdException(Exception):
+    pass
