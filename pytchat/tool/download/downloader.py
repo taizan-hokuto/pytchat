@@ -81,8 +81,8 @@ def download(video_id, div = 1, callback = None, processor = None):
     if processor is None:
         return data
     return processor.process(
-        [{'video_id':None,'timeout':1,'chatdata' : [action
-        ["replayChatItemAction"]["actions"][0] for action in data]}]
+        [{'video_id':None,'timeout':1,'chatdata' : (action
+        ["replayChatItemAction"]["actions"][0] for action in data)}]
     )
 
 def cancel():
