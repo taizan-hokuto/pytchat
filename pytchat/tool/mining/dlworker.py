@@ -34,7 +34,6 @@ class DownloadWorker:
         self.video_id:str = video_id
         self.parent_block:Block = None
 
-
     async def run(self, session):
         while self.block.continuation:
             patch = await self.fetch(
@@ -44,11 +43,3 @@ class DownloadWorker:
         self.block.done = True    
 
 
-def fd(name,mes,src,patch,end):
-    def offset(chats):
-        if len(chats)==0:
-            return None,None
-        return parser.get_offset(chats[0]),parser.get_offset(chats[-1])
-
-    with open("v://tlog.csv",encoding="utf-8",mode="a") as f:
-        f.write(f"WORKER,{name},mes,{mes},edge,{offset(src)[1]},first,{offset(patch)[0]},last,{offset(patch)[1]},end,{end}\n")

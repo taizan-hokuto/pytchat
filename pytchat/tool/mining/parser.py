@@ -35,10 +35,7 @@ def parse(jsn):
     metadata = cont.get('liveChatReplayContinuationData')
     if metadata:
         continuation = metadata.get("continuation")
-        #print(continuation)
         actions = contents['liveChatContinuation'].get('actions')
-        # print(list(actions[0]['replayChatItemAction']["actions"][0].values()
-        #         )[0]['item'].get("liveChatPaidMessageRenderer"))
         if continuation:
             return continuation, [action["replayChatItemAction"]["actions"][0] 
                     for action in actions 

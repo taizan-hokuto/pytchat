@@ -178,20 +178,20 @@ class LiveChatAsync:
                     }
                     time_mark =time.time()
                     if self._direct_mode:
-                        await self._callback(
-                            self.processor.process([chat_component])
-                            )
+                        processed_chat = self.processor.process([chat_component])
+                        if isinstance(processed_chat,tuple):
+                            await self._callback(*processed_chat)
+                        else:
+                            await self._callback(processed_chat)
                     else:
                         await self._buffer.put(chat_component)
                     diff_time = timeout - (time.time()-time_mark)
                     await asyncio.sleep(diff_time)        
                     continuation = metadata.get('continuation')     
         except ChatParseException as e:
-            #self.terminate()
             self._logger.debug(f"[{self.video_id}]{str(e)}")
             return            
         except (TypeError , json.JSONDecodeError) :
-            #self.terminate()
             self._logger.error(f"{traceback.format_exc(limit = -1)}")
             return
         
@@ -211,13 +211,13 @@ class LiveChatAsync:
         return continuation
 
     async def _get_contents(self, continuation, session, headers):
-        '''Get 'contents' dict from livechat json.
+        '''Get 'continuationContents' from livechat json.
            If contents is None at first fetching, 
            try to fetch archive chat data.
 
           Return:
           -------
-            'contents' dict which includes metadata & chatdata.
+            'continuationContents' which includes metadata & chatdata.
         '''
         livechat_json = (await 
             self._get_livechat_json(continuation, session, headers)
@@ -275,8 +275,11 @@ class LiveChatAsync:
         """
         while self.is_alive():
             items = await self._buffer.get()
-            data = self.processor.process(items)
-            await callback(data)
+            processed_chat = self.processor.process(items)
+            if isinstance(processed_chat, tuple):
+                await self._callback(*processed_chat)
+            else:
+                await self._callback(processed_chat)
 
     async def get(self):
         """ bufferからデータを取り出し、processorに投げ、

@@ -1,0 +1,18 @@
+{
+ "response": {
+  "responseContext": {
+   "webResponseContextExtensionData": ""
+  },
+  "continuationContents": {
+   "liveChatContinuation": {
+    "continuations": [
+     {
+      "playerSeekContinuationData": {
+       "continuation": "___reload_continuation___"
+      }
+     }
+    ]
+   }
+  }
+ }
+}

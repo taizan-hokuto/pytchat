@@ -1,23 +1,22 @@
 class ChatProcessor:
     '''
-     Listenerからチャットデータ（actions）を受け取り
-    チャットデータを加工するクラスの抽象クラス
+    Abstract class that processes chat data.
+    Receive chat data (actions) from Listener.
     '''
     def process(self, chat_components: list):
         '''
-        チャットデータの加工を表すインターフェース。
-        LiveChatオブジェクトから呼び出される。 
+        Interface that represents processing of chat data.
+        Called from LiveChat object. 
                
         Parameter
         ----------
         chat_components: List[component]
             component : dict {
                 "video_id" : str
-                    動画ID
                 "timeout"  : int
-                    次のチャットの再読み込みまでの時間(秒）
+                    Time to fetch next chat (seconds)
                 "chatdata" : List[dict]
-                    チャットデータのリスト
+                    List of chat data.
             }
         '''
         pass

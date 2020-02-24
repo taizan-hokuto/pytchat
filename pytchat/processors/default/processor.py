@@ -35,7 +35,6 @@ class DefaultProcessor(ChatProcessor):
             for component in chat_components:
                 timeout += component.get('timeout', 0)
                 chatdata = component.get('chatdata')
-             
                 if chatdata is None: continue
                 for action in chatdata:
                     if action is None: continue

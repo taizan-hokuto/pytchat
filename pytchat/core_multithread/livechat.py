@@ -174,9 +174,11 @@ class LiveChat:
                     }
                     time_mark =time.time()
                     if self._direct_mode:
-                        self._callback(
-                            self.processor.process([chat_component])
-                            )
+                        processed_chat = self.processor.process([chat_component])
+                        if isinstance(processed_chat,tuple):
+                            self._callback(*processed_chat)
+                        else:
+                            self._callback(processed_chat)
                     else:
                         self._buffer.put(chat_component)
                     diff_time = timeout - (time.time()-time_mark)
@@ -204,13 +206,13 @@ class LiveChat:
         return continuation
 
     def _get_contents(self, continuation, session, headers):
-        '''Get 'contents' dict from livechat json.
+        '''Get 'continuationContents' from livechat json.
            If contents is None at first fetching, 
            try to fetch archive chat data.
 
           Return:
           -------
-            'contents' dict which includes metadata & chatdata.
+            'continuationContents' which includes metadata & chat data.
         '''
         livechat_json = ( 
             self._get_livechat_json(continuation, session, headers)
@@ -268,8 +270,11 @@ class LiveChat:
         """
         while self.is_alive():
             items = self._buffer.get()
-            data = self.processor.process(items)
-            callback(data)
+            processed_chat = self.processor.process(items)
+            if isinstance(processed_chat, tuple):
+                self._callback(*processed_chat)
+            else:
+                self._callback(processed_chat)
 
     def get(self):
         """ bufferからデータを取り出し、processorに投げ、

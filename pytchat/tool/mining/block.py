@@ -38,6 +38,9 @@ class Block:
     during_split : bool :
         whether this block is in the process of during_split.
         while True, this block is excluded from duplicate split procedure.
+    
+    seektime : float :
+        the last position of this block(seconds) already fetched.
     """
     
     __slots__ = ['first','last','end','continuation','chat_data','remaining',
@@ -45,7 +48,7 @@ class Block:
 
     def __init__(self, first = 0, last = 0, end = 0,
                 continuation = '', chat_data = [], is_last = False,
-                during_split = False,seektime = None):
+                during_split = False, seektime = None):
         self.first = first
         self.last = last
         self.end = end
