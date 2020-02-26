@@ -3,10 +3,10 @@ import asyncio
 import json
 import os, sys
 import time
-from pytchat.tool.download import duplcheck
-from pytchat.tool.download import parser
-from pytchat.tool.download.block import Block
-from pytchat.tool.download.duplcheck import _dump
+from pytchat.tool.extract import duplcheck
+from pytchat.tool.extract import parser
+from pytchat.tool.extract.block import Block
+from pytchat.tool.extract.duplcheck import _dump
 def _open_file(path):
     with open(path,mode ='r',encoding = 'utf-8') as f:
         return f.read()
@@ -23,7 +23,7 @@ def test_overlap():
 
     def load_chatdata(filename):
         return parser.parse(
-            json.loads(_open_file("tests/testdata/dl_duplcheck/overlap/"+filename))
+            json.loads(_open_file("tests/testdata/extarct_duplcheck/overlap/"+filename))
         )[1]
 
     blocks = (
@@ -54,7 +54,7 @@ def test_duplicate_head():
 
     def load_chatdata(filename):
         return parser.parse(
-            json.loads(_open_file("tests/testdata/dl_duplcheck/head/"+filename))
+            json.loads(_open_file("tests/testdata/extarct_duplcheck/head/"+filename))
         )[1]
 
     """
@@ -103,7 +103,7 @@ def test_duplicate_tail():
     """
     def load_chatdata(filename):
         return parser.parse(
-            json.loads(_open_file("tests/testdata/dl_duplcheck/head/"+filename))
+            json.loads(_open_file("tests/testdata/extarct_duplcheck/head/"+filename))
         )[1]
     #chat data offsets are ignored.    
     blocks = (

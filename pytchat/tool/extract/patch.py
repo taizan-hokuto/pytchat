@@ -5,7 +5,7 @@ from typing import NamedTuple
 class Patch(NamedTuple):
     """
     Patch represents chunk of chat data
-    which is fetched by asyncdl.download_patch._fetch().
+    which is fetched by asyncdl.fetch_patch._fetch().
     """
     chats : list = []
     continuation : str = None

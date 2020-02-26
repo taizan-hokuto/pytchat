@@ -1,7 +1,7 @@
 import requests,json,datetime
 from .. import config
 
-def download(url):
+def extract(url):
     _session = requests.Session()
     html = _session.get(url, headers=config.headers)
     with open(str(datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')

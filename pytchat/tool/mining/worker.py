@@ -3,17 +3,17 @@ from . block import Block
 from . patch import Patch, fill
 from ... paramgen import arcparam
 INTERVAL = 1
-class DownloadWorker:
+class ExtractWorker:
     """
-    DownloadWorker associates a download session with a block.
+    ExtractWorker associates a download session with a block.
 
-    When the dlworker finishes downloading, the block
-    being downloaded is splitted and assigned the free dlworker.
+    When the worker finishes fetching, the block
+    being fetched is splitted and assigned the free worker.
 
     Parameter
     ----------
     fetch : func :
-        download function of asyncdl
+        extract function of asyncdl
 
     block : Block :
         Block object that includes chat_data
