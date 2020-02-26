@@ -22,5 +22,6 @@ from .api import (
     SimpleDisplayProcessor,
     JsonfileArchiver,
     SpeedCalculator,
+    SuperchatCalculator,
     DummyProcessor
 )
