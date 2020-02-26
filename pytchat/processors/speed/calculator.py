@@ -4,7 +4,7 @@ speed_calculator.py
 Calculate speed of chat.
 """
 import time
-from .chat_processor import ChatProcessor
+from .. chat_processor import ChatProcessor
 class RingQueue:
     """
     リング型キュー
