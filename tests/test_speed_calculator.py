@@ -7,7 +7,7 @@ from pytchat.exceptions import (
     NoLivechatRendererException,NoYtinitialdataException,
     ResponseContextError, NoContentsException)
 
-from pytchat.processors.speed_calculator import SpeedCalculator
+from pytchat.processors.speed.calculator import SpeedCalculator
 
 parser = Parser(is_replay =False)
 

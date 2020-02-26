@@ -9,18 +9,25 @@ logger = config.logger(__name__)
 headers=config.headers
 
 class Extractor:
-    def __init__(self, video_id, duration, div, callback):
+    def __init__(self, video_id, div, callback = None, processor = None):
         if not isinstance(div ,int) or div < 1:
             raise ValueError('div must be positive integer.')
         elif div > 10:
             div = 10
-        if not isinstance(duration ,int) or duration < 1:
-            raise ValueError('duration must be positive integer.')
         self.video_id = video_id
-        self.duration = duration
         self.div = div
         self.callback = callback
+        self.processor = processor
+        self.duration = self._get_duration_of_video(video_id)
         self.blocks = []
+
+    def _get_duration_of_video(self, video_id):
+        duration = 0
+        try:
+            duration = VideoInfo(video_id).get("duration")
+        except InvalidVideoIdException:
+            raise
+        return duration
 
     def _ready_blocks(self):
         blocks = asyncdl.ready_blocks(
@@ -57,7 +64,7 @@ class Extractor:
             ret.extend(block.chat_data) 
         return ret
 
-    def extract(self):
+    def _execute_extract_operations(self):
         return (
             self._ready_blocks()
                 ._remove_duplicate_head()
@@ -68,22 +75,17 @@ class Extractor:
                 ._combine()
         )
 
-def extract(video_id, div = 1, callback = None, processor = None):
-    duration = 0
-    try:
-        duration = VideoInfo(video_id).get("duration")
-    except InvalidVideoIdException:
-        raise
-    if duration == 0:
-        print("video is live.")
-        return []
-    data = Extractor(video_id, duration, div, callback).extract()
-    if processor is None:
-        return data
-    return processor.process(
-        [{'video_id':None,'timeout':1,'chatdata' : (action
-        ["replayChatItemAction"]["actions"][0] for action in data)}]
+    def extract(self):
+        if self.duration == 0:
+            print("video is not archived.")
+            return []
+        data = self._execute_extract_operations()
+        if self.processor is None:
+           return data
+        return self.processor.process(
+            [{'video_id':None,'timeout':1,'chatdata' : (action
+            ["replayChatItemAction"]["actions"][0] for action in data)}]
     )
 
-def cancel():
-    asyncdl.cancel()
+    def cancel(self):
+        asyncdl.cancel()

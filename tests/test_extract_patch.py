@@ -9,6 +9,7 @@ from pytchat.tool.extract import parser
 from pytchat.tool.extract.block import Block
 from pytchat.tool.extract.patch import Patch, fill, split, set_patch
 from pytchat.tool.extract.duplcheck import _dump
+
 def _open_file(path):
     with open(path,mode ='r',encoding = 'utf-8') as f:
         return f.read()
