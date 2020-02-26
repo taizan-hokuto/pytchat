@@ -1,6 +1,6 @@
-from pytchat.processors.superchat.calculator import Calculator
+from pytchat.processors.superchat.calculator import SuperchatCalculator
 
-get_item = Calculator()._get_item
+get_item = SuperchatCalculator()._get_item
 
 dict_test = {
     'root':{

@@ -1,8 +1,8 @@
 import json
 from pytchat.parser.live import Parser
-from pytchat.processors.superchat.calculator import Calculator
+from pytchat.processors.superchat.calculator import SuperchatCalculator
 from pytchat.exceptions import ChatParseException
-parse = Calculator()._parse
+parse = SuperchatCalculator()._parse
 
 
 def _open_file(path):
@@ -38,7 +38,7 @@ def test_process_0():
         'timeout':10,
         'chatdata':load_chatdata(r"tests\testdata\calculator\superchat_0.json")
     }
-    assert Calculator().process([chat_component])=={'￥': 6800.0, '€': 2.0}
+    assert SuperchatCalculator().process([chat_component])=={'￥': 6800.0, '€': 2.0}
 
 def test_process_1():
     """
@@ -49,7 +49,7 @@ def test_process_1():
         'timeout':10,
         'chatdata':load_chatdata(r"tests\testdata\calculator\text_only.json")
     }
-    assert Calculator().process([chat_component])=={}
+    assert SuperchatCalculator().process([chat_component])=={}
 
 def test_process_2():
     """
@@ -62,7 +62,7 @@ def test_process_2():
             'chatdata':load_chatdata(r"tests\testdata\calculator\replay_end.json")
         }
         assert False
-        Calculator().process([chat_component])
+        SuperchatCalculator().process([chat_component])
     except ChatParseException:
         assert True
     
