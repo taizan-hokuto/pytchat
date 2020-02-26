@@ -23,7 +23,7 @@ def test_overlap():
 
     def load_chatdata(filename):
         return parser.parse(
-            json.loads(_open_file("tests/testdata/extarct_duplcheck/overlap/"+filename))
+            json.loads(_open_file("tests/testdata/extract_duplcheck/overlap/"+filename))
         )[1]
 
     blocks = (
@@ -54,7 +54,7 @@ def test_duplicate_head():
 
     def load_chatdata(filename):
         return parser.parse(
-            json.loads(_open_file("tests/testdata/extarct_duplcheck/head/"+filename))
+            json.loads(_open_file("tests/testdata/extract_duplcheck/head/"+filename))
         )[1]
 
     """
@@ -103,7 +103,7 @@ def test_duplicate_tail():
     """
     def load_chatdata(filename):
         return parser.parse(
-            json.loads(_open_file("tests/testdata/extarct_duplcheck/head/"+filename))
+            json.loads(_open_file("tests/testdata/extract_duplcheck/head/"+filename))
         )[1]
     #chat data offsets are ignored.    
     blocks = (
