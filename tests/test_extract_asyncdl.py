@@ -1,12 +1,12 @@
 import aiohttp
 import asyncio
 import json
-from pytchat.tool.download import parser
+from pytchat.tool.extract import parser
 import sys
 import time
 from aioresponses import aioresponses
 from concurrent.futures import CancelledError
-from pytchat.tool.download import asyncdl
+from pytchat.tool.extract import asyncdl
 
 def _open_file(path):
     with open(path,mode ='r',encoding = 'utf-8') as f:

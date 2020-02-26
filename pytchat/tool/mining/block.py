@@ -16,9 +16,9 @@ class Block:
         this value increases as fetching chatdata progresses.
 
     end : int :
-        target videoOffsetTimeMs of last chat data for download,
+        target videoOffsetTimeMs of last chat data for extract,
         equals to first videoOffsetTimeMs of next block.
-        when download worker reaches this offset, stop downloading.
+        when extract worker reaches this offset, stop fetching.
 
     continuation : str :
         continuation param of last chat data.
@@ -26,10 +26,10 @@ class Block:
     chat_data : list 
 
     done : bool :
-        whether this block has been downloaded.
+        whether this block has been fetched.
     
     remaining : int :
-        remaining data to download.
+        remaining data to extract.
         equals end - last.
     
     is_last : bool :

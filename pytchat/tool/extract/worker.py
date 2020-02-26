@@ -3,17 +3,17 @@ from . block import Block
 from . patch import Patch, fill, split
 from ... paramgen import arcparam
 
-class DownloadWorker:
+class ExtractWorker:
     """
-    DownloadWorker associates a download session with a block.
+    ExtractWorker associates a download session with a block.
 
-    When the dlworker finishes downloading, the block
-    being downloaded is splitted and assigned the free dlworker.
+    When the worker finishes fetching, the block
+    being fetched is splitted and assigned the free worker.
 
     Parameter
     ----------
     fetch : func :
-        download function of asyncdl
+        extract function of asyncdl
 
     block : Block :
         Block object that includes chat_data
@@ -40,7 +40,7 @@ class DownloadWorker:
             patch = await self.fetch(
                 self.block.continuation, session)
             if patch.continuation is None:
-                """TODO : make the dlworker assigned to the last block
+                """TODO : make the worker assigned to the last block
                 to work more than twice as possible.
                 """
                 break
@@ -50,7 +50,7 @@ class DownloadWorker:
             else:    
                 fill(self.block, patch)
             if self.block.continuation is None:
-                """finished downloading this block """
+                """finished fetching this block """
                 self.block.done = True
                 self.block = _search_new_block(self)
 

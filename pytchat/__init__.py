@@ -20,7 +20,7 @@ from .api import (
     CompatibleProcessor,
     DefaultProcessor, 
     SimpleDisplayProcessor,
-    JsonfileArchiveProcessor,
+    JsonfileArchiver,
     SpeedCalculator,
     DummyProcessor
 )

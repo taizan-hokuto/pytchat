@@ -3,7 +3,7 @@ import asyncio
 import json
 from . import parser
 from . block import Block
-from . dlworker import DownloadWorker
+from . worker import ExtractWorker
 from . patch import Patch
 from ... import config 
 from ... paramgen import arcparam
@@ -79,11 +79,11 @@ def ready_blocks(video_id, duration, div, callback):
         _get_blocks(video_id, duration, div, callback))
     return blocks
 
-def download_patch(callback, blocks, video_id):
+def fetch_patch(callback, blocks, video_id):
 
     async def _allocate_workers():
         workers = [
-            DownloadWorker(
+            ExtractWorker(
                 fetch = _fetch,  block = block,
                 blocks = blocks, video_id = video_id
             )
