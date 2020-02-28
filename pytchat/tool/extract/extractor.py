@@ -9,7 +9,7 @@ logger = config.logger(__name__)
 headers=config.headers
 
 class Extractor:
-    def __init__(self, video_id, div, callback = None, processor = None):
+    def __init__(self, video_id, div = 1, callback = None, processor = None):
         if not isinstance(div ,int) or div < 1:
             raise ValueError('div must be positive integer.')
         elif div > 10:

@@ -124,7 +124,6 @@ class VideoInfo:
         return None
 
     def get_title(self):
-        print(self._renderer)
         if self._renderer.get("title"):
             return [''.join(run["text"]) 
                 for run in self._renderer["title"]["runs"]][0]
