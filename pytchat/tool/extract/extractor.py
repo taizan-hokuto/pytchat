@@ -24,7 +24,7 @@ class Extractor:
     def _get_duration_of_video(self, video_id):
         duration = 0
         try:
-            duration = VideoInfo(video_id).duration
+            duration = VideoInfo(video_id).get_duration()
         except InvalidVideoIdException:
             raise
         return duration

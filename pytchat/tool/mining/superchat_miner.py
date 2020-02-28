@@ -54,7 +54,7 @@ class SuperChatMiner:
 def extract(video_id, div = 1, callback = None, processor = None):
     duration = 0
     try:
-        duration = VideoInfo(video_id).duration
+        duration = VideoInfo(video_id).get_duration()
     except InvalidVideoIdException:
         raise
     if duration == 0:

@@ -14,6 +14,7 @@ items_sticker = [
     'item',
     'liveChatPaidStickerRenderer'
 ]
+
 class SuperchatCalculator(ChatProcessor):
     """
     Calculate the amount of SuperChat by currency.

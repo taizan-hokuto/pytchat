@@ -71,6 +71,7 @@ items_test_list3 = [
     'root',
     'node4'
 ]
+
 items_test_list_nest = [
     'root',
     'node5',
@@ -114,7 +115,8 @@ def test_get_items_2():
     assert get_item(dict_test, items_test_nest) == 'value2-0'
 
 def test_get_items_3():
-    assert get_item(dict_test, items_test_list0) ==  {'node3-1-0' : 'value3-1-0'}
+    assert get_item(
+        dict_test, items_test_list0) ==  {'node3-1-0' : 'value3-1-0'}
 
 def test_get_items_4():
     assert get_item(dict_test, items_test_list1) ==  'value3-1-0'
