@@ -20,6 +20,13 @@ class Buffer(asyncio.Queue):
             super().get_nowait()
         await super().put(item)
 
+    def put_nowait(self,item):
+        if item is None:
+            return 
+        if super().full():
+            super().get_nowait()
+        super().put_nowait(item)
+
     async def get(self):
         ret = []
         ret.append(await super().get())

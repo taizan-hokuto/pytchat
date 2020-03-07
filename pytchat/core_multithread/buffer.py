@@ -22,7 +22,14 @@ class Buffer(queue.Queue):
         else:
             super().put(item)
             
-
+    def put_nowait(self,item):
+        if item is None:
+            return 
+        if super().full():
+            super().get_nowait()
+        else:
+            super().put_nowait(item)
+            
     def get(self):
         ret = []
         ret.append(super().get())
