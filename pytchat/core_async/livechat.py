@@ -238,6 +238,7 @@ class LiveChatAsync:
                     livechat_json = (await  self._get_livechat_json(
                         reload_continuation, session, headers))
                 contents = self._parser.get_contents(livechat_json)
+                self._is_replay = True
             self._first_fetch = False
         return contents
 
