@@ -22,10 +22,23 @@ For more detailed information, see [wiki](https://github.com/taizan-hokuto/pytch
 ```python
 pip install pytchat
 ```
-## Demo
-![demo](https://taizan-hokuto.github.io/statics/demo.gif "demo")
-
 ## Examples
+
+### CLI
+
+One-liner command.
+Save chat data to html.
+
+```bash
+$ pytchat -v ZJ6Q4U_Vg6s -o "c:/temp/"
+
+# options:
+#  -v : video_id
+#  -o : output directory (default path: './')
+# saved filename is [video_id].html
+```
+
+
 ### on-demand mode
 ```python
 from pytchat import LiveChat
@@ -262,6 +275,15 @@ Structure of author object.
 ## Licence
 
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+
+
+## Contributes
+Great thanks:
+
+Most of source code of CLI refer to:
+
+[PetterKraabol / Twitch-Chat-Downloader](https://github.com/PetterKraabol/Twitch-Chat-Downloader)
+
 
 ## Author
 

@@ -59,6 +59,7 @@ class BaseRenderer:
 
 
     def get_badges(self,renderer):
+        self.author.type = ''
         isVerified = False
         isChatOwner = False
         isChatSponsor = False
@@ -68,6 +69,7 @@ class BaseRenderer:
             for badge in badges:
                 if badge["liveChatAuthorBadgeRenderer"].get("icon"):
                     author_type  = badge["liveChatAuthorBadgeRenderer"]["icon"]["iconType"]
+                    self.author.type = author_type
                     if author_type == 'VERIFIED':
                         isVerified = True
                     if author_type == 'OWNER':
@@ -76,6 +78,7 @@ class BaseRenderer:
                         isChatModerator = True
                 if badge["liveChatAuthorBadgeRenderer"].get("customThumbnail"):
                     isChatSponsor = True
+                    self.author.type = 'MEMBER'
                     self.get_badgeurl(badge)
         return isVerified, isChatOwner, isChatSponsor, isChatModerator
     
