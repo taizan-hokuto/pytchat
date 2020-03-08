@@ -1,6 +1,6 @@
 from logging import NullHandler, getLogger, StreamHandler, FileHandler, Formatter
 import logging
-import datetime
+from datetime import datetime
 
 
 def get_logger(modname,loglevel=logging.DEBUG):
@@ -28,5 +28,11 @@ def get_logger(modname,loglevel=logging.DEBUG):
 
 class MyFormatter(logging.Formatter):
     def format(self, record):
-        s =(datetime.datetime.fromtimestamp(record.created)).strftime("%m-%d %H:%M:%S")+'| '+ (record.module).ljust(15)+(' { '+record.funcName).ljust(20) +":"+str(record.lineno).rjust(4)+'} - '+record.getMessage()
-        return s
+        timestamp = (
+            datetime.fromtimestamp(record.created)).strftime("%m-%d %H:%M:%S")
+        module = (record.module).ljust(15)
+        funcname = (record.funcName).ljust(18)
+        lineno = str(record.lineno).rjust(4)
+        message = record.getMessage()
+
+        return timestamp+'| '+module+' { '+funcname+':'+lineno+'} - '+message 

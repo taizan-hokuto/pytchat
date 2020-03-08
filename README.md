@@ -263,6 +263,15 @@ Structure of author object.
 
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
+
+## Contributes
+Great thanks:
+
+Most of source code of CLI refer to:
+
+[PetterKraabol / Twitch-Chat-Downloader](https://github.com/PetterKraabol/Twitch-Chat-Downloader)
+
+
 ## Author
 
 [taizan-hokuto](https://github.com/taizan-hokuto)

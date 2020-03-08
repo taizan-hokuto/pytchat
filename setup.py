@@ -44,29 +44,29 @@ with open('README.md', encoding='utf-8') as f:
 
 
 setup(
-    name=package_name,
-    packages=find_packages(exclude=['*log.txt','*tests','*testrun']),
-    version=version,
-    url=url,
     author=author,
     author_email=author_email,
-    long_description=long_description,
-    long_description_content_type='text/markdown',
-    license=license,
-    install_requires=_requirements(),
-    description="a python library for fetching youtube live chat.",
     classifiers=[
         'Natural Language :: Japanese',
         'Development Status :: 4 - Beta',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',        
         'Programming Language :: Python :: 3.8',        
         'License :: OSI Approved :: MIT License',
     ],
+    description="a python library for fetching youtube live chat.",
+    entry_points=
+    '''
+        [console_scripts]
+        pytchat=pytchat.cli:main
+    ''',
+    install_requires=_requirements(),
     keywords='youtube livechat asyncio',
-
+    license=license,
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    name=package_name,
+    packages=find_packages(exclude=['*log.txt','*tests','*testrun']),
+    url=url,
+    version=version,
 )

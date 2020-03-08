@@ -11,6 +11,7 @@ __url__          = 'https://github.com/taizan-hokuto/pytchat'
 __all__ = ["core_async","core_multithread","processors"]
 
 from .api import (
+    cli,
     config,
     LiveChat,
     LiveChatAsync,
@@ -19,6 +20,8 @@ from .api import (
     DummyProcessor,
     DefaultProcessor,
     Extractor, 
+    HTMLArchiver,
+    TSVArchiver,
     JsonfileArchiver,
     SimpleDisplayProcessor,
     SpeedCalculator,
