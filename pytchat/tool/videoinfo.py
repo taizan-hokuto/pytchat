@@ -65,8 +65,7 @@ item_moving_thumbnail = [
 
 class VideoInfo:
     '''
-    VideoInfo object retrieves YouTube video informations
-    from the video page.
+    VideoInfo object retrieves YouTube video information.
 
     Parameter
     ---------
@@ -93,12 +92,18 @@ class VideoInfo:
         res= json.loads(result.group(1))
         response = self._get_item(res, item_response)
         if response is None:
-            raise InvalidVideoIdException(
-                f"Specified video_id [{self.video_id}] is invalid.")
+            self._check_video_is_private(res.get("args"))
         self._renderer = self._get_item(json.loads(response), item_renderer)
         if self._renderer is None:
             raise InvalidVideoIdException(
                 f"No renderer found in video_id: [{self.video_id}].")
+
+    def _check_video_is_private(self,args):
+        if args and args.get("video_id"):
+            raise InvalidVideoIdException(
+                f"video_id [{self.video_id}] is private or deleted.")
+        raise InvalidVideoIdException(
+            f"video_id [{self.video_id}] is invalid.")
 
     def _get_item(self, dict_body, items: list):
         for item in items:

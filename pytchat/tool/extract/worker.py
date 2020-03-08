@@ -68,6 +68,9 @@ def _search_new_block(worker) -> Block:
         continuation = continuation,
         during_split = True,
         is_last = worker.parent_block.is_last)
+    '''swap last block'''
+    if worker.parent_block.is_last:
+        worker.parent_block.is_last = False
     worker.blocks.insert(index+1, new_block)
     return new_block
 
