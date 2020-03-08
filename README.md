@@ -22,10 +22,23 @@ For more detailed information, see [wiki](https://github.com/taizan-hokuto/pytch
 ```python
 pip install pytchat
 ```
-## Demo
-![demo](https://taizan-hokuto.github.io/statics/demo.gif "demo")
-
 ## Examples
+
+### CLI
+
+One-liner command.
+Save chat data to html.
+
+```bash
+$ pytchat -v ZJ6Q4U_Vg6s -o "c:/temp/"
+
+# options:
+#  -v : video_id
+#  -o : output directory (default path: './')
+# saved filename is [video_id].html
+```
+
+
 ### on-demand mode
 ```python
 from pytchat import LiveChat
