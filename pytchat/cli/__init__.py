@@ -35,6 +35,8 @@ def main():
     # Extractor
     if Arguments().video_ids:
         for video_id in Arguments().video_ids:
+            if '[' in video_id:
+                video_id = video_id.replace('[','').replace(']','')
             try:
                 info = VideoInfo(video_id)
                 print(f"Extracting...\n"
