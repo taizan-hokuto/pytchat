@@ -22,9 +22,10 @@ def main():
     # Arguments 
     parser = argparse.ArgumentParser(description=f'pytchat v{__version__}')
     parser.add_argument('-v', f'--{Arguments.Name.VIDEO}', type=str,
-         help='Video IDs separated by commas without space')
+         help='Video IDs separated by commas without space.\n'
+         'If ID starts with a hyphen (-), enclose the ID in square brackets.')
     parser.add_argument('-o', f'--{Arguments.Name.OUTPUT}', type=str,
-         help='Output directory (end with "/")', default='./')
+         help='Output directory (end with "/"). default="./"', default='./')
     parser.add_argument(f'--{Arguments.Name.VERSION}', action='store_true',
          help='Settings version')
     Arguments(parser.parse_args().__dict__)
