@@ -36,7 +36,7 @@ def test_process_0():
     chat_component = {
         'video_id':'',
         'timeout':10,
-        'chatdata':load_chatdata(r"tests\testdata\calculator\superchat_0.json")
+        'chatdata':load_chatdata(r"tests/testdata/calculator/superchat_0.json")
     }
     assert SuperchatCalculator().process([chat_component])=={'￥': 6800.0, '€': 2.0}
 
@@ -47,7 +47,7 @@ def test_process_1():
     chat_component = {
         'video_id':'',
         'timeout':10,
-        'chatdata':load_chatdata(r"tests\testdata\calculator\text_only.json")
+        'chatdata':load_chatdata(r"tests/testdata/calculator/text_only.json")
     }
     assert SuperchatCalculator().process([chat_component])=={}
 
@@ -59,7 +59,7 @@ def test_process_2():
         chat_component = {
             'video_id':'',
             'timeout':10,
-            'chatdata':load_chatdata(r"tests\testdata\calculator\replay_end.json")
+            'chatdata':load_chatdata(r"tests/testdata/calculator/replay_end.json")
         }
         assert False
         SuperchatCalculator().process([chat_component])

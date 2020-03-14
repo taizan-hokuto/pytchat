@@ -1,46 +1,52 @@
 class ChatParseException(Exception):
     '''
-    チャットデータをパースするライブラリが投げる例外の基底クラス
+    Base exception thrown by the parser
     '''
     pass
 
 class NoYtinitialdataException(ChatParseException):
     '''
-    配信ページ内にチャットデータurlが見つからないときに投げる例外
+    Thrown when the video is not found.
     '''
     pass
 
 class ResponseContextError(ChatParseException):
     '''
-    配信ページでチャットデータ無効の時に投げる例外
+    Thrown when chat data is invalid.
     '''
     pass
 
 class NoLivechatRendererException(ChatParseException):
     '''
-    チャットデータのJSON中にlivechatRendererがない時に投げる例外
+    Thrown when livechatRenderer is missing in JSON.
     '''
     pass
 
 
 class NoContentsException(ChatParseException):
     '''
-    チャットデータのJSON中にContinuationContentsがない時に投げる例外
+    Thrown when ContinuationContents is missing in JSON.
     '''
     pass
 
 class NoContinuationsException(ChatParseException):
     '''
-    チャットデータのContinuationContents中にcontinuationがない時に投げる例外
+    Thrown when continuation is missing in ContinuationContents.
     '''
     pass
 
 class IllegalFunctionCall(Exception):
     '''
-    set_callback()を実行済みにもかかわらず
-    get()を呼び出した場合の例外
+    Thrown when get () is called even though 
+    set_callback () has been executed.
     '''
     pass
 
 class InvalidVideoIdException(Exception):
+    '''
+    Thrown when the video_id is not exist (VideoInfo).
+    '''
+    pass
+
+class UnknownConnectionError(Exception):
     pass

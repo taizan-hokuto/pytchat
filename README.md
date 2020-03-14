@@ -7,10 +7,10 @@ pytchat is a python library for fetching youtube live chat.
 pytchat is a python library for fetching youtube live chat
 without using youtube api, Selenium or BeautifulSoup.
 
-pytchatはAPIを使わずにYouTubeチャットを取得するための軽量pythonライブラリです。
+pytchatはAPIを使わずにYouTubeチャットを取得するためのpythonライブラリです。
 
 Other features:
-+ Customizable chat data processors including youtube api compatible one.
++ Customizable [chat data processors](https://github.com/taizan-hokuto/pytchat/wiki/ChatProcessor) including youtube api compatible one.
 + Available on asyncio context. 
 + Quick fetching of initial chat data by generating continuation params
 instead of web scraping.
