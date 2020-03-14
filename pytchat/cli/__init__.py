@@ -44,11 +44,17 @@ def main():
                       f" video_id: {video_id}\n"
                       f" channel:  {info.get_channel_name()}\n"
                       f" title:    {info.get_title()}")
+                path = Path(Arguments().output+video_id+'.html')
+                print(f"output path: {path.resolve()}")
                 Extractor(video_id, 
-                  processor = HTMLArchiver(Arguments().output+video_id+'.html')
+                  processor = HTMLArchiver(Arguments().output+video_id+'.html'),
+                  callback = _disp_progress
                 ).extract()
-                print("Extraction end.\n")
+                print("\nExtraction end.\n")
             except (InvalidVideoIdException, NoContentsException) as e:
                 print(e)
         return
     parser.print_help()
+
+def _disp_progress(a,b):
+    print('.',end="",flush=True)
