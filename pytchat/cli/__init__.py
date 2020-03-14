@@ -22,9 +22,10 @@ def main():
     # Arguments 
     parser = argparse.ArgumentParser(description=f'pytchat v{__version__}')
     parser.add_argument('-v', f'--{Arguments.Name.VIDEO}', type=str,
-         help='Video IDs separated by commas without space')
+         help='Video IDs separated by commas without space.\n'
+         'If ID starts with a hyphen (-), enclose the ID in square brackets.')
     parser.add_argument('-o', f'--{Arguments.Name.OUTPUT}', type=str,
-         help='Output directory (end with "/")', default='./')
+         help='Output directory (end with "/"). default="./"', default='./')
     parser.add_argument(f'--{Arguments.Name.VERSION}', action='store_true',
          help='Settings version')
     Arguments(parser.parse_args().__dict__)
@@ -43,11 +44,17 @@ def main():
                       f" video_id: {video_id}\n"
                       f" channel:  {info.get_channel_name()}\n"
                       f" title:    {info.get_title()}")
+                path = Path(Arguments().output+video_id+'.html')
+                print(f"output path: {path.resolve()}")
                 Extractor(video_id, 
-                  processor = HTMLArchiver(Arguments().output+video_id+'.html')
+                  processor = HTMLArchiver(Arguments().output+video_id+'.html'),
+                  callback = _disp_progress
                 ).extract()
-                print("Extraction end.\n")
+                print("\nExtraction end.\n")
             except (InvalidVideoIdException, NoContentsException) as e:
                 print(e)
         return
     parser.print_help()
+
+def _disp_progress(a,b):
+    print('.',end="",flush=True)

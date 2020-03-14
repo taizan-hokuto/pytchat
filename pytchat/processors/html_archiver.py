@@ -8,6 +8,11 @@ PATTERN  = re.compile(r"(.*)\(([0-9]+)\)$")
 fmt_headers = ['datetime','elapsed','authorName','message','superchat'
      ,'type','authorChannel']
 
+HEADER_HTML = '''
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+'''
+
 class HTMLArchiver(ChatProcessor):
     '''
     HtmlArchiver saves chat data as HTML table format.
@@ -17,6 +22,7 @@ class HTMLArchiver(ChatProcessor):
         super().__init__()
         self.save_path = self._checkpath(save_path)
         with open(self.save_path, mode='a', encoding = 'utf-8') as f:
+            f.write(HEADER_HTML)
             f.write('<table border="1" style="border-collapse: collapse">')
             f.writelines(self._parse_html_header(fmt_headers))
         self.processor = DefaultProcessor()

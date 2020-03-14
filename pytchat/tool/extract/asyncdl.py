@@ -7,12 +7,15 @@ from . worker import ExtractWorker
 from . patch import Patch
 from ... import config 
 from ... paramgen import arcparam
+from ... exceptions import UnknownConnectionError
 from concurrent.futures import CancelledError
+from json import JSONDecodeError
 from urllib.parse import quote
 
 headers = config.headers
 REPLAY_URL = "https://www.youtube.com/live_chat_replay/" \
              "get_live_chat_replay?continuation="
+MAX_RETRY_COUNT = 3
 
 def _split(start, end, count, min_interval_sec = 120):
     """
@@ -53,13 +56,22 @@ def ready_blocks(video_id, duration, div, callback):
             tasks = [_create_block(session, video_id,  seektime, callback)
                 for  seektime in _split(-1, duration, div)]
             return await asyncio.gather(*tasks)
-
+    
     async def _create_block(session, video_id, seektime, callback):
         continuation = arcparam.getparam(video_id, seektime = seektime)
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
-        async with session.get(url, headers = headers) as resp:
-            text = await resp.text()
-        next_continuation, actions = parser.parse(json.loads(text))
+        for _ in range(MAX_RETRY_COUNT):
+            try :
+                async with session.get(url, headers = headers) as resp:
+                    text = await resp.text()
+                next_continuation, actions = parser.parse(json.loads(text))
+                break
+            except JSONDecodeError:
+                await asyncio.sleep(3)
+        else:
+            cancel()
+            raise UnknownConnectionError("Abort: Unknown connection error.")
+
         if actions:
             first = parser.get_offset(actions[0])
             last = parser.get_offset(actions[-1])
@@ -71,6 +83,7 @@ def ready_blocks(video_id, duration, div, callback):
                 first = first,
                 last = last
             )
+            
     """
     fetch initial blocks.
     """  
@@ -95,9 +108,18 @@ def fetch_patch(callback, blocks, video_id):
 
     async def _fetch(continuation,session) -> Patch:
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
-        async with session.get(url,headers = config.headers) as resp:
-            chat_json = await resp.text()
-        continuation, actions = parser.parse(json.loads(chat_json))
+        for _ in range(MAX_RETRY_COUNT):
+            try:
+                async with session.get(url,headers = config.headers) as resp:
+                    chat_json = await resp.text()
+                continuation, actions = parser.parse(json.loads(chat_json))
+                break
+            except JSONDecodeError:
+                await asyncio.sleep(3)
+        else:
+            cancel()
+            raise UnknownConnectionError("Abort: Unknown connection error.")
+
         if actions:
             last = parser.get_offset(actions[-1])
             first = parser.get_offset(actions[0])
@@ -105,6 +127,7 @@ def fetch_patch(callback, blocks, video_id):
                 callback(actions, last - first)
             return Patch(actions, continuation, first, last)
         return Patch(continuation = continuation)
+
     """
     allocate workers and assign blocks.
     """   
