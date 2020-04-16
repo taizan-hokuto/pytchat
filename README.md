@@ -3,6 +3,7 @@
 pip install yvi
 ```
 
+
 ## Usage
 ```python
 import yvi
@@ -11,18 +12,23 @@ info = yvi.get_info(video_id = "xxxxxxxx")
 info.get_title()
 info.get_channel_id()
 ```
-## Parameter
-### video_id
+## Function
+### get_info(video_id, session)
 
-- video id
+Returns
+-------
++ VideoInfo object.
 
-### session
+Parameters
+----------
+- video_id : video id
 
-- session object of requests.
+- session : session object of requests.
 
-## Funtions
+
+## Attributes of VideoInfo object
 ###    get_duration()
-動画の長さ（アーカイブのみ。ライブ動画または待機画面の場合0）
+-     動画の長さ（アーカイブのみ。ライブ動画または待機画面の場合0）
 
 ###    get_title()
 - 　　動画タイトル
