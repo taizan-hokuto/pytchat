@@ -1,2 +1,2 @@
 include requirements.txt    
-global-exclude pytchat/testrun*.py
+global-exclude yvi/testrun*.py
