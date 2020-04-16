@@ -1,10 +1,10 @@
+from . import config
+import emoji
 import json
 import re
 import requests
-import config
-from exceptions import InvalidVideoIdException
-
-headers = config.headers
+from . import util
+from . exceptions import InvalidVideoIdException
 
 pattern = re.compile(r"yt\.setConfig\({'PLAYER_CONFIG': ({.*})}\);")
 
@@ -44,7 +44,7 @@ item_thumbnail = [
     "url"
 ]
 
-item_channel_name = [
+item_owner_name = [
     "videoDetails",
     "embeddedPlayerOverlayVideoDetailsRenderer",
     "expandedRenderer",
@@ -55,22 +55,14 @@ item_channel_name = [
     "text"
 ]
 
-item_username = [
+item_user_name = [
     "args",
     "user_display_name",
 ]
 
-item_userimage = [
+item_user_image = [
     "args",
     "user_display_image",
-]
-
-
-item_moving_thumbnail = [
-    "movingThumbnail",
-    "thumbnails",
-    0,
-    "url"
 ]
 
 
@@ -88,7 +80,7 @@ class VideoInfo:
         Occurs when video_id does not exist on YouTube.
     '''
 
-    def __init__(self, video_id, session=None):
+    def __init__(self, video_id, session:requests.Session = None):
         if session:
             self.session = session
         else:
@@ -100,16 +92,17 @@ class VideoInfo:
 
     def _get_page_text(self, video_id):
         url = f"https://www.youtube.com/embed/{video_id}"
-        resp = self.session.get(url, headers=headers)
+        resp = self.session.get(url)
         resp.raise_for_status()
         return resp.text
 
     def _parse(self, text):
         result = re.search(pattern, text)
-        res = json.loads(result.group(1))
-        response = self._get_item(res, item_response)
+        self._res = json.loads(result.group(1))
+        response = self._get_item(self._res, item_response)
         if response is None:
-            self._check_video_is_private(res.get("args"))
+            self._check_video_is_private(self._res.get("args"))
+        
         self._renderer = self._get_item(json.loads(response), item_renderer)
         if self._renderer is None:
             raise InvalidVideoIdException(
@@ -151,26 +144,51 @@ class VideoInfo:
                     for run in self._renderer["title"]["runs"]][0]
         return None
 
+    def get_title_escaped(self):
+        return self._no_emoji(self.get_title())
+
     def get_channel_id(self):
         channel_url = self._get_item(self._renderer, item_channel_id)
         if channel_url:
             return channel_url[9:]
         return None
 
-    def get_owner_image(self):
-        return self._get_item(self._renderer, item_owner_image)
-
     def get_thumbnail(self):
         return self._get_item(self._renderer, item_thumbnail)
 
-    def get_channel_name(self):
-        return self._get_item(self._renderer, item_channel_name)
+    def get_owner_image(self):
+        return self._get_item(self._renderer, item_owner_image)
 
-    def get_username(self):
-        return self._get_item(self._renderer, item_username)
+    def get_owner_name(self):
+        return self._get_item(self._renderer, item_owner_name)
 
-    def get_userimage(self):
-        return self._get_item(self._renderer, item_userimage)
-        
-    def get_moving_thumbnail(self):
-        return self._get_item(self._renderer, item_moving_thumbnail)
+    def get_owner_name_escaped(self):
+        return self._no_emoji(self.get_owner_name())
+
+    def get_user_name(self):
+        return self._get_item(self._res, item_user_name)
+
+    def get_user_name_escaped(self):
+        return self._no_emoji(self.get_user_name())
+
+    def get_user_image(self):
+        return self._get_item(self._res, item_user_image)
+
+    def _no_emoji(self, text:str):
+        if text is None:
+            return None
+        return ''.join(c for c in text
+            if c not in emoji.UNICODE_EMOJI)    
+
+def get_info(video_id:str, session:requests.Session = None) -> VideoInfo:
+    """
+    Paaramters
+    ----------
+    video_id : str :
+        video_id
+    
+    session : requests.Session
+        session object
+    """
+
+    return VideoInfo(video_id = video_id, session = session)
