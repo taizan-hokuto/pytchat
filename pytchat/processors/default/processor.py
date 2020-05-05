@@ -4,15 +4,18 @@ from .renderer.textmessage import LiveChatTextMessageRenderer
 from .renderer.paidmessage import LiveChatPaidMessageRenderer
 from .renderer.paidsticker import LiveChatPaidStickerRenderer
 from .renderer.legacypaid import LiveChatLegacyPaidMessageRenderer
+from .renderer.membership import LiveChatMembershipItemRenderer
 from .. chat_processor import ChatProcessor
 from ... import config
+
 logger = config.logger(__name__)
 
+
 class Chatdata:
-    def __init__(self,chatlist:list, timeout:float):
+    def __init__(self, chatlist: list, timeout: float):
         self.items = chatlist
         self.interval = timeout
-    
+
     def tick(self):
         if self.interval == 0:
             time.sleep(1)
@@ -25,6 +28,7 @@ class Chatdata:
             return
         await asyncio.sleep(self.interval/len(self.items))
 
+
 class DefaultProcessor(ChatProcessor):
     def process(self, chat_components: list):
 
@@ -35,24 +39,27 @@ class DefaultProcessor(ChatProcessor):
             for component in chat_components:
                 timeout += component.get('timeout', 0)
                 chatdata = component.get('chatdata')
-                if chatdata is None: continue
+                if chatdata is None:
+                    continue
                 for action in chatdata:
-                    if action is None: continue
-                    if action.get('addChatItemAction') is None: continue
-                    if action['addChatItemAction'].get('item') is None: continue
+                    if action is None:
+                        continue
+                    if action.get('addChatItemAction') is None:
+                        continue
+                    if action['addChatItemAction'].get('item') is None:
+                        continue
 
                     chat = self._parse(action)
                     if chat:
                         chatlist.append(chat)
         return Chatdata(chatlist, float(timeout))
-  
 
     def _parse(self, sitem):
-
         action = sitem.get("addChatItemAction")
         if action:
             item = action.get("item")
-        if item is None: return None
+        if item is None:
+            return None
         try:
             renderer = self._get_renderer(item)
             if renderer == None:
@@ -60,20 +67,22 @@ class DefaultProcessor(ChatProcessor):
 
             renderer.get_snippet()
             renderer.get_authordetails()
-        except (KeyError,TypeError) as e:
+        except (KeyError, TypeError) as e:
             logger.error(f"{str(type(e))}-{str(e)} sitem:{str(sitem)}")
             return None
-        return renderer        
+        return renderer
 
     def _get_renderer(self, item):
         if item.get("liveChatTextMessageRenderer"):
             renderer = LiveChatTextMessageRenderer(item)
         elif item.get("liveChatPaidMessageRenderer"):
             renderer = LiveChatPaidMessageRenderer(item)
-        elif item.get( "liveChatPaidStickerRenderer"):
+        elif item.get("liveChatPaidStickerRenderer"):
             renderer = LiveChatPaidStickerRenderer(item)
         elif item.get("liveChatLegacyPaidMessageRenderer"):
             renderer = LiveChatLegacyPaidMessageRenderer(item)
+        elif item.get("liveChatMembershipItemRenderer"):
+            renderer = LiveChatMembershipItemRenderer(item)
         else:
             renderer = None
         return renderer

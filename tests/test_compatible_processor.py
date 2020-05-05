@@ -1,10 +1,11 @@
 import json
 import pytest
-import asyncio,aiohttp
+import asyncio
+import aiohttp
 from pytchat.parser.live import Parser
 from pytchat.processors.compatible.processor import CompatibleProcessor
 from pytchat.exceptions import (
-    NoLivechatRendererException,NoYtinitialdataException,
+    NoLivechatRendererException, NoYtinitialdataException,
     ResponseContextError, NoContentsException)
 
 from pytchat.processors.compatible.renderer.textmessage import LiveChatTextMessageRenderer
@@ -14,6 +15,7 @@ from pytchat.processors.compatible.renderer.legacypaid import LiveChatLegacyPaid
 
 parser = Parser(is_replay=False)
 
+
 def test_textmessage(mocker):
     '''api互換processorのテスト：通常テキストメッセージ'''
     processor = CompatibleProcessor()
@@ -22,16 +24,16 @@ def test_textmessage(mocker):
 
     _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
     data = {
-        "video_id" : "",
-        "timeout" : 7,
-        "chatdata" : chatdata
+        "video_id": "",
+        "timeout": 7,
+        "chatdata": chatdata
     }
     ret = processor.process([data])
 
-    assert ret["kind"]== "youtube#liveChatMessageListResponse"
-    assert ret["pollingIntervalMillis"]==data["timeout"]*1000
+    assert ret["kind"] == "youtube#liveChatMessageListResponse"
+    assert ret["pollingIntervalMillis"] == data["timeout"]*1000
     assert ret.keys() == {
-        "kind",   "etag",   "pageInfo",   "nextPageToken","pollingIntervalMillis","items"
+        "kind",   "etag",   "pageInfo",   "nextPageToken", "pollingIntervalMillis", "items"
     }
     assert ret["pageInfo"].keys() == {
         "totalResults",   "resultsPerPage"
@@ -48,8 +50,9 @@ def test_textmessage(mocker):
     assert ret["items"][0]["snippet"]["textMessageDetails"].keys() == {
         'messageText'
     }
-    assert "LCC." in ret["items"][0]["id"] 
-    assert ret["items"][0]["snippet"]["type"]=="textMessageEvent"
+    assert "LCC." in ret["items"][0]["id"]
+    assert ret["items"][0]["snippet"]["type"] == "textMessageEvent"
+
 
 def test_newsponcer(mocker):
     '''api互換processorのテスト：メンバ新規登録'''
@@ -59,22 +62,22 @@ def test_newsponcer(mocker):
 
     _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
     data = {
-        "video_id" : "",
-        "timeout" : 7,
-        "chatdata" : chatdata
+        "video_id": "",
+        "timeout": 7,
+        "chatdata": chatdata
     }
     ret = processor.process([data])
 
-    assert ret["kind"]== "youtube#liveChatMessageListResponse"
-    assert ret["pollingIntervalMillis"]==data["timeout"]*1000
+    assert ret["kind"] == "youtube#liveChatMessageListResponse"
+    assert ret["pollingIntervalMillis"] == data["timeout"]*1000
     assert ret.keys() == {
-        "kind",   "etag",   "pageInfo",   "nextPageToken","pollingIntervalMillis","items"
+        "kind",   "etag",   "pageInfo",   "nextPageToken", "pollingIntervalMillis", "items"
     }
     assert ret["pageInfo"].keys() == {
         "totalResults",   "resultsPerPage"
     }
     assert ret["items"][0].keys() == {
-        "kind",   "etag",   "id",   "snippet","authorDetails"
+        "kind",   "etag",   "id",   "snippet", "authorDetails"
     }
     assert ret["items"][0]["snippet"].keys() == {
         'type', 'liveChatId', 'authorChannelId', 'publishedAt', 'hasDisplayContent', 'displayMessage'
@@ -83,8 +86,44 @@ def test_newsponcer(mocker):
     assert ret["items"][0]["authorDetails"].keys() == {
         'channelId', 'channelUrl', 'displayName', 'profileImageUrl', 'isVerified', 'isChatOwner', 'isChatSponsor', 'isChatModerator'
     }
-    assert "LCC." in ret["items"][0]["id"] 
-    assert ret["items"][0]["snippet"]["type"]=="newSponsorEvent"
+    assert "LCC." in ret["items"][0]["id"]
+    assert ret["items"][0]["snippet"]["type"] == "newSponsorEvent"
+
+
+def test_newsponcer_rev(mocker):
+    '''api互換processorのテスト：メンバ新規登録'''
+    processor = CompatibleProcessor()
+
+    _json = _open_file("tests/testdata/compatible/newSponsor_rev.json")
+
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    data = {
+        "video_id": "",
+        "timeout": 7,
+        "chatdata": chatdata
+    }
+    ret = processor.process([data])
+
+    assert ret["kind"] == "youtube#liveChatMessageListResponse"
+    assert ret["pollingIntervalMillis"] == data["timeout"]*1000
+    assert ret.keys() == {
+        "kind",   "etag",   "pageInfo",   "nextPageToken", "pollingIntervalMillis", "items"
+    }
+    assert ret["pageInfo"].keys() == {
+        "totalResults",   "resultsPerPage"
+    }
+    assert ret["items"][0].keys() == {
+        "kind",   "etag",   "id",   "snippet", "authorDetails"
+    }
+    assert ret["items"][0]["snippet"].keys() == {
+        'type', 'liveChatId', 'authorChannelId', 'publishedAt', 'hasDisplayContent', 'displayMessage'
+
+    }
+    assert ret["items"][0]["authorDetails"].keys() == {
+        'channelId', 'channelUrl', 'displayName', 'profileImageUrl', 'isVerified', 'isChatOwner', 'isChatSponsor', 'isChatModerator'
+    }
+    assert "LCC." in ret["items"][0]["id"]
+    assert ret["items"][0]["snippet"]["type"] == "newSponsorEvent"
 
 
 def test_superchat(mocker):
@@ -95,16 +134,16 @@ def test_superchat(mocker):
 
     _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
     data = {
-        "video_id" : "",
-        "timeout" : 7,
-        "chatdata" : chatdata
+        "video_id": "",
+        "timeout": 7,
+        "chatdata": chatdata
     }
     ret = processor.process([data])
 
-    assert ret["kind"]== "youtube#liveChatMessageListResponse"
-    assert ret["pollingIntervalMillis"]==data["timeout"]*1000
+    assert ret["kind"] == "youtube#liveChatMessageListResponse"
+    assert ret["pollingIntervalMillis"] == data["timeout"]*1000
     assert ret.keys() == {
-        "kind",   "etag",   "pageInfo",   "nextPageToken","pollingIntervalMillis","items"
+        "kind",   "etag",   "pageInfo",   "nextPageToken", "pollingIntervalMillis", "items"
     }
     assert ret["pageInfo"].keys() == {
         "totalResults",   "resultsPerPage"
@@ -121,8 +160,9 @@ def test_superchat(mocker):
     assert ret["items"][0]["snippet"]["superChatDetails"].keys() == {
         'amountMicros', 'currency', 'amountDisplayString', 'tier', 'backgroundColor'
     }
-    assert "LCC." in ret["items"][0]["id"] 
-    assert ret["items"][0]["snippet"]["type"]=="superChatEvent"
+    assert "LCC." in ret["items"][0]["id"]
+    assert ret["items"][0]["snippet"]["type"] == "superChatEvent"
+
 
 def test_unregistered_currency(mocker):
     processor = CompatibleProcessor()
@@ -132,14 +172,14 @@ def test_unregistered_currency(mocker):
     _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
 
     data = {
-        "video_id" : "",
-        "timeout" : 7,
-        "chatdata" : chatdata
+        "video_id": "",
+        "timeout": 7,
+        "chatdata": chatdata
     }
     ret = processor.process([data])
     assert ret["items"][0]["snippet"]["superChatDetails"]["currency"] == "[UNREGISTERD]"
 
 
 def _open_file(path):
-    with open(path,mode ='r',encoding = 'utf-8') as f:
+    with open(path, mode='r', encoding='utf-8') as f:
         return f.read()
