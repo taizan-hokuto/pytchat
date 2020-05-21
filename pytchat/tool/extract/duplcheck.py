@@ -70,7 +70,8 @@ def check_duplicate_offset(chatdata):
         if is_duplicate(i,i+1)]
 
 def remove_duplicate_head(blocks):
-    if len(blocks) == 1 : return blocks
+    if len(blocks) == 0 or len(blocks) == 1:
+        return blocks
 
     def is_duplicate_head(index):
 
@@ -97,7 +98,8 @@ def remove_duplicate_head(blocks):
     return ret
 
 def remove_duplicate_tail(blocks):
-    if len(blocks) == 1 : return blocks    
+    if len(blocks) == 0 or len(blocks) == 1:
+        return blocks    
 
     def is_duplicate_tail(index):
         if len(blocks[index].chat_data) == 0:
@@ -126,7 +128,8 @@ def remove_overlap(blocks):
     Align the last offset of each block to the first offset 
     of next block (equals `end` offset of each block).
     """
-    if len(blocks) == 1 : return blocks
+    if len(blocks) == 0 or len(blocks) == 1:
+        return blocks    
 
     for block in blocks:
         if block.is_last:
