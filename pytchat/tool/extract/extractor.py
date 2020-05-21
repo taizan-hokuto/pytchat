@@ -40,10 +40,11 @@ class Extractor:
         return self
 
     def _set_block_end(self):
-        for i in range(len(self.blocks)-1):
-            self.blocks[i].end = self.blocks[i+1].first
-        self.blocks[-1].end = self.duration*1000
-        self.blocks[-1].is_last =True
+        if len(self.blocks) > 0:
+            for i in range(len(self.blocks)-1):
+                self.blocks[i].end = self.blocks[i+1].first
+            self.blocks[-1].end = self.duration*1000
+            self.blocks[-1].is_last =True
         return self
 
     def _remove_overlap(self):
