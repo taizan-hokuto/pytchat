@@ -1,4 +1,5 @@
 aiohttp
+protobuf
 pytz
 requests
 urllib3
