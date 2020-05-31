@@ -22,6 +22,7 @@ def _gen_vid(video_id) -> str:
 
 def _build(video_id, seektime, topchat_only) -> str:
     chattype = 1
+    timestamp = 0
     if topchat_only:
         chattype = 4
 
@@ -29,12 +30,13 @@ def _build(video_id, seektime, topchat_only) -> str:
     if seektime < 0:
         fetch_before_start = 1
     elif seektime == 0:
-        seektime = 1/1000000
-
+        timestamp = 1
+    else:
+        timestamp = int(seektime*1000000)
     continuation = Continuation()
     entity = continuation.entity
     entity.header = _gen_vid(video_id)
-    entity.timestamp = int(seektime*1000000)
+    entity.timestamp = timestamp
     entity.s6 = 0
     entity.s7 = 0
     entity.s8 = fetch_before_start
@@ -47,7 +49,7 @@ def _build(video_id, seektime, topchat_only) -> str:
         base64.urlsafe_b64encode(continuation.SerializeToString()).decode())
 
 
-def getparam(video_id, seektime=0, topchat_only=False) -> str:
+def getparam(video_id, seektime=-1, topchat_only=False) -> str:
     '''
     Parameter
     ---------
