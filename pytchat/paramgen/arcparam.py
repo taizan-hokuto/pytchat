@@ -26,9 +26,9 @@ def _build(video_id, seektime, topchat_only) -> str:
     if topchat_only:
         chattype = 4
 
-    fetch_before_start = 0
+    fetch_before_start = 3
     if seektime < 0:
-        fetch_before_start = 1
+        fetch_before_start = 4
     elif seektime == 0:
         timestamp = 1
     else:
@@ -39,8 +39,8 @@ def _build(video_id, seektime, topchat_only) -> str:
     entity.timestamp = timestamp
     entity.s6 = 0
     entity.s7 = 0
-    entity.s8 = fetch_before_start
-    entity.s9 = 3
+    entity.s8 = 0
+    entity.s9 = fetch_before_start
     entity.s10 = ''
     entity.s12 = chattype
     entity.chattype.value = chattype
