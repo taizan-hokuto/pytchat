@@ -1,7 +1,5 @@
 from base64 import urlsafe_b64encode as b64enc
 from functools import reduce
-import math
-import random
 import urllib.parse
 
 '''
@@ -11,6 +9,7 @@ Author: taizan-hokuto (2019) @taizan205
 
 ver 0.0.1 2019.10.05
 '''
+
 
 def _gen_vid_long(video_id):
     """generate video_id parameter.
@@ -23,7 +22,7 @@ def _gen_vid_long(video_id):
     byte[] : base64 encoded video_id parameter.
     """
     header_magic = b'\x0A\x0F\x1A\x0D\x0A'
-    header_id =  video_id.encode()
+    header_id = video_id.encode()
     header_sep_1 = b'\x1A\x13\xEA\xA8\xDD\xB9\x01\x0D\x0A\x0B'
     header_terminator = b'\x20\x01'
 
@@ -67,14 +66,16 @@ def _gen_vid(video_id):
 
 def _nval(val):
     """convert value to byte array"""
-    if val<0: raise ValueError
+    if val < 0:
+        raise ValueError
     buf = b''
     while val >> 7:
         m = val & 0xFF | 0x80
-        buf += m.to_bytes(1,'big')
+        buf += m.to_bytes(1, 'big')
         val >>= 7
-    buf += val.to_bytes(1,'big')
+    buf += val.to_bytes(1, 'big')
     return buf
+
 
 def _build(video_id, seektime, topchat_only):
     switch_01 = b'\x04' if topchat_only else b'\x01'
@@ -83,11 +84,9 @@ def _build(video_id, seektime, topchat_only):
     if seektime == 0:
         times = b''
     else:
-        times =_nval(int(seektime*1000))
+        times = _nval(int(seektime*1000))
     if seektime > 0:
-        _len_time = ( b'\x5A'
-                    + (len(times)+1).to_bytes(1,'big')
-                    + b'\x10')
+        _len_time = b'\x5A' + (len(times)+1).to_bytes(1, 'big') + b'\x10'
     else:
         _len_time = b''
     
@@ -112,15 +111,16 @@ def _build(video_id, seektime, topchat_only):
     ]
 
     body = reduce(lambda x, y: x+y, body)
-    
-    return  urllib.parse.quote(
-                b64enc( header_magic +
+
+    return urllib.parse.quote(
+                b64enc(header_magic +
                         _nval(len(body)) +
                         body
                 ).decode()
             )
 
-def getparam(video_id, seektime = 0.0, topchat_only = False):
+
+def getparam(video_id, seektime=0.0, topchat_only=False):
     '''
     Parameter
     ---------

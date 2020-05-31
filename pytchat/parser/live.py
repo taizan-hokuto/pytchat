@@ -4,27 +4,26 @@ pytchat.parser.live
 Parser of live chat JSON.
 """
 
-import json
-from .. exceptions import ( 
-    ResponseContextError, 
-    NoContentsException, 
+from .. exceptions import (
+    ResponseContextError,
+    NoContentsException,
     NoContinuationsException,
-    ChatParseException )
+    ChatParseException)
+
 
 class Parser:
 
     __slots__ = ['is_replay']
-    
-    def __init__(self, is_replay): 
+
+    def __init__(self, is_replay):
         self.is_replay = is_replay
 
     def get_contents(self, jsn):
-        if jsn is None: 
+        if jsn is None:
             raise ChatParseException('Called with none JSON object.')
         if jsn['response']['responseContext'].get('errors'):
-            raise ResponseContextError('The video_id would be wrong,'
-                'or video is deleted or private.')
-        contents=jsn['response'].get('continuationContents')
+            raise ResponseContextError('The video_id would be wrong, or video is deleted or private.')
+        contents = jsn['response'].get('continuationContents')
         return contents
 
     def parse(self, contents):
@@ -40,7 +39,7 @@ class Parser:
         + metadata : dict
          + timeout
          + video_id
-         + continuation           
+         + continuation
         + chatdata : List[dict]
         """
 
@@ -51,9 +50,9 @@ class Parser:
         cont = contents['liveChatContinuation']['continuations'][0]
         if cont is None:
             raise NoContinuationsException('No Continuation')
-        metadata = (cont.get('invalidationContinuationData')  or
-                    cont.get('timedContinuationData')         or
-                    cont.get('reloadContinuationData')        or
+        metadata = (cont.get('invalidationContinuationData') or
+                    cont.get('timedContinuationData') or
+                    cont.get('reloadContinuationData') or
                     cont.get('liveChatReplayContinuationData')
                     )
         if metadata is None:
@@ -68,30 +67,30 @@ class Parser:
 
     def reload_continuation(self, contents):
         """
-        When `seektime = 0` or seektime is abbreviated , 
-        check if fetched chat json has no chat data. 
-        If so, try to fetch playerSeekContinuationData. 
+        When `seektime = 0` or seektime is abbreviated ,
+        check if fetched chat json has no chat data.
+        If so, try to fetch playerSeekContinuationData.
         This function must be run only first fetching.
         """
         cont = contents['liveChatContinuation']['continuations'][0]
         if cont.get("liveChatReplayContinuationData"):
-            #chat data exist.
+            # chat data exist.
             return None
-        #chat data do not exist, get playerSeekContinuationData.
+        # chat data do not exist, get playerSeekContinuationData.
         init_cont = cont.get("playerSeekContinuationData")
         if init_cont:
             return init_cont.get("continuation")
         raise ChatParseException('Finished chat data')
 
-    def _create_data(self, metadata, contents):    
+    def _create_data(self, metadata, contents):
         actions = contents['liveChatContinuation'].get('actions')
-        if self.is_replay:    
+        if self.is_replay:
             interval = self._get_interval(actions)
-            metadata.setdefault("timeoutMs",interval)
-            """Archived chat has different structures than live chat, 
+            metadata.setdefault("timeoutMs", interval)
+            """Archived chat has different structures than live chat,
             so make it the same format."""
             chatdata = [action["replayChatItemAction"]["actions"][0]
-                for action in actions]
+                        for action in actions]
         else:
             metadata.setdefault('timeoutMs', 10000)
             chatdata = actions

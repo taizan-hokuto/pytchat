@@ -1,7 +1,5 @@
 import requests
-import datetime
 import json
-import random
 import signal
 import time
 import traceback
@@ -53,9 +51,9 @@ class LiveChat:
     direct_mode : bool
         Trueの場合、bufferを使わずにcallbackを呼ぶ。
         Trueの場合、callbackの設定が必須
-        (設定していない場合IllegalFunctionCall例外を発生させる）  
+        (設定していない場合IllegalFunctionCall例外を発生させる）
 
-    force_replay : bool  
+    force_replay : bool
         Trueの場合、ライブチャットが取得できる場合であっても
         強制的にアーカイブ済みチャットを取得する。
 
@@ -74,7 +72,7 @@ class LiveChat:
     _setup_finished = False
 
     def __init__(self, video_id,
-                 seektime=0,
+                 seektime=-1,
                  processor=DefaultProcessor(),
                  buffer=None,
                  interruptable=True,
@@ -181,7 +179,7 @@ class LiveChat:
             self._logger.debug(f"[{self.video_id}]{str(e)}")
             return
         except (TypeError, json.JSONDecodeError):
-            self._logger.error(f"{traceback.format_exc(limit = -1)}")
+            self._logger.error(f"{traceback.format_exc(limit=-1)}")
             return
 
         self._logger.debug(f"[{self.video_id}]finished fetching chat.")
@@ -200,7 +198,7 @@ class LiveChat:
 
     def _get_contents(self, continuation, session, headers):
         '''Get 'continuationContents' from livechat json.
-           If contents is None at first fetching, 
+           If contents is None at first fetching,
            try to fetch archive chat data.
 
           Return:
@@ -255,7 +253,7 @@ class LiveChat:
 
     def _callback_loop(self, callback):
         """ コンストラクタでcallbackを指定している場合、バックグラウンドで
-        callbackに指定された関数に一定間隔でチャットデータを投げる。        
+        callbackに指定された関数に一定間隔でチャットデータを投げる。
 
         Parameter
         ---------
