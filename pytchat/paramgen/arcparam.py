@@ -32,7 +32,7 @@ def _build(video_id, seektime, topchat_only) -> str:
     elif seektime == 0:
         timestamp = 1
     else:
-        timestamp = int(seektime*1000000)
+        timestamp = int(seektime * 1000000)
     continuation = Continuation()
     entity = continuation.entity
     entity.header = _gen_vid(video_id)

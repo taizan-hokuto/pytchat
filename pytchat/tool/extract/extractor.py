@@ -1,16 +1,16 @@
 from . import asyncdl
-from . import duplcheck 
-from . import parser
+from . import duplcheck
 from .. videoinfo import VideoInfo
 from ... import config
 from ... exceptions import InvalidVideoIdException
 
 logger = config.logger(__name__)
-headers=config.headers
+headers = config.headers
+
 
 class Extractor:
-    def __init__(self, video_id, div = 1, callback = None, processor = None):
-        if not isinstance(div ,int) or div < 1:
+    def __init__(self, video_id, div=1, callback=None, processor=None):
+        if not isinstance(div, int) or div < 1:
             raise ValueError('div must be positive integer.')
         elif div > 10:
             div = 10
@@ -33,7 +33,7 @@ class Extractor:
         blocks = asyncdl.ready_blocks(
             self.video_id, self.duration, self.div, self.callback)
         self.blocks = [block for block in blocks if block]
-        return self  
+        return self
 
     def _remove_duplicate_head(self):
         self.blocks = duplcheck.remove_duplicate_head(self.blocks)
@@ -41,10 +41,10 @@ class Extractor:
 
     def _set_block_end(self):
         if len(self.blocks) > 0:
-            for i in range(len(self.blocks)-1):
-                self.blocks[i].end = self.blocks[i+1].first
-            self.blocks[-1].end = self.duration*1000
-            self.blocks[-1].is_last =True
+            for i in range(len(self.blocks) - 1):
+                self.blocks[i].end = self.blocks[i + 1].first
+            self.blocks[-1].end = self.duration * 1000
+            self.blocks[-1].is_last = True
         return self
 
     def _remove_overlap(self):
@@ -62,7 +62,7 @@ class Extractor:
     def _combine(self):
         ret = []
         for block in self.blocks:
-            ret.extend(block.chat_data) 
+            ret.extend(block.chat_data)
         return ret
 
     def _execute_extract_operations(self):
@@ -82,11 +82,12 @@ class Extractor:
             return []
         data = self._execute_extract_operations()
         if self.processor is None:
-           return data
+            return data
         return self.processor.process(
-            [{'video_id':None,'timeout':1,'chatdata' : (action
-            ["replayChatItemAction"]["actions"][0] for action in data)}]
-    )
+            [{'video_id': None,
+              'timeout': 1,
+              'chatdata': (action["replayChatItemAction"]["actions"][0] for action in data)}]
+        )
 
     def cancel(self):
         asyncdl.cancel()

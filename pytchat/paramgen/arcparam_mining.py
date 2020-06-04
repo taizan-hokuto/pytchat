@@ -36,8 +36,9 @@ def _gen_vid_long(video_id):
     ]
 
     return urllib.parse.quote(
-        b64enc(reduce(lambda x, y: x+y, item)).decode()
+        b64enc(reduce(lambda x, y: x + y, item)).decode()
     ).encode()
+
 
 def _gen_vid(video_id):
     """generate video_id parameter.
@@ -50,7 +51,7 @@ def _gen_vid(video_id):
         bytes : base64 encoded video_id parameter.
     """
     header_magic = b'\x0A\x0F\x1A\x0D\x0A'
-    header_id =  video_id.encode()
+    header_id = video_id.encode()
     header_terminator = b'\x20\x01'
 
     item = [
@@ -61,8 +62,9 @@ def _gen_vid(video_id):
     ]
 
     return urllib.parse.quote(
-        b64enc(reduce(lambda x, y: x+y, item)).decode()
+        b64enc(reduce(lambda x, y: x + y, item)).decode()
     ).encode()
+
 
 def _nval(val):
     """convert value to byte array"""
@@ -84,19 +86,19 @@ def _build(video_id, seektime, topchat_only):
     if seektime == 0:
         times = b''
     else:
-        times = _nval(int(seektime*1000))
+        times = _nval(int(seektime * 1000))
     if seektime > 0:
-        _len_time = b'\x5A' + (len(times)+1).to_bytes(1, 'big') + b'\x10'
+        _len_time = b'\x5A' + (len(times) + 1).to_bytes(1, 'big') + b'\x10'
     else:
         _len_time = b''
-    
+
     header_magic = b'\xA2\x9D\xB0\xD3\x04'
-    sep_0        = b'\x1A'
-    vid          = _gen_vid(video_id)
-    _tag         = b'\x40\x01'
-    timestamp1   = times
-    sep_1        = b'\x60\x04\x72\x02\x08'
-    terminator   = b'\x78\x01'
+    sep_0 = b'\x1A'
+    vid = _gen_vid(video_id)
+    _tag = b'\x40\x01'
+    timestamp1 = times
+    sep_1 = b'\x60\x04\x72\x02\x08'
+    terminator = b'\x78\x01'
 
     body = [
         sep_0,
@@ -110,14 +112,12 @@ def _build(video_id, seektime, topchat_only):
         terminator
     ]
 
-    body = reduce(lambda x, y: x+y, body)
+    body = reduce(lambda x, y: x + y, body)
 
     return urllib.parse.quote(
-                b64enc(header_magic +
-                        _nval(len(body)) +
-                        body
-                ).decode()
-            )
+        b64enc(header_magic + _nval(len(body)) + body
+               ).decode()
+    )
 
 
 def getparam(video_id, seektime=0.0, topchat_only=False):

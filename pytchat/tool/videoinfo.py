@@ -1,15 +1,14 @@
-import json 
+import json
 import re
 import requests
 from .. import config
-from .. import util
-from ..exceptions import InvalidVideoIdException 
+from ..exceptions import InvalidVideoIdException
 
 headers = config.headers
 
 pattern = re.compile(r"yt\.setConfig\({'PLAYER_CONFIG': ({.*})}\);")
 
-item_channel_id =[
+item_channel_id = [
     "videoDetails",
     "embeddedPlayerOverlayVideoDetailsRenderer",
     "channelThumbnailEndpoint",
@@ -29,7 +28,7 @@ item_response = [
     "embedded_player_response"
 ]
 
-item_author_image =[
+item_author_image = [
     "videoDetails",
     "embeddedPlayerOverlayVideoDetailsRenderer",
     "channelThumbnail",
@@ -63,6 +62,7 @@ item_moving_thumbnail = [
     "url"
 ]
 
+
 class VideoInfo:
     '''
     VideoInfo object retrieves YouTube video information.
@@ -76,6 +76,7 @@ class VideoInfo:
     InvalidVideoIdException :
         Occurs when video_id does not exist on YouTube.
     '''
+
     def __init__(self, video_id):
         self.video_id = video_id
         text = self._get_page_text(video_id)
@@ -83,13 +84,13 @@ class VideoInfo:
 
     def _get_page_text(self, video_id):
         url = f"https://www.youtube.com/embed/{video_id}"
-        resp = requests.get(url, headers = headers)
+        resp = requests.get(url, headers=headers)
         resp.raise_for_status()
         return resp.text
 
     def _parse(self, text):
         result = re.search(pattern, text)
-        res= json.loads(result.group(1))
+        res = json.loads(result.group(1))
         response = self._get_item(res, item_response)
         if response is None:
             self._check_video_is_private(res.get("args"))
@@ -98,7 +99,7 @@ class VideoInfo:
             raise InvalidVideoIdException(
                 f"No renderer found in video_id: [{self.video_id}].")
 
-    def _check_video_is_private(self,args):
+    def _check_video_is_private(self, args):
         if args and args.get("video_id"):
             raise InvalidVideoIdException(
                 f"video_id [{self.video_id}] is private or deleted.")
@@ -130,8 +131,8 @@ class VideoInfo:
 
     def get_title(self):
         if self._renderer.get("title"):
-            return [''.join(run["text"]) 
-                for run in self._renderer["title"]["runs"]][0]
+            return [''.join(run["text"])
+                    for run in self._renderer["title"]["runs"]][0]
         return None
 
     def get_channel_id(self):
@@ -141,13 +142,13 @@ class VideoInfo:
         return None
 
     def get_author_image(self):
-        return self._get_item(self._renderer, item_author_image) 
+        return self._get_item(self._renderer, item_author_image)
 
     def get_thumbnail(self):
         return self._get_item(self._renderer, item_thumbnail)
 
     def get_channel_name(self):
         return self._get_item(self._renderer, item_channel_name)
-    
+
     def get_moving_thumbnail(self):
         return self._get_item(self._renderer, item_moving_thumbnail)

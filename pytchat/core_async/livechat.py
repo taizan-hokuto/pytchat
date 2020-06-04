@@ -169,7 +169,7 @@ class LiveChatAsync:
                         continuation, session, headers)
                     metadata, chatdata = self._parser.parse(contents)
 
-                    timeout = metadata['timeoutMs']/1000
+                    timeout = metadata['timeoutMs'] / 1000
                     chat_component = {
                         "video_id": self.video_id,
                         "timeout": timeout,
@@ -177,14 +177,15 @@ class LiveChatAsync:
                     }
                     time_mark = time.time()
                     if self._direct_mode:
-                        processed_chat = self.processor.process([chat_component])
+                        processed_chat = self.processor.process(
+                            [chat_component])
                         if isinstance(processed_chat, tuple):
                             await self._callback(*processed_chat)
                         else:
                             await self._callback(processed_chat)
                     else:
                         await self._buffer.put(chat_component)
-                    diff_time = timeout - (time.time()-time_mark)
+                    diff_time = timeout - (time.time() - time_mark)
                     await asyncio.sleep(diff_time)
                     continuation = metadata.get('continuation')
         except ChatParseException as e:

@@ -10,6 +10,6 @@ class LiveChatMembershipItemRenderer(BaseRenderer):
         self.author.isChatSponsor = True
 
     def get_message(self, renderer):
-        message = ''.join([mes.get("text", "") for mes in renderer["headerSubtext"]["runs"]])
+        message = ''.join([mes.get("text", "")
+                           for mes in renderer["headerSubtext"]["runs"]])
         return message, [message]
-

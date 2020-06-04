@@ -156,7 +156,7 @@ class LiveChat:
                         continuation, session, headers)
                     metadata, chatdata = self._parser.parse(contents)
 
-                    timeout = metadata['timeoutMs']/1000
+                    timeout = metadata['timeoutMs'] / 1000
                     chat_component = {
                         "video_id": self.video_id,
                         "timeout": timeout,
@@ -172,7 +172,7 @@ class LiveChat:
                             self._callback(processed_chat)
                     else:
                         self._buffer.put(chat_component)
-                    diff_time = timeout - (time.time()-time_mark)
+                    diff_time = timeout - (time.time() - time_mark)
                     time.sleep(diff_time if diff_time > 0 else 0)
                     continuation = metadata.get('continuation')
         except ChatParseException as e:

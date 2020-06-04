@@ -20,13 +20,13 @@ class Chatdata:
         if self.interval == 0:
             time.sleep(1)
             return
-        time.sleep(self.interval/len(self.items))
+        time.sleep(self.interval / len(self.items))
 
     async def tick_async(self):
         if self.interval == 0:
             await asyncio.sleep(1)
             return
-        await asyncio.sleep(self.interval/len(self.items))
+        await asyncio.sleep(self.interval / len(self.items))
 
 
 class DefaultProcessor(ChatProcessor):
@@ -62,7 +62,7 @@ class DefaultProcessor(ChatProcessor):
             return None
         try:
             renderer = self._get_renderer(item)
-            if renderer == None:
+            if renderer is None:
                 return None
 
             renderer.get_snippet()

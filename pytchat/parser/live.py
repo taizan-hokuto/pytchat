@@ -22,7 +22,8 @@ class Parser:
         if jsn is None:
             raise ChatParseException('Called with none JSON object.')
         if jsn['response']['responseContext'].get('errors'):
-            raise ResponseContextError('The video_id would be wrong, or video is deleted or private.')
+            raise ResponseContextError(
+                'The video_id would be wrong, or video is deleted or private.')
         contents = jsn['response'].get('continuationContents')
         return contents
 
@@ -50,17 +51,18 @@ class Parser:
         cont = contents['liveChatContinuation']['continuations'][0]
         if cont is None:
             raise NoContinuationsException('No Continuation')
-        metadata = (cont.get('invalidationContinuationData') or
-                    cont.get('timedContinuationData') or
-                    cont.get('reloadContinuationData') or
-                    cont.get('liveChatReplayContinuationData')
+        metadata = (cont.get('invalidationContinuationData')
+                    or cont.get('timedContinuationData')
+                    or cont.get('reloadContinuationData')
+                    or cont.get('liveChatReplayContinuationData')
                     )
         if metadata is None:
             if cont.get("playerSeekContinuationData"):
                 raise ChatParseException('Finished chat data')
             unknown = list(cont.keys())[0]
             if unknown:
-                raise ChatParseException(f"Received unknown continuation type:{unknown}")
+                raise ChatParseException(
+                    f"Received unknown continuation type:{unknown}")
             else:
                 raise ChatParseException('Cannot extract continuation data')
         return self._create_data(metadata, contents)

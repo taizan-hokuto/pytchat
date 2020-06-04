@@ -28,3 +28,5 @@ from .api import (
     SuperchatCalculator,
     VideoInfo
 )
+
+# flake8: noqa

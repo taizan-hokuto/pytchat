@@ -1,7 +1,7 @@
-from . import parser
 from . block import Block
-from . patch import Patch, fill, split
+from . patch import fill, split
 from ... paramgen import arcparam
+
 
 class ExtractWorker:
     """
@@ -17,18 +17,18 @@ class ExtractWorker:
 
     block : Block :
         Block object that includes chat_data
-    
+
     blocks : list :
         List of Block(s)
 
     video_id : str :
 
     parent_block : Block :
-        the block from which current block is splitted 
+        the block from which current block is splitted
     """
     __slots__ = ['block', 'fetch', 'blocks', 'video_id', 'parent_block']
 
-    def __init__(self, fetch, block, blocks, video_id ):
+    def __init__(self, fetch, block, blocks, video_id):
         self.block = block
         self.fetch = fetch
         self.blocks = blocks
@@ -47,32 +47,34 @@ class ExtractWorker:
             if self.parent_block:
                 split(self.parent_block, self.block, patch)
                 self.parent_block = None
-            else:    
+            else:
                 fill(self.block, patch)
             if self.block.continuation is None:
                 """finished fetching this block """
                 self.block.done = True
                 self.block = _search_new_block(self)
 
+
 def _search_new_block(worker) -> Block:
     index, undone_block = _get_undone_block(worker.blocks)
     if undone_block is None:
-        return Block(continuation = None)
-    mean = (undone_block.last + undone_block.end)/2
-    continuation = arcparam.getparam(worker.video_id, seektime = mean/1000)
+        return Block(continuation=None)
+    mean = (undone_block.last + undone_block.end) / 2
+    continuation = arcparam.getparam(worker.video_id, seektime=mean / 1000)
     worker.parent_block = undone_block
     worker.parent_block.during_split = True
     new_block = Block(
-        end =  undone_block.end,
-        chat_data = [], 
-        continuation = continuation,
-        during_split = True,
-        is_last = worker.parent_block.is_last)
+        end=undone_block.end,
+        chat_data=[],
+        continuation=continuation,
+        during_split=True,
+        is_last=worker.parent_block.is_last)
     '''swap last block'''
     if worker.parent_block.is_last:
         worker.parent_block.is_last = False
-    worker.blocks.insert(index+1, new_block)
+    worker.blocks.insert(index + 1, new_block)
     return new_block
+
 
 def _get_undone_block(blocks) -> (int, Block):
     min_interval_ms = 120000

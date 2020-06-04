@@ -68,12 +68,12 @@ def _build(video_id, ts1, ts2, ts3, ts4, ts5, topchat_only) -> str:
 
 def _times(past_sec):
     n = int(time.time())
-    _ts1 = n - random.uniform(0, 1*3)
+    _ts1 = n - random.uniform(0, 1 * 3)
     _ts2 = n - random.uniform(0.01, 0.99)
     _ts3 = n - past_sec + random.uniform(0, 1)
-    _ts4 = n - random.uniform(10*60, 60*60)
+    _ts4 = n - random.uniform(10 * 60, 60 * 60)
     _ts5 = n - random.uniform(0.01, 0.99)
-    return list(map(lambda x: int(x*1000000), [_ts1, _ts2, _ts3, _ts4, _ts5]))
+    return list(map(lambda x: int(x * 1000000), [_ts1, _ts2, _ts3, _ts4, _ts5]))
 
 
 def getparam(video_id, past_sec=0, topchat_only=False) -> str:

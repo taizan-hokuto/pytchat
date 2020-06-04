@@ -1,9 +1,11 @@
 '''
-This modules refer to 
+This modules refer to
 Petter Kraabøl's Twitch-Chat-Downloader
 https://github.com/PetterKraabol/Twitch-Chat-Downloader
 (MIT License)
 '''
+
+
 class Singleton(type):
     """
     Abstract class for singletons
