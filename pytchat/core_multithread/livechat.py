@@ -6,10 +6,11 @@ import traceback
 import urllib.parse
 from concurrent.futures import CancelledError, ThreadPoolExecutor
 from queue import Queue
+from threading import Event
 from .buffer import Buffer
 from ..parser.live import Parser
 from .. import config
-from ..exceptions import ChatParseException, IllegalFunctionCall
+from .. import exceptions
 from ..paramgen import liveparam, arcparam
 from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
@@ -83,7 +84,7 @@ class LiveChat:
                  topchat_only=False,
                  logger=config.logger(__name__)
                  ):
-        self.video_id = video_id
+        self._video_id = video_id
         self.seektime = seektime
         if isinstance(processor, tuple):
             self.processor = Combinator(processor)
@@ -102,7 +103,9 @@ class LiveChat:
         self._first_fetch = True
         self._fetch_url = "live_chat/get_live_chat?continuation="
         self._topchat_only = topchat_only
+        self._event = Event()
         self._logger = logger
+        self.exception = None
         if interruptable:
             signal.signal(signal.SIGINT, lambda a, b: self.terminate())
         self._setup()
@@ -111,7 +114,7 @@ class LiveChat:
         # direct modeがTrueでcallback未設定の場合例外発生。
         if self._direct_mode:
             if self._callback is None:
-                raise IllegalFunctionCall(
+                raise exceptions.IllegalFunctionCall(
                     "When direct_mode=True, callback parameter is required.")
         else:
             # direct modeがFalseでbufferが未設定ならばデフォルトのbufferを作成
@@ -124,19 +127,19 @@ class LiveChat:
                 # callbackを呼ぶループタスクの開始
                 self._executor.submit(self._callback_loop, self._callback)
         # _listenループタスクの開始
-        listen_task = self._executor.submit(self._startlisten)
+        self.listen_task = self._executor.submit(self._startlisten)
         # add_done_callbackの登録
         if self._done_callback is None:
-            listen_task.add_done_callback(self.finish)
+            self.listen_task.add_done_callback(self._finish)
         else:
-            listen_task.add_done_callback(self._done_callback)
+            self.listen_task.add_done_callback(self._done_callback)
 
     def _startlisten(self):
         time.sleep(0.1)  # sleep shortly to prohibit skipping fetching data
         """Fetch first continuation parameter,
         create and start _listen loop.
         """
-        initial_continuation = liveparam.getparam(self.video_id, 3)
+        initial_continuation = liveparam.getparam(self._video_id, 3)
         self._listen(initial_continuation)
 
     def _listen(self, continuation):
@@ -152,13 +155,11 @@ class LiveChat:
             with requests.Session() as session:
                 while(continuation and self._is_alive):
                     continuation = self._check_pause(continuation)
-                    contents = self._get_contents(
-                        continuation, session, headers)
+                    contents = self._get_contents(continuation, session, headers)
                     metadata, chatdata = self._parser.parse(contents)
-
                     timeout = metadata['timeoutMs'] / 1000
                     chat_component = {
-                        "video_id": self.video_id,
+                        "video_id": self._video_id,
                         "timeout": timeout,
                         "chatdata": chatdata
                     }
@@ -173,16 +174,17 @@ class LiveChat:
                     else:
                         self._buffer.put(chat_component)
                     diff_time = timeout - (time.time() - time_mark)
-                    time.sleep(diff_time if diff_time > 0 else 0)
+                    self._event.wait(diff_time if diff_time > 0 else 0)
                     continuation = metadata.get('continuation')
-        except ChatParseException as e:
-            self._logger.debug(f"[{self.video_id}]{str(e)}")
-            return
+        except exceptions.ChatParseException as e:
+            self._logger.debug(f"[{self._video_id}]{str(e)}")
+            raise
         except (TypeError, json.JSONDecodeError):
             self._logger.error(f"{traceback.format_exc(limit=-1)}")
-            return
+            raise
 
-        self._logger.debug(f"[{self.video_id}]finished fetching chat.")
+        self._logger.debug(f"[{self._video_id}]finished fetching chat.")
+        raise exceptions.ChatDataFinished
 
     def _check_pause(self, continuation):
         if self._pauser.empty():
@@ -193,7 +195,7 @@ class LiveChat:
             '''
             self._pauser.put_nowait(None)
             if not self._is_replay:
-                continuation = liveparam.getparam(self.video_id, 3)
+                continuation = liveparam.getparam(self._video_id, 3)
         return continuation
 
     def _get_contents(self, continuation, session, headers):
@@ -215,9 +217,8 @@ class LiveChat:
                 self._parser.is_replay = True
                 self._fetch_url = "live_chat_replay/get_live_chat_replay?continuation="
                 continuation = arcparam.getparam(
-                    self.video_id, self.seektime, self._topchat_only)
-                livechat_json = (self._get_livechat_json(
-                    continuation, session, headers))
+                    self._video_id, self.seektime, self._topchat_only)
+                livechat_json = (self._get_livechat_json(continuation, session, headers))
                 reload_continuation = self._parser.reload_continuation(
                     self._parser.get_contents(livechat_json))
                 if reload_continuation:
@@ -246,9 +247,9 @@ class LiveChat:
                     time.sleep(1)
                     continue
         else:
-            self._logger.error(f"[{self.video_id}]"
+            self._logger.error(f"[{self._video_id}]"
                                f"Exceeded retry count. status_code={status_code}")
-            return None
+            raise exceptions.RetryExceedMaxCount()
         return livechat_json
 
     def _callback_loop(self, callback):
@@ -276,9 +277,12 @@ class LiveChat:
              : Processorによって加工されたチャットデータ
         """
         if self._callback is None:
-            items = self._buffer.get()
-            return self.processor.process(items)
-        raise IllegalFunctionCall(
+            if self.is_alive():
+                items = self._buffer.get()
+                return self.processor.process(items)
+            else:
+                return []
+        raise exceptions.IllegalFunctionCall(
             "既にcallbackを登録済みのため、get()は実行できません。")
 
     def is_replay(self):
@@ -299,18 +303,34 @@ class LiveChat:
     def is_alive(self):
         return self._is_alive
 
-    def finish(self, sender):
+    def _finish(self, sender):
         '''Listener終了時のコールバック'''
         try:
-            self.terminate()
+            self._task_finished()
         except CancelledError:
-            self._logger.debug(f'[{self.video_id}]cancelled:{sender}')
+            self._logger.debug(f'[{self._video_id}]cancelled:{sender}')
 
     def terminate(self):
+        if self._pauser.empty():
+            self._pauser.put_nowait(None)
+        self._is_alive = False
+        self._buffer.put({})
+        self._event.set()
+
+    def _task_finished(self):
         '''
         Listenerを終了する。
         '''
         if self.is_alive():
-            self._is_alive = False
-            self._buffer.put({})
-            self._logger.info(f'[{self.video_id}]終了しました')
+            self.terminate()
+            try:
+                self.listen_task.result()
+            except Exception as e:
+                self.exception = e
+                if not isinstance(e, exceptions.ChatParseException):
+                    self._logger.error(f'Internal exception - {type(e)}{str(e)}')
+        self._logger.info(f'[{self._video_id}]終了しました')
+
+    def raise_for_status(self):
+        if self.exception is not None:
+            raise self.exception

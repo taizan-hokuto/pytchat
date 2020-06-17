@@ -11,7 +11,7 @@ from asyncio import Queue
 from .buffer import Buffer
 from ..parser.live import Parser
 from .. import config
-from ..exceptions import ChatParseException, IllegalFunctionCall
+from .. import exceptions
 from ..paramgen import liveparam, arcparam
 from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
@@ -86,7 +86,7 @@ class LiveChatAsync:
                  topchat_only=False,
                  logger=config.logger(__name__),
                  ):
-        self.video_id = video_id
+        self._video_id = video_id
         self.seektime = seektime
         if isinstance(processor, tuple):
             self.processor = Combinator(processor)
@@ -102,28 +102,26 @@ class LiveChatAsync:
         self._parser = Parser(is_replay=self._is_replay)
         self._pauser = Queue()
         self._pauser.put_nowait(None)
-        self._setup()
         self._first_fetch = True
         self._fetch_url = "live_chat/get_live_chat?continuation="
         self._topchat_only = topchat_only
         self._logger = logger
+        self.exception = None
         LiveChatAsync._logger = logger
 
-        if not LiveChatAsync._setup_finished:
-            LiveChatAsync._setup_finished = True
-            if exception_handler:
-                self._set_exception_handler(exception_handler)
-            if interruptable:
-                signal.signal(signal.SIGINT,
-                              (lambda a, b: asyncio.create_task(
-                               LiveChatAsync.shutdown(None, signal.SIGINT, b))
-                               ))
+        if exception_handler:
+            self._set_exception_handler(exception_handler)
+        if interruptable:
+            signal.signal(signal.SIGINT,
+                (lambda a, b: asyncio.create_task(
+                 LiveChatAsync.shutdown(None, signal.SIGINT, b))))
+        self._setup()
 
     def _setup(self):
         # direct modeがTrueでcallback未設定の場合例外発生。
         if self._direct_mode:
             if self._callback is None:
-                raise IllegalFunctionCall(
+                raise exceptions.IllegalFunctionCall(
                     "When direct_mode=True, callback parameter is required.")
         else:
             # direct modeがFalseでbufferが未設定ならばデフォルトのbufferを作成
@@ -138,18 +136,18 @@ class LiveChatAsync:
                 loop.create_task(self._callback_loop(self._callback))
         # _listenループタスクの開始
         loop = asyncio.get_event_loop()
-        listen_task = loop.create_task(self._startlisten())
+        self.listen_task = loop.create_task(self._startlisten())
         # add_done_callbackの登録
         if self._done_callback is None:
-            listen_task.add_done_callback(self.finish)
+            self.listen_task.add_done_callback(self._finish)
         else:
-            listen_task.add_done_callback(self._done_callback)
+            self.listen_task.add_done_callback(self._done_callback)
 
     async def _startlisten(self):
         """Fetch first continuation parameter,
         create and start _listen loop.
         """
-        initial_continuation = liveparam.getparam(self.video_id, 3)
+        initial_continuation = liveparam.getparam(self._video_id, 3)
         await self._listen(initial_continuation)
 
     async def _listen(self, continuation):
@@ -171,7 +169,7 @@ class LiveChatAsync:
 
                     timeout = metadata['timeoutMs'] / 1000
                     chat_component = {
-                        "video_id": self.video_id,
+                        "video_id": self._video_id,
                         "timeout": timeout,
                         "chatdata": chatdata
                     }
@@ -188,14 +186,15 @@ class LiveChatAsync:
                     diff_time = timeout - (time.time() - time_mark)
                     await asyncio.sleep(diff_time)
                     continuation = metadata.get('continuation')
-        except ChatParseException as e:
-            self._logger.debug(f"[{self.video_id}]{str(e)}")
-            return
+        except exceptions.ChatParseException as e:
+            self._logger.debug(f"[{self._video_id}]{str(e)}")
+            raise
         except (TypeError, json.JSONDecodeError):
             self._logger.error(f"{traceback.format_exc(limit = -1)}")
-            return
+            raise
 
-        self._logger.debug(f"[{self.video_id}]finished fetching chat.")
+        self._logger.debug(f"[{self._video_id}]finished fetching chat.")
+        raise exceptions.ChatDataFinished
 
     async def _check_pause(self, continuation):
         if self._pauser.empty():
@@ -207,7 +206,7 @@ class LiveChatAsync:
             self._pauser.put_nowait(None)
             if not self._is_replay:
                 continuation = liveparam.getparam(
-                    self.video_id, 3, self._topchat_only)
+                    self._video_id, 3, self._topchat_only)
         return continuation
 
     async def _get_contents(self, continuation, session, headers):
@@ -227,7 +226,7 @@ class LiveChatAsync:
                 self._parser.is_replay = True
                 self._fetch_url = "live_chat_replay/get_live_chat_replay?continuation="
                 continuation = arcparam.getparam(
-                    self.video_id, self.seektime, self._topchat_only)
+                    self._video_id, self.seektime, self._topchat_only)
                 livechat_json = (await self._get_livechat_json(
                                  continuation, session, headers))
                 reload_continuation = self._parser.reload_continuation(
@@ -258,7 +257,7 @@ class LiveChatAsync:
                     await asyncio.sleep(1)
                     continue
         else:
-            self._logger.error(f"[{self.video_id}]"
+            self._logger.error(f"[{self._video_id}]"
                                f"Exceeded retry count. status_code={status_code}")
             return None
         return livechat_json
@@ -288,9 +287,12 @@ class LiveChatAsync:
              : Processorによって加工されたチャットデータ
         """
         if self._callback is None:
-            items = await self._buffer.get()
-            return self.processor.process(items)
-        raise IllegalFunctionCall(
+            if self.is_alive():
+                items = await self._buffer.get()
+                return self.processor.process(items)
+            else:
+                return []
+        raise exceptions.IllegalFunctionCall(
             "既にcallbackを登録済みのため、get()は実行できません。")
 
     def is_replay(self):
@@ -311,22 +313,36 @@ class LiveChatAsync:
     def is_alive(self):
         return self._is_alive
 
-    def finish(self, sender):
+    def _finish(self, sender):
         '''Listener終了時のコールバック'''
         try:
-            self.terminate()
+            self._task_finished()
         except CancelledError:
-            self._logger.debug(f'[{self.video_id}]cancelled:{sender}')
+            self._logger.debug(f'[{self._video_id}]cancelled:{sender}')
 
     def terminate(self):
+        if self._pauser.empty():
+            self._pauser.put_nowait(None)
+        self._is_alive = False
+        self._buffer.put_nowait({})
+
+    def _task_finished(self):
         '''
         Listenerを終了する。
         '''
-        self._is_alive = False
-        if self._direct_mode is False:
-            # bufferにダミーオブジェクトを入れてis_alive()を判定させる
-            self._buffer.put_nowait({'chatdata': '', 'timeout': 0})
-        self._logger.info(f'[{self.video_id}]finished.')
+        if self.is_alive():
+            self.terminate()
+            try:
+                self.listen_task.result()
+            except Exception as e:
+                self.exception = e
+                if not isinstance(e, exceptions.ChatParseException):
+                    self._logger.error(f'Internal exception - {type(e)}{str(e)}')
+        self._logger.info(f'[{self._video_id}]終了しました')
+
+    def raise_for_status(self):
+        if self.exception is not None:
+            raise self.exception
 
     @classmethod
     def _set_exception_handler(cls, handler):

@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 from .arguments import Arguments
-from .. exceptions import InvalidVideoIdException, NoContentsException
+from .. exceptions import InvalidVideoIdException, NoContents
 from .. processors.html_archiver import HTMLArchiver
 from .. tool.extract.extractor import Extractor
 from .. tool.videoinfo import VideoInfo
@@ -50,7 +50,7 @@ def main():
                           callback=_disp_progress
                           ).extract()
                 print("\nExtraction end.\n")
-            except (InvalidVideoIdException, NoContentsException) as e:
+            except (InvalidVideoIdException, NoContents) as e:
                 print(e)
         return
     parser.print_help()

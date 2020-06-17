@@ -1,8 +1,5 @@
 from ... import config
-from ... exceptions import (
-    ResponseContextError,
-    NoContentsException,
-    NoContinuationsException)
+from ... import exceptions
 
 logger = config.logger(__name__)
 
@@ -23,15 +20,15 @@ def parse(jsn):
     if jsn is None:
         raise ValueError("parameter JSON is None")
     if jsn['response']['responseContext'].get('errors'):
-        raise ResponseContextError(
+        raise exceptions.ResponseContextError(
             'video_id is invalid or private/deleted.')
     contents = jsn['response'].get('continuationContents')
     if contents is None:
-        raise NoContentsException('No chat data.')
+        raise exceptions.NoContents('No chat data.')
 
     cont = contents['liveChatContinuation']['continuations'][0]
     if cont is None:
-        raise NoContinuationsException('No Continuation')
+        raise exceptions.NoContinuation('No Continuation')
     metadata = cont.get('liveChatReplayContinuationData')
     if metadata:
         continuation = metadata.get("continuation")
