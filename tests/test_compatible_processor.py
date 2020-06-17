@@ -1,17 +1,6 @@
 import json
-import pytest
-import asyncio
-import aiohttp
 from pytchat.parser.live import Parser
 from pytchat.processors.compatible.processor import CompatibleProcessor
-from pytchat.exceptions import (
-    NoLivechatRendererException, NoYtinitialdataException,
-    ResponseContextError, NoContentsException)
-
-from pytchat.processors.compatible.renderer.textmessage import LiveChatTextMessageRenderer
-from pytchat.processors.compatible.renderer.paidmessage import LiveChatPaidMessageRenderer
-from pytchat.processors.compatible.renderer.paidsticker import LiveChatPaidStickerRenderer
-from pytchat.processors.compatible.renderer.legacypaid import LiveChatLegacyPaidMessageRenderer
 
 parser = Parser(is_replay=False)
 
@@ -31,21 +20,23 @@ def test_textmessage(mocker):
     ret = processor.process([data])
 
     assert ret["kind"] == "youtube#liveChatMessageListResponse"
-    assert ret["pollingIntervalMillis"] == data["timeout"]*1000
+    assert ret["pollingIntervalMillis"] == data["timeout"] * 1000
     assert ret.keys() == {
-        "kind",   "etag",   "pageInfo",   "nextPageToken", "pollingIntervalMillis", "items"
+        "kind", "etag", "pageInfo", "nextPageToken", "pollingIntervalMillis", "items"
     }
     assert ret["pageInfo"].keys() == {
-        "totalResults",   "resultsPerPage"
+        "totalResults", "resultsPerPage"
     }
     assert ret["items"][0].keys() == {
-        "kind",   "etag",   "id",   "snippet", "authorDetails"
+        "kind", "etag", "id", "snippet", "authorDetails"
     }
     assert ret["items"][0]["snippet"].keys() == {
-        'type', 'liveChatId', 'authorChannelId', 'publishedAt', 'hasDisplayContent', 'displayMessage', 'textMessageDetails'
+        'type', 'liveChatId', 'authorChannelId', 'publishedAt', 'hasDisplayContent', 'displayMessage',
+        'textMessageDetails'
     }
     assert ret["items"][0]["authorDetails"].keys() == {
-        'channelId', 'channelUrl', 'displayName', 'profileImageUrl', 'isVerified', 'isChatOwner', 'isChatSponsor', 'isChatModerator'
+        'channelId', 'channelUrl', 'displayName', 'profileImageUrl', 'isVerified', 'isChatOwner', 'isChatSponsor',
+        'isChatModerator'
     }
     assert ret["items"][0]["snippet"]["textMessageDetails"].keys() == {
         'messageText'
@@ -69,22 +60,23 @@ def test_newsponcer(mocker):
     ret = processor.process([data])
 
     assert ret["kind"] == "youtube#liveChatMessageListResponse"
-    assert ret["pollingIntervalMillis"] == data["timeout"]*1000
+    assert ret["pollingIntervalMillis"] == data["timeout"] * 1000
     assert ret.keys() == {
-        "kind",   "etag",   "pageInfo",   "nextPageToken", "pollingIntervalMillis", "items"
+        "kind", "etag", "pageInfo", "nextPageToken", "pollingIntervalMillis", "items"
     }
     assert ret["pageInfo"].keys() == {
-        "totalResults",   "resultsPerPage"
+        "totalResults", "resultsPerPage"
     }
     assert ret["items"][0].keys() == {
-        "kind",   "etag",   "id",   "snippet", "authorDetails"
+        "kind", "etag", "id", "snippet", "authorDetails"
     }
     assert ret["items"][0]["snippet"].keys() == {
         'type', 'liveChatId', 'authorChannelId', 'publishedAt', 'hasDisplayContent', 'displayMessage'
 
     }
     assert ret["items"][0]["authorDetails"].keys() == {
-        'channelId', 'channelUrl', 'displayName', 'profileImageUrl', 'isVerified', 'isChatOwner', 'isChatSponsor', 'isChatModerator'
+        'channelId', 'channelUrl', 'displayName', 'profileImageUrl', 'isVerified', 'isChatOwner', 'isChatSponsor',
+        'isChatModerator'
     }
     assert "LCC." in ret["items"][0]["id"]
     assert ret["items"][0]["snippet"]["type"] == "newSponsorEvent"
@@ -105,22 +97,23 @@ def test_newsponcer_rev(mocker):
     ret = processor.process([data])
 
     assert ret["kind"] == "youtube#liveChatMessageListResponse"
-    assert ret["pollingIntervalMillis"] == data["timeout"]*1000
+    assert ret["pollingIntervalMillis"] == data["timeout"] * 1000
     assert ret.keys() == {
-        "kind",   "etag",   "pageInfo",   "nextPageToken", "pollingIntervalMillis", "items"
+        "kind", "etag", "pageInfo", "nextPageToken", "pollingIntervalMillis", "items"
     }
     assert ret["pageInfo"].keys() == {
-        "totalResults",   "resultsPerPage"
+        "totalResults", "resultsPerPage"
     }
     assert ret["items"][0].keys() == {
-        "kind",   "etag",   "id",   "snippet", "authorDetails"
+        "kind", "etag", "id", "snippet", "authorDetails"
     }
     assert ret["items"][0]["snippet"].keys() == {
         'type', 'liveChatId', 'authorChannelId', 'publishedAt', 'hasDisplayContent', 'displayMessage'
 
     }
     assert ret["items"][0]["authorDetails"].keys() == {
-        'channelId', 'channelUrl', 'displayName', 'profileImageUrl', 'isVerified', 'isChatOwner', 'isChatSponsor', 'isChatModerator'
+        'channelId', 'channelUrl', 'displayName', 'profileImageUrl', 'isVerified', 'isChatOwner', 'isChatSponsor',
+        'isChatModerator'
     }
     assert "LCC." in ret["items"][0]["id"]
     assert ret["items"][0]["snippet"]["type"] == "newSponsorEvent"
@@ -141,21 +134,23 @@ def test_superchat(mocker):
     ret = processor.process([data])
 
     assert ret["kind"] == "youtube#liveChatMessageListResponse"
-    assert ret["pollingIntervalMillis"] == data["timeout"]*1000
+    assert ret["pollingIntervalMillis"] == data["timeout"] * 1000
     assert ret.keys() == {
-        "kind",   "etag",   "pageInfo",   "nextPageToken", "pollingIntervalMillis", "items"
+        "kind", "etag", "pageInfo", "nextPageToken", "pollingIntervalMillis", "items"
     }
     assert ret["pageInfo"].keys() == {
-        "totalResults",   "resultsPerPage"
+        "totalResults", "resultsPerPage"
     }
     assert ret["items"][0].keys() == {
-        "kind",   "etag",   "id",   "snippet", "authorDetails"
+        "kind", "etag", "id", "snippet", "authorDetails"
     }
     assert ret["items"][0]["snippet"].keys() == {
-        'type', 'liveChatId', 'authorChannelId', 'publishedAt', 'hasDisplayContent', 'displayMessage', 'superChatDetails'
+        'type', 'liveChatId', 'authorChannelId', 'publishedAt', 'hasDisplayContent', 'displayMessage',
+        'superChatDetails'
     }
     assert ret["items"][0]["authorDetails"].keys() == {
-        'channelId', 'channelUrl', 'displayName', 'profileImageUrl', 'isVerified', 'isChatOwner', 'isChatSponsor', 'isChatModerator'
+        'channelId', 'channelUrl', 'displayName', 'profileImageUrl', 'isVerified', 'isChatOwner', 'isChatSponsor',
+        'isChatModerator'
     }
     assert ret["items"][0]["snippet"]["superChatDetails"].keys() == {
         'amountMicros', 'currency', 'amountDisplayString', 'tier', 'backgroundColor'

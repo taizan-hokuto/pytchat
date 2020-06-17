@@ -25,7 +25,7 @@ class LiveChatMembershipItemRenderer(BaseRenderer):
         )
         return {
             "channelId": authorExternalChannelId,
-            "channelUrl": "http://www.youtube.com/channel/"+authorExternalChannelId,
+            "channelUrl": "http://www.youtube.com/channel/" + authorExternalChannelId,
             "displayName": self.renderer["authorName"]["simpleText"],
             "profileImageUrl": self.renderer["authorPhoto"]["thumbnails"][1]["url"],
             "isVerified": isVerified,
@@ -35,6 +35,6 @@ class LiveChatMembershipItemRenderer(BaseRenderer):
         }
 
     def get_message(self, renderer):
-        message = ''.join([mes.get("text", "") for mes in renderer["headerSubtext"]["runs"]])
+        message = ''.join([mes.get("text", "")
+                           for mes in renderer["headerSubtext"]["runs"]])
         return message, [message]
-

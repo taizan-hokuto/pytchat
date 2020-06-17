@@ -1,5 +1,3 @@
-import datetime
-import time
 from .renderer.textmessage import LiveChatTextMessageRenderer
 from .renderer.paidmessage import LiveChatPaidMessageRenderer
 from .renderer.paidsticker import LiveChatPaidStickerRenderer
@@ -39,7 +37,7 @@ class CompatibleProcessor(ChatProcessor):
                     chat = self.parse(action)
                     if chat:
                         chatlist.append(chat)
-        ret["pollingIntervalMillis"] = int(timeout*1000)
+        ret["pollingIntervalMillis"] = int(timeout * 1000)
         ret["pageInfo"] = {
             "totalResults": len(chatlist),
             "resultsPerPage": len(chatlist),
@@ -58,7 +56,7 @@ class CompatibleProcessor(ChatProcessor):
         rd = {}
         try:
             renderer = self.get_renderer(item)
-            if renderer == None:
+            if renderer is None:
                 return None
 
             rd["kind"] = "youtube#liveChatMessage"

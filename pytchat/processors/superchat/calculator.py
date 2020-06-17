@@ -15,10 +15,12 @@ items_sticker = [
     'liveChatPaidStickerRenderer'
 ]
 
+
 class SuperchatCalculator(ChatProcessor):
     """
     Calculate the amount of SuperChat by currency.
     """
+
     def __init__(self):
         self.results = {}
 
@@ -34,22 +36,24 @@ class SuperchatCalculator(ChatProcessor):
             return self.results
         for component in chat_components:
             chatdata = component.get('chatdata')
-            if chatdata is None: continue
+            if chatdata is None:
+                continue
             for action in chatdata:
                 renderer = self._get_item(action, items_paid) or \
-                           self._get_item(action, items_sticker)
-                if renderer is None: continue
+                    self._get_item(action, items_sticker)
+                if renderer is None:
+                    continue
                 symbol, amount = self._parse(renderer)
-                self.results.setdefault(symbol,0)
-                self.results[symbol]+=amount
+                self.results.setdefault(symbol, 0)
+                self.results[symbol] += amount
         return self.results
-    
+
     def _parse(self, renderer):
         purchase_amount_text = renderer["purchaseAmountText"]["simpleText"]
         m = superchat_regex.search(purchase_amount_text)
         if m:
             symbol = m.group(1)
-            amount = float(m.group(2).replace(',',''))
+            amount = float(m.group(2).replace(',', ''))
         else:
             symbol = ""
             amount = 0.0
@@ -69,6 +73,3 @@ class SuperchatCalculator(ChatProcessor):
                 continue
             return None
         return dict_body
-
-
-

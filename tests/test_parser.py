@@ -1,17 +1,16 @@
-import pytest
 from pytchat.parser.live import Parser
 import json
-import asyncio,aiohttp
 from aioresponses import aioresponses
-from pytchat.exceptions import (
-    NoLivechatRendererException,NoYtinitialdataException,
-    ResponseContextError, NoContentsException)
+from pytchat.exceptions import NoContents
 
 
 def _open_file(path):
-    with open(path,mode ='r',encoding = 'utf-8') as f:
+    with open(path, mode='r', encoding='utf-8') as f:
         return f.read()
-parser = Parser(is_replay = False)
+
+
+parser = Parser(is_replay=False)
+
 
 @aioresponses()
 def test_finishedlive(*mock):
@@ -20,11 +19,12 @@ def test_finishedlive(*mock):
     _text = _open_file('tests/testdata/finished_live.json')
     _text = json.loads(_text)
 
-    try:    
+    try:
         parser.parse(parser.get_contents(_text))
         assert False
-    except NoContentsException:
+    except NoContents:
         assert True
+
 
 @aioresponses()
 def test_parsejson(*mock):
@@ -33,12 +33,13 @@ def test_parsejson(*mock):
     _text = _open_file('tests/testdata/paramgen_firstread.json')
     _text = json.loads(_text)
 
-    try:    
+    try:
         parser.parse(parser.get_contents(_text))
         jsn = _text
         timeout = jsn["response"]["continuationContents"]["liveChatContinuation"]["continuations"][0]["timedContinuationData"]["timeoutMs"]
-        continuation = jsn["response"]["continuationContents"]["liveChatContinuation"]["continuations"][0]["timedContinuationData"]["continuation"]
-        assert 5035 == timeout
-        assert "0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiPz5-Os-PkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CRwciOs-PkAli3pNq1k-PkAmgBggEECAEQAIgBAKABjbfnjrPj5AI%3D" == continuation
-    except:
+        continuation = jsn["response"]["continuationContents"]["liveChatContinuation"][
+            "continuations"][0]["timedContinuationData"]["continuation"]
+        assert timeout == 5035
+        assert continuation == "0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiPz5-Os-PkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CRwciOs-PkAli3pNq1k-PkAmgBggEECAEQAIgBAKABjbfnjrPj5AI%3D"
+    except Exception:
         assert False

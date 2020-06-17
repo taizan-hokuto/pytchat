@@ -1,11 +1,8 @@
-import json
 from ... import config
-from ... exceptions import ( 
-    ResponseContextError, 
-    NoContentsException, 
-    NoContinuationsException )
+from ... import exceptions
 
 logger = config.logger(__name__)
+
 
 def parse(jsn):
     """
@@ -20,18 +17,18 @@ def parse(jsn):
         actions : list
 
     """
-    if jsn is None: 
+    if jsn is None:
         raise ValueError("parameter JSON is None")
     if jsn['response']['responseContext'].get('errors'):
-        raise ResponseContextError(
-    'video_id is invalid or private/deleted.')
-    contents=jsn['response'].get('continuationContents')
+        raise exceptions.ResponseContextError(
+            'video_id is invalid or private/deleted.')
+    contents = jsn['response'].get('continuationContents')
     if contents is None:
-        raise NoContentsException('No chat data.')
+        raise exceptions.NoContents('No chat data.')
 
     cont = contents['liveChatContinuation']['continuations'][0]
     if cont is None:
-        raise NoContinuationsException('No Continuation')
+        raise exceptions.NoContinuation('No Continuation')
     metadata = cont.get('liveChatReplayContinuationData')
     if metadata:
         continuation = metadata.get("continuation")
@@ -43,12 +40,12 @@ def parse(jsn):
 def get_offset(item):
     return int(item['replayChatItemAction']["videoOffsetTimeMsec"])
 
+
 def get_id(item):
     return list((list(item['replayChatItemAction']["actions"][0].values()
-                )[0])['item'].values())[0].get('id')
+                      )[0])['item'].values())[0].get('id')
+
 
 def get_type(item):
     return list((list(item['replayChatItemAction']["actions"][0].values()
-                )[0])['item'].keys())[0]
-
-
+                      )[0])['item'].keys())[0]

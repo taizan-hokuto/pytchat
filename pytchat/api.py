@@ -14,3 +14,5 @@ from .processors.speed.calculator import SpeedCalculator
 from .processors.superchat.calculator import SuperchatCalculator
 from .tool.extract.extractor import Extractor
 from .tool.videoinfo import VideoInfo
+
+# flake8: noqa
