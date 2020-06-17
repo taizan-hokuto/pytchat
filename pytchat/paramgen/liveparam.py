@@ -23,7 +23,7 @@ def _gen_vid(video_id) -> str:
 
     Return
     ---------
-    byte[] : base64 encoded video_id parameter.
+    str : base64 encoded video_id parameter.
     """
     header = Header()
     header.info.video.id = video_id
