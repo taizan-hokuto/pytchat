@@ -43,12 +43,11 @@ class HTMLArchiver(ChatProcessor):
     '''
     HTMLArchiver saves chat data as HTML table format.
     '''
-
     def __init__(self, save_path):
         super().__init__()
         self.save_path = self._checkpath(save_path)
         self.processor = DefaultProcessor()
-        self.emoji_table = {}
+        self.emoji_table = {}  # table for custom emojis. key: emoji_id, value: base64 encoded image binary.
         self.header = [HEADER_HTML]
         self.body = ['<body>\n', '<table class="css">\n', self._parse_table_header(fmt_headers)]
 
@@ -81,7 +80,6 @@ class HTMLArchiver(ChatProcessor):
         """
         if chat_components is None or len(chat_components) == 0:
             return
-        # chats = self.processor.process(chat_components).items
         self.body.extend(
             (self._parse_html_line((
                 c.datetime,
