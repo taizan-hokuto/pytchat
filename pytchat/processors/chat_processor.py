@@ -21,3 +21,10 @@ class ChatProcessor:
             }
         '''
         pass
+
+    def finalize(self, *args, **kwargs):
+        '''
+        Interface for finalizing the process.
+        Called when chat fetching finished.
+        '''
+        pass

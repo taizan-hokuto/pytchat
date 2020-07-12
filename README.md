@@ -27,7 +27,7 @@ pip install pytchat
 ### CLI
 
 One-liner command.
-Save chat data to html.
+Save chat data to html, with embedded custom emojis.
 
 ```bash
 $ pytchat -v ZJ6Q4U_Vg6s -o "c:/temp/"
@@ -148,6 +148,20 @@ def main():
 if __name__ == '__main__':
   main()
 ```
+### Extract archived chat data as [HTML](https://github.com/taizan-hokuto/pytchat/wiki/HTMLArchiver) or [tab separated values](https://github.com/taizan-hokuto/pytchat/wiki/TSVArchiver).
+```python
+from pytchat import HTMLArchiver, Extractor
+
+video_id = "*******"
+ex = Extractor(
+    video_id,
+    div=10,
+    processor=HTMLArchiver("c:/test.html")
+)
+
+ex.extract()
+print("finished.")
+```
 
 ## Structure of Default Processor
 Each item can be got with `items` function.
@@ -175,7 +189,7 @@ Each item can be got with `items` function.
   <tr>
     <td>messageEx</td>
     <td>str</td>
-    <td>list of message texts and emoji URLs.</td>
+    <td>list of message texts and emoji dicts(id, txt, url).</td>
   </tr>
   <tr>
     <td>timestamp</td>

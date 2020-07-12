@@ -52,8 +52,11 @@ class BaseRenderer:
                     if r:
                         if r.get('emoji'):
                             message += r['emoji'].get('shortcuts', [''])[0]
-                            message_ex.append(
-                                r['emoji']['image']['thumbnails'][1].get('url'))
+                            message_ex.append({
+                                'id': r['emoji'].get('emojiId').split('/')[-1],
+                                'txt': r['emoji'].get('shortcuts', [''])[0],
+                                'url': r['emoji']['image']['thumbnails'][0].get('url')
+                            })
                         else:
                             message += r.get('text', '')
                             message_ex.append(r.get('text', ''))
