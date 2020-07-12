@@ -325,7 +325,8 @@ class LiveChatAsync:
             self._pauser.put_nowait(None)
         self._is_alive = False
         self._buffer.put_nowait({})
-
+        self.processor.finalize()
+        
     def _task_finished(self):
         '''
         Listenerを終了する。
