@@ -316,6 +316,7 @@ class LiveChat:
         self._is_alive = False
         self._buffer.put({})
         self._event.set()
+        self.processor.finalize()
 
     def _task_finished(self):
         '''

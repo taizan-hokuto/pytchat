@@ -83,11 +83,13 @@ class Extractor:
         data = self._execute_extract_operations()
         if self.processor is None:
             return data
-        return self.processor.process(
+        ret = self.processor.process(
             [{'video_id': None,
               'timeout': 1,
               'chatdata': (action["replayChatItemAction"]["actions"][0] for action in data)}]
         )
+        self.processor.finalize()
+        return ret
 
     def cancel(self):
         asyncdl.cancel()
