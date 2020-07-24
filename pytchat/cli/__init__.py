@@ -20,9 +20,6 @@ https://github.com/PetterKraabol/Twitch-Chat-Downloader
 def main():
     # Arguments
     parser = argparse.ArgumentParser(description=f'pytchat v{__version__}')
-    # parser.add_argument('VideoID_or_URL', type=str, default='__NONE__',nargs='?',
-    #                     help='Video ID, or URL that includes id.\n'
-    #                     'If ID starts with a hyphen (-), enclose the ID in square brackets.')
     parser.add_argument('-v', f'--{Arguments.Name.VIDEO_IDS}', type=str,
                         help='Video ID (or URL that includes Video ID). You can specify multiple video IDs by separating them with commas without spaces.\n'
                         'If ID starts with a hyphen (-), enclose the ID in square brackets.')
@@ -41,6 +38,7 @@ def main():
             if '[' in video_id:
                 video_id = video_id.replace('[', '').replace(']', '')
             try:
+                video_id = extract_video_id(video_id)
                 info = VideoInfo(video_id)
                 print(f"Extracting...\n"
                       f" video_id: {video_id}\n"
