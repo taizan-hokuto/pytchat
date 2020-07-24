@@ -7,7 +7,7 @@ pytchat is a python library for fetching youtube live chat.
 pytchat is a python library for fetching youtube live chat
 without using youtube api, Selenium or BeautifulSoup.
 
-pytchatはAPIを使わずにYouTubeチャットを取得するためのpythonライブラリです。
+pytchatは、YouTubeチャットを閲覧するためのpythonライブラリです。
 
 Other features:
 + Customizable [chat data processors](https://github.com/taizan-hokuto/pytchat/wiki/ChatProcessor) including youtube api compatible one.
@@ -30,10 +30,9 @@ One-liner command.
 Save chat data to html, with embedded custom emojis.
 
 ```bash
-$ pytchat -v ZJ6Q4U_Vg6s -o "c:/temp/"
-
+$ pytchat -v https://www.youtube.com/watch?v=ZJ6Q4U_Vg6s -o "c:/temp/"
 # options:
-#  -v : video_id
+#  -v : Video ID or URL that includes ID
 #  -o : output directory (default path: './')
 # saved filename is [video_id].html
 ```
@@ -43,7 +42,8 @@ $ pytchat -v ZJ6Q4U_Vg6s -o "c:/temp/"
 ```python
 from pytchat import LiveChat
 livechat = LiveChat(video_id = "Zvp1pJpie4I")
-
+# It is also possible to specify a URL that includes the video ID:
+# livechat = LiveChat("https://www.youtube.com/watch?v=Zvp1pJpie4I")
 while livechat.is_alive():
   try:
     chatdata = livechat.get()
