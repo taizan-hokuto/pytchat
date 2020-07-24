@@ -20,7 +20,7 @@ def test_async_live_stream(*mock):
             r'^https://www.youtube.com/live_chat/get_live_chat\?continuation=.*$')
         _text = _open_file('tests/testdata/test_stream.json')
         mock[0].get(pattern, status=200, body=_text)
-        chat = LiveChatAsync(video_id='', processor=DummyProcessor())
+        chat = LiveChatAsync(video_id='__test_id__', processor=DummyProcessor())
         chats = await chat.get()
         rawdata = chats[0]["chatdata"]
         # assert fetching livachat data
@@ -60,7 +60,7 @@ def test_async_replay_stream(*mock):
         mock[0].get(pattern_live, status=200, body=_text_live)
         mock[0].get(pattern_replay, status=200, body=_text_replay)
 
-        chat = LiveChatAsync(video_id='', processor=DummyProcessor())
+        chat = LiveChatAsync(video_id='__test_id__', processor=DummyProcessor())
         chats = await chat.get()
         rawdata = chats[0]["chatdata"]
         # assert fetching replaychat data
@@ -93,7 +93,7 @@ def test_async_force_replay(*mock):
         mock[0].get(pattern_replay, status=200, body=_text_replay)
         # force replay
         chat = LiveChatAsync(
-            video_id='', processor=DummyProcessor(), force_replay=True)
+            video_id='__test_id__', processor=DummyProcessor(), force_replay=True)
         chats = await chat.get()
         rawdata = chats[0]["chatdata"]
         # assert fetching replaychat data
@@ -119,7 +119,7 @@ def test_multithread_live_stream(mocker):
     mocker.patch(
         'requests.Session.get').return_value.__enter__.return_value = responseMock
 
-    chat = LiveChat(video_id='test_id', processor=DummyProcessor())
+    chat = LiveChat(video_id='__test_id__', processor=DummyProcessor())
     chats = chat.get()
     rawdata = chats[0]["chatdata"]
     # assert fetching livachat data

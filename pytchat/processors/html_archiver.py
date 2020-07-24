@@ -47,7 +47,7 @@ class HTMLArchiver(ChatProcessor):
         super().__init__()
         self.save_path = self._checkpath(save_path)
         self.processor = DefaultProcessor()
-        self.emoji_table = {}  # table for custom emojis. key: emoji_id, value: base64 encoded image binary.
+        self.emoji_table = {}  # tuble for custom emojis. key: emoji_id, value: base64 encoded image binary.
         self.header = [HEADER_HTML]
         self.body = ['<body>\n', '<table class="css">\n', self._parse_table_header(fmt_headers)]
 

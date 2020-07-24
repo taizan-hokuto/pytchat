@@ -12,4 +12,4 @@ class LiveChatLegacyPaidMessageRenderer(BaseRenderer):
     def get_message(self, renderer):
         message = (renderer["eventText"]["runs"][0]["text"]
                    ) + ' / ' + (renderer["detailText"]["simpleText"])
-        return message
+        return message, [message]
