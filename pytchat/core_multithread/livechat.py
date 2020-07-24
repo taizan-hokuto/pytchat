@@ -325,12 +325,12 @@ class LiveChat:
         '''
         if self.is_alive():
             self.terminate()
-            try:
-                self.listen_task.result()
-            except Exception as e:
-                self.exception = e
-                if not isinstance(e, exceptions.ChatParseException):
-                    self._logger.error(f'Internal exception - {type(e)}{str(e)}')
+        try:
+            self.listen_task.result()
+        except Exception as e:
+            self.exception = e
+            if not isinstance(e, exceptions.ChatParseException):
+                self._logger.error(f'Internal exception - {type(e)}{str(e)}')
         self._logger.info(f'[{self._video_id}]終了しました')
 
     def raise_for_status(self):
