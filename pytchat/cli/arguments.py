@@ -16,8 +16,8 @@ class Arguments(metaclass=Singleton):
 
     class Name:
         VERSION: str = 'version'
-        OUTPUT: str = 'output'
-        VIDEO: str = 'video'
+        OUTPUT: str = 'output_dir'
+        VIDEO_IDS: str = 'video_id'
 
     def __init__(self,
                  arguments: Optional[Dict[str, Union[str, bool, int]]] = None):
@@ -35,6 +35,9 @@ class Arguments(metaclass=Singleton):
         self.output: str = arguments[Arguments.Name.OUTPUT]
         self.video_ids: List[int] = []
         # Videos
-        if arguments[Arguments.Name.VIDEO]:
+        if arguments[Arguments.Name.VIDEO_IDS]:
             self.video_ids = [video_id
-                              for video_id in arguments[Arguments.Name.VIDEO].split(',')]
+                              for video_id in arguments[Arguments.Name.VIDEO_IDS].split(',')]
+
+
+

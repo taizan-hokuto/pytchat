@@ -15,6 +15,7 @@ from .. import exceptions
 from ..paramgen import liveparam, arcparam
 from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
+from ..util.extract_video_id import extract_video_id
 
 headers = config.headers
 MAX_RETRY = 10
@@ -86,7 +87,7 @@ class LiveChatAsync:
                  topchat_only=False,
                  logger=config.logger(__name__),
                  ):
-        self._video_id = video_id
+        self._video_id = extract_video_id(video_id)
         self.seektime = seektime
         if isinstance(processor, tuple):
             self.processor = Combinator(processor)

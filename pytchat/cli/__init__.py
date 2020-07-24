@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+from pytchat.util.extract_video_id import extract_video_id
 from .arguments import Arguments
 from .. exceptions import InvalidVideoIdException, NoContents
 from .. processors.html_archiver import HTMLArchiver
@@ -19,16 +20,19 @@ https://github.com/PetterKraabol/Twitch-Chat-Downloader
 def main():
     # Arguments
     parser = argparse.ArgumentParser(description=f'pytchat v{__version__}')
-    parser.add_argument('-v', f'--{Arguments.Name.VIDEO}', type=str,
-                        help='Video IDs separated by commas without space.\n'
+    # parser.add_argument('VideoID_or_URL', type=str, default='__NONE__',nargs='?',
+    #                     help='Video ID, or URL that includes id.\n'
+    #                     'If ID starts with a hyphen (-), enclose the ID in square brackets.')
+    parser.add_argument('-v', f'--{Arguments.Name.VIDEO_IDS}', type=str,
+                        help='Video ID (or URL that includes Video ID). You can specify multiple video IDs by separating them with commas without spaces.\n'
                         'If ID starts with a hyphen (-), enclose the ID in square brackets.')
     parser.add_argument('-o', f'--{Arguments.Name.OUTPUT}', type=str,
                         help='Output directory (end with "/"). default="./"', default='./')
     parser.add_argument(f'--{Arguments.Name.VERSION}', action='store_true',
-                        help='Settings version')
+                        help='Show version')
     Arguments(parser.parse_args().__dict__)
     if Arguments().print_version:
-        print(f'pytchat v{__version__}')
+        print(f'pytchat v{__version__}     © 2019 taizan-hokuto')
         return
 
     # Extractor
@@ -43,14 +47,16 @@ def main():
                       f" channel:  {info.get_channel_name()}\n"
                       f" title:    {info.get_title()}")
                 path = Path(Arguments().output + video_id + '.html')
-                print(f"output path: {path.resolve()}")
+                print(f" output path: {path.resolve()}")
                 Extractor(video_id,
                           processor=HTMLArchiver(
                               Arguments().output + video_id + '.html'),
                           callback=_disp_progress
                           ).extract()
                 print("\nExtraction end.\n")
-            except (InvalidVideoIdException, NoContents) as e:
+            except InvalidVideoIdException:
+                print("Invalid Video ID or URL:", video_id)
+            except (TypeError, NoContents) as e:
                 print(e)
         return
     parser.print_help()
