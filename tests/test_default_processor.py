@@ -136,7 +136,7 @@ def test_supersticker(mocker):
     assert ret.amountValue == 200
     assert ret.amountString == "￥200"
     assert ret.currency == "JPY"
-    assert ret.bgColor == 4278248959
+    assert ret.bgColor == 4278237396
     assert ret.sticker == "https://lh3.googleusercontent.com/param_s=s72-rp"
     assert ret.author.name == "author_name"
     assert ret.author.channelId == "author_channel_id"

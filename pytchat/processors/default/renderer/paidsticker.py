@@ -21,7 +21,7 @@ class LiveChatPaidStickerRenderer(BaseRenderer):
         self.amountString = amountDisplayString
         self.currency = currency.symbols[symbol]["fxtext"] if currency.symbols.get(
             symbol) else symbol
-        self.bgColor = self.renderer.get("moneyChipBackgroundColor", 0)
+        self.bgColor = self.renderer.get("backgroundColor", 0)
         self.sticker = "".join(("https:",
             self.renderer["sticker"]["thumbnails"][0]["url"]))
         self.colors = self.get_colors()
