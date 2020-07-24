@@ -3,6 +3,7 @@ import re
 import requests
 from .. import config
 from ..exceptions import InvalidVideoIdException
+from ..util.extract_video_id import extract_video_id
 
 headers = config.headers
 
@@ -78,8 +79,8 @@ class VideoInfo:
     '''
 
     def __init__(self, video_id):
-        self.video_id = video_id
-        text = self._get_page_text(video_id)
+        self.video_id = extract_video_id(video_id)
+        text = self._get_page_text(self.video_id)
         self._parse(text)
 
     def _get_page_text(self, video_id):
