@@ -1,4 +1,5 @@
 import argparse
+import os
 from pathlib import Path
 from pytchat.util.extract_video_id import extract_video_id
 from .arguments import Arguments
@@ -21,7 +22,8 @@ def main():
     # Arguments
     parser = argparse.ArgumentParser(description=f'pytchat v{__version__}')
     parser.add_argument('-v', f'--{Arguments.Name.VIDEO_IDS}', type=str,
-                        help='Video ID (or URL that includes Video ID). You can specify multiple video IDs by separating them with commas without spaces.\n'
+                        help='Video ID (or URL that includes Video ID). You can specify multiple video IDs by '
+                        'separating them with commas without spaces.\n'
                         'If ID starts with a hyphen (-), enclose the ID in square brackets.')
     parser.add_argument('-o', f'--{Arguments.Name.OUTPUT}', type=str,
                         help='Output directory (end with "/"). default="./"', default='./')
@@ -38,13 +40,17 @@ def main():
             if '[' in video_id:
                 video_id = video_id.replace('[', '').replace(']', '')
             try:
+                if os.path.exists(Arguments().output):
+                    path = Path(Arguments().output + video_id + '.html')
+                else:
+                    raise FileNotFoundError
                 video_id = extract_video_id(video_id)
                 info = VideoInfo(video_id)
                 print(f"Extracting...\n"
                       f" video_id: {video_id}\n"
                       f" channel:  {info.get_channel_name()}\n"
                       f" title:    {info.get_title()}")
-                path = Path(Arguments().output + video_id + '.html')
+
                 print(f" output path: {path.resolve()}")
                 Extractor(video_id,
                           processor=HTMLArchiver(
@@ -56,6 +62,8 @@ def main():
                 print("Invalid Video ID or URL:", video_id)
             except (TypeError, NoContents) as e:
                 print(e)
+            except FileNotFoundError:
+                print("The specified directory does not exist.:{}".format(Arguments().output ))
         return
     parser.print_help()
 
