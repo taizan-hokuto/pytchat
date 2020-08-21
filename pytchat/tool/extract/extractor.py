@@ -79,7 +79,7 @@ class Extractor:
 
     def extract(self):
         if self.duration == 0:
-            print("video is not archived.")
+            print("\nCannot extract chat data:\n The specified video has not yet been archived.")
             return []
         data = self._execute_extract_operations()
         if self.processor is None:
