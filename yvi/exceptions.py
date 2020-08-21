@@ -7,3 +7,9 @@ class InvalidVideoIdException(Exception):
 
 class UnknownConnectionError(Exception):
     pass
+
+
+class VideoInfoParseException(Exception):
+    '''
+    thrown when failed to parse video info
+    '''

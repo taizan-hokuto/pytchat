@@ -4,9 +4,9 @@ import json
 import re
 import requests
 from . import util
-from . exceptions import InvalidVideoIdException
+from . exceptions import InvalidVideoIdException, VideoInfoParseException
 
-pattern = re.compile(r"yt\.setConfig\({'PLAYER_CONFIG': ({.*})}\);")
+pattern = re.compile(r"'PLAYER_CONFIG': ({.*}}})")
 
 item_channel_id = [
     "videoDetails",
@@ -98,7 +98,10 @@ class VideoInfo:
 
     def _parse(self, text):
         result = re.search(pattern, text)
-        self._res = json.loads(result.group(1))
+        gr = result.group(1)
+        if gr is None:
+            raise VideoInfoParseException("Failed to parse video info.")
+        self._res = json.loads(gr[:-1])
         response = self._get_item(self._res, item_response)
         if response is None:
             self._check_video_is_private(self._res.get("args"))
