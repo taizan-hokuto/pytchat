@@ -91,8 +91,7 @@ class VideoInfo:
 
     def _parse(self, text):
         result = re.search(pattern, text)
-        result = result.group(1)[:-1]
-        res = json.loads(result)
+        res = json.loads(result.group(1)[:-1])
         response = self._get_item(res, item_response)
         if response is None:
             self._check_video_is_private(res.get("args"))
