@@ -7,7 +7,7 @@ from ..util.extract_video_id import extract_video_id
 
 headers = config.headers
 
-pattern = re.compile(r"yt\.setConfig\({'PLAYER_CONFIG': ({.*})}\);")
+pattern = re.compile(r"'PLAYER_CONFIG': ({.*}}})")
 
 item_channel_id = [
     "videoDetails",
@@ -91,7 +91,8 @@ class VideoInfo:
 
     def _parse(self, text):
         result = re.search(pattern, text)
-        res = json.loads(result.group(1))
+        result = result.group(1)[:-1]
+        res = json.loads(result)
         response = self._get_item(res, item_response)
         if response is None:
             self._check_video_is_private(res.get("args"))
