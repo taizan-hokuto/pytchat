@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from pytchat.util.extract_video_id import extract_video_id
 from .arguments import Arguments
-from .. exceptions import InvalidVideoIdException, NoContents
+from .. exceptions import InvalidVideoIdException, NoContents, VideoInfoParseException
 from .. processors.html_archiver import HTMLArchiver
 from .. tool.extract.extractor import Extractor
 from .. tool.videoinfo import VideoInfo
@@ -40,11 +40,11 @@ def main():
             if '[' in video_id:
                 video_id = video_id.replace('[', '').replace(']', '')
             try:
+                video_id = extract_video_id(video_id)
                 if os.path.exists(Arguments().output):
                     path = Path(Arguments().output + video_id + '.html')
                 else:
                     raise FileNotFoundError
-                video_id = extract_video_id(video_id)
                 info = VideoInfo(video_id)
                 print(f"Extracting...\n"
                       f" video_id: {video_id}\n"
@@ -63,7 +63,9 @@ def main():
             except (TypeError, NoContents) as e:
                 print(e)
             except FileNotFoundError:
-                print("The specified directory does not exist.:{}".format(Arguments().output ))
+                print("The specified directory does not exist.:{}".format(Arguments().output))
+            except VideoInfoParseException:
+                print("Cannot parse video information.:{}".format(video_id))
         return
     parser.print_help()
 
