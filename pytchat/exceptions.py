@@ -62,3 +62,9 @@ class ReceivedUnknownContinuation(ChatParseException):
 
 class FailedExtractContinuation(ChatDataFinished):
     pass
+
+
+class VideoInfoParseException(Exception):
+    '''
+    thrown when failed to parse video info
+    '''
