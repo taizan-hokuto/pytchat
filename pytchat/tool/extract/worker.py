@@ -1,6 +1,7 @@
 from . block import Block
 from . patch import fill, split
 from ... paramgen import arcparam
+from typing import Tuple
 
 
 class ExtractWorker:
@@ -76,7 +77,7 @@ def _search_new_block(worker) -> Block:
     return new_block
 
 
-def _get_undone_block(blocks) -> (int, Block):
+def _get_undone_block(blocks) -> Tuple[int, Block]:
     min_interval_ms = 120000
     max_remaining = 0
     undone_block = None

@@ -1,6 +1,6 @@
 import os
 import re
-import requests
+import httpx
 from base64 import standard_b64encode
 from .chat_processor import ChatProcessor
 from .default.processor import DefaultProcessor
@@ -108,7 +108,7 @@ class HTMLArchiver(ChatProcessor):
                        for item in message_items)
 
     def _encode_img(self, url):
-        resp = requests.get(url)
+        resp = httpx.get(url)
         return standard_b64encode(resp.content).decode()
 
     def _set_emoji_table(self, item: dict):

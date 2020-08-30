@@ -1,6 +1,6 @@
 from pytchat.tool.mining import parser
 import pytchat.config as config
-import requests
+import httpx
 import json
 from pytchat.paramgen import arcparam_mining as arcparam
 
@@ -28,7 +28,7 @@ def test_arcparam_1(mocker):
 def test_arcparam_2(mocker):
     param = arcparam.getparam("PZz9NB0-Z64", 1)
     url = f"https://www.youtube.com/live_chat_replay?continuation={param}&playerOffsetMs=1000&pbj=1"
-    resp = requests.Session().get(url, headers=config.headers)
+    resp = httpx.Client(http2=True).get(url, headers=config.headers)
     jsn = json.loads(resp.text)
     _, chatdata = parser.parse(jsn[1])
     test_id = chatdata[0]["addChatItemAction"]["item"]["liveChatPaidMessageRenderer"]["id"]

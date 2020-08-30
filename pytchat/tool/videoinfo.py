@@ -1,6 +1,6 @@
 import json
 import re
-import requests
+import httpx
 from .. import config
 from ..exceptions import InvalidVideoIdException
 from ..util.extract_video_id import extract_video_id
@@ -85,7 +85,7 @@ class VideoInfo:
 
     def _get_page_text(self, video_id):
         url = f"https://www.youtube.com/embed/{video_id}"
-        resp = requests.get(url, headers=headers)
+        resp = httpx.get(url, headers=headers)
         resp.raise_for_status()
         return resp.text
 
