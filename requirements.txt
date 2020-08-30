@@ -1,5 +1,4 @@
-aiohttp
-protobuf
+httpx==0.14.1
+protobuf==3.13.0
 pytz
-requests
 urllib3

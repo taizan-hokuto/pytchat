@@ -1,6 +1,5 @@
-import aiohttp
+import httpx
 import asyncio
-import json
 from . import parser
 from . block import Block
 from . worker import ExtractWorker
@@ -55,7 +54,7 @@ def ready_blocks(video_id, duration, div, callback):
         raise ValueError
 
     async def _get_blocks(video_id, duration, div, callback):
-        async with aiohttp.ClientSession() as session:
+        async with httpx.AsyncClient(http2=True) as session:
             tasks = [_create_block(session, video_id, seektime, callback)
                      for seektime in _split(-1, duration, div)]
             return await asyncio.gather(*tasks)
@@ -65,9 +64,8 @@ def ready_blocks(video_id, duration, div, callback):
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
         for _ in range(MAX_RETRY_COUNT):
             try:
-                async with session.get(url, headers=headers) as resp:
-                    text = await resp.text()
-                next_continuation, actions = parser.parse(json.loads(text))
+                resp = await session.get(url, headers=headers)
+                next_continuation, actions = parser.parse(resp.json())
                 break
             except JSONDecodeError:
                 await asyncio.sleep(3)
@@ -106,7 +104,7 @@ def fetch_patch(callback, blocks, video_id):
             )
             for block in blocks
         ]
-        async with aiohttp.ClientSession() as session:
+        async with httpx.AsyncClient() as session:
             tasks = [worker.run(session) for worker in workers]
             return await asyncio.gather(*tasks)
 
@@ -114,9 +112,8 @@ def fetch_patch(callback, blocks, video_id):
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
         for _ in range(MAX_RETRY_COUNT):
             try:
-                async with session.get(url, headers=config.headers) as resp:
-                    chat_json = await resp.text()
-                continuation, actions = parser.parse(json.loads(chat_json))
+                resp = await session.get(url, headers=config.headers)
+                continuation, actions = parser.parse(resp.json())
                 break
             except JSONDecodeError:
                 await asyncio.sleep(3)

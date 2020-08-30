@@ -12,13 +12,13 @@ def _set_test_data(filepath, mocker):
     response_mock = mocker.Mock()
     response_mock.status_code = 200
     response_mock.text = _text
-    mocker.patch('requests.get').return_value = response_mock
+    mocker.patch('httpx.get').return_value = response_mock
 
 
 def test_archived_page(mocker):
     _set_test_data('tests/testdata/videoinfo/archived_page.txt', mocker)
     info = VideoInfo('__test_id__')
-    actual_thumbnail_url =  'https://i.ytimg.com/vi/fzI9FNjXQ0o/hqdefault.jpg'
+    actual_thumbnail_url = 'https://i.ytimg.com/vi/fzI9FNjXQ0o/hqdefault.jpg'
     assert info.video_id == '__test_id__'
     assert info.get_channel_name() == 'GitHub'
     assert info.get_thumbnail() == actual_thumbnail_url
