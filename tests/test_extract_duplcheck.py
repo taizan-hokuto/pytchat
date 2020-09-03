@@ -12,7 +12,7 @@ def _open_file(path):
 
 def test_overlap():
     """
-    test overlap data 
+    test overlap data
         operation : [0]  [2] [3]  [4] -> last :align to end
                     [1] , [5] -> no change
 
