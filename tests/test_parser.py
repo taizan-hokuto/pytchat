@@ -1,7 +1,9 @@
 from pytchat.parser.live import Parser
 import json
-from aioresponses import aioresponses
 from pytchat.exceptions import NoContents
+
+
+parser = Parser(is_replay=False)
 
 
 def _open_file(path):
@@ -9,13 +11,8 @@ def _open_file(path):
         return f.read()
 
 
-parser = Parser(is_replay=False)
-
-
-@aioresponses()
 def test_finishedlive(*mock):
     '''配信が終了した動画を正しく処理できるか'''
-
     _text = _open_file('tests/testdata/finished_live.json')
     _text = json.loads(_text)
 
@@ -26,10 +23,8 @@ def test_finishedlive(*mock):
         assert True
 
 
-@aioresponses()
 def test_parsejson(*mock):
     '''jsonを正常にパースできるか'''
-
     _text = _open_file('tests/testdata/paramgen_firstread.json')
     _text = json.loads(_text)
 

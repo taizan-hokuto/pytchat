@@ -1,6 +1,6 @@
 import asyncio
-import re
-from aioresponses import aioresponses
+import json
+from pytest_httpx import HTTPXMock
 from concurrent.futures import CancelledError
 from pytchat.core_multithread.livechat import LiveChat
 from pytchat.core_async.livechat import LiveChatAsync
@@ -12,18 +12,18 @@ def _open_file(path):
         return f.read()
 
 
-@aioresponses()
-def test_async_live_stream(*mock):
+def add_response_file(httpx_mock: HTTPXMock, jsonfile_path: str):
+    testdata = json.loads(_open_file(jsonfile_path))
+    httpx_mock.add_response(json=testdata)
 
-    async def test_loop(*mock):
-        pattern = re.compile(
-            r'^https://www.youtube.com/live_chat/get_live_chat\?continuation=.*$')
-        _text = _open_file('tests/testdata/test_stream.json')
-        mock[0].get(pattern, status=200, body=_text)
+
+def test_async_live_stream(httpx_mock: HTTPXMock):
+    add_response_file(httpx_mock, 'tests/testdata/test_stream.json')
+
+    async def test_loop():
         chat = LiveChatAsync(video_id='__test_id__', processor=DummyProcessor())
         chats = await chat.get()
         rawdata = chats[0]["chatdata"]
-        # assert fetching livachat data
         assert list(rawdata[0]["addChatItemAction"]["item"].keys())[
             0] == "liveChatTextMessageRenderer"
         assert list(rawdata[1]["addChatItemAction"]["item"].keys())[
@@ -41,25 +41,16 @@ def test_async_live_stream(*mock):
 
     loop = asyncio.get_event_loop()
     try:
-        loop.run_until_complete(test_loop(*mock))
+        loop.run_until_complete(test_loop())
     except CancelledError:
         assert True
 
 
-@aioresponses()
-def test_async_replay_stream(*mock):
+def test_async_replay_stream(httpx_mock: HTTPXMock):
+    add_response_file(httpx_mock, 'tests/testdata/finished_live.json')
+    add_response_file(httpx_mock, 'tests/testdata/chatreplay.json')
 
-    async def test_loop(*mock):
-        pattern_live = re.compile(
-            r'^https://www.youtube.com/live_chat/get_live_chat\?continuation=.*$')
-        pattern_replay = re.compile(
-            r'^https://www.youtube.com/live_chat_replay/get_live_chat_replay\?continuation=.*$')
-        # empty livechat -> switch to fetch replaychat
-        _text_live = _open_file('tests/testdata/finished_live.json')
-        _text_replay = _open_file('tests/testdata/chatreplay.json')
-        mock[0].get(pattern_live, status=200, body=_text_live)
-        mock[0].get(pattern_replay, status=200, body=_text_replay)
-
+    async def test_loop():
         chat = LiveChatAsync(video_id='__test_id__', processor=DummyProcessor())
         chats = await chat.get()
         rawdata = chats[0]["chatdata"]
@@ -71,27 +62,16 @@ def test_async_replay_stream(*mock):
 
     loop = asyncio.get_event_loop()
     try:
-        loop.run_until_complete(test_loop(*mock))
+        loop.run_until_complete(test_loop())
     except CancelledError:
         assert True
 
 
-@aioresponses()
-def test_async_force_replay(*mock):
+def test_async_force_replay(httpx_mock: HTTPXMock):
+    add_response_file(httpx_mock, 'tests/testdata/test_stream.json')
+    add_response_file(httpx_mock, 'tests/testdata/chatreplay.json')
 
-    async def test_loop(*mock):
-        pattern_live = re.compile(
-            r'^https://www.youtube.com/live_chat/get_live_chat\?continuation=.*$')
-        pattern_replay = re.compile(
-            r'^https://www.youtube.com/live_chat_replay/get_live_chat_replay\?continuation=.*$')
-        # valid live data, but force_replay = True
-        _text_live = _open_file('tests/testdata/test_stream.json')
-        # valid replay data
-        _text_replay = _open_file('tests/testdata/chatreplay.json')
-
-        mock[0].get(pattern_live, status=200, body=_text_live)
-        mock[0].get(pattern_replay, status=200, body=_text_replay)
-        # force replay
+    async def test_loop():
         chat = LiveChatAsync(
             video_id='__test_id__', processor=DummyProcessor(), force_replay=True)
         chats = await chat.get()
@@ -105,20 +85,13 @@ def test_async_force_replay(*mock):
 
     loop = asyncio.get_event_loop()
     try:
-        loop.run_until_complete(test_loop(*mock))
+        loop.run_until_complete(test_loop())
     except CancelledError:
         assert True
 
 
-def test_multithread_live_stream(mocker):
-
-    _text = _open_file('tests/testdata/test_stream.json')
-    responseMock = mocker.Mock()
-    responseMock.status_code = 200
-    responseMock.text = _text
-    mocker.patch(
-        'requests.Session.get').return_value.__enter__.return_value = responseMock
-
+def test_multithread_live_stream(httpx_mock: HTTPXMock):
+    add_response_file(httpx_mock, 'tests/testdata/test_stream.json')
     chat = LiveChat(video_id='__test_id__', processor=DummyProcessor())
     chats = chat.get()
     rawdata = chats[0]["chatdata"]

@@ -1,5 +1,4 @@
-aioresponses
 mock
 mocker
 pytest
-pytest-mock
+pytest_httpx

@@ -1,8 +1,8 @@
 import json
 import re
-import requests
+import httpx
 from .. import config
-from ..exceptions import InvalidVideoIdException
+from ..exceptions import InvalidVideoIdException, PatternUnmatchError
 from ..util.extract_video_id import extract_video_id
 
 headers = config.headers
@@ -85,12 +85,14 @@ class VideoInfo:
 
     def _get_page_text(self, video_id):
         url = f"https://www.youtube.com/embed/{video_id}"
-        resp = requests.get(url, headers=headers)
+        resp = httpx.get(url, headers=headers)
         resp.raise_for_status()
         return resp.text
 
     def _parse(self, text):
         result = re.search(pattern, text)
+        if result is None:
+            raise PatternUnmatchError(text)
         res = json.loads(result.group(1)[:-1])
         response = self._get_item(res, item_response)
         if response is None:

@@ -1,23 +1,19 @@
-import aiohttp
-import asyncio
 import json
-import os, sys
-import time
-from aioresponses import aioresponses
-from pytchat.tool.extract import duplcheck
+
 from pytchat.tool.extract import parser
 from pytchat.tool.extract.block import Block
-from pytchat.tool.extract.patch import Patch, fill, split, set_patch
-from pytchat.tool.extract.duplcheck import _dump
+from pytchat.tool.extract.patch import Patch, split
+
 
 def _open_file(path):
-    with open(path,mode ='r',encoding = 'utf-8') as f:
+    with open(path, mode='r', encoding='utf-8') as f:
         return f.read()
 
+
 def load_chatdata(filename):
-        return parser.parse(
-            json.loads(_open_file("tests/testdata/fetch_patch/"+filename))
-        )[1]
+    return parser.parse(
+        json.loads(_open_file("tests/testdata/fetch_patch/" + filename))
+    )[1]
 
 
 def test_split_0():
@@ -61,20 +57,23 @@ def test_split_0():
      @fetched patch
                             |-- patch --|
     """
-    parent = Block(first=0, last=4000, end=60000, continuation='parent', during_split=True)
-    child = Block(first=0, last=0, end=60000, continuation='mean', during_split=True)
+    parent = Block(first=0, last=4000, end=60000,
+                   continuation='parent', during_split=True)
+    child = Block(first=0, last=0, end=60000,
+                  continuation='mean', during_split=True)
     patch = Patch(chats=load_chatdata('pt0-5.json'),
-        first=32500, last=34000, continuation='patch')
-    
-    split(parent,child,patch)
+                  first=32500, last=34000, continuation='patch')
+
+    split(parent, child, patch)
 
     assert child.continuation == 'patch'
     assert parent.last < child.first
     assert parent.end == child.first
     assert child.first < child.last
     assert child.last < child.end
-    assert parent.during_split == False
-    assert child.during_split == False
+    assert parent.during_split is False
+    assert child.during_split is False
+
 
 def test_split_1():
     """patch.first <= parent_block.last
@@ -119,14 +118,15 @@ def test_split_1():
     child = Block(first=0, last=0, end=60000, continuation='mean', during_split=True)
     patch = Patch(chats=load_chatdata('pt0-5.json'),
         first=32500, last=34000, continuation='patch')
-    
-    split(parent,child,patch)
 
-    assert parent.last == 33000 #no change
-    assert parent.end == 60000 #no change
+    split(parent, child, patch)
+
+    assert parent.last == 33000  # no change
+    assert parent.end == 60000  # no change
     assert child.continuation is None
-    assert parent.during_split == False
-    assert child.during_split == True #exclude during_split sequence
+    assert parent.during_split is False
+    assert child.during_split is True  # exclude during_split sequence
+
 
 def test_split_2():
     """child_block.end < patch.last:
@@ -174,7 +174,7 @@ def test_split_2():
     patch = Patch(chats=load_chatdata('pt0-5.json'),
         first=32500, last=34000, continuation='patch')
      
-    split(parent,child,patch)
+    split(parent, child, patch)
 
     assert child.continuation is None
     assert parent.last < child.first
@@ -182,8 +182,9 @@ def test_split_2():
     assert child.first < child.last
     assert child.last < child.end
     assert child.continuation is None
-    assert parent.during_split == False
-    assert child.during_split == False
+    assert parent.during_split is False
+    assert child.during_split is False
+
 
 def test_split_none():
     """patch.last <= parent_block.last
@@ -193,7 +194,7 @@ def test_split_none():
     and parent.block.last exceeds patch.first.
 
     In this case, fetched patch is all discarded,
-    and worker searches other processing block again. 
+    and worker searches other processing block again.
     
     ~~~~~~ before ~~~~~~
 
@@ -229,10 +230,10 @@ def test_split_none():
     patch = Patch(chats=load_chatdata('pt0-5.json'),
         first=32500, last=34000, continuation='patch')
     
-    split(parent,child,patch)
+    split(parent, child, patch)
 
-    assert parent.last == 40000 #no change
-    assert parent.end == 60000 #no change
+    assert parent.last == 40000  # no change
+    assert parent.end == 60000  # no change
     assert child.continuation is None
-    assert parent.during_split == False
-    assert child.during_split == True #exclude during_split sequence
+    assert parent.during_split is False
+    assert child.during_split is True  # exclude during_split sequence

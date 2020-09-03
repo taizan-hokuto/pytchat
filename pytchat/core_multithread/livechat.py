@@ -1,4 +1,4 @@
-import requests
+import httpx
 import json
 import signal
 import time
@@ -153,10 +153,10 @@ class LiveChat:
             parameter for next chat data
         '''
         try:
-            with requests.Session() as session:
+            with httpx.Client(http2=True) as client:
                 while(continuation and self._is_alive):
                     continuation = self._check_pause(continuation)
-                    contents = self._get_contents(continuation, session, headers)
+                    contents = self._get_contents(continuation, client, headers)
                     metadata, chatdata = self._parser.parse(contents)
                     timeout = metadata['timeoutMs'] / 1000
                     chat_component = {
@@ -199,7 +199,7 @@ class LiveChat:
                 continuation = liveparam.getparam(self._video_id, 3)
         return continuation
 
-    def _get_contents(self, continuation, session, headers):
+    def _get_contents(self, continuation, client, headers):
         '''Get 'continuationContents' from livechat json.
            If contents is None at first fetching,
            try to fetch archive chat data.
@@ -209,7 +209,7 @@ class LiveChat:
             'continuationContents' which includes metadata & chat data.
         '''
         livechat_json = (
-            self._get_livechat_json(continuation, session, headers)
+            self._get_livechat_json(continuation, client, headers)
         )
         contents = self._parser.get_contents(livechat_json)
         if self._first_fetch:
@@ -219,18 +219,18 @@ class LiveChat:
                 self._fetch_url = "live_chat_replay/get_live_chat_replay?continuation="
                 continuation = arcparam.getparam(
                     self._video_id, self.seektime, self._topchat_only)
-                livechat_json = (self._get_livechat_json(continuation, session, headers))
+                livechat_json = (self._get_livechat_json(continuation, client, headers))
                 reload_continuation = self._parser.reload_continuation(
                     self._parser.get_contents(livechat_json))
                 if reload_continuation:
                     livechat_json = (self._get_livechat_json(
-                        reload_continuation, session, headers))
+                        reload_continuation, client, headers))
                 contents = self._parser.get_contents(livechat_json)
                 self._is_replay = True
             self._first_fetch = False
         return contents
 
-    def _get_livechat_json(self, continuation, session, headers):
+    def _get_livechat_json(self, continuation, client, headers):
         '''
         Get json which includes chat data.
         '''
@@ -239,10 +239,9 @@ class LiveChat:
         status_code = 0
         url = f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1"
         for _ in range(MAX_RETRY + 1):
-            with session.get(url, headers=headers) as resp:
+            with client:
                 try:
-                    text = resp.text
-                    livechat_json = json.loads(text)
+                    livechat_json = client.get(url, headers=headers).json()
                     break
                 except json.JSONDecodeError:
                     time.sleep(1)

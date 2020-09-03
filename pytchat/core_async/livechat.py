@@ -1,13 +1,13 @@
-import aiohttp
+
 import asyncio
+import httpx
 import json
 import signal
 import time
 import traceback
 import urllib.parse
-from aiohttp.client_exceptions import ClientConnectorError
-from concurrent.futures import CancelledError
 from asyncio import Queue
+from concurrent.futures import CancelledError
 from .buffer import Buffer
 from ..parser.live import Parser
 from .. import config
@@ -22,7 +22,7 @@ MAX_RETRY = 10
 
 
 class LiveChatAsync:
-    '''asyncio(aiohttp)を利用してYouTubeのライブ配信のチャットデータを取得する。
+    '''asyncioを利用してYouTubeのライブ配信のチャットデータを取得する。
 
     Parameter
     ---------
@@ -161,11 +161,11 @@ class LiveChatAsync:
             parameter for next chat data
         '''
         try:
-            async with aiohttp.ClientSession() as session:
+            async with httpx.AsyncClient(http2=True) as client:
                 while(continuation and self._is_alive):
                     continuation = await self._check_pause(continuation)
                     contents = await self._get_contents(
-                        continuation, session, headers)
+                        continuation, client, headers)
                     metadata, chatdata = self._parser.parse(contents)
 
                     timeout = metadata['timeoutMs'] / 1000
@@ -210,7 +210,7 @@ class LiveChatAsync:
                     self._video_id, 3, self._topchat_only)
         return continuation
 
-    async def _get_contents(self, continuation, session, headers):
+    async def _get_contents(self, continuation, client, headers):
         '''Get 'continuationContents' from livechat json.
            If contents is None at first fetching,
            try to fetch archive chat data.
@@ -219,7 +219,7 @@ class LiveChatAsync:
           -------
             'continuationContents' which includes metadata & chatdata.
         '''
-        livechat_json = await self._get_livechat_json(continuation, session, headers)
+        livechat_json = await self._get_livechat_json(continuation, client, headers)
         contents = self._parser.get_contents(livechat_json)
         if self._first_fetch:
             if contents is None or self._is_replay:
@@ -229,18 +229,18 @@ class LiveChatAsync:
                 continuation = arcparam.getparam(
                     self._video_id, self.seektime, self._topchat_only)
                 livechat_json = (await self._get_livechat_json(
-                                 continuation, session, headers))
+                                 continuation, client, headers))
                 reload_continuation = self._parser.reload_continuation(
                     self._parser.get_contents(livechat_json))
                 if reload_continuation:
                     livechat_json = (await self._get_livechat_json(
-                        reload_continuation, session, headers))
+                        reload_continuation, client, headers))
                 contents = self._parser.get_contents(livechat_json)
                 self._is_replay = True
             self._first_fetch = False
         return contents
 
-    async def _get_livechat_json(self, continuation, session, headers):
+    async def _get_livechat_json(self, continuation, client, headers):
         '''
         Get json which includes chat data.
         '''
@@ -249,14 +249,13 @@ class LiveChatAsync:
         status_code = 0
         url = f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1"
         for _ in range(MAX_RETRY + 1):
-            async with session.get(url, headers=headers) as resp:
-                try:
-                    text = await resp.text()
-                    livechat_json = json.loads(text)
-                    break
-                except (ClientConnectorError, json.JSONDecodeError):
-                    await asyncio.sleep(1)
-                    continue
+            try:
+                resp = await client.get(url, headers=headers)
+                livechat_json = resp.json()
+                break
+            except (httpx.HTTPError, json.JSONDecodeError):
+                await asyncio.sleep(1)
+                continue
         else:
             self._logger.error(f"[{self._video_id}]"
                                f"Exceeded retry count. status_code={status_code}")

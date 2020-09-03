@@ -1,11 +1,11 @@
-import requests
+import httpx
 import json
 import datetime
 from .. import config
 
 
 def extract(url):
-    _session = requests.Session()
+    _session = httpx.Client(http2=True)
     html = _session.get(url, headers=config.headers)
     with open(str(datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
                   ) + 'test.json', mode='w', encoding='utf-8') as f:
