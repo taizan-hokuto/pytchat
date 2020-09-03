@@ -76,9 +76,10 @@ def main():
             print("\nThe extraction process has been completed.\n")
         except InvalidVideoIdException:
             print("Invalid Video ID or URL:", video_id)
-        except (TypeError, NoContents) as e:
-
+        except TypeError as e:
             print(e.with_traceback())
+        except NoContents as e:
+            print(e)
         except FileNotFoundError:
             print("The specified directory does not exist.:{}".format(Arguments().output))
         except JSONDecodeError as e:
