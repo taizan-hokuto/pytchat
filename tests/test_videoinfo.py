@@ -1,7 +1,6 @@
 from json.decoder import JSONDecodeError
 from pytchat.tool.videoinfo import VideoInfo
 from pytchat.exceptions import InvalidVideoIdException, PatternUnmatchError
-from pytchat import util
 
 
 def _open_file(path):
@@ -32,7 +31,7 @@ def test_archived_page(mocker):
 def test_live_page(mocker):
     _set_test_data('tests/testdata/videoinfo/live_page.txt', mocker)
     info = VideoInfo('__test_id__')
-    '''live page :duration = 0'''        
+    '''live page: duration==0'''
     assert info.get_duration() == 0
     assert info.video_id == '__test_id__'
     assert info.get_channel_name() == 'BGM channel'
@@ -88,3 +87,15 @@ def test_pattern_unmatch(mocker):
         assert False
     except PatternUnmatchError:
         assert True
+
+
+def test_extradata_handling(mocker):
+    '''Test case the extracted data are JSON lines.'''
+    _set_test_data(
+        'tests/testdata/videoinfo/extradata_page.txt', mocker)
+    try:
+        _ = VideoInfo('__test_id__')
+        assert True
+    except JSONDecodeError as e:
+        print(e.doc)
+        assert False

@@ -93,7 +93,8 @@ class VideoInfo:
         result = re.search(pattern, text)
         if result is None:
             raise PatternUnmatchError(text)
-        res = json.loads(result.group(1)[:-1])
+        decoder = json.JSONDecoder()
+        res = decoder.raw_decode(result.group(1)[:-1])[0]
         response = self._get_item(res, item_response)
         if response is None:
             self._check_video_is_private(res.get("args"))
