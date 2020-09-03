@@ -1,4 +1,4 @@
-httpx==0.14.1
+httpx[http2]==0.14.1
 protobuf==3.13.0
 pytz
 urllib3
