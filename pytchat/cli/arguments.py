@@ -19,6 +19,7 @@ class Arguments(metaclass=Singleton):
         OUTPUT: str = 'output_dir'
         VIDEO_IDS: str = 'video_id'
         SAVE_ERROR_DATA: bool = 'save_error_data'
+
     def __init__(self,
                  arguments: Optional[Dict[str, Union[str, bool, int]]] = None):
         """
@@ -39,6 +40,3 @@ class Arguments(metaclass=Singleton):
         if arguments[Arguments.Name.VIDEO_IDS]:
             self.video_ids = [video_id
                               for video_id in arguments[Arguments.Name.VIDEO_IDS].split(',')]
-
-
-
