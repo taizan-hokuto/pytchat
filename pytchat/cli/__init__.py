@@ -34,6 +34,8 @@ def main():
                         help='Output directory (end with "/"). default="./"', default='./')
     parser.add_argument(f'--{Arguments.Name.VERSION}', action='store_true',
                         help='Show version')
+    parser.add_argument(f'--{Arguments.Name.SAVE_ERROR_DATA}', action='store_true',
+                        help='Save error data when error occurs(".dat" file)')
     Arguments(parser.parse_args().__dict__)
     if Arguments().print_version:
         print(f'pytchat v{__version__}     © 2019 taizan-hokuto')
@@ -82,11 +84,13 @@ def main():
         except JSONDecodeError as e:
             print(e.msg)
             print("Cannot parse video information.:{}".format(video_id))
-            util.save(e.doc, "ERR_JSON_DECODE", ".dat")
+            if Arguments().save_error_data:
+                util.save(e.doc, "ERR_JSON_DECODE", ".dat")
         except PatternUnmatchError as e:
             print(e.msg)
             print("Cannot parse video information.:{}".format(video_id))
-            util.save(e.doc, "ERR_PATTERN_UNMATCH", ".dat")
+            if Arguments().save_error_data:
+                util.save(e.doc, "ERR_PATTERN_UNMATCH", ".dat")
 
     return
 
