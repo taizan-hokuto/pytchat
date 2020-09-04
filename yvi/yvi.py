@@ -98,14 +98,13 @@ class VideoInfo:
 
     def _parse(self, text):
         result = re.search(pattern, text)
-        gr = result.group(1)
-        if gr is None:
+        if result is None:
             raise VideoInfoParseException("Failed to parse video info.")
-        self._res = json.loads(gr[:-1])
+        decoder = json.JSONDecoder()
+        self._res = decoder.raw_decode(result.group(1)[:-1])[0]
         response = self._get_item(self._res, item_response)
         if response is None:
             self._check_video_is_private(self._res.get("args"))
-        
         self._renderer = self._get_item(json.loads(response), item_renderer)
         if self._renderer is None:
             raise InvalidVideoIdException(
