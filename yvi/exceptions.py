@@ -9,7 +9,16 @@ class UnknownConnectionError(Exception):
     pass
 
 
-class VideoInfoParseException(Exception):
+class VideoInfoParseError(Exception):
     '''
     thrown when failed to parse video info
     '''
+
+
+class PatternUnmatchError(VideoInfoParseError):
+    '''
+    thrown when failed to parse video info with unmatched pattern
+    '''
+    def __init__(self, doc):
+        self.msg = "PatternUnmatchError"
+        self.doc = doc
