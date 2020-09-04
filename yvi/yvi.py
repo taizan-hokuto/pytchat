@@ -4,7 +4,7 @@ import json
 import re
 import requests
 from . import util
-from . exceptions import InvalidVideoIdException, VideoInfoParseException
+from . exceptions import InvalidVideoIdException, VideoInfoParseError
 
 pattern = re.compile(r"'PLAYER_CONFIG': ({.*}}})")
 
@@ -99,7 +99,7 @@ class VideoInfo:
     def _parse(self, text):
         result = re.search(pattern, text)
         if result is None:
-            raise VideoInfoParseException("Failed to parse video info.")
+            raise VideoInfoParseError("Failed to parse video info.")
         decoder = json.JSONDecoder()
         self._res = decoder.raw_decode(result.group(1)[:-1])[0]
         response = self._get_item(self._res, item_response)
