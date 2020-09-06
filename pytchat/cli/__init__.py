@@ -62,18 +62,30 @@ def main():
 
             print(f" output path: {path.resolve()}")
             duration = info.get_duration()
-            pbar = ProgressBar(duration)
-            ex = Extractor(video_id,
-                    processor=HTMLArchiver(Arguments().output + video_id + '.html'),
+            pbar = ProgressBar(total=(duration * 1000) / 0.99, status="Extracting")
+            ex = Extractor(video_id,                    
                     callback=pbar._disp,
                     div=10)
             signal.signal(signal.SIGINT, (lambda a, b: cancel(ex, pbar)))
-            ex.extract()
+            data = ex.extract()
+            if data == []:
+                return False
+            pbar.reset("#", "=", total=len(data), status="Rendering  ")
+            processor = HTMLArchiver(Arguments().output + video_id + '.html', callback=pbar._disp)
+            processor.process(
+                [{'video_id': None,
+                'timeout': 1,
+                'chatdata': (action["replayChatItemAction"]["actions"][0] for action in data)}]
+            )
+            processor.finalize()
+            pbar.reset('#', '#', status='Completed   ')
             pbar.close()
+            print()
             if pbar.is_cancelled():
                 print("\nThe extraction process has been discontinued.\n")
-                return
-            print("\nThe extraction process has been completed.\n")
+                return False
+            return True
+
         except InvalidVideoIdException:
             print("Invalid Video ID or URL:", video_id)
         except TypeError as e:
