@@ -43,20 +43,21 @@ class HTMLArchiver(ChatProcessor):
     '''
     HTMLArchiver saves chat data as HTML table format.
     '''
-    def __init__(self, save_path):
+    def __init__(self, save_path, callback):
         super().__init__()
         self.save_path = self._checkpath(save_path)
         self.processor = DefaultProcessor()
         self.emoji_table = {}  # tuble for custom emojis. key: emoji_id, value: base64 encoded image binary.
         self.header = [HEADER_HTML]
         self.body = ['<body>\n', '<table class="css">\n', self._parse_table_header(fmt_headers)]
+        self.callback = callback
 
     def _checkpath(self, filepath):
         splitter = os.path.splitext(os.path.basename(filepath))
         body = splitter[0]
         extention = splitter[1]
         newpath = filepath
-        counter = 0
+        counter = 1
         while os.path.exists(newpath):
             match = re.search(PATTERN, body)
             if match:
@@ -80,17 +81,19 @@ class HTMLArchiver(ChatProcessor):
         """
         if chat_components is None or len(chat_components) == 0:
             return
-        self.body.extend(
-            (self._parse_html_line((
-                c.datetime,
-                c.elapsedTime,
-                c.author.name,
-                self._parse_message(c.messageEx),
-                c.amountString,
-                c.author.type,
-                c.author.channelId)
-            ) for c in self.processor.process(chat_components).items)
-        )
+        for c in self.processor.process(chat_components).items:
+            self.body.extend(
+                self._parse_html_line((
+                    c.datetime,
+                    c.elapsedTime,
+                    c.author.name,
+                    self._parse_message(c.messageEx),
+                    c.amountString,
+                    c.author.type,
+                    c.author.channelId)
+                )
+            )
+            self.callback(None, 1)
 
     def _parse_html_line(self, raw_line):
         return ''.join(('<tr>',
@@ -131,7 +134,7 @@ class HTMLArchiver(ChatProcessor):
     
     def finalize(self):
         self.header.extend([self._create_styles(), '</head>\n'])
-        self.body.extend(['</table>\n</body>'])
+        self.body.extend(['</table>\n</body>\n</html>'])
         with open(self.save_path, mode='a', encoding='utf-8') as f:
             f.writelines(self.header)
             f.writelines(self.body)
