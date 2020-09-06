@@ -88,8 +88,6 @@ def main():
 
         except InvalidVideoIdException:
             print("Invalid Video ID or URL:", video_id)
-        except TypeError as e:
-            print(e.with_traceback())
         except NoContents as e:
             print(e)
         except FileNotFoundError:
