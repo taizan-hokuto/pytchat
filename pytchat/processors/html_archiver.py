@@ -43,7 +43,7 @@ class HTMLArchiver(ChatProcessor):
     '''
     HTMLArchiver saves chat data as HTML table format.
     '''
-    def __init__(self, save_path, callback):
+    def __init__(self, save_path, callback=None):
         super().__init__()
         self.save_path = self._checkpath(save_path)
         self.processor = DefaultProcessor()
@@ -93,7 +93,8 @@ class HTMLArchiver(ChatProcessor):
                     c.author.channelId)
                 )
             )
-            self.callback(None, 1)
+            if self.callback:
+                self.callback(None, 1)
 
     def _parse_html_line(self, raw_line):
         return ''.join(('<tr>',
