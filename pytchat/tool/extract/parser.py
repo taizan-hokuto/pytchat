@@ -42,10 +42,14 @@ def get_offset(item):
 
 
 def get_id(item):
-    return list((list(item['replayChatItemAction']["actions"][0].values()
-                      )[0])['item'].values())[0].get('id')
+    a = list(item['replayChatItemAction']["actions"][0].values())[0].get('item')
+    if a:
+        return list(a.values())[0].get('id')
+    return None
 
 
 def get_type(item):
-    return list((list(item['replayChatItemAction']["actions"][0].values()
-                      )[0])['item'].keys())[0]
+    a = list(item['replayChatItemAction']["actions"][0].values())[0].get('item')
+    if a:
+        return list(a.keys())[0]
+    return None

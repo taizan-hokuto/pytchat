@@ -1,11 +1,11 @@
 import argparse
 
 import os
+import sys
 import signal
 from json.decoder import JSONDecodeError
 from pathlib import Path
 from .arguments import Arguments
-from .progressbar import ProgressBar
 from .. exceptions import InvalidVideoIdException, NoContents, PatternUnmatchError
 from .. processors.html_archiver import HTMLArchiver
 from .. tool.extract.extractor import Extractor
@@ -32,11 +32,18 @@ def main():
                         'If ID starts with a hyphen (-), enclose the ID in square brackets.')
     parser.add_argument('-o', f'--{Arguments.Name.OUTPUT}', type=str,
                         help='Output directory (end with "/"). default="./"', default='./')
-    parser.add_argument(f'--{Arguments.Name.VERSION}', action='store_true',
-                        help='Show version')
+    parser.add_argument(f'--{Arguments.Name.PBAR}', action='store_true',
+                        help='Display rich progress bar')
     parser.add_argument(f'--{Arguments.Name.SAVE_ERROR_DATA}', action='store_true',
                         help='Save error data when error occurs(".dat" file)')
+    parser.add_argument(f'--{Arguments.Name.VERSION}', action='store_true',
+                        help='Show version')
     Arguments(parser.parse_args().__dict__)
+
+    if Arguments().pbar:
+        from .progressbar_rich import ProgressBar
+    else:
+        from .progressbar_simple import ProgressBar
     if Arguments().print_version:
         print(f'pytchat v{__version__}     © 2019 taizan-hokuto')
         return
@@ -62,15 +69,18 @@ def main():
 
             print(f" output path: {path.resolve()}")
             duration = info.get_duration()
-            pbar = ProgressBar(total=(duration * 1000) / 0.99, status="Extracting")
-            ex = Extractor(video_id,                    
+            pbar = ProgressBar(total=(duration * 1000), status="Extracting")
+            ex = Extractor(video_id,                  
                     callback=pbar._disp,
                     div=10)
             signal.signal(signal.SIGINT, (lambda a, b: cancel(ex, pbar)))
             data = ex.extract()
             if data == []:
                 return False
-            pbar.reset("#", "=", total=len(data), status="Rendering  ")
+            if Arguments().pbar:
+                pbar.reset("#", "=", total=len(data), status="Rendering  ")
+            else:
+                pbar.reset("=", "", total=len(data), status="Rendering  ")
             processor = HTMLArchiver(Arguments().output + video_id + '.html', callback=pbar._disp)
             processor.process(
                 [{'video_id': None,
@@ -78,8 +88,13 @@ def main():
                 'chatdata': (action["replayChatItemAction"]["actions"][0] for action in data)}]
             )
             processor.finalize()
-            pbar.reset('#', '#', status='Completed   ')
-            pbar.close()
+            if Arguments().pbar:
+                pbar.reset('#', '#', status='Completed   ')
+                pbar.close()
+            else:
+                pbar.close()
+                print("\nCompleted")
+            
             print()
             if pbar.is_cancelled():
                 print("\nThe extraction process has been discontinued.\n")
@@ -106,6 +121,6 @@ def main():
     return
 
 
-def cancel(ex: Extractor, pbar: ProgressBar):
+def cancel(ex, pbar):
     ex.cancel()
     pbar.cancel()
