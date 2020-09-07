@@ -6,8 +6,6 @@ https://gist.github.com/vladignatyev/06860ec2040cb497f0f3
 '''
 import sys
 
-ROT = ['\u25F4', '\u25F5', '\u25F6', '\u25F7']
-
 
 class ProgressBar:
     def __init__(self, total, status):
@@ -39,7 +37,7 @@ class ProgressBar:
             
         bar = self._symbol_done * filled_len + \
               self._symbol_space * (self._bar_len - filled_len)
-        sys.stdout.write(' [%s] %s%s ...%s %s \r' % (bar, percents, '%', self._status, ROT[self._blinker % 4]))
+        sys.stdout.write(' [%s] %s%s ...%s \r' % (bar, percents, '%', self._status))
         sys.stdout.flush()
         self._blinker += 1
 
