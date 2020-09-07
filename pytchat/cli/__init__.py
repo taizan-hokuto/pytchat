@@ -24,8 +24,6 @@ https://github.com/PetterKraabol/Twitch-Chat-Downloader
 
 
 def main():
-    
-
     # Arguments
     parser = argparse.ArgumentParser(description=f'pytchat v{__version__}')
     parser.add_argument('-v', f'--{Arguments.Name.VIDEO_IDS}', type=str,
