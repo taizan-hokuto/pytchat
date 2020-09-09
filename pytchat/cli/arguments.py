@@ -19,7 +19,7 @@ class Arguments(metaclass=Singleton):
         OUTPUT: str = 'output_dir'
         VIDEO_IDS: str = 'video_id'
         SAVE_ERROR_DATA: bool = 'save_error_data'
-        PBAR: bool ='pbar'
+        PBAR: bool = 'pbar'
 
     def __init__(self,
                  arguments: Optional[Dict[str, Union[str, bool, int]]] = None):
@@ -37,7 +37,7 @@ class Arguments(metaclass=Singleton):
         self.output: str = arguments[Arguments.Name.OUTPUT]
         self.video_ids: List[int] = []
         self.save_error_data: bool = arguments[Arguments.Name.SAVE_ERROR_DATA]
-        self.pbar: bool = arguments[Arguments.Name.PBAR]
+
         # Videos
         if arguments[Arguments.Name.VIDEO_IDS]:
             self.video_ids = [video_id
