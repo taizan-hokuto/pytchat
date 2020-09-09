@@ -4,6 +4,7 @@ vladignatyev/progress.py
 https://gist.github.com/vladignatyev/06860ec2040cb497f0f3
 (MIT License)
 '''
+import shutil
 import sys
 
 
@@ -13,8 +14,9 @@ class ProgressBar:
         self._cancelled = False
         self.reset(total=total, status=status)
         self._blinker = 0
-
+        
     def reset(self, symbol_done="=", symbol_space=" ", total=100, status=''):
+        self.con_width = shutil.get_terminal_size(fallback=(80, 24)).columns
         self._symbol_done = symbol_done
         self._symbol_space = symbol_space
         self._total = total
@@ -37,7 +39,9 @@ class ProgressBar:
             
         bar = self._symbol_done * filled_len + \
               self._symbol_space * (self._bar_len - filled_len)
-        sys.stdout.write(' [%s] %s%s ...%s \r' % (bar, percents, '%', self._status))
+        disp = f" [{bar}] {percents:>5.1f}% ...{self._status} "[:self.con_width - 1] + '\r'
+
+        sys.stdout.write(disp)
         sys.stdout.flush()
         self._blinker += 1
 
