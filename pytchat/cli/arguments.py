@@ -19,7 +19,6 @@ class Arguments(metaclass=Singleton):
         OUTPUT: str = 'output_dir'
         VIDEO_IDS: str = 'video_id'
         SAVE_ERROR_DATA: bool = 'save_error_data'
-        PBAR: bool = 'pbar'
 
     def __init__(self,
                  arguments: Optional[Dict[str, Union[str, bool, int]]] = None):
