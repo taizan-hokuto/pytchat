@@ -2,6 +2,7 @@ import argparse
 
 import os
 import signal
+import time
 from json.decoder import JSONDecodeError
 from pathlib import Path
 from .arguments import Arguments
@@ -55,7 +56,21 @@ def main():
                 path = Path(Arguments().output + video_id + '.html')
             else:
                 raise FileNotFoundError
-            info = VideoInfo(video_id)
+            err = None
+            for _ in range(3): # retry 3 times
+                try:                
+                    info = VideoInfo(video_id)
+                    break
+                except (PatternUnmatchError, JSONDecodeError, InvalidVideoIdException) as e:
+                    err = e
+                    time.sleep(2)
+                    continue
+            else:
+                print("Cannot parse video information.:{}".format(video_id))
+                if Arguments().save_error_data:
+                    util.save(err.doc, "ERR", ".dat")
+                continue
+
             if len(Arguments().video_ids) > 1:
                 print(f"\n{'-' * 10} video:{counter + 1} of {len(Arguments().video_ids)} {'-' * 10}")
             print(f"\n"
@@ -86,8 +101,6 @@ def main():
             print()
             if pbar.is_cancelled():
                 print("\nThe extraction process has been discontinued.\n")
-
-
         except InvalidVideoIdException:
             print("Invalid Video ID or URL:", video_id)
         except NoContents as e:
@@ -96,14 +109,9 @@ def main():
             print("The specified directory does not exist.:{}".format(Arguments().output))
         except JSONDecodeError as e:
             print(e.msg)
-            print("Cannot parse video information.:{}".format(video_id))
+            print("JSONDecodeError.:{}".format(video_id))
             if Arguments().save_error_data:
                 util.save(e.doc, "ERR_JSON_DECODE", ".dat")
-        except PatternUnmatchError as e:
-            print(e.msg)
-            print("Cannot parse video information.:{}".format(video_id))
-            if Arguments().save_error_data:
-                util.save(e.doc, "ERR_PATTERN_UNMATCH", ".dat")
 
     return
 

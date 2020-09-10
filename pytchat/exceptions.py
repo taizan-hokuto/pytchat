@@ -38,7 +38,10 @@ class InvalidVideoIdException(Exception):
     '''
     Thrown when the video_id is not exist (VideoInfo).
     '''
-    pass
+    def __init__(self, doc):
+        self.msg = "InvalidVideoIdException"
+        self.doc = doc
+
 
 
 class UnknownConnectionError(Exception):
@@ -47,7 +50,7 @@ class UnknownConnectionError(Exception):
 
 class RetryExceedMaxCount(Exception):
     '''
-    thrown when the number of retries exceeds the maximum value.
+    Thrown when the number of retries exceeds the maximum value.
     '''
     pass
 
@@ -66,13 +69,13 @@ class FailedExtractContinuation(ChatDataFinished):
 
 class VideoInfoParseError(Exception):
     '''
-    thrown when failed to parse video info
+    Base exception when parsing video info.
     '''
 
 
 class PatternUnmatchError(VideoInfoParseError):
     '''
-    thrown when failed to parse video info with unmatched pattern
+    Thrown when failed to parse video info with unmatched pattern.
     '''
     def __init__(self, doc):
         self.msg = "PatternUnmatchError"
