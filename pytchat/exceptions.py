@@ -43,7 +43,6 @@ class InvalidVideoIdException(Exception):
         self.doc = doc
 
 
-
 class UnknownConnectionError(Exception):
     pass
 
