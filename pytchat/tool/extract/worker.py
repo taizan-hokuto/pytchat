@@ -7,7 +7,6 @@ from typing import Tuple
 class ExtractWorker:
     """
     ExtractWorker associates a download session with a block.
-
     When the worker finishes fetching, the block
     being fetched is splitted and assigned the free worker.
 

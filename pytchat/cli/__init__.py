@@ -57,8 +57,8 @@ def main():
             else:
                 raise FileNotFoundError
             err = None
-            for _ in range(3): # retry 3 times
-                try:                
+            for _ in range(3):  # retry 3 times
+                try:
                     info = VideoInfo(video_id)
                     break
                 except (PatternUnmatchError, JSONDecodeError, InvalidVideoIdException) as e:
@@ -81,7 +81,7 @@ def main():
             print(f" output path: {path.resolve()}")
             duration = info.get_duration()
             pbar = ProgressBar(total=(duration * 1000), status="Extracting")
-            ex = Extractor(video_id,               
+            ex = Extractor(video_id,
                     callback=pbar._disp,
                     div=10)
             signal.signal(signal.SIGINT, (lambda a, b: cancel(ex, pbar)))
