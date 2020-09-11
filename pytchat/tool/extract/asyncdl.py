@@ -16,6 +16,9 @@ REPLAY_URL = "https://www.youtube.com/live_chat_replay/" \
              "get_live_chat_replay?continuation="
 MAX_RETRY_COUNT = 3
 
+# Set to avoid duplicate parameters
+param_set = set()
+
 
 def _split(start, end, count, min_interval_sec=120):
     """
@@ -64,6 +67,10 @@ def ready_blocks(video_id, duration, div, callback):
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
         for _ in range(MAX_RETRY_COUNT):
             try:
+                if continuation in param_set:
+                    next_continuation, actions = None, []
+                    break
+                param_set.add(continuation)
                 resp = await session.get(url, headers=headers)
                 next_continuation, actions = parser.parse(resp.json())
                 break
@@ -112,6 +119,10 @@ def fetch_patch(callback, blocks, video_id):
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
         for _ in range(MAX_RETRY_COUNT):
             try:
+                if continuation in param_set:
+                    continuation, actions = None, []
+                    break
+                param_set.add(continuation)
                 resp = await session.get(url, headers=config.headers)
                 continuation, actions = parser.parse(resp.json())
                 break
