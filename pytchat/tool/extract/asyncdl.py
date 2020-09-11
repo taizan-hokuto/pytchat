@@ -53,6 +53,7 @@ def _split(start, end, count, min_interval_sec=120):
 
 
 def ready_blocks(video_id, duration, div, callback):
+    param_set.clear()
     if div <= 0:
         raise ValueError
 
