@@ -8,8 +8,10 @@ from ... import config
 from ... paramgen import arcparam
 from ... exceptions import UnknownConnectionError
 from concurrent.futures import CancelledError
+from httpx import NetworkError, ReadTimeout
 from json import JSONDecodeError
 from urllib.parse import quote
+
 
 headers = config.headers
 REPLAY_URL = "https://www.youtube.com/live_chat_replay/" \
@@ -66,6 +68,7 @@ def ready_blocks(video_id, duration, div, callback):
     async def _create_block(session, video_id, seektime, callback):
         continuation = arcparam.getparam(video_id, seektime=seektime)
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
+        err = None
         for _ in range(MAX_RETRY_COUNT):
             try:
                 if continuation in param_set:
@@ -77,9 +80,12 @@ def ready_blocks(video_id, duration, div, callback):
                 break
             except JSONDecodeError:
                 await asyncio.sleep(3)
+            except (NetworkError, ReadTimeout) as e:
+                err = e
+                await asyncio.sleep(3)
         else:
             cancel()
-            raise UnknownConnectionError("Abort: Unknown connection error.")
+            raise UnknownConnectionError("Abort:" + str(err))
 
         if actions:
             first = parser.get_offset(actions[0])
@@ -118,6 +124,7 @@ def fetch_patch(callback, blocks, video_id):
 
     async def _fetch(continuation, session) -> Patch:
         url = f"{REPLAY_URL}{quote(continuation)}&pbj=1"
+        err = None
         for _ in range(MAX_RETRY_COUNT):
             try:
                 if continuation in param_set:
@@ -129,9 +136,12 @@ def fetch_patch(callback, blocks, video_id):
                 break
             except JSONDecodeError:
                 await asyncio.sleep(3)
+            except (NetworkError, ReadTimeout) as e:
+                err = e
+                await asyncio.sleep(3)
         else:
             cancel()
-            raise UnknownConnectionError("Abort: Unknown connection error.")
+            raise UnknownConnectionError("Abort:" + str(err))
 
         if actions:
             last = parser.get_offset(actions[-1])
