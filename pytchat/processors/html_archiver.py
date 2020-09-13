@@ -1,9 +1,12 @@
+import httpx
 import os
 import re
-import httpx
+import time
 from base64 import standard_b64encode
+from httpx import NetworkError, ReadTimeout
 from .chat_processor import ChatProcessor
 from .default.processor import DefaultProcessor
+from ..exceptions import UnknownConnectionError
 
 
 PATTERN = re.compile(r"(.*)\(([0-9]+)\)$")
@@ -112,7 +115,17 @@ class HTMLArchiver(ChatProcessor):
                        for item in message_items)
 
     def _encode_img(self, url):
-        resp = httpx.get(url)
+        err = None
+        for _ in range(3):
+            try:
+                resp = httpx.get(url)
+                break
+            except (NetworkError, ReadTimeout) as e:
+                err = e
+                time.sleep(3)
+        else:
+            raise UnknownConnectionError(str(err))
+
         return standard_b64encode(resp.content).decode()
 
     def _set_emoji_table(self, item: dict):

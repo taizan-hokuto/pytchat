@@ -93,4 +93,5 @@ class Extractor:
         return ret
 
     def cancel(self):
+        print("cancel")
         asyncdl.cancel()

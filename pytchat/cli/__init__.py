@@ -5,9 +5,10 @@ import signal
 import time
 from json.decoder import JSONDecodeError
 from pathlib import Path
+from httpcore import ReadTimeout as HCReadTimeout, NetworkError as HCNetworkError
 from .arguments import Arguments
 from .progressbar import ProgressBar
-from .. exceptions import InvalidVideoIdException, NoContents, PatternUnmatchError
+from .. exceptions import InvalidVideoIdException, NoContents, PatternUnmatchError, UnknownConnectionError
 from .. processors.html_archiver import HTMLArchiver
 from .. tool.extract.extractor import Extractor
 from .. tool.videoinfo import VideoInfo
@@ -50,6 +51,9 @@ def main():
     for counter, video_id in enumerate(Arguments().video_ids):
         if '[' in video_id:
             video_id = video_id.replace('[', '').replace(']', '')
+        if len(Arguments().video_ids) > 1:
+            print(f"\n{'-' * 10} video:{counter + 1} of {len(Arguments().video_ids)} {'-' * 10}")
+
         try:
             video_id = extract_video_id(video_id)
             if os.path.exists(Arguments().output):
@@ -71,8 +75,6 @@ def main():
                     util.save(err.doc, "ERR", ".dat")
                 continue
 
-            if len(Arguments().video_ids) > 1:
-                print(f"\n{'-' * 10} video:{counter + 1} of {len(Arguments().video_ids)} {'-' * 10}")
             print(f"\n"
                   f" video_id: {video_id}\n"
                   f" channel:  {info.get_channel_name()}\n"
@@ -112,6 +114,12 @@ def main():
             print("JSONDecodeError.:{}".format(video_id))
             if Arguments().save_error_data:
                 util.save(e.doc, "ERR_JSON_DECODE", ".dat")
+        except (UnknownConnectionError, HCNetworkError, HCReadTimeout) as e:
+            print(f"An unknown network error occurred during the processing of [{video_id}]. : " + str(e))
+        except PatternUnmatchError:
+            print(f"PatternUnmatchError [{video_id}]. ")
+        except Exception as e:
+            print(type(e), str(e))
 
     return
 
