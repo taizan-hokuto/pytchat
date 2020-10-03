@@ -57,7 +57,10 @@ def main():
         try:
             video_id = extract_video_id(video_id)
             if os.path.exists(Arguments().output):
-                path = Path(Arguments().output + video_id + '.html')
+                if Arguments().output[-1] != "/" or Arguments().output[-1] != "\\":
+                    Arguments().output = '/'.join([Arguments().output, os.path.sep])
+                path = util.checkpath(Path.resolve(Path(Arguments().output + video_id + '.html')))
+                print(path)
             else:
                 raise FileNotFoundError
             err = None
@@ -80,7 +83,7 @@ def main():
                   f" channel:  {info.get_channel_name()}\n"
                   f" title:    {info.get_title()}")
 
-            print(f" output path: {path.resolve()}")
+            print(f" output path: {path}")
             duration = info.get_duration()
             pbar = ProgressBar(total=(duration * 1000), status="Extracting")
             ex = Extractor(video_id,
