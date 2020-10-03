@@ -9,8 +9,8 @@ from ..util.extract_video_id import extract_video_id
 
 
 headers = config.headers
-
-pattern = re.compile(r"'PLAYER_CONFIG': ({.*}}})")
+                         
+pattern = re.compile(r"['\"]PLAYER_CONFIG['\"]:\s*({.*})")
 
 item_channel_id = [
     "videoDetails",
@@ -83,8 +83,16 @@ class VideoInfo:
 
     def __init__(self, video_id):
         self.video_id = extract_video_id(video_id)
-        text = self._get_page_text(self.video_id)
-        self._parse(text)
+        for _ in range(3):
+            try:
+                text = self._get_page_text(self.video_id)
+                self._parse(text)
+                break
+            except PatternUnmatchError:
+                time.sleep(2)
+                pass
+        else:
+            raise PatternUnmatchError("Pattern Unmatch")
 
     def _get_page_text(self, video_id):
         url = f"https://www.youtube.com/embed/{video_id}"
@@ -105,7 +113,7 @@ class VideoInfo:
     def _parse(self, text):
         result = re.search(pattern, text)
         if result is None:
-            raise PatternUnmatchError(text)
+            raise PatternUnmatchError()
         decoder = json.JSONDecoder()
         res = decoder.raw_decode(result.group(1)[:-1])[0]
         response = self._get_item(res, item_response)

@@ -116,11 +116,12 @@ class HTMLArchiver(ChatProcessor):
 
     def _encode_img(self, url):
         err = None
-        for _ in range(3):
+        for _ in range(5):
             try:
-                resp = httpx.get(url)
+                resp = httpx.get(url, timeout=30)
                 break
             except (NetworkError, ReadTimeout) as e:
+                print("Network Error. retrying...")
                 err = e
                 time.sleep(3)
         else:
