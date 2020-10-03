@@ -60,7 +60,6 @@ def main():
                 if Arguments().output[-1] != "/" or Arguments().output[-1] != "\\":
                     Arguments().output = '/'.join([Arguments().output, os.path.sep])
                 path = util.checkpath(Path.resolve(Path(Arguments().output + video_id + '.html')))
-                print(path)
             else:
                 raise FileNotFoundError
             err = None
