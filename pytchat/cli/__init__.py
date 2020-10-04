@@ -91,7 +91,7 @@ def main():
             if data == []:
                 return False
             pbar.reset("#", "=", total=len(data), status="Rendering  ")
-            processor = HTMLArchiver(Arguments().output + video_id + '.html', callback=pbar._disp)
+            processor = HTMLArchiver(path, callback=pbar._disp)
             processor.process(
                 [{'video_id': None,
                 'timeout': 1,
