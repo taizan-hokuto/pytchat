@@ -56,12 +56,10 @@ def main():
 
         try:
             video_id = extract_video_id(video_id)
-            if os.path.exists(Arguments().output):
-                if Arguments().output[-1] != "/" or Arguments().output[-1] != "\\":
-                    Arguments().output = '/'.join([Arguments().output, os.path.sep])
-                path = util.checkpath(Path.resolve(Path(Arguments().output + video_id + '.html')))
-            else:
+            if not os.path.exists(Arguments().output):
                 raise FileNotFoundError
+            separated_path = str(Path(Arguments().output)) + os.path.sep
+            path = util.checkpath(separated_path + video_id + '.html')
             err = None
             for _ in range(3):  # retry 3 times
                 try:
