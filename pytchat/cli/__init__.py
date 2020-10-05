@@ -1,8 +1,11 @@
 import argparse
-
+import asyncio
+try:
+    from asyncio import CancelledError
+except ImportError:
+    from asyncio.futures import CancelledError
 import os
 import signal
-import time
 from json.decoder import JSONDecodeError
 from pathlib import Path
 from httpcore import ReadTimeout as HCReadTimeout, NetworkError as HCNetworkError
@@ -38,6 +41,7 @@ def main():
                         help='Save error data when error occurs(".dat" file)')
     parser.add_argument(f'--{Arguments.Name.VERSION}', action='store_true',
                         help='Show version')
+
     Arguments(parser.parse_args().__dict__)
 
     if Arguments().print_version:
@@ -48,82 +52,106 @@ def main():
     if not Arguments().video_ids:
         parser.print_help()
         return
-    for counter, video_id in enumerate(Arguments().video_ids):
-        if '[' in video_id:
-            video_id = video_id.replace('[', '').replace(']', '')
-        if len(Arguments().video_ids) > 1:
-            print(f"\n{'-' * 10} video:{counter + 1} of {len(Arguments().video_ids)} {'-' * 10}")
 
-        try:
-            video_id = extract_video_id(video_id)
-            if not os.path.exists(Arguments().output):
-                raise FileNotFoundError
-            separated_path = str(Path(Arguments().output)) + os.path.sep
-            path = util.checkpath(separated_path + video_id + '.html')
-            err = None
-            for _ in range(3):  # retry 3 times
+    if not os.path.exists(Arguments().output):
+        print("\nThe specified directory does not exist.:{}\n".format(Arguments().output))
+        return
+    try:
+        Runner().run()
+    except CancelledError as e:
+        print(str(e))
+
+
+class Runner:
+    
+    def run(self) -> None:
+        ex = None
+        pbar = None
+        for counter, video_id in enumerate(Arguments().video_ids):
+            if len(Arguments().video_ids) > 1:
+                print(f"\n{'-' * 10} video:{counter + 1} of {len(Arguments().video_ids)} {'-' * 10}")
+
+            try:
+                video_id = extract_video_id(video_id)
+                separated_path = str(Path(Arguments().output)) + os.path.sep
+                path = util.checkpath(separated_path + video_id + '.html')
                 try:
                     info = VideoInfo(video_id)
-                    break
-                except (PatternUnmatchError, JSONDecodeError, InvalidVideoIdException) as e:
-                    err = e
-                    time.sleep(2)
+                except Exception as e:
+                    print("Cannot parse video information.:{} {}".format(video_id, type(e)))
+                    if Arguments().save_error_data:
+                        util.save(str(e), "ERR", ".dat")
                     continue
-            else:
-                print("Cannot parse video information.:{}".format(video_id))
+
+                print(f"\n"
+                    f" video_id: {video_id}\n"
+                    f" channel:  {info.get_channel_name()}\n"
+                    f" title:    {info.get_title()}\n"
+                    f" output path: {path}")
+
+                duration = info.get_duration()
+                pbar = ProgressBar(total=(duration * 1000), status_txt="Extracting")
+                ex = Extractor(video_id,
+                        callback=pbar.disp,
+                        div=10)
+                signal.signal(signal.SIGINT, (lambda a, b: self.cancel(ex, pbar)))
+
+                data = ex.extract()
+                if data == []:
+                    continue
+                pbar.reset("#", "=", total=len(data), status_txt="Rendering  ")
+                processor = HTMLArchiver(path, callback=pbar.disp)
+                processor.process(
+                    [{'video_id': None,
+                    'timeout': 1,
+                    'chatdata': (action["replayChatItemAction"]["actions"][0] for action in data)}]
+                )
+                processor.finalize()
+                pbar.reset('#', '#', status_txt='Completed   ')
+                pbar.close()
+                print()
+                if pbar.is_cancelled():
+                    print("\nThe extraction process has been discontinued.\n")
+            except InvalidVideoIdException:
+                print("Invalid Video ID or URL:", video_id)
+            except NoContents as e:
+                print(f"Abort:{str(e)}:[{video_id}]")
+            except (JSONDecodeError, PatternUnmatchError) as e:
+                print("{}:{}".format(e.msg, video_id))
                 if Arguments().save_error_data:
-                    util.save(err.doc, "ERR", ".dat")
-                continue
+                    util.save(e.doc, "ERR_", ".dat")
+            except (UnknownConnectionError, HCNetworkError, HCReadTimeout) as e:
+                print(f"An unknown network error occurred during the processing of [{video_id}]. : " + str(e))
+            except Exception as e:
+                print(f"Abort:{str(type(e))} {str(e)[:80]}")
+            finally:
+                clear_tasks()
 
-            print(f"\n"
-                  f" video_id: {video_id}\n"
-                  f" channel:  {info.get_channel_name()}\n"
-                  f" title:    {info.get_title()}")
+        return
 
-            print(f" output path: {path}")
-            duration = info.get_duration()
-            pbar = ProgressBar(total=(duration * 1000), status="Extracting")
-            ex = Extractor(video_id,
-                    callback=pbar._disp,
-                    div=10)
-            signal.signal(signal.SIGINT, (lambda a, b: cancel(ex, pbar)))
-            data = ex.extract()
-            if data == []:
-                return False
-            pbar.reset("#", "=", total=len(data), status="Rendering  ")
-            processor = HTMLArchiver(path, callback=pbar._disp)
-            processor.process(
-                [{'video_id': None,
-                'timeout': 1,
-                'chatdata': (action["replayChatItemAction"]["actions"][0] for action in data)}]
-            )
-            processor.finalize()
-            pbar.reset('#', '#', status='Completed   ')
-            pbar.close()
-            print()
-            if pbar.is_cancelled():
-                print("\nThe extraction process has been discontinued.\n")
-        except InvalidVideoIdException:
-            print("Invalid Video ID or URL:", video_id)
-        except NoContents as e:
-            print(e)
-        except FileNotFoundError:
-            print("The specified directory does not exist.:{}".format(Arguments().output))
-        except JSONDecodeError as e:
-            print(e.msg)
-            print("JSONDecodeError.:{}".format(video_id))
-            if Arguments().save_error_data:
-                util.save(e.doc, "ERR_JSON_DECODE", ".dat")
-        except (UnknownConnectionError, HCNetworkError, HCReadTimeout) as e:
-            print(f"An unknown network error occurred during the processing of [{video_id}]. : " + str(e))
-        except PatternUnmatchError:
-            print(f"PatternUnmatchError [{video_id}]. ")
-        except Exception as e:
-            print(type(e), str(e))
-
-    return
+    def cancel(self, ex=None, pbar=None) -> None:
+        '''Called when keyboard interrupted has occurred.
+        '''
+        print("\nKeyboard interrupted.\n")
+        if ex and pbar:
+            ex.cancel()
+            pbar.cancel()
 
 
-def cancel(ex, pbar):
-    ex.cancel()
-    pbar.cancel()
+def clear_tasks():
+    '''
+    Clear remained tasks.
+    Called when internal exception has occurred or
+    after each extraction process is completed.
+    '''
+    async def _shutdown():
+        tasks = [t for t in asyncio.all_tasks()
+                if t is not asyncio.current_task()]
+        for task in tasks:
+            task.cancel()
+            
+    try:
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(_shutdown())
+    except Exception as e:
+        print(e)
