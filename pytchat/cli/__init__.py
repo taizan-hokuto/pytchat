@@ -1,6 +1,9 @@
 import argparse
 import asyncio
-from asyncio.exceptions import CancelledError
+try:
+    from asyncio import CancelledError
+except ImportError:
+    from asyncio.futures import CancelledError
 import os
 import signal
 from json.decoder import JSONDecodeError
