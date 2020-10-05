@@ -8,6 +8,9 @@ YT_VIDEO_ID_LENGTH = 11
 
 def extract_video_id(url_or_id: str) -> str:
     ret = ''
+    if '[' in url_or_id:
+        url_or_id = url_or_id.replace('[', '').replace(']', '')
+
     if type(url_or_id) != str:
         raise TypeError(f"{url_or_id}: URL or VideoID must be str, but {type(url_or_id)} is passed.")
     if len(url_or_id) == YT_VIDEO_ID_LENGTH:

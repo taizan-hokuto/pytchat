@@ -2,7 +2,7 @@ import httpx
 import json
 import re
 import time
-from httpx import ConnectError, NetworkError
+from httpx import ConnectError, NetworkError, TimeoutException
 from .. import config
 from ..exceptions import InvalidVideoIdException, PatternUnmatchError, UnknownConnectionError
 from ..util.extract_video_id import extract_video_id
@@ -83,16 +83,21 @@ class VideoInfo:
 
     def __init__(self, video_id):
         self.video_id = extract_video_id(video_id)
+        err = None
         for _ in range(3):
             try:
                 text = self._get_page_text(self.video_id)
                 self._parse(text)
                 break
-            except PatternUnmatchError:
+            except (InvalidVideoIdException, UnknownConnectionError) as e:
+                print(str(e))
+                raise e
+            except Exception as e:
+                err = e
                 time.sleep(2)
                 pass
         else:
-            raise PatternUnmatchError("Pattern Unmatch")
+            raise err
 
     def _get_page_text(self, video_id):
         url = f"https://www.youtube.com/embed/{video_id}"
@@ -102,7 +107,7 @@ class VideoInfo:
                 resp = httpx.get(url, headers=headers)
                 resp.raise_for_status()
                 break
-            except (ConnectError, NetworkError) as e:
+            except (ConnectError, NetworkError, TimeoutException) as e:
                 err = e
                 time.sleep(3)
         else:
@@ -113,7 +118,7 @@ class VideoInfo:
     def _parse(self, text):
         result = re.search(pattern, text)
         if result is None:
-            raise PatternUnmatchError()
+            raise PatternUnmatchError(doc=text)
         decoder = json.JSONDecoder()
         res = decoder.raw_decode(result.group(1)[:-1])[0]
         response = self._get_item(res, item_response)
