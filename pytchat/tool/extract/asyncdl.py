@@ -1,5 +1,6 @@
-import httpx
 import asyncio
+import httpx
+import socket
 from . import parser
 from . block import Block
 from . worker import ExtractWorker
@@ -8,7 +9,7 @@ from ... import config
 from ... paramgen import arcparam
 from ... exceptions import UnknownConnectionError
 from concurrent.futures import CancelledError
-from httpx import NetworkError, ReadTimeout
+from httpx import NetworkError, TimeoutException, ConnectError
 from json import JSONDecodeError
 from urllib.parse import quote
 
@@ -75,12 +76,12 @@ def ready_blocks(video_id, duration, div, callback):
                     next_continuation, actions = None, []
                     break
                 param_set.add(continuation)
-                resp = await session.get(url, headers=headers)
+                resp = await session.get(url, headers=headers, timeout=10)
                 next_continuation, actions = parser.parse(resp.json())
                 break
             except JSONDecodeError:
                 await asyncio.sleep(3)
-            except (NetworkError, ReadTimeout) as e:
+            except (NetworkError, TimeoutException, ConnectError) as e:
                 err = e
                 await asyncio.sleep(3)
         else:
@@ -136,8 +137,11 @@ def fetch_patch(callback, blocks, video_id):
                 break
             except JSONDecodeError:
                 await asyncio.sleep(3)
-            except (NetworkError, ReadTimeout) as e:
+            except (NetworkError, TimeoutException, ConnectError) as e:
                 err = e
+                await asyncio.sleep(3)
+            except socket.error as error:
+                print("socket error", error.errno)
                 await asyncio.sleep(3)
         else:
             cancel()
@@ -162,15 +166,10 @@ def fetch_patch(callback, blocks, video_id):
 
 
 async def _shutdown():
-    print("\nshutdown...")
     tasks = [t for t in asyncio.all_tasks()
              if t is not asyncio.current_task()]
     for task in tasks:
         task.cancel()
-        try:
-            await task
-        except asyncio.CancelledError:
-            pass
 
 
 def cancel():

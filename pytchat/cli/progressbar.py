@@ -9,21 +9,20 @@ import sys
 
 
 class ProgressBar:
-    def __init__(self, total, status):
+    def __init__(self, total, status_txt):
         self._bar_len = 60
         self._cancelled = False
-        self.reset(total=total, status=status)
-        self._blinker = 0
+        self.reset(total=total, status_txt=status_txt)
         
-    def reset(self, symbol_done="=", symbol_space=" ", total=100, status=''):
-        self.con_width = shutil.get_terminal_size(fallback=(80, 24)).columns
+    def reset(self, symbol_done="=", symbol_space=" ", total=100, status_txt=''):
+        self._console_width = shutil.get_terminal_size(fallback=(80, 24)).columns
         self._symbol_done = symbol_done
         self._symbol_space = symbol_space
         self._total = total
-        self._status = status
+        self._status_txt = status_txt
         self._count = 0
 
-    def _disp(self, _, fetched):
+    def disp(self, _, fetched):
         self._progress(fetched, self._total)
 
     def _progress(self, fillin, total):
@@ -39,11 +38,10 @@ class ProgressBar:
             
         bar = self._symbol_done * filled_len + \
               self._symbol_space * (self._bar_len - filled_len)
-        disp = f" [{bar}] {percents:>5.1f}% ...{self._status} "[:self.con_width - 1] + '\r'
+        disp = f" [{bar}] {percents:>5.1f}% ...{self._status_txt} "[:self._console_width - 1] + '\r'
 
         sys.stdout.write(disp)
         sys.stdout.flush()
-        self._blinker += 1
 
     def close(self):
         if not self._cancelled:
