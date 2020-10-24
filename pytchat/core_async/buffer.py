@@ -4,13 +4,13 @@ import asyncio
 
 class Buffer(asyncio.Queue):
     '''
-    チャットデータを格納するバッファの役割を持つFIFOキュー
+    Buffer for storing chat data.
 
     Parameter
     ---------
     maxsize : int
-        格納するチャットブロックの最大個数。0の場合は無限。
-        最大値を超える場合は古いチャットブロックから破棄される。
+        Maximum number of chat blocks to be stored.
+        If it exceeds the maximum, the oldest chat block will be discarded.
     '''
 
     def __init__(self, maxsize=0):
