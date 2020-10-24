@@ -1,5 +1,7 @@
 import asyncio
+import json
 import time
+from .custom_encoder import CustomEncoder
 from .renderer.textmessage import LiveChatTextMessageRenderer
 from .renderer.paidmessage import LiveChatPaidMessageRenderer
 from .renderer.paidsticker import LiveChatPaidStickerRenderer
@@ -11,25 +13,121 @@ from ... import config
 logger = config.logger(__name__)
 
 
+class Chat:
+    def json(self) -> str:
+        return json.dumps(vars(self), ensure_ascii=False, cls=CustomEncoder)
+
+
 class Chatdata:
-    def __init__(self, chatlist: list, timeout: float):
+
+    def __init__(self, chatlist: list, timeout: float, abs_diff):
         self.items = chatlist
         self.interval = timeout
+        self.abs_diff = abs_diff
+        self.itemcount = 0
+        self.before_timestamp = -2**64
 
     def tick(self):
-        if self.interval == 0:
+        '''DEPRECATE
+            Use sync_items()
+        '''
+        if len(self.items) < 1:
             time.sleep(1)
             return
-        time.sleep(self.interval / len(self.items))
+        if self.itemcount == 0:
+            self.starttime = time.time()
+        if len(self.items) == 1:
+            total_itemcount = 1
+        else:
+            total_itemcount = len(self.items) - 1
+        next_chattime = (self.items[0].timestamp + (self.items[-1].timestamp - self.items[0].timestamp) / total_itemcount * self.itemcount) / 1000
+        tobe_disptime = self.abs_diff + next_chattime
+        wait_sec = tobe_disptime - time.time()
+        self.itemcount += 1
+        
+        if wait_sec < 0:
+            wait_sec = 0
+       
+        time.sleep(wait_sec)
 
     async def tick_async(self):
-        if self.interval == 0:
+        '''DEPRECATE
+            Use async_items()
+        '''
+        if len(self.items) < 1:
             await asyncio.sleep(1)
             return
-        await asyncio.sleep(self.interval / len(self.items))
+        if self.itemcount == 0:
+            self.starttime = time.time()
+        if len(self.items) == 1:
+            total_itemcount = 1
+        else:
+            total_itemcount = len(self.items) - 1
+        next_chattime = (self.items[0].timestamp + (self.items[-1].timestamp - self.items[0].timestamp) / total_itemcount * self.itemcount) / 1000
+        tobe_disptime = self.abs_diff + next_chattime
+        wait_sec = tobe_disptime - time.time()
+        self.itemcount += 1
+        
+        if wait_sec < 0:
+            wait_sec = 0
+       
+        await asyncio.sleep(wait_sec)
+
+    def sync_items(self):
+        starttime = time.time()
+        if len(self.items) > 0:
+            last_chattime = self.items[-1].timestamp / 1000
+            tobe_disptime = self.abs_diff + last_chattime
+            wait_total_sec = max(tobe_disptime - time.time(), 0)
+            if len(self.items) > 1:
+                wait_sec = wait_total_sec / len(self.items)
+            elif len(self.items) == 1:
+                wait_sec = 0
+            for c in self.items:
+                if wait_sec < 0:
+                    wait_sec = 0
+                time.sleep(wait_sec)
+                yield c
+        stop_interval = time.time() - starttime
+        if stop_interval < 1:
+            time.sleep(1 - stop_interval)
+
+    async def async_items(self):
+        starttime = time.time()
+        if len(self.items) > 0:
+            last_chattime = self.items[-1].timestamp / 1000
+            tobe_disptime = self.abs_diff + last_chattime
+            wait_total_sec = max(tobe_disptime - time.time(), 0)
+            if len(self.items) > 1:
+                wait_sec = wait_total_sec / len(self.items)
+            elif len(self.items) == 1:
+                wait_sec = 0
+            for c in self.items:
+                if wait_sec < 0:
+                    wait_sec = 0
+                await asyncio.sleep(wait_sec)
+                yield c
+                
+        stop_interval = time.time() - starttime
+        if stop_interval < 1:
+            await asyncio.sleep(1 - stop_interval)
+
+    def json(self) -> str:
+        return json.dumps([vars(a) for a in self.items], ensure_ascii=False, cls=CustomEncoder)
 
 
 class DefaultProcessor(ChatProcessor):
+    def __init__(self):
+        self.first = True
+        self.abs_diff = 0
+        self.renderers = {
+            "liveChatTextMessageRenderer": LiveChatTextMessageRenderer(),
+            "liveChatPaidMessageRenderer": LiveChatPaidMessageRenderer(),
+            "liveChatPaidStickerRenderer": LiveChatPaidStickerRenderer(),
+            "liveChatLegacyPaidMessageRenderer": LiveChatLegacyPaidMessageRenderer(),
+            "liveChatMembershipItemRenderer": LiveChatMembershipItemRenderer()
+        }
+
     def process(self, chat_components: list):
 
         chatlist = []
@@ -46,43 +144,35 @@ class DefaultProcessor(ChatProcessor):
                         continue
                     if action.get('addChatItemAction') is None:
                         continue
-                    if action['addChatItemAction'].get('item') is None:
+                    item = action['addChatItemAction'].get('item')
+                    if item is None:
                         continue
-
-                    chat = self._parse(action)
+                    chat = self._parse(item)
                     if chat:
                         chatlist.append(chat)
-        return Chatdata(chatlist, float(timeout))
+        
+        if self.first and chatlist:
+            self.abs_diff = time.time() - chatlist[0].timestamp / 1000 + 2
+            self.first = False
 
-    def _parse(self, sitem):
-        action = sitem.get("addChatItemAction")
-        if action:
-            item = action.get("item")
-        if item is None:
-            return None
+        chatdata = Chatdata(chatlist, float(timeout), self.abs_diff)
+
+        return chatdata
+
+    def _parse(self, item):
         try:
-            renderer = self._get_renderer(item)
+            key = list(item.keys())[0]
+            renderer = self.renderers.get(key)
             if renderer is None:
                 return None
-
+            renderer.setitem(item.get(key), Chat())
+            renderer.settype()
             renderer.get_snippet()
             renderer.get_authordetails()
+            rendered_chatobj = renderer.get_chatobj()
+            renderer.clear()
         except (KeyError, TypeError) as e:
-            logger.error(f"{str(type(e))}-{str(e)} sitem:{str(sitem)}")
+            logger.error(f"{str(type(e))}-{str(e)} item:{str(item)}")
             return None
-        return renderer
-
-    def _get_renderer(self, item):
-        if item.get("liveChatTextMessageRenderer"):
-            renderer = LiveChatTextMessageRenderer(item)
-        elif item.get("liveChatPaidMessageRenderer"):
-            renderer = LiveChatPaidMessageRenderer(item)
-        elif item.get("liveChatPaidStickerRenderer"):
-            renderer = LiveChatPaidStickerRenderer(item)
-        elif item.get("liveChatLegacyPaidMessageRenderer"):
-            renderer = LiveChatLegacyPaidMessageRenderer(item)
-        elif item.get("liveChatMembershipItemRenderer"):
-            renderer = LiveChatMembershipItemRenderer(item)
-        else:
-            renderer = None
-        return renderer
+        
+        return rendered_chatobj
