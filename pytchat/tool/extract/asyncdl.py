@@ -9,7 +9,6 @@ from ... import config
 from ... paramgen import arcparam
 from ... exceptions import UnknownConnectionError
 from concurrent.futures import CancelledError
-from httpx import NetworkError, TimeoutException, ConnectError
 from json import JSONDecodeError
 from urllib.parse import quote
 
@@ -81,7 +80,7 @@ def ready_blocks(video_id, duration, div, callback):
                 break
             except JSONDecodeError:
                 await asyncio.sleep(3)
-            except (NetworkError, TimeoutException, ConnectError) as e:
+            except httpx.HTTPError as e:
                 err = e
                 await asyncio.sleep(3)
         else:
@@ -137,7 +136,7 @@ def fetch_patch(callback, blocks, video_id):
                 break
             except JSONDecodeError:
                 await asyncio.sleep(3)
-            except (NetworkError, TimeoutException, ConnectError) as e:
+            except httpx.HTTPError as e:
                 err = e
                 await asyncio.sleep(3)
             except socket.error as error:

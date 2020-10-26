@@ -249,7 +249,7 @@ class LiveChatAsync:
                 resp = await client.get(url, headers=headers)
                 livechat_json = resp.json()
                 break
-            except (httpx.HTTPError, json.JSONDecodeError):
+            except (json.JSONDecodeError, httpx.HTTPError):
                 await asyncio.sleep(1)
                 continue
         else:

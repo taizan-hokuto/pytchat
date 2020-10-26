@@ -2,7 +2,6 @@ import httpx
 import json
 import re
 import time
-from httpx import ConnectError, NetworkError, TimeoutException
 from .. import config
 from ..exceptions import InvalidVideoIdException, PatternUnmatchError, UnknownConnectionError
 from ..util.extract_video_id import extract_video_id
@@ -107,7 +106,7 @@ class VideoInfo:
                 resp = httpx.get(url, headers=headers)
                 resp.raise_for_status()
                 break
-            except (ConnectError, NetworkError, TimeoutException) as e:
+            except httpx.HTTPError as e:
                 err = e
                 time.sleep(3)
         else:

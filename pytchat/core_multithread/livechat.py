@@ -241,7 +241,7 @@ class LiveChat:
                 try:
                     livechat_json = client.get(url, headers=headers).json()
                     break
-                except (json.JSONDecodeError, httpx.TimeoutError):
+                except (json.JSONDecodeError, httpx.HTTPError):
                     time.sleep(2)
                     continue
         else:
