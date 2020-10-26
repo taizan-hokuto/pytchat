@@ -191,7 +191,7 @@ class LiveChatAsync:
             self._logger.error(f"{traceback.format_exc(limit = -1)}")
             raise
 
-        self._logger.debug(f"[{self._video_id}]finished fetching chat.")
+        self._logger.debug(f"[{self._video_id}] finished fetching chat.")
         raise exceptions.ChatDataFinished
 
     async def _check_pause(self, continuation):
@@ -243,7 +243,6 @@ class LiveChatAsync:
         '''
         continuation = urllib.parse.quote(continuation)
         livechat_json = None
-        status_code = 0
         url = f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1"
         for _ in range(MAX_RETRY + 1):
             try:
@@ -255,7 +254,7 @@ class LiveChatAsync:
                 continue
         else:
             self._logger.error(f"[{self._video_id}]"
-                               f"Exceeded retry count. status_code={status_code}")
+                               f"Exceeded retry count.")
             return None
         return livechat_json
 
@@ -318,7 +317,7 @@ class LiveChatAsync:
         try:
             self._task_finished()
         except CancelledError:
-            self._logger.debug(f'[{self._video_id}]cancelled:{sender}')
+            self._logger.debug(f'[{self._video_id}] cancelled:{sender}')
 
     def terminate(self):
         if self._pauser.empty():

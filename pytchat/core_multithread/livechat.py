@@ -183,7 +183,7 @@ class LiveChat:
             self._logger.error(f"{traceback.format_exc(limit=-1)}")
             raise
 
-        self._logger.debug(f"[{self._video_id}]finished fetching chat.")
+        self._logger.debug(f"[{self._video_id}] finished fetching chat.")
         raise exceptions.ChatDataFinished
 
     def _check_pause(self, continuation):
@@ -235,7 +235,6 @@ class LiveChat:
         '''
         continuation = urllib.parse.quote(continuation)
         livechat_json = None
-        status_code = 0
         url = f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1"
         for _ in range(MAX_RETRY + 1):
             with client:
@@ -247,7 +246,7 @@ class LiveChat:
                     continue
         else:
             self._logger.error(f"[{self._video_id}]"
-                               f"Exceeded retry count. status_code={status_code}")
+                               f"Exceeded retry count.")
             raise exceptions.RetryExceedMaxCount()
         return livechat_json
 

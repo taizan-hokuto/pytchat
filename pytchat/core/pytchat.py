@@ -4,7 +4,6 @@ import signal
 import time
 import traceback
 import urllib.parse
-from threading import Event
 from ..parser.live import Parser
 from .. import config
 from .. import exceptions
@@ -154,19 +153,20 @@ class PytchatCore:
         '''
         continuation = urllib.parse.quote(continuation)
         livechat_json = None
-        status_code = 0
+        err = None
         url = f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1"
         for _ in range(MAX_RETRY + 1):
             with client:
                 try:
                     livechat_json = client.get(url, headers=headers).json()
                     break
-                except (json.JSONDecodeError, httpx.ConnectTimeout, httpx.ReadTimeout, httpx.ConnectError):
+                except (json.JSONDecodeError, httpx.ConnectTimeout, httpx.ReadTimeout, httpx.ConnectError) as e:
+                    err = e
                     time.sleep(2)
                     continue
         else:
             self._logger.error(f"[{self._video_id}]"
-                               f"Exceeded retry count. status_code={status_code}")
+                               f"Exceeded retry count. Last error: {str(err)}")
             raise exceptions.RetryExceedMaxCount()
         return livechat_json
     
