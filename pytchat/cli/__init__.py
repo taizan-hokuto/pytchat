@@ -10,6 +10,7 @@ from json.decoder import JSONDecodeError
 from pathlib import Path
 from httpcore import ReadTimeout as HCReadTimeout, NetworkError as HCNetworkError
 from .arguments import Arguments
+from .echo import Echo
 from .progressbar import ProgressBar
 from .. exceptions import InvalidVideoIdException, NoContents, PatternUnmatchError, UnknownConnectionError
 from .. processors.html_archiver import HTMLArchiver
@@ -41,17 +42,33 @@ def main():
                         help='Save error data when error occurs(".dat" file)')
     parser.add_argument(f'--{Arguments.Name.VERSION}', action='store_true',
                         help='Show version')
+    parser.add_argument(f'--{Arguments.Name.ECHO}', action='store_true',
+        help='Show chats of specified video')
 
     Arguments(parser.parse_args().__dict__)
 
     if Arguments().print_version:
-        print(f'pytchat v{__version__}     © 2019 taizan-hokuto')
+        print(f'pytchat v{__version__}     © 2019,2020 taizan-hokuto')
         return
 
     # Extractor
     if not Arguments().video_ids:
         parser.print_help()
         return
+
+    # Echo
+    if Arguments().echo:
+        if len(Arguments().video_ids) > 1:
+            print("You can specify only one video ID.")
+            return
+        try:
+            SimpleEcho(Arguments().video_ids[0]).run()
+        except InvalidVideoIdException as e:
+            print("Invalid video id:", str(e))
+        except Exception as e:
+            print(type(e), str(e))
+        finally:
+            return
 
     if not os.path.exists(Arguments().output):
         print("\nThe specified directory does not exist.:{}\n".format(Arguments().output))
