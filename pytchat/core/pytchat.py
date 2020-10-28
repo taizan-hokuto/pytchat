@@ -42,6 +42,10 @@ class PytchatCore:
     topchat_only : bool
         If True, get only top chat.
 
+    hold_exception : bool [default:True]
+        If True, when exceptions occur, the exception is holded internally,
+        and can be raised by raise_for_status().
+
     Attributes
     ---------
     _is_alive : bool
@@ -56,7 +60,8 @@ class PytchatCore:
                  interruptable=True,
                  force_replay=False,
                  topchat_only=False,
-                 logger=config.logger(__name__)
+                 hold_exception=True,
+                 logger=config.logger(__name__),
                  ):
         self._video_id = extract_video_id(video_id)
         self.seektime = seektime
@@ -66,12 +71,16 @@ class PytchatCore:
             self.processor = processor
         self._is_alive = True
         self._is_replay = force_replay
-        self._parser = Parser(is_replay=self._is_replay)
+        self._hold_exception = hold_exception
+        self._exception_holder = None
+        self._parser = Parser(
+            is_replay=self._is_replay,
+            exception_holder=self._exception_holder
+        )
         self._first_fetch = True
         self._fetch_url = "live_chat/get_live_chat?continuation="
         self._topchat_only = topchat_only
         self._logger = logger
-        self.exception = None
         if interruptable:
             signal.signal(signal.SIGINT, lambda a, b: self.terminate())
         self._setup()
@@ -108,13 +117,13 @@ class PytchatCore:
                     return chat_component
         except exceptions.ChatParseException as e:
             self._logger.debug(f"[{self._video_id}]{str(e)}")
-            raise
-        except (TypeError, json.JSONDecodeError):
+            self._raise_exception(e)
+        except (TypeError, json.JSONDecodeError) as e:
             self._logger.error(f"{traceback.format_exc(limit=-1)}")
-            raise
+            self._raise_exception(e)
 
         self._logger.debug(f"[{self._video_id}]finished fetching chat.")
-        raise exceptions.ChatDataFinished
+        self._raise_exception(exceptions.ChatDataFinished)
 
     def _get_contents(self, continuation, client, headers):
         '''Get 'continuationContents' from livechat json.
@@ -167,7 +176,7 @@ class PytchatCore:
         else:
             self._logger.error(f"[{self._video_id}]"
                                f"Exceeded retry count. Last error: {str(err)}")
-            raise exceptions.RetryExceedMaxCount()
+            self._raise_exception(exceptions.RetryExceedMaxCount())
         return livechat_json
     
     def get(self):
@@ -188,5 +197,11 @@ class PytchatCore:
         self.processor.finalize()
 
     def raise_for_status(self):
-        if self.exception is not None:
-            raise self.exception
+        if self._exception_holder is not None:
+            raise self._exception_holder
+
+    def _raise_exception(self, exception: Exception = None):
+        self._is_alive = False
+        if self._hold_exception is False:
+            raise exception
+        self._exception_holder = exception
