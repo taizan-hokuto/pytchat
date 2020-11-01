@@ -3,7 +3,6 @@ import os
 import re
 import time
 from base64 import standard_b64encode
-from httpx import NetworkError, ReadTimeout
 from .chat_processor import ChatProcessor
 from .default.processor import DefaultProcessor
 from ..exceptions import UnknownConnectionError
@@ -48,6 +47,7 @@ class HTMLArchiver(ChatProcessor):
     '''
     def __init__(self, save_path, callback=None):
         super().__init__()
+        self.client = httpx.Client(http2=True)
         self.save_path = self._checkpath(save_path)
         self.processor = DefaultProcessor()
         self.emoji_table = {}  # tuble for custom emojis. key: emoji_id, value: base64 encoded image binary.
@@ -118,9 +118,9 @@ class HTMLArchiver(ChatProcessor):
         err = None
         for _ in range(5):
             try:
-                resp = httpx.get(url, timeout=30)
+                resp = self.client.get(url, timeout=30)
                 break
-            except (NetworkError, ReadTimeout) as e:
+            except httpx.HTTPError as e:
                 print("Network Error. retrying...")
                 err = e
                 time.sleep(3)

@@ -13,7 +13,7 @@ def _set_test_data(filepath, mocker):
     response_mock = mocker.Mock()
     response_mock.status_code = 200
     response_mock.text = _text
-    mocker.patch('httpx.get').return_value = response_mock
+    mocker.patch('httpx.Client.get').return_value = response_mock
 
 
 def test_archived_page(mocker):

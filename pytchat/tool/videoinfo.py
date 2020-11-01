@@ -82,6 +82,7 @@ class VideoInfo:
 
     def __init__(self, video_id):
         self.video_id = extract_video_id(video_id)
+        self.client = httpx.Client(http2=True)
         err = None
         for _ in range(3):
             try:
@@ -103,7 +104,7 @@ class VideoInfo:
         err = None
         for _ in range(3):
             try:
-                resp = httpx.get(url, headers=headers)
+                resp = self.client.get(url, headers=headers)
                 resp.raise_for_status()
                 break
             except httpx.HTTPError as e:
