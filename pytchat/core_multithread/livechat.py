@@ -41,7 +41,7 @@ class LiveChat:
         buffer of chat data fetched background.
 
     interruptable : bool
-        Allows keyboard interrupts. 
+        Allows keyboard interrupts.
         Set this parameter to False if your own threading program causes
         the problem.
 
