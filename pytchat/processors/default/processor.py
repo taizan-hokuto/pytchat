@@ -25,7 +25,6 @@ class Chatdata:
         self.interval = timeout
         self.abs_diff = abs_diff
         self.itemcount = 0
-        self.before_timestamp = -2**64
 
     def tick(self):
         '''DEPRECATE
@@ -135,6 +134,8 @@ class DefaultProcessor(ChatProcessor):
 
         if chat_components:
             for component in chat_components:
+                if component is None:
+                    continue
                 timeout += component.get('timeout', 0)
                 chatdata = component.get('chatdata')
                 if chatdata is None:
