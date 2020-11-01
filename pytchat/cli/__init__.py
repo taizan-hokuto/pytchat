@@ -62,7 +62,7 @@ def main():
             print("You can specify only one video ID.")
             return
         try:
-            SimpleEcho(Arguments().video_ids[0]).run()
+            Echo(Arguments().video_ids[0]).run()
         except InvalidVideoIdException as e:
             print("Invalid video id:", str(e))
         except Exception as e:
