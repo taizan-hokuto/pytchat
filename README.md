@@ -5,9 +5,7 @@ pytchat is a python library for fetching youtube live chat.
 
 ## Description
 pytchat is a python library for fetching youtube live chat
-without using youtube api, Selenium or BeautifulSoup.
-
-pytchatは、YouTubeチャットを閲覧するためのpythonライブラリです。
+without using Selenium or BeautifulSoup.
 
 Other features:
 + Customizable [chat data processors](https://github.com/taizan-hokuto/pytchat/wiki/ChatProcessor) including youtube api compatible one.
@@ -16,7 +14,7 @@ Other features:
 instead of web scraping.
 
 For more detailed information, see [wiki](https://github.com/taizan-hokuto/pytchat/wiki). <br>
-より詳細な解説は[wiki](https://github.com/taizan-hokuto/pytchat/wiki/Home_jp)を参照してください。
+[JP wiki](https://github.com/taizan-hokuto/pytchat/wiki/Home_jp)
 
 ## Install
 ```python
@@ -27,51 +25,45 @@ pip install pytchat
 ### CLI
 
 One-liner command.
-Save chat data to html, with embedded custom emojis.
 
+Save chat data to html with embedded custom emojis.
+Show chat stream (--echo option) .
 ```bash
 $ pytchat -v https://www.youtube.com/watch?v=ZJ6Q4U_Vg6s -o "c:/temp/"
 # options:
 #  -v : Video ID or URL that includes ID
 #  -o : output directory (default path: './')
+#  --echo : Show chats.
 # saved filename is [video_id].html
 ```
 
 
-### on-demand mode
+### on-demand mode with simple non-buffered.
 ```python
-from pytchat import LiveChat
-livechat = LiveChat(video_id = "Zvp1pJpie4I")
-# It is also possible to specify a URL that includes the video ID:
-# livechat = LiveChat("https://www.youtube.com/watch?v=Zvp1pJpie4I")
-while livechat.is_alive():
-  try:
-    chatdata = livechat.get()
-    for c in chatdata.items:
+import pytchat
+chat = pytchat.create(video_id="Zvp1pJpie4I")
+while chat.is_alive():
+    chatdata = chat.get()
+    for c in chatdata.sync_items():
         print(f"{c.datetime} [{c.author.name}]- {c.message}")
-        chatdata.tick()
-  except KeyboardInterrupt:
-    livechat.terminate()
-    break
 ```
 
-### callback mode
+### callback mode with bufferd.
 ```python
 from pytchat import LiveChat
 import time
 
 def main():
-  livechat = LiveChat(video_id = "Zvp1pJpie4I", callback = disp)
+  chat = LiveChat(video_id = "Zvp1pJpie4I", callback = disp)
   while livechat.is_alive():
     #other background operation.
     time.sleep(1)
-  livechat.terminate()
+  chat.terminate()
 
 #callback function (automatically called)
 def disp(chatdata):
-    for c in chatdata.items:
+    for c in chatdata.sync_items():
         print(f"{c.datetime} [{c.author.name}]- {c.message}")
-        chatdata.tick()
 
 if __name__ == '__main__':
   main()
@@ -92,9 +84,8 @@ async def main():
 
 #callback function is automatically called.
 async def func(chatdata):
-  for c in chatdata.items:
+  async for c in chatdata.async_items():
     print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
-    await chatdata.tick_async()
 
 if __name__ == '__main__':
   try:
@@ -103,7 +94,6 @@ if __name__ == '__main__':
   except CancelledError:
     pass
 ```
-
 
 ### youtube api compatible processor:
 ```python
@@ -130,23 +120,12 @@ If specified video is not live,
 automatically try to fetch archived chat data.
 
 ```python
-from pytchat import LiveChat
-
-def main():
-  #seektime (seconds): start position of chat.
-  chat = LiveChat("ojes5ULOqhc", seektime = 60*30)
-  print('Replay from 30:00')
-  try:
-    while chat.is_alive():
-      data = chat.get()
-      for c in data.items:
-        print(f"{c.elapsedTime} [{c.author.name}]-{c.message} {c.amountString}")
-        data.tick()
-  except KeyboardInterrupt:
-    chat.terminate()
-
-if __name__ == '__main__':
-  main()
+import pytchat
+chat = pytchat.get("ojes5ULOqhc", seektime = 60*30)
+while chat.is_alive():
+    chatdata = chat.get()
+    for c in chatdata.sync_items():
+        print(f"{c.datetime} [{c.author.name}]- {c.message}")
 ```
 ### Extract archived chat data as [HTML](https://github.com/taizan-hokuto/pytchat/wiki/HTMLArchiver) or [tab separated values](https://github.com/taizan-hokuto/pytchat/wiki/TSVArchiver).
 ```python
@@ -164,7 +143,7 @@ print("finished.")
 ```
 
 ## Structure of Default Processor
-Each item can be got with `items` function.
+Each item can be got with `sync_items()` function.
 <table>
   <tr>
     <th>name</th>
@@ -298,6 +277,9 @@ Most of source code of CLI refer to:
 
 [PetterKraabol / Twitch-Chat-Downloader](https://github.com/PetterKraabol/Twitch-Chat-Downloader)
 
+Progress bar in CLI is based on:
+
+[vladignatyev/progress.py](https://gist.github.com/vladignatyev/06860ec2040cb497f0f3)
 
 ## Author
 
