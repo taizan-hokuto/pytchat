@@ -14,7 +14,7 @@ Other features:
 instead of web scraping.
 
 For more detailed information, see [wiki](https://github.com/taizan-hokuto/pytchat/wiki). <br>
-[JP wiki](https://github.com/taizan-hokuto/pytchat/wiki/Home_jp)
+[wiki (Japanese)](https://github.com/taizan-hokuto/pytchat/wiki/Home_jp)
 
 ## Install
 ```python
@@ -27,9 +27,9 @@ pip install pytchat
 One-liner command.
 
 Save chat data to html with embedded custom emojis.
-Show chat stream (--echo option) .
+Show chat stream (--echo option).
 ```bash
-$ pytchat -v https://www.youtube.com/watch?v=ZJ6Q4U_Vg6s -o "c:/temp/"
+$ pytchat -v https://www.youtube.com/watch?v=uIx8l2xlYVY -o "c:/temp/"
 # options:
 #  -v : Video ID or URL that includes ID
 #  -o : output directory (default path: './')
@@ -38,96 +38,42 @@ $ pytchat -v https://www.youtube.com/watch?v=ZJ6Q4U_Vg6s -o "c:/temp/"
 ```
 
 
-### on-demand mode with simple non-buffered.
+### On-demand mode with simple non-buffered object.
 ```python
 import pytchat
-chat = pytchat.create(video_id="Zvp1pJpie4I")
+chat = pytchat.create(video_id="uIx8l2xlYVY")
 while chat.is_alive():
-    chatdata = chat.get()
-    for c in chatdata.sync_items():
+    for c in chat.get().sync_items():
         print(f"{c.datetime} [{c.author.name}]- {c.message}")
 ```
 
-### callback mode with bufferd.
-```python
-from pytchat import LiveChat
-import time
-
-def main():
-  chat = LiveChat(video_id = "Zvp1pJpie4I", callback = disp)
-  while livechat.is_alive():
-    #other background operation.
-    time.sleep(1)
-  chat.terminate()
-
-#callback function (automatically called)
-def disp(chatdata):
-    for c in chatdata.sync_items():
-        print(f"{c.datetime} [{c.author.name}]- {c.message}")
-
-if __name__ == '__main__':
-  main()
-
-```
-
-### asyncio context:
-```python
-from pytchat import LiveChatAsync
-from concurrent.futures import CancelledError
-import asyncio
-
-async def main():
-  livechat = LiveChatAsync("Zvp1pJpie4I", callback = func)
-  while livechat.is_alive():
-    #other background operation.
-    await asyncio.sleep(3)
-
-#callback function is automatically called.
-async def func(chatdata):
-  async for c in chatdata.async_items():
-    print(f"{c.datetime} [{c.author.name}]-{c.message} {c.amountString}")
-
-if __name__ == '__main__':
-  try:
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
-  except CancelledError:
-    pass
-```
-
-### youtube api compatible processor:
-```python
-from pytchat import LiveChat, CompatibleProcessor
-import time
-
-chat = LiveChat("Zvp1pJpie4I", 
-  processor = CompatibleProcessor() )
-
-while chat.is_alive():
-  try:
-    data = chat.get()
-    polling = data['pollingIntervalMillis']/1000
-    for c in data['items']:
-      if c.get('snippet'):
-        print(f"[{c['authorDetails']['displayName']}]"
-              f"-{c['snippet']['displayMessage']}")
-        time.sleep(polling/len(data['items']))
-  except KeyboardInterrupt:
-    chat.terminate()
-```
-### replay: 
-If specified video is not live,
-automatically try to fetch archived chat data.
-
+### Output JSON format (feature of [DefaultProcessor](DefaultProcessor))
 ```python
 import pytchat
-chat = pytchat.get("ojes5ULOqhc", seektime = 60*30)
+import time
+
+chat = pytchat.create(video_id="uIx8l2xlYVY")
 while chat.is_alive():
-    chatdata = chat.get()
-    for c in chatdata.sync_items():
-        print(f"{c.datetime} [{c.author.name}]- {c.message}")
+    print(chat.get().json())
+    time.sleep(5)
+    '''
+    # Each chat item can also be output in JSON format.
+    for c in chat.get().sync_items():
+        print(c.json())
+    '''     
 ```
-### Extract archived chat data as [HTML](https://github.com/taizan-hokuto/pytchat/wiki/HTMLArchiver) or [tab separated values](https://github.com/taizan-hokuto/pytchat/wiki/TSVArchiver).
+
+
+### other
+#### Fetch chat with buffer.
+[LiveChat](https://github.com/taizan-hokuto/pytchat/wiki/LiveChat)
+
+#### Asyncio Context
+[LiveChatAsync](https://github.com/taizan-hokuto/pytchat/wiki/LiveChatAsync)
+
+#### [YT API compatible chat processor]https://github.com/taizan-hokuto/pytchat/wiki/CompatibleProcessor)
+
+### [Extract archived chat data](https://github.com/taizan-hokuto/pytchat/wiki/Extractor)
 ```python
 from pytchat import HTMLArchiver, Extractor
 
