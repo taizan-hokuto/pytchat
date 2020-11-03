@@ -47,7 +47,7 @@ while chat.is_alive():
         print(f"{c.datetime} [{c.author.name}]- {c.message}")
 ```
 
-### Output JSON format (feature of [DefaultProcessor](DefaultProcessor))
+### Output JSON format (feature of [DefaultProcessor](https://github.com/taizan-hokuto/pytchat/wiki/DefaultProcessor))
 ```python
 import pytchat
 import time
@@ -71,7 +71,7 @@ while chat.is_alive():
 #### Asyncio Context
 [LiveChatAsync](https://github.com/taizan-hokuto/pytchat/wiki/LiveChatAsync)
 
-#### [YT API compatible chat processor]https://github.com/taizan-hokuto/pytchat/wiki/CompatibleProcessor)
+#### [YT API compatible chat processor](https://github.com/taizan-hokuto/pytchat/wiki/CompatibleProcessor)
 
 ### [Extract archived chat data](https://github.com/taizan-hokuto/pytchat/wiki/Extractor)
 ```python
