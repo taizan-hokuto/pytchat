@@ -21,54 +21,53 @@ MAX_RETRY = 10
 
 
 class LiveChat:
-    ''' スレッドプールを利用してYouTubeのライブ配信のチャットデータを取得する
+    '''
+    LiveChat object fetches chat data and stores them
+    in a buffer with ThreadpoolExecutor.
 
     Parameter
     ---------
     video_id : str
-        動画ID
 
     seektime : int
-        （ライブチャット取得時は無視）
-        取得開始するアーカイブ済みチャットの経過時間(秒）
-        マイナス値を指定した場合は、配信開始前のチャットも取得する。
+        start position of fetching chat (seconds).
+        This option is valid for archived chat only.
+        If negative value, chat data posted before the start of the broadcast
+        will be retrieved as well.
 
     processor : ChatProcessor
-        チャットデータを加工するオブジェクト
 
-    buffer : Buffer(maxsize:20[default])
-        チャットデータchat_componentを格納するバッファ。
-        maxsize : 格納できるchat_componentの個数
-        default値20個。1個で約5~10秒分。
+    buffer : Buffer
+        buffer of chat data fetched background.
 
     interruptable : bool
-        Ctrl+Cによる処理中断を行うかどうか。
+        Allows keyboard interrupts.
+        Set this parameter to False if your own threading program causes
+        the problem.
 
     callback : func
-        _listen()関数から一定間隔で自動的に呼びだす関数。
+        function called periodically from _listen().
 
     done_callback : func
-        listener終了時に呼び出すコールバック。
+        function called when listener ends.
 
     direct_mode : bool
-        Trueの場合、bufferを使わずにcallbackを呼ぶ。
-        Trueの場合、callbackの設定が必須
-        (設定していない場合IllegalFunctionCall例外を発生させる）
+        If True, invoke specified callback function without using buffer.
+        callback is required. If not, IllegalFunctionCall will be raised.
 
     force_replay : bool
-        Trueの場合、ライブチャットが取得できる場合であっても
-        強制的にアーカイブ済みチャットを取得する。
+        force to fetch archived chat data, even if specified video is live.
 
     topchat_only : bool
-        Trueの場合、上位チャットのみ取得する。
+        If True, get only top chat.
 
     Attributes
     ---------
     _executor : ThreadPoolExecutor
-        チャットデータ取得ループ（_listen）用のスレッド
+        This is used for _listen() loop.
 
     _is_alive : bool
-        チャット取得を停止するためのフラグ
+        Flag to stop getting chat.
     '''
 
     _setup_finished = False
@@ -112,24 +111,24 @@ class LiveChat:
         self._setup()
 
     def _setup(self):
-        # direct modeがTrueでcallback未設定の場合例外発生。
+        # An exception is raised when direct mode is true and no callback is set.
         if self._direct_mode:
             if self._callback is None:
                 raise exceptions.IllegalFunctionCall(
                     "When direct_mode=True, callback parameter is required.")
         else:
-            # direct modeがFalseでbufferが未設定ならばデフォルトのbufferを作成
+            # Create a default buffer if `direct_mode` is False and buffer is not set.
             if self._buffer is None:
                 self._buffer = Buffer(maxsize=20)
-                # callbackが指定されている場合はcallbackを呼ぶループタスクを作成
+                # Create a loop task to call callback if the `callback` param is specified.
             if self._callback is None:
                 pass
             else:
-                # callbackを呼ぶループタスクの開始
+                # Start a loop task calling callback function.
                 self._executor.submit(self._callback_loop, self._callback)
-        # _listenループタスクの開始
+        # Start a loop task for _listen()
         self.listen_task = self._executor.submit(self._startlisten)
-        # add_done_callbackの登録
+        # Register add_done_callback
         if self._done_callback is None:
             self.listen_task.add_done_callback(self._finish)
         else:
@@ -184,7 +183,7 @@ class LiveChat:
             self._logger.error(f"{traceback.format_exc(limit=-1)}")
             raise
 
-        self._logger.debug(f"[{self._video_id}]finished fetching chat.")
+        self._logger.debug(f"[{self._video_id}] finished fetching chat.")
         raise exceptions.ChatDataFinished
 
     def _check_pause(self, continuation):
@@ -236,30 +235,30 @@ class LiveChat:
         '''
         continuation = urllib.parse.quote(continuation)
         livechat_json = None
-        status_code = 0
         url = f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1"
         for _ in range(MAX_RETRY + 1):
             with client:
                 try:
                     livechat_json = client.get(url, headers=headers).json()
                     break
-                except json.JSONDecodeError:
-                    time.sleep(1)
+                except (json.JSONDecodeError, httpx.HTTPError):
+                    time.sleep(2)
                     continue
         else:
             self._logger.error(f"[{self._video_id}]"
-                               f"Exceeded retry count. status_code={status_code}")
+                               f"Exceeded retry count.")
             raise exceptions.RetryExceedMaxCount()
         return livechat_json
 
     def _callback_loop(self, callback):
-        """ コンストラクタでcallbackを指定している場合、バックグラウンドで
-        callbackに指定された関数に一定間隔でチャットデータを投げる。
+        """ If a callback is specified in the constructor,
+        it throws chat data at regular intervals to the
+        function specified in the callback in the backgroun
 
         Parameter
         ---------
         callback : func
-            加工済みのチャットデータを渡す先の関数。
+            function to which the processed chat data is passed.
         """
         while self.is_alive():
             items = self._buffer.get()
@@ -270,11 +269,13 @@ class LiveChat:
                 self._callback(processed_chat)
 
     def get(self):
-        """ bufferからデータを取り出し、processorに投げ、
-        加工済みのチャットデータを返す。
+        """
+        Retrieves data from the buffer,
+        throws it to the processor,
+        and returns the processed chat data.
 
         Returns
-             : Processorによって加工されたチャットデータ
+             : Chat data processed by the Processor
         """
         if self._callback is None:
             if self.is_alive():
@@ -283,7 +284,7 @@ class LiveChat:
             else:
                 return []
         raise exceptions.IllegalFunctionCall(
-            "既にcallbackを登録済みのため、get()は実行できません。")
+            "Callback parameter is already set, so get() cannot be performed.")
 
     def is_replay(self):
         return self._is_replay
@@ -304,13 +305,16 @@ class LiveChat:
         return self._is_alive
 
     def _finish(self, sender):
-        '''Listener終了時のコールバック'''
+        '''Called when the _listen() task finished.'''
         try:
             self._task_finished()
         except CancelledError:
-            self._logger.debug(f'[{self._video_id}]cancelled:{sender}')
+            self._logger.debug(f'[{self._video_id}] cancelled:{sender}')
 
     def terminate(self):
+        '''
+        Terminate fetching chats.
+        '''
         if self._pauser.empty():
             self._pauser.put_nowait(None)
         self._is_alive = False
@@ -319,9 +323,6 @@ class LiveChat:
         self.processor.finalize()
 
     def _task_finished(self):
-        '''
-        Listenerを終了する。
-        '''
         if self.is_alive():
             self.terminate()
         try:
@@ -330,7 +331,7 @@ class LiveChat:
             self.exception = e
             if not isinstance(e, exceptions.ChatParseException):
                 self._logger.error(f'Internal exception - {type(e)}{str(e)}')
-        self._logger.info(f'[{self._video_id}]終了しました')
+        self._logger.info(f'[{self._video_id}] finished.')
 
     def raise_for_status(self):
         if self.exception is not None:

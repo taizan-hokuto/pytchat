@@ -2,14 +2,17 @@ from .base import BaseRenderer
 
 
 class LiveChatMembershipItemRenderer(BaseRenderer):
-    def __init__(self, item):
-        super().__init__(item, "newSponsor")
+    def settype(self):
+        self.chat.type = "newSponsor"
 
     def get_authordetails(self):
         super().get_authordetails()
-        self.author.isChatSponsor = True
+        self.chat.author.isChatSponsor = True
 
-    def get_message(self, renderer):
-        message = ''.join([mes.get("text", "")
-                           for mes in renderer["headerSubtext"]["runs"]])
+    def get_message(self, item):
+        try:
+            message = ''.join([mes.get("text", "")
+                           for mes in item["headerSubtext"]["runs"]])
+        except KeyError:
+            return "Welcome New Member!", ["Welcome New Member!"]
         return message, [message]

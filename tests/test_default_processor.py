@@ -17,7 +17,6 @@ def test_textmessage(mocker):
     }
 
     ret = processor.process([data]).items[0]
-    assert ret.chattype == "textMessage"
     assert ret.id == "dummy_id"
     assert ret.message == "dummy_message"
     assert ret.timestamp == 1570678496000
@@ -47,7 +46,6 @@ def test_textmessage_replay_member(mocker):
     }
     
     ret = processor.process([data]).items[0]
-    assert ret.chattype == "textMessage"
     assert ret.type == "textMessage"
     assert ret.id == "dummy_id"
     assert ret.message == "dummy_message"
@@ -80,8 +78,6 @@ def test_superchat(mocker):
     }
     
     ret = processor.process([data]).items[0]
-    print(json.dumps(chatdata, ensure_ascii=False))
-    assert ret.chattype == "superChat"
     assert ret.type == "superChat"
     assert ret.id == "dummy_id"
     assert ret.message == "dummy_message"
@@ -124,8 +120,6 @@ def test_supersticker(mocker):
     }
    
     ret = processor.process([data]).items[0]
-    print(json.dumps(chatdata, ensure_ascii=False))
-    assert ret.chattype == "superSticker"
     assert ret.type == "superSticker"
     assert ret.id == "dummy_id"
     assert ret.message == ""
@@ -167,8 +161,6 @@ def test_sponsor(mocker):
     }
     
     ret = processor.process([data]).items[0]
-    print(json.dumps(chatdata, ensure_ascii=False))
-    assert ret.chattype == "newSponsor"
     assert ret.type == "newSponsor"
     assert ret.id == "dummy_id"
     assert ret.message == "新規メンバー"
@@ -202,8 +194,6 @@ def test_sponsor_legacy(mocker):
     }
     
     ret = processor.process([data]).items[0]
-    print(json.dumps(chatdata, ensure_ascii=False))
-    assert ret.chattype == "newSponsor"
     assert ret.type == "newSponsor"
     assert ret.id == "dummy_id"
     assert ret.message == "新規メンバー / ようこそ、author_name！"

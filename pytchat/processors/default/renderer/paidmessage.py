@@ -9,23 +9,23 @@ class Colors:
 
 
 class LiveChatPaidMessageRenderer(BaseRenderer):
-    def __init__(self, item):
-        super().__init__(item, "superChat")
+    def settype(self):
+        self.chat.type = "superChat"
 
     def get_snippet(self):
         super().get_snippet()
         amountDisplayString, symbol, amount = (
-            self.get_amountdata(self.renderer)
+            self.get_amountdata(self.item)
         )
-        self.amountValue = amount
-        self.amountString = amountDisplayString
-        self.currency = currency.symbols[symbol]["fxtext"] if currency.symbols.get(
+        self.chat.amountValue = amount
+        self.chat.amountString = amountDisplayString
+        self.chat.currency = currency.symbols[symbol]["fxtext"] if currency.symbols.get(
             symbol) else symbol
-        self.bgColor = self.renderer.get("bodyBackgroundColor", 0)
-        self.colors = self.get_colors()
+        self.chat.bgColor = self.item.get("bodyBackgroundColor", 0)
+        self.chat.colors = self.get_colors()
 
-    def get_amountdata(self, renderer):
-        amountDisplayString = renderer["purchaseAmountText"]["simpleText"]
+    def get_amountdata(self, item):
+        amountDisplayString = item["purchaseAmountText"]["simpleText"]
         m = superchat_regex.search(amountDisplayString)
         if m:
             symbol = m.group(1)
@@ -36,11 +36,12 @@ class LiveChatPaidMessageRenderer(BaseRenderer):
         return amountDisplayString, symbol, amount
 
     def get_colors(self):
+        item = self.item
         colors = Colors()
-        colors.headerBackgroundColor = self.renderer.get("headerBackgroundColor", 0)
-        colors.headerTextColor = self.renderer.get("headerTextColor", 0)
-        colors.bodyBackgroundColor = self.renderer.get("bodyBackgroundColor", 0)
-        colors.bodyTextColor = self.renderer.get("bodyTextColor", 0)
-        colors.timestampColor = self.renderer.get("timestampColor", 0)
-        colors.authorNameTextColor = self.renderer.get("authorNameTextColor", 0)
+        colors.headerBackgroundColor = item.get("headerBackgroundColor", 0)
+        colors.headerTextColor = item.get("headerTextColor", 0)
+        colors.bodyBackgroundColor = item.get("bodyBackgroundColor", 0)
+        colors.bodyTextColor = item.get("bodyTextColor", 0)
+        colors.timestampColor = item.get("timestampColor", 0)
+        colors.authorNameTextColor = item.get("authorNameTextColor", 0)
         return colors

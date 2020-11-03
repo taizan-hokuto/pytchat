@@ -76,6 +76,6 @@ class PatternUnmatchError(VideoInfoParseError):
     '''
     Thrown when failed to parse video info with unmatched pattern.
     '''
-    def __init__(self, doc):
+    def __init__(self, doc=''):
         self.msg = "PatternUnmatchError"
         self.doc = doc

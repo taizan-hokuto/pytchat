@@ -2,14 +2,14 @@ from .base import BaseRenderer
 
 
 class LiveChatLegacyPaidMessageRenderer(BaseRenderer):
-    def __init__(self, item):
-        super().__init__(item, "newSponsor")
+    def settype(self):
+        self.chat.type = "newSponsor"
 
     def get_authordetails(self):
         super().get_authordetails()
-        self.author.isChatSponsor = True
+        self.chat.author.isChatSponsor = True
 
-    def get_message(self, renderer):
-        message = (renderer["eventText"]["runs"][0]["text"]
-                   ) + ' / ' + (renderer["detailText"]["simpleText"])
+    def get_message(self, item):
+        message = (item["eventText"]["runs"][0]["text"]
+                   ) + ' / ' + (item["detailText"]["simpleText"])
         return message, [message]

@@ -17,12 +17,12 @@ def extract_video_id(url_or_id: str) -> str:
         return url_or_id
     match = re.search(PATTERN, url_or_id)
     if match is None:
-        raise InvalidVideoIdException(url_or_id)
+        raise InvalidVideoIdException(f"Invalid video id: {url_or_id}")
     try:
         ret = match.group(4)
     except IndexError:
-        raise InvalidVideoIdException(url_or_id)
+        raise InvalidVideoIdException(f"Invalid video id: {url_or_id}")
 
     if ret is None or len(ret) != YT_VIDEO_ID_LENGTH:
-        raise InvalidVideoIdException(url_or_id)
+        raise InvalidVideoIdException(f"Invalid video id: {url_or_id}")
     return ret

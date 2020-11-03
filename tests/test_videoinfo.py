@@ -1,6 +1,6 @@
 from json.decoder import JSONDecodeError
 from pytchat.tool.videoinfo import VideoInfo
-from pytchat.exceptions import InvalidVideoIdException, PatternUnmatchError
+from pytchat.exceptions import InvalidVideoIdException
 
 
 def _open_file(path):
@@ -13,7 +13,7 @@ def _set_test_data(filepath, mocker):
     response_mock = mocker.Mock()
     response_mock.status_code = 200
     response_mock.text = _text
-    mocker.patch('httpx.get').return_value = response_mock
+    mocker.patch('httpx.Client.get').return_value = response_mock
 
 
 def test_archived_page(mocker):
@@ -85,7 +85,7 @@ def test_pattern_unmatch(mocker):
     try:
         _ = VideoInfo('__test_id__')
         assert False
-    except PatternUnmatchError:
+    except JSONDecodeError:
         assert True
 
 
