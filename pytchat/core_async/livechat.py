@@ -111,8 +111,7 @@ class LiveChatAsync:
             self._set_exception_handler(exception_handler)
         if interruptable:
             signal.signal(signal.SIGINT,
-                (lambda a, b: asyncio.create_task(
-                 LiveChatAsync.shutdown(None, signal.SIGINT, b))))
+                (lambda a, b: self._keyboard_interrupt()))
         self._setup()
 
     def _setup(self):
@@ -325,7 +324,11 @@ class LiveChatAsync:
         self._is_alive = False
         self._buffer.put_nowait({})
         self.processor.finalize()
-        
+    
+    def _keyboard_interrupt(self):
+        self.exception = exceptions.ChatDataFinished()
+        self.terminate()
+
     def _task_finished(self):
         '''
         Terminate fetching chats.
@@ -348,15 +351,3 @@ class LiveChatAsync:
     def _set_exception_handler(cls, handler):
         loop = asyncio.get_event_loop()
         loop.set_exception_handler(handler)
-
-    @classmethod
-    async def shutdown(cls, event, sig=None, handler=None):
-        cls._logger.debug("shutdown...")
-        tasks = [t for t in asyncio.all_tasks() if t is not
-                 asyncio.current_task()]
-        [task.cancel() for task in tasks]
-
-        cls._logger.debug("complete remaining tasks...")
-        await asyncio.gather(*tasks, return_exceptions=True)
-        loop = asyncio.get_event_loop()
-        loop.stop()
