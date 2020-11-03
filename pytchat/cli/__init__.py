@@ -94,10 +94,13 @@ class Runner:
                 path = util.checkpath(separated_path + video_id + '.html')
                 try:
                     info = VideoInfo(video_id)
-                except Exception as e:
+                except (PatternUnmatchError, JSONDecodeError) as e:
                     print("Cannot parse video information.:{} {}".format(video_id, type(e)))
                     if Arguments().save_error_data:
-                        util.save(str(e), "ERR", ".dat")
+                        util.save(str(e.doc), "ERR", ".dat")
+                    continue
+                except Exception as e:
+                    print("Cannot parse video information.:{} {}".format(video_id, type(e)))
                     continue
 
                 print(f"\n"
