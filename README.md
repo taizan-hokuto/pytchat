@@ -27,7 +27,9 @@ pip install pytchat
 One-liner command.
 
 Save chat data to html with embedded custom emojis.
+
 Show chat stream (--echo option).
+
 ```bash
 $ pytchat -v https://www.youtube.com/watch?v=uIx8l2xlYVY -o "c:/temp/"
 # options:
@@ -46,8 +48,9 @@ while chat.is_alive():
     for c in chat.get().sync_items():
         print(f"{c.datetime} [{c.author.name}]- {c.message}")
 ```
+see [wiki](https://github.com/taizan-hokuto/pytchat/wiki/PytchatCore)
 
-### Output JSON format (feature of [DefaultProcessor](https://github.com/taizan-hokuto/pytchat/wiki/DefaultProcessor))
+### Output JSON format (feature of [DefaultProcessor](https://github.com/taizan-hokuto/pytchat/wiki/DefaultProcessor)
 ```python
 import pytchat
 import time
@@ -68,7 +71,7 @@ while chat.is_alive():
 #### Fetch chat with buffer.
 [LiveChat](https://github.com/taizan-hokuto/pytchat/wiki/LiveChat)
 
-#### Asyncio Context
+#### Use with asyncio.
 [LiveChatAsync](https://github.com/taizan-hokuto/pytchat/wiki/LiveChatAsync)
 
 #### [YT API compatible chat processor](https://github.com/taizan-hokuto/pytchat/wiki/CompatibleProcessor)
