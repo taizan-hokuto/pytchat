@@ -1,5 +1,5 @@
 '''
-This code for this progress bar is based on
+This code is based on
 vladignatyev/progress.py
 https://gist.github.com/vladignatyev/06860ec2040cb497f0f3
 (MIT License)

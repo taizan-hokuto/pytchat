@@ -2,15 +2,14 @@ import httpx
 import json
 import re
 import time
-from httpx import ConnectError, NetworkError, TimeoutException
 from .. import config
 from ..exceptions import InvalidVideoIdException, PatternUnmatchError, UnknownConnectionError
 from ..util.extract_video_id import extract_video_id
 
 
 headers = config.headers
-                         
 pattern = re.compile(r"['\"]PLAYER_CONFIG['\"]:\s*({.*})")
+pattern2 = re.compile(r"yt\.setConfig\((\{[\s\S]*?\})\);")
 
 item_channel_id = [
     "videoDetails",
@@ -32,6 +31,10 @@ item_response = [
     "embedded_player_response"
 ]
 
+item_response2 = [
+    "PLAYER_VARS",
+    "embedded_player_response"
+]
 item_author_image = [
     "videoDetails",
     "embeddedPlayerOverlayVideoDetailsRenderer",
@@ -83,6 +86,8 @@ class VideoInfo:
 
     def __init__(self, video_id):
         self.video_id = extract_video_id(video_id)
+        self.client = httpx.Client(http2=True)
+        self.new_pattern_text = False
         err = None
         for _ in range(3):
             try:
@@ -90,7 +95,6 @@ class VideoInfo:
                 self._parse(text)
                 break
             except (InvalidVideoIdException, UnknownConnectionError) as e:
-                print(str(e))
                 raise e
             except Exception as e:
                 err = e
@@ -104,10 +108,10 @@ class VideoInfo:
         err = None
         for _ in range(3):
             try:
-                resp = httpx.get(url, headers=headers)
+                resp = self.client.get(url, headers=headers)
                 resp.raise_for_status()
                 break
-            except (ConnectError, NetworkError, TimeoutException) as e:
+            except httpx.HTTPError as e:
                 err = e
                 time.sleep(3)
         else:
@@ -118,12 +122,25 @@ class VideoInfo:
     def _parse(self, text):
         result = re.search(pattern, text)
         if result is None:
-            raise PatternUnmatchError(doc=text)
+            result = re.search(pattern2, text)
+            if result is None:
+                raise PatternUnmatchError(doc=text)
+            else:
+                self.new_pattern_text = True
         decoder = json.JSONDecoder()
-        res = decoder.raw_decode(result.group(1)[:-1])[0]
-        response = self._get_item(res, item_response)
+        if self.new_pattern_text:
+            res = decoder.raw_decode(result.group(1))[0]
+        else:
+            res = decoder.raw_decode(result.group(1)[:-1])[0]
+        if self.new_pattern_text:
+            response = self._get_item(res, item_response2)
+        else:
+            response = self._get_item(res, item_response)
         if response is None:
-            self._check_video_is_private(res.get("args"))
+            if self.new_pattern_text:
+                self._check_video_is_private(res.get("PLAYER_VARS"))
+            else:
+                self._check_video_is_private(res.get("args"))
         self._renderer = self._get_item(json.loads(response), item_renderer)
         if self._renderer is None:
             raise InvalidVideoIdException(

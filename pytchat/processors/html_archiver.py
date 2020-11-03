@@ -3,7 +3,7 @@ import os
 import re
 import time
 from base64 import standard_b64encode
-from httpx import NetworkError, ReadTimeout
+from concurrent.futures import ThreadPoolExecutor
 from .chat_processor import ChatProcessor
 from .default.processor import DefaultProcessor
 from ..exceptions import UnknownConnectionError
@@ -48,12 +48,14 @@ class HTMLArchiver(ChatProcessor):
     '''
     def __init__(self, save_path, callback=None):
         super().__init__()
+        self.client = httpx.Client(http2=True)
         self.save_path = self._checkpath(save_path)
         self.processor = DefaultProcessor()
         self.emoji_table = {}  # tuble for custom emojis. key: emoji_id, value: base64 encoded image binary.
         self.header = [HEADER_HTML]
         self.body = ['<body>\n', '<table class="css">\n', self._parse_table_header(fmt_headers)]
         self.callback = callback
+        self.executor = ThreadPoolExecutor(max_workers=10)
 
     def _checkpath(self, filepath):
         splitter = os.path.splitext(os.path.basename(filepath))
@@ -80,7 +82,7 @@ class HTMLArchiver(ChatProcessor):
             save_path : str :
                 Actual save path of file.
             total_lines : int :
-                count of total lines written to the file.
+                Count of total lines written to the file.
         """
         if chat_components is None or len(chat_components) == 0:
             return
@@ -118,9 +120,9 @@ class HTMLArchiver(ChatProcessor):
         err = None
         for _ in range(5):
             try:
-                resp = httpx.get(url, timeout=30)
+                resp = self.client.get(url, timeout=30)
                 break
-            except (NetworkError, ReadTimeout) as e:
+            except httpx.HTTPError as e:
                 print("Network Error. retrying...")
                 err = e
                 time.sleep(3)
@@ -132,7 +134,7 @@ class HTMLArchiver(ChatProcessor):
     def _set_emoji_table(self, item: dict):
         emoji_id = item['id']
         if emoji_id not in self.emoji_table:
-            self.emoji_table.setdefault(emoji_id, self._encode_img(item['url']))
+            self.emoji_table.setdefault(emoji_id, self.executor.submit(self._encode_img, item['url']))
         return emoji_id
 
     def _stylecode(self, name, code, width, height):
@@ -143,11 +145,12 @@ class HTMLArchiver(ChatProcessor):
     def _create_styles(self):
         return '\n'.join(('<style type="text/css">',
                           TABLE_CSS,
-                          '\n'.join(self._stylecode(key, self.emoji_table[key], 24, 24)
+                          '\n'.join(self._stylecode(key, self.emoji_table[key].result(), 24, 24)
                                 for key in self.emoji_table.keys()),
                           '</style>\n'))
     
     def finalize(self):
+        self.executor.shutdown()
         self.header.extend([self._create_styles(), '</head>\n'])
         self.body.extend(['</table>\n</body>\n</html>'])
         with open(self.save_path, mode='a', encoding='utf-8') as f:

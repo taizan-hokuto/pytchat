@@ -36,3 +36,7 @@ class Combinator(ChatProcessor):
         '''
         return tuple(processor.process(chat_components)
                      for processor in self.processors)
+
+    def finalize(self, *args, **kwargs):
+        [processor.finalize(*args, **kwargs)
+                     for processor in self.processors]
