@@ -1,6 +1,6 @@
 from json.decoder import JSONDecodeError
 from pytchat.tool.videoinfo import VideoInfo
-from pytchat.exceptions import InvalidVideoIdException, PatternUnmatchError
+from pytchat.exceptions import InvalidVideoIdException
 
 
 def _open_file(path):
