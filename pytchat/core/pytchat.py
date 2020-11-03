@@ -43,7 +43,7 @@ class PytchatCore:
         If True, get only top chat.
 
     hold_exception : bool [default:True]
-        If True, when exceptions occur, the exception is holded internally,
+        If True, when exceptions occur, the exception is held internally,
         and can be raised by raise_for_status().
 
     Attributes
