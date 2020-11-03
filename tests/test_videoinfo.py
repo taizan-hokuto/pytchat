@@ -85,7 +85,7 @@ def test_pattern_unmatch(mocker):
     try:
         _ = VideoInfo('__test_id__')
         assert False
-    except PatternUnmatchError:
+    except JSONDecodeError:
         assert True
 
 
