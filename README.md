@@ -24,11 +24,11 @@ pip install pytchat
 
 ### CLI
 
-One-liner command.
++ One-liner command.
 
-Save chat data to html with embedded custom emojis.
++ Save chat data to html with embedded custom emojis.
 
-Show chat stream (--echo option).
++ Show chat stream (--echo option).
 
 ```bash
 $ pytchat -v https://www.youtube.com/watch?v=uIx8l2xlYVY -o "c:/temp/"
@@ -40,7 +40,7 @@ $ pytchat -v https://www.youtube.com/watch?v=uIx8l2xlYVY -o "c:/temp/"
 ```
 
 
-### On-demand mode with simple non-buffered object.
+### Fetch chat data (see [wiki](https://github.com/taizan-hokuto/pytchat/wiki/PytchatCore))
 ```python
 import pytchat
 chat = pytchat.create(video_id="uIx8l2xlYVY")
@@ -48,9 +48,9 @@ while chat.is_alive():
     for c in chat.get().sync_items():
         print(f"{c.datetime} [{c.author.name}]- {c.message}")
 ```
-see [wiki](https://github.com/taizan-hokuto/pytchat/wiki/PytchatCore)
 
-### Output JSON format (feature of [DefaultProcessor](https://github.com/taizan-hokuto/pytchat/wiki/DefaultProcessor)
+
+### Output JSON format string (feature of [DefaultProcessor](https://github.com/taizan-hokuto/pytchat/wiki/DefaultProcessor))
 ```python
 import pytchat
 import time
@@ -68,28 +68,14 @@ while chat.is_alive():
 
 
 ### other
-#### Fetch chat with buffer.
-[LiveChat](https://github.com/taizan-hokuto/pytchat/wiki/LiveChat)
++ Fetch chat with a buffer ([LiveChat](https://github.com/taizan-hokuto/pytchat/wiki/LiveChat))
 
-#### Use with asyncio.
-[LiveChatAsync](https://github.com/taizan-hokuto/pytchat/wiki/LiveChatAsync)
++ Use with asyncio ([LiveChatAsync](https://github.com/taizan-hokuto/pytchat/wiki/LiveChatAsync))
 
-#### [YT API compatible chat processor](https://github.com/taizan-hokuto/pytchat/wiki/CompatibleProcessor)
++ YT API compatible chat processor ([CompatibleProcessor](https://github.com/taizan-hokuto/pytchat/wiki/CompatibleProcessor))
 
-### [Extract archived chat data](https://github.com/taizan-hokuto/pytchat/wiki/Extractor)
-```python
-from pytchat import HTMLArchiver, Extractor
++ Extract archived chat data ([Extractor](https://github.com/taizan-hokuto/pytchat/wiki/Extractor))
 
-video_id = "*******"
-ex = Extractor(
-    video_id,
-    div=10,
-    processor=HTMLArchiver("c:/test.html")
-)
-
-ex.extract()
-print("finished.")
-```
 
 ## Structure of Default Processor
 Each item can be got with `sync_items()` function.
