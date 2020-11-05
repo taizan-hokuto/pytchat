@@ -31,7 +31,7 @@ pip install pytchat
 + Show chat stream (--echo option).
 
 ```bash
-$ pytchat -v https://www.youtube.com/watch?v=uIx8l2xlYVY -o "c:/temp/"
+$ pytchat -v uIx8l2xlYVY -o "c:/temp/"
 # options:
 #  -v : Video ID or URL that includes ID
 #  -o : output directory (default path: './')
@@ -61,7 +61,7 @@ while chat.is_alive():
     time.sleep(5)
     '''
     # Each chat item can also be output in JSON format.
-    for c in chat.get().sync_items():
+    for c in chat.get().items:
         print(c.json())
     '''     
 ```
