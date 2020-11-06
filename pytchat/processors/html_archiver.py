@@ -132,7 +132,7 @@ class HTMLArchiver(ChatProcessor):
         return standard_b64encode(resp.content).decode()
 
     def _set_emoji_table(self, item: dict):
-        emoji_id = item['id']
+        emoji_id = ''.join(('Z', item['id'])) if 48 <= ord(item['id'][0]) <= 57 else item['id']
         if emoji_id not in self.emoji_table:
             self.emoji_table.setdefault(emoji_id, self.executor.submit(self._encode_img, item['url']))
         return emoji_id
