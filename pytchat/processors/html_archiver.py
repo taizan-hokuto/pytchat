@@ -51,7 +51,7 @@ class HTMLArchiver(ChatProcessor):
         self.client = httpx.Client(http2=True)
         self.save_path = self._checkpath(save_path)
         self.processor = DefaultProcessor()
-        self.emoji_table = {}  # tuble for custom emojis. key: emoji_id, value: base64 encoded image binary.
+        self.emoji_table = {}  # dict for custom emojis. key: emoji_id, value: base64 encoded image binary.
         self.header = [HEADER_HTML]
         self.body = ['<body>\n', '<table class="css">\n', self._parse_table_header(fmt_headers)]
         self.callback = callback
@@ -123,7 +123,6 @@ class HTMLArchiver(ChatProcessor):
                 resp = self.client.get(url, timeout=30)
                 break
             except httpx.HTTPError as e:
-                print("Network Error. retrying...")
                 err = e
                 time.sleep(3)
         else:
