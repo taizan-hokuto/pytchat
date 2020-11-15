@@ -16,8 +16,6 @@ from .. util.extract_video_id import extract_video_id
 
 
 class CLIExtractor:
-    # def __init__(self, arguments):
-    #     self.arguments = arguments
 
     def run(self) -> None:
         ex = None
