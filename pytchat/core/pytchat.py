@@ -118,12 +118,9 @@ class PytchatCore:
         except exceptions.ChatParseException as e:
             self._logger.debug(f"[{self._video_id}]{str(e)}")
             self._raise_exception(e)
-        except (TypeError, json.JSONDecodeError) as e:
+        except Exception as e:
             self._logger.error(f"{traceback.format_exc(limit=-1)}")
             self._raise_exception(e)
-
-        self._logger.debug(f"[{self._video_id}]finished fetching chat.")
-        self._raise_exception(exceptions.ChatDataFinished)
 
     def _get_contents(self, continuation, client, headers):
         '''Get 'continuationContents' from livechat json.
@@ -201,7 +198,7 @@ class PytchatCore:
             raise self._exception_holder
 
     def _raise_exception(self, exception: Exception = None):
-        self._is_alive = False
+        self.terminate()
         if self._hold_exception is False:
             raise exception
         self._exception_holder = exception
