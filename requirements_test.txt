@@ -1,4 +1,2 @@
-mock
-mocker
-pytest
-pytest_httpx
+pytest-mock==3.3.1
+pytest-httpx==0.10.0
