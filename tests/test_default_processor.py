@@ -1,6 +1,15 @@
 import json
+from datetime import datetime
 from pytchat.parser.live import Parser
 from pytchat.processors.default.processor import DefaultProcessor
+
+
+TEST_TIMETSTAMP = 1570678496000000
+
+
+def get_local_datetime(timestamp):
+    dt = datetime.fromtimestamp(timestamp / 1000000)
+    return dt.strftime('%Y-%m-%d %H:%M:%S')
 
 
 def test_textmessage(mocker):
@@ -20,7 +29,7 @@ def test_textmessage(mocker):
     assert ret.id == "dummy_id"
     assert ret.message == "dummy_message"
     assert ret.timestamp == 1570678496000
-    assert ret.datetime == "2019-10-10 12:34:56"
+    assert ret.datetime == get_local_datetime(TEST_TIMETSTAMP)
     assert ret.author.name == "author_name"
     assert ret.author.channelId == "author_channel_id"
     assert ret.author.channelUrl == "http://www.youtube.com/channel/author_channel_id"
@@ -51,7 +60,7 @@ def test_textmessage_replay_member(mocker):
     assert ret.message == "dummy_message"
     assert ret.messageEx == ["dummy_message"]
     assert ret.timestamp == 1570678496000
-    assert ret.datetime == "2019-10-10 12:34:56"
+    assert ret.datetime == get_local_datetime(TEST_TIMETSTAMP)
     assert ret.elapsedTime == "1:23:45"
     assert ret.author.name == "author_name"
     assert ret.author.channelId == "author_channel_id"
@@ -83,7 +92,7 @@ def test_superchat(mocker):
     assert ret.message == "dummy_message"
     assert ret.messageEx == ["dummy_message"]
     assert ret.timestamp == 1570678496000
-    assert ret.datetime == "2019-10-10 12:34:56"
+    assert ret.datetime == get_local_datetime(TEST_TIMETSTAMP)
     assert ret.elapsedTime == ""
     assert ret.amountValue == 800
     assert ret.amountString == "￥800"
@@ -125,7 +134,7 @@ def test_supersticker(mocker):
     assert ret.message == ""
     assert ret.messageEx == []
     assert ret.timestamp == 1570678496000
-    assert ret.datetime == "2019-10-10 12:34:56"
+    assert ret.datetime == get_local_datetime(TEST_TIMETSTAMP)
     assert ret.elapsedTime == ""
     assert ret.amountValue == 200
     assert ret.amountString == "￥200"
@@ -166,7 +175,7 @@ def test_sponsor(mocker):
     assert ret.message == "新規メンバー"
     assert ret.messageEx == ["新規メンバー"]
     assert ret.timestamp == 1570678496000
-    assert ret.datetime == "2019-10-10 12:34:56"
+    assert ret.datetime == get_local_datetime(TEST_TIMETSTAMP)
     assert ret.elapsedTime == ""
     assert ret.bgColor == 0
     assert ret.author.name == "author_name"
@@ -199,7 +208,7 @@ def test_sponsor_legacy(mocker):
     assert ret.message == "新規メンバー / ようこそ、author_name！"
     assert ret.messageEx == ["新規メンバー / ようこそ、author_name！"]
     assert ret.timestamp == 1570678496000
-    assert ret.datetime == "2019-10-10 12:34:56"
+    assert ret.datetime == get_local_datetime(TEST_TIMETSTAMP)
     assert ret.elapsedTime == ""
     assert ret.bgColor == 0
     assert ret.author.name == "author_name"
