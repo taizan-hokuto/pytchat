@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 from .chat_processor import ChatProcessor
 from .default.processor import DefaultProcessor
 from ..exceptions import UnknownConnectionError
-
+import tempfile
 
 PATTERN = re.compile(r"(.*)\(([0-9]+)\)$")
 
@@ -52,10 +52,11 @@ class HTMLArchiver(ChatProcessor):
         self.save_path = self._checkpath(save_path)
         self.processor = DefaultProcessor()
         self.emoji_table = {}  # dict for custom emojis. key: emoji_id, value: base64 encoded image binary.
-        self.header = [HEADER_HTML]
-        self.body = ['<body>\n', '<table class="css">\n', self._parse_table_header(fmt_headers)]
         self.callback = callback
         self.executor = ThreadPoolExecutor(max_workers=10)
+        self.tmp_fp = tempfile.NamedTemporaryFile(mode="a", encoding="utf-8", delete=False)
+        self.tmp_filename = self.tmp_fp.name
+        self.counter = 0
 
     def _checkpath(self, filepath):
         splitter = os.path.splitext(os.path.basename(filepath))
@@ -85,9 +86,9 @@ class HTMLArchiver(ChatProcessor):
                 Count of total lines written to the file.
         """
         if chat_components is None or len(chat_components) == 0:
-            return
+            return self.save_path ,self.counter
         for c in self.processor.process(chat_components).items:
-            self.body.extend(
+            self.tmp_fp.write(
                 self._parse_html_line((
                     c.datetime,
                     c.elapsedTime,
@@ -100,6 +101,8 @@ class HTMLArchiver(ChatProcessor):
             )
             if self.callback:
                 self.callback(None, 1)
+            self.counter += 1
+        return self.save_path, self.counter
 
     def _parse_html_line(self, raw_line):
         return ''.join(('<tr>',
@@ -149,9 +152,19 @@ class HTMLArchiver(ChatProcessor):
                           '</style>\n'))
     
     def finalize(self):
-        self.executor.shutdown()
-        self.header.extend([self._create_styles(), '</head>\n'])
-        self.body.extend(['</table>\n</body>\n</html>'])
-        with open(self.save_path, mode='a', encoding='utf-8') as f:
-            f.writelines(self.header)
-            f.writelines(self.body)
+        if self.tmp_fp:
+            self.tmp_fp.flush()
+            self.tmp_fp = None
+        with open(self.save_path, mode='w', encoding='utf-8') as outfile:
+            # write header
+            outfile.writelines((
+                HEADER_HTML, self._create_styles(), '</head>\n',
+                '<body>\n', '<table class="css">\n', 
+                self._parse_table_header(fmt_headers)))
+            # write body
+            fp = open(self.tmp_filename, mode="r", encoding="utf-8")
+            for line in fp:
+                outfile.write(line)
+            outfile.write('</table>\n</body>\n</html>')
+            fp.close()
+        os.remove(self.tmp_filename)

@@ -179,12 +179,12 @@ class LiveChat:
         except exceptions.ChatParseException as e:
             self._logger.debug(f"[{self._video_id}]{str(e)}")
             raise
-        except (TypeError, json.JSONDecodeError):
+        except Exception:
             self._logger.error(f"{traceback.format_exc(limit=-1)}")
             raise
 
         self._logger.debug(f"[{self._video_id}] finished fetching chat.")
-        raise exceptions.ChatDataFinished
+
 
     def _check_pause(self, continuation):
         if self._pauser.empty():

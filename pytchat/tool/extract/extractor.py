@@ -1,3 +1,4 @@
+from typing import Generator
 from . import asyncdl
 from . import duplcheck
 from .. videoinfo import VideoInfo
@@ -60,11 +61,10 @@ class Extractor:
         self.blocks = duplcheck.remove_duplicate_tail(self.blocks)
         return self
 
-    def _combine(self):
-        ret = []
+    def _get_chatdata(self) -> Generator:
         for block in self.blocks:
-            ret.extend(block.chat_data)
-        return ret
+            for chatdata in block.chat_data:
+                yield chatdata
 
     def _execute_extract_operations(self):
         return (
@@ -74,7 +74,7 @@ class Extractor:
                 ._remove_overlap()
                 ._download_blocks()
                 ._remove_duplicate_tail()
-                ._combine()
+                ._get_chatdata()
         )
 
     def extract(self):
