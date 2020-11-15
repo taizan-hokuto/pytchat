@@ -137,7 +137,7 @@ class DefaultProcessor(ChatProcessor):
                 if component is None:
                     continue
                 timeout += component.get('timeout', 0)
-                chatdata = component.get('chatdata')
+                chatdata = component.get('chatdata')  # if from Extractor, chatdata is generator.
                 if chatdata is None:
                     continue
                 for action in chatdata:
