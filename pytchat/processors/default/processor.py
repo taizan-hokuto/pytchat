@@ -153,7 +153,7 @@ class DefaultProcessor(ChatProcessor):
                         chatlist.append(chat)
         
         if self.first and chatlist:
-            self.abs_diff = time.time() - chatlist[0].timestamp / 1000 + 2
+            self.abs_diff = time.time() - chatlist[0].timestamp / 1000
             self.first = False
 
         chatdata = Chatdata(chatlist, float(timeout), self.abs_diff)
