@@ -16,10 +16,11 @@ def extract(url):
         json.dump(html.json(), f, ensure_ascii=False)
 
 
-def save(data, filename, extention):
-    with open(filename + "_" + (datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')) + extention,
-              mode='w', encoding='utf-8') as f:
+def save(data, filename, extention) -> str:
+    save_filename = filename + "_" + (datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')) + extention
+    with open(save_filename ,mode='w', encoding='utf-8') as f:
         f.writelines(data)
+    return save_filename
 
 
 def checkpath(filepath):

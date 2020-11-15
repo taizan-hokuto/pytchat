@@ -18,7 +18,7 @@ class Arguments(metaclass=Singleton):
         VERSION: str = 'version'
         OUTPUT: str = 'output_dir'
         VIDEO_IDS: str = 'video_id'
-        SAVE_ERROR_DATA: bool = 'save_error_data'
+        DEBUG: bool = 'debug'
         ECHO: bool = 'echo'
 
     def __init__(self,
@@ -36,10 +36,10 @@ class Arguments(metaclass=Singleton):
         self.print_version: bool = arguments[Arguments.Name.VERSION]
         self.output: str = arguments[Arguments.Name.OUTPUT]
         self.video_ids: List[int] = []
-        self.save_error_data: bool = arguments[Arguments.Name.SAVE_ERROR_DATA]
+        self.debug: bool = arguments[Arguments.Name.DEBUG]
         self.echo: bool = arguments[Arguments.Name.ECHO]
+        
         # Videos
-
         if arguments[Arguments.Name.VIDEO_IDS]:
             self.video_ids = [video_id
                               for video_id in arguments[Arguments.Name.VIDEO_IDS].split(',')]

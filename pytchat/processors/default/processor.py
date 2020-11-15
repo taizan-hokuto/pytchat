@@ -137,7 +137,7 @@ class DefaultProcessor(ChatProcessor):
                 if component is None:
                     continue
                 timeout += component.get('timeout', 0)
-                chatdata = component.get('chatdata')
+                chatdata = component.get('chatdata')  # if from Extractor, chatdata is generator.
                 if chatdata is None:
                     continue
                 for action in chatdata:
@@ -153,7 +153,7 @@ class DefaultProcessor(ChatProcessor):
                         chatlist.append(chat)
         
         if self.first and chatlist:
-            self.abs_diff = time.time() - chatlist[0].timestamp / 1000 + 2
+            self.abs_diff = time.time() - chatlist[0].timestamp / 1000
             self.first = False
 
         chatdata = Chatdata(chatlist, float(timeout), self.abs_diff)
