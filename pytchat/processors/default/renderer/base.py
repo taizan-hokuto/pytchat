@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
 
 
 class Author:
@@ -90,8 +90,7 @@ class BaseRenderer:
         self.chat.author.badgeUrl = badge["liveChatAuthorBadgeRenderer"]["customThumbnail"]["thumbnails"][0]["url"]
 
     def get_datetime(self, timestamp):
-        jst = timezone(timedelta(hours=9))
-        dt = datetime.fromtimestamp(timestamp / 1000000, jst)
+        dt = datetime.fromtimestamp(timestamp / 1000000)
         return dt.strftime('%Y-%m-%d %H:%M:%S')
 
     def get_chatobj(self):
