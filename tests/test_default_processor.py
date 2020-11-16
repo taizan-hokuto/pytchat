@@ -1,6 +1,5 @@
 import json
 from datetime import datetime
-from test.support import captured_stdout
 from pytchat.parser.live import Parser
 from pytchat.processors.default.processor import DefaultProcessor
 
