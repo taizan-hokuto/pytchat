@@ -236,8 +236,7 @@ def test_jsonify_list(mocker):
     }
     
     ret = processor.process([data]).json()
-    tobe = _open_file("tests/testdata/default/jsonified_list.json")
-    assert ret == tobe
+    assert ret == '[{"author": {"badgeUrl": "", "type": "", "isVerified": false, "isChatOwner": false, "isChatSponsor": false, "isChatModerator": false, "channelId": "author_channel_id", "channelUrl": "http://www.youtube.com/channel/author_channel_id", "name": "author_name", "imageUrl": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s64-x-x-xx-xx-xx-c0xffffff/photo.jpg"}, "type": "superChat", "id": "dummy_id", "timestamp": 1570678496000, "elapsedTime": "", "datetime": "2019-10-10 12:34:56", "message": "dummy_message", "messageEx": ["dummy_message"], "amountValue": 800.0, "amountString": "￥800", "currency": "JPY", "bgColor": 4280150454, "colors": {"headerBackgroundColor": 4278239141, "headerTextColor": 4278190080, "bodyBackgroundColor": 4280150454, "bodyTextColor": 4278190080, "timestampColor": 2147483648, "authorNameTextColor": 2315255808}}]'  #nopa 
     
 
 def test_jsonify_item(mocker):
@@ -254,26 +253,8 @@ def test_jsonify_item(mocker):
     }
     
     ret = processor.process([data]).items[0].json()
-    tobe = _open_file("tests/testdata/default/jsonified_item.json")
-    assert ret == tobe.splitlines()[0]
+    assert ret == '{"author": {"badgeUrl": "", "type": "", "isVerified": false, "isChatOwner": false, "isChatSponsor": false, "isChatModerator": false, "channelId": "author_channel_id", "channelUrl": "http://www.youtube.com/channel/author_channel_id", "name": "author_name", "imageUrl": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s64-x-x-xx-xx-xx-c0xffffff/photo.jpg"}, "type": "superChat", "id": "dummy_id", "timestamp": 1570678496000, "elapsedTime": "", "datetime": "2019-10-10 12:34:56", "message": "dummy_message", "messageEx": ["dummy_message"], "amountValue": 800.0, "amountString": "￥800", "currency": "JPY", "bgColor": 4280150454, "colors": {"headerBackgroundColor": 4278239141, "headerTextColor": 4278190080, "bodyBackgroundColor": 4280150454, "bodyTextColor": 4278190080, "timestampColor": 2147483648, "authorNameTextColor": 2315255808}}'  #nopa
 
-
-def test_jsonify_item(mocker):
-    '''lagacy sponsor(membership)'''
-    processor = DefaultProcessor()
-    parser = Parser(is_replay=False)
-    _json = _open_file("tests/testdata/default/superchat.json")
-
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
-    data = {
-        "video_id": "",
-        "timeout": 7,
-        "chatdata": chatdata
-    }
-    
-    ret = processor.process([data]).items[0].json()
-    tobe = _open_file("tests/testdata/default/jsonified_item.json")
-    assert ret == tobe.splitlines()[0]
 
 def _open_file(path):
     with open(path, mode='r', encoding='utf-8') as f:
