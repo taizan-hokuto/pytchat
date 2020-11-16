@@ -240,41 +240,6 @@ def test_jsonify_list(mocker):
     assert ret == tobe
     
 
-def test_jsonify_item(mocker):
-    '''lagacy sponsor(membership)'''
-    processor = DefaultProcessor()
-    parser = Parser(is_replay=False)
-    _json = _open_file("tests/testdata/default/superchat.json")
-
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
-    data = {
-        "video_id": "",
-        "timeout": 7,
-        "chatdata": chatdata
-    }
-    
-    ret = processor.process([data]).items[0].json()
-    tobe = _open_file("tests/testdata/default/jsonified_item.json")
-    assert ret == tobe.splitlines()[0]
-
-
-def test_jsonify_item(mocker):
-    '''lagacy sponsor(membership)'''
-    processor = DefaultProcessor()
-    parser = Parser(is_replay=False)
-    _json = _open_file("tests/testdata/default/superchat.json")
-
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
-    data = {
-        "video_id": "",
-        "timeout": 7,
-        "chatdata": chatdata
-    }
-    
-    ret = processor.process([data]).items[0].json()
-    tobe = _open_file("tests/testdata/default/jsonified_item.json")
-    assert ret == tobe.splitlines()[0]
-
 def _open_file(path):
     with open(path, mode='r', encoding='utf-8') as f:
         return f.read()
