@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from test.support import captured_stdout
 from pytchat.parser.live import Parser
 from pytchat.processors.default.processor import DefaultProcessor
 
@@ -255,7 +256,7 @@ def test_jsonify_item(mocker):
     
     ret = processor.process([data]).items[0].json()
     tobe = _open_file("tests/testdata/default/jsonified_item.json")
-    assert ret == tobe
+    assert ret == tobe.splitlines()[0]
 
 
 def test_jsonify_item(mocker):
@@ -273,8 +274,7 @@ def test_jsonify_item(mocker):
     
     ret = processor.process([data]).items[0].json()
     tobe = _open_file("tests/testdata/default/jsonified_item.json")
-    assert ret == tobe
-
+    assert ret == tobe.splitlines()[0]
 
 def _open_file(path):
     with open(path, mode='r', encoding='utf-8') as f:
