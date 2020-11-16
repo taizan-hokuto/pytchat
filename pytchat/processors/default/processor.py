@@ -112,7 +112,7 @@ class Chatdata:
             await asyncio.sleep(1 - stop_interval)
 
     def json(self) -> str:
-        return json.dumps([vars(a) for a in self.items], ensure_ascii=False, cls=CustomEncoder)
+        return ''.join(("[", ','.join((a.json() for a in self.items)), "]"))
 
 
 class DefaultProcessor(ChatProcessor):
