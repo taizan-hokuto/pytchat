@@ -222,24 +222,6 @@ def test_sponsor_legacy(mocker):
     assert ret.author.isChatModerator is False
 
 
-def test_jsonify_list(mocker):
-    '''lagacy sponsor(membership)'''
-    processor = DefaultProcessor()
-    parser = Parser(is_replay=False)
-    _json = _open_file("tests/testdata/default/superchat.json")
-
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
-    data = {
-        "video_id": "",
-        "timeout": 7,
-        "chatdata": chatdata
-    }
-    
-    ret = processor.process([data]).json()
-    tobe = _open_file("tests/testdata/default/jsonified_list.json")
-    assert ret == tobe
-    
-
 def _open_file(path):
     with open(path, mode='r', encoding='utf-8') as f:
         return f.read()
