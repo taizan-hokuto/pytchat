@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+httpx = {extras = ["http2"], version = "*"}
+protobuf = "==3.14.0"
+pytz = "*"
+urllib3 = "*"
+
+[dev-packages]
+pytest-mock = "*"
+pytest-httpx = "*"
+wheel = "*"
+twine = "*"
+
+[requires]
+python_version = ">=3.6"
