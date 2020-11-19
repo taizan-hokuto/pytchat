@@ -3,6 +3,16 @@ pytchat
 
 pytchat is a python library for fetching youtube live chat.
 
+
+## Note (2020-11-19)
+### Since the YouTube specification has changed, this program does not work well.
+### Whether to fix it or not is undecided. 
+
+<br><br><br>
+
+
+
+
 ## Description
 pytchat is a python library for fetching youtube live chat
 without using Selenium or BeautifulSoup.
