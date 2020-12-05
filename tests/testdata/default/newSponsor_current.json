@@ -1,100 +1,98 @@
 {
-  "response": {
-    "responseContext": {
-      "webResponseContextExtensionData": ""
-    },
-    "continuationContents": {
-      "liveChatContinuation": {
-        "continuations": [
-          {
-            "invalidationContinuationData": {
-              "invalidationId": {
-                "objectSource": 1000,
-                "objectId": "___objectId___",
-                "topic": "chat~00000000000~0000000",
-                "subscribeToGcmTopics": true,
-                "protoCreationTimestampMs": "1577804400000"
-              },
-              "timeoutMs": 10000,
-              "continuation": "___continuation___"
-            }
+  "responseContext": {
+    "webResponseContextExtensionData": ""
+  },
+  "continuationContents": {
+    "liveChatContinuation": {
+      "continuations": [
+        {
+          "invalidationContinuationData": {
+            "invalidationId": {
+              "objectSource": 1000,
+              "objectId": "___objectId___",
+              "topic": "chat~00000000000~0000000",
+              "subscribeToGcmTopics": true,
+              "protoCreationTimestampMs": "1577804400000"
+            },
+            "timeoutMs": 10000,
+            "continuation": "___continuation___"
           }
-        ],
-        "actions": [
-          {
-            "addChatItemAction": {
-              "item": {
-                "liveChatMembershipItemRenderer": {
-                  "id": "dummy_id",
-                  "timestampUsec": 1570678496000000,
-                  "authorExternalChannelId": "author_channel_id",
-                  "headerSubtext": {
-                    "runs": [
-                      {
-                        "text": "新規メンバー"
-                      }
-                    ]
-                  },
-                  "authorName": {
-                    "simpleText": "author_name"
-                  },
-                  "authorPhoto": {
-                    "thumbnails": [
-                      {
-                        "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-                        "width": 32,
-                        "height": 32
-                      },
-                      {
-                        "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s64-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-                        "width": 64,
-                        "height": 64
-                      }
-                    ]
-                  },
-                  "authorBadges": [
+        }
+      ],
+      "actions": [
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatMembershipItemRenderer": {
+                "id": "dummy_id",
+                "timestampUsec": 1570678496000000,
+                "authorExternalChannelId": "author_channel_id",
+                "headerSubtext": {
+                  "runs": [
                     {
-                      "liveChatAuthorBadgeRenderer": {
-                        "customThumbnail": {
-                          "thumbnails": [
-                            {
-                              "url": "https://yt3.ggpht.com/X=s32-c-k"
-                            },
-                            {
-                              "url": "https://yt3.ggpht.com/X=s64-c-k"
-                            }
-                          ]
-                        },
-                        "tooltip": "新規メンバー",
-                        "accessibility": {
-                          "accessibilityData": {
-                            "label": "新規メンバー"
+                      "text": "新規メンバー"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "author_name"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s64-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://yt3.ggpht.com/X=s32-c-k"
+                          },
+                          {
+                            "url": "https://yt3.ggpht.com/X=s64-c-k"
                           }
+                        ]
+                      },
+                      "tooltip": "新規メンバー",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "新規メンバー"
                         }
                       }
                     }
-                  ],
-                  "contextMenuEndpoint": {
-                    "commandMetadata": {
-                      "webCommandMetadata": {
-                        "ignoreNavigation": true
-                      }
-                    },
-                    "liveChatItemContextMenuEndpoint": {
-                      "params": "___params___"
+                  }
+                ],
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
                     }
                   },
-                  "contextMenuAccessibility": {
-                    "accessibilityData": {
-                      "label": "コメントの操作"
-                    }
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": "___params___"
+                  }
+                },
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "コメントの操作"
                   }
                 }
               }
             }
           }
-        ]
-      }
+        }
+      ]
     }
   }
 }

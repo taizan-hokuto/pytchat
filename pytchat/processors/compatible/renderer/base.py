@@ -1,5 +1,6 @@
-import datetime
-import pytz
+from datetime import datetime, timedelta, timezone
+
+TZ_UTC = timezone(timedelta(0), 'UTC')
 
 
 class BaseRenderer:
@@ -62,13 +63,13 @@ class BaseRenderer:
         if badges:
             for badge in badges:
                 author_type = badge["liveChatAuthorBadgeRenderer"]["accessibility"]["accessibilityData"]["label"]
-                if author_type == '確認済み':
+                if author_type == 'VERIFIED' or author_type == '確認済み':
                     isVerified = True
-                if author_type == '所有者':
+                if author_type == 'OWNER' or author_type == '所有者':
                     isChatOwner = True
-                if 'メンバー' in author_type:
+                if 'メンバー' in author_type or 'MEMBER' in author_type:
                     isChatSponsor = True
-                if author_type == 'モデレーター':
+                if author_type == 'MODERATOR' or author_type == 'モデレーター':
                     isChatModerator = True
         return isVerified, isChatOwner, isChatSponsor, isChatModerator
 
@@ -76,6 +77,6 @@ class BaseRenderer:
         return self.renderer.get('id')
 
     def get_publishedat(self, timestamp):
-        dt = datetime.datetime.fromtimestamp(int(timestamp) / 1000000)
-        return dt.astimezone(pytz.utc).isoformat(
+        dt = datetime.fromtimestamp(int(timestamp) / 1000000)
+        return dt.astimezone(TZ_UTC).isoformat(
             timespec='milliseconds').replace('+00:00', 'Z')

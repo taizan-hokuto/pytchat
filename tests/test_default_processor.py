@@ -18,7 +18,7 @@ def test_textmessage(mocker):
     parser = Parser(is_replay=False)
     _json = _open_file("tests/testdata/default/textmessage.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 7,
@@ -47,7 +47,7 @@ def test_textmessage_replay_member(mocker):
     parser = Parser(is_replay=True)
     _json = _open_file("tests/testdata/default/replay_member_text.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 7,
@@ -79,7 +79,7 @@ def test_superchat(mocker):
     parser = Parser(is_replay=False)
     _json = _open_file("tests/testdata/default/superchat.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 7,
@@ -121,7 +121,7 @@ def test_supersticker(mocker):
     parser = Parser(is_replay=False)
     _json = _open_file("tests/testdata/default/supersticker.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 7,
@@ -162,7 +162,7 @@ def test_sponsor(mocker):
     parser = Parser(is_replay=False)
     _json = _open_file("tests/testdata/default/newSponsor_current.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 7,
@@ -195,7 +195,7 @@ def test_sponsor_legacy(mocker):
     parser = Parser(is_replay=False)
     _json = _open_file("tests/testdata/default/newSponsor_lagacy.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 7,

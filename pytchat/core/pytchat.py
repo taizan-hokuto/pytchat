@@ -3,14 +3,13 @@ import json
 import signal
 import time
 import traceback
-import urllib.parse
 from ..parser.live import Parser
 from .. import config
 from .. import exceptions
 from ..paramgen import liveparam, arcparam
 from ..processors.default.processor import DefaultProcessor
 from ..processors.combinator import Combinator
-from ..util.extract_video_id import extract_video_id
+from .. import util
 
 headers = config.headers
 MAX_RETRY = 10
@@ -52,8 +51,6 @@ class PytchatCore:
         Flag to stop getting chat.
     '''
 
-    _setup_finished = False
-
     def __init__(self, video_id,
                  seektime=-1,
                  processor=DefaultProcessor(),
@@ -63,7 +60,7 @@ class PytchatCore:
                  hold_exception=True,
                  logger=config.logger(__name__),
                  ):
-        self._video_id = extract_video_id(video_id)
+        self._video_id = util.extract_video_id(video_id)
         self.seektime = seektime
         if isinstance(processor, tuple):
             self.processor = Combinator(processor)
@@ -78,8 +75,10 @@ class PytchatCore:
             exception_holder=self._exception_holder
         )
         self._first_fetch = True
-        self._fetch_url = "live_chat/get_live_chat?continuation="
+        self._fetch_url = config._sml
         self._topchat_only = topchat_only
+        self._dat = ''
+        self._last_offset_ms = 0
         self._logger = logger
         if interruptable:
             signal.signal(signal.SIGINT, lambda a, b: self.terminate())
@@ -91,7 +90,7 @@ class PytchatCore:
         create and start _listen loop.
         """
         self.continuation = liveparam.getparam(self._video_id, 3)
-
+        
     def _get_chat_component(self):
         
         ''' Fetch chat data and store them into buffer,
@@ -114,6 +113,7 @@ class PytchatCore:
                         "chatdata": chatdata
                     }
                     self.continuation = metadata.get('continuation')
+                    self._last_offset_ms = metadata.get('last_offset_ms', 0)
                     return chat_component
         except exceptions.ChatParseException as e:
             self._logger.debug(f"[{self._video_id}]{str(e)}")
@@ -132,39 +132,43 @@ class PytchatCore:
             'continuationContents' which includes metadata & chat data.
         '''
         livechat_json = (
-            self._get_livechat_json(continuation, client, headers)
+            self._get_livechat_json(continuation, client, replay=self._is_replay, offset_ms=self._last_offset_ms)
         )
-        contents = self._parser.get_contents(livechat_json)
+        contents, dat = self._parser.get_contents(livechat_json)
+        if self._dat == '' and dat:
+            self._dat = dat
         if self._first_fetch:
             if contents is None or self._is_replay:
                 '''Try to fetch archive chat data.'''
                 self._parser.is_replay = True
-                self._fetch_url = "live_chat_replay/get_live_chat_replay?continuation="
+                self._fetch_url = config._smr
                 continuation = arcparam.getparam(
                     self._video_id, self.seektime, self._topchat_only)
-                livechat_json = (self._get_livechat_json(continuation, client, headers))
+                livechat_json = (self._get_livechat_json(continuation, client, replay=True, offset_ms=self.seektime * 1000))
                 reload_continuation = self._parser.reload_continuation(
-                    self._parser.get_contents(livechat_json))
+                    self._parser.get_contents(livechat_json)[0])
                 if reload_continuation:
                     livechat_json = (self._get_livechat_json(
                         reload_continuation, client, headers))
-                contents = self._parser.get_contents(livechat_json)
+                contents, _ = self._parser.get_contents(livechat_json)
                 self._is_replay = True
             self._first_fetch = False
         return contents
 
-    def _get_livechat_json(self, continuation, client, headers):
+    def _get_livechat_json(self, continuation, client, replay: bool, offset_ms: int = 0):
         '''
         Get json which includes chat data.
         '''
-        continuation = urllib.parse.quote(continuation)
         livechat_json = None
         err = None
-        url = f"https://www.youtube.com/{self._fetch_url}{continuation}&pbj=1"
+        if offset_ms < 0:
+            offset_ms = 0
+        param = util.get_param(continuation, dat=self._dat, replay=replay, offsetms=offset_ms)
         for _ in range(MAX_RETRY + 1):
-            with client:
+            with httpx.Client(http2=True) as client:
                 try:
-                    livechat_json = client.get(url, headers=headers).json()
+                    response = client.post(self._fetch_url, json=param)
+                    livechat_json = json.loads(response.text, encoding='utf-8')
                     break
                 except (json.JSONDecodeError, httpx.ConnectTimeout, httpx.ReadTimeout, httpx.ConnectError) as e:
                     err = e

@@ -1,3324 +1,3322 @@
 {
- "response": {
-  "responseContext": {
-   "webResponseContextExtensionData": ""
-  },
-  "continuationContents": {
-   "liveChatContinuation": {
-    "continuations": [
-     {
-      "invalidationContinuationData": {
-       "invalidationId": {
-        "objectSource": 1000,
-        "objectId": "___objectId___",
-        "topic": "chat~00000000000~0000000",
-        "subscribeToGcmTopics": true,
-        "protoCreationTimestampMs": "1577804400000"
-       },
-       "timeoutMs": 10000,
-       "continuation": "___continuation___"
-      }
+ "responseContext": {
+  "webResponseContextExtensionData": ""
+ },
+ "continuationContents": {
+  "liveChatContinuation": {
+   "continuations": [
+    {
+     "invalidationContinuationData": {
+      "invalidationId": {
+       "objectSource": 1000,
+       "objectId": "___objectId___",
+       "topic": "chat~00000000000~0000000",
+       "subscribeToGcmTopics": true,
+       "protoCreationTimestampMs": "1577804400000"
+      },
+      "timeoutMs": 10000,
+      "continuation": "___continuation___"
      }
-    ],
-    "actions": [
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+    }
+   ],
+   "actions": [
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "10000"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "10000"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "10192"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "10192"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "10384"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "10384"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "10576"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "10576"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "10768"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "10768"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "10960"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatPaidMessageRenderer": {
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "purchaseAmountText": {
-             "simpleText": "￥6,000"
-            },
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "headerBackgroundColor": 4290910299,
-            "headerTextColor": 4294967295,
-            "bodyBackgroundColor": 4293467747,
-            "bodyTextColor": 4294967295,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "authorNameTextColor": 3019898879,
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "10960"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatPaidMessageRenderer": {
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "purchaseAmountText": {
+            "simpleText": "￥6,000"
+           },
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "headerBackgroundColor": 4290910299,
+           "headerTextColor": 4294967295,
+           "bodyBackgroundColor": 4293467747,
+           "bodyTextColor": 4294967295,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "authorNameTextColor": 3019898879,
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "timestampColor": 2164260863,
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "timestampColor": 2164260863,
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
           }
          }
         }
-       ],
-       "videoOffsetTimeMsec": "11152"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addLiveChatTickerItemAction": {
-          "item": {
-           "liveChatTickerPaidMessageItemRenderer": {
-            "id": "dummy_id",
-            "amount": {
-             "simpleText": "￥6,000"
-            },
-            "amountTextColor": 4294967295,
-            "startBackgroundColor": 4293467747,
-            "endBackgroundColor": 4290910299,
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "durationSec": 1800,
-            "showItemEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "11152"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addLiveChatTickerItemAction": {
+         "item": {
+          "liveChatTickerPaidMessageItemRenderer": {
+           "id": "dummy_id",
+           "amount": {
+            "simpleText": "￥6,000"
+           },
+           "amountTextColor": 4294967295,
+           "startBackgroundColor": 4293467747,
+           "endBackgroundColor": 4290910299,
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "showLiveChatItemEndpoint": {
-              "renderer": {
-               "liveChatPaidMessageRenderer": {
-                "id": "dummy_id",
-                "timestampUsec": 0,
-                "authorName": {
-                 "simpleText": "author_name"
-                },
-                "authorPhoto": {
-                 "thumbnails": [
-                  {
-                   "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-                   "width": 32,
-                   "height": 32
-                  },
-                  {
-                   "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-                   "width": 64,
-                   "height": 64
-                  }
-                 ]
-                },
-                "purchaseAmountText": {
-                 "simpleText": "￥6,000"
-                },
-                "message": {
-                 "runs": [
-                  {
-                   "text": "dummy_message"
-                  }
-                 ]
-                },
-                "headerBackgroundColor": 4290910299,
-                "headerTextColor": 4294967295,
-                "bodyBackgroundColor": 4293467747,
-                "bodyTextColor": 4294967295,
-                "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-                "authorNameTextColor": 3019898879,
-                "contextMenuEndpoint": {
-                 "commandMetadata": {
-                  "webCommandMetadata": {
-                   "ignoreNavigation": true
-                  }
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "durationSec": 1800,
+           "showItemEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
+             }
+            },
+            "showLiveChatItemEndpoint": {
+             "renderer": {
+              "liveChatPaidMessageRenderer": {
+               "id": "dummy_id",
+               "timestampUsec": 0,
+               "authorName": {
+                "simpleText": "author_name"
+               },
+               "authorPhoto": {
+                "thumbnails": [
+                 {
+                  "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+                  "width": 32,
+                  "height": 32
                  },
-                 "liveChatItemContextMenuEndpoint": {
-                  "params": "___params___"
+                 {
+                  "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+                  "width": 64,
+                  "height": 64
+                 }
+                ]
+               },
+               "purchaseAmountText": {
+                "simpleText": "￥6,000"
+               },
+               "message": {
+                "runs": [
+                 {
+                  "text": "dummy_message"
+                 }
+                ]
+               },
+               "headerBackgroundColor": 4290910299,
+               "headerTextColor": 4294967295,
+               "bodyBackgroundColor": 4293467747,
+               "bodyTextColor": 4294967295,
+               "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+               "authorNameTextColor": 3019898879,
+               "contextMenuEndpoint": {
+                "commandMetadata": {
+                 "webCommandMetadata": {
+                  "ignoreNavigation": true
                  }
                 },
-                "timestampColor": 2164260863,
-                "contextMenuAccessibility": {
-                 "accessibilityData": {
-                  "label": "コメントの操作"
-                 }
-                },
-                "timestampText": {
-                 "simpleText": "0:00"
+                "liveChatItemContextMenuEndpoint": {
+                 "params": "___params___"
                 }
+               },
+               "timestampColor": 2164260863,
+               "contextMenuAccessibility": {
+                "accessibilityData": {
+                 "label": "コメントの操作"
+                }
+               },
+               "timestampText": {
+                "simpleText": "0:00"
                }
               }
              }
-            },
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "fullDurationSec": 1800
-           }
-          },
-          "durationSec": "1800"
-         }
-        }
-       ],
-       "videoOffsetTimeMsec": "11344"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
-             },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
-             }
-            },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
             }
-           }
-          },
-          "clientId": "dummy_client_id"
-         }
+           },
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "fullDurationSec": 1800
+          }
+         },
+         "durationSec": "1800"
         }
-       ],
-       "videoOffsetTimeMsec": "11536"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatPaidMessageRenderer": {
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "purchaseAmountText": {
-             "simpleText": "€2"
-            },
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "headerBackgroundColor": 4278237396,
-            "headerTextColor": 4278190080,
-            "bodyBackgroundColor": 4278248959,
-            "bodyTextColor": 4278190080,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "authorNameTextColor": 3003121664,
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "11344"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "timestampColor": 2147483648,
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
+           }
+          }
+         },
+         "clientId": "dummy_client_id"
+        }
+       }
+      ],
+      "videoOffsetTimeMsec": "11536"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatPaidMessageRenderer": {
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
+             },
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "purchaseAmountText": {
+            "simpleText": "€2"
+           },
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "headerBackgroundColor": 4278237396,
+           "headerTextColor": 4278190080,
+           "bodyBackgroundColor": 4278248959,
+           "bodyTextColor": 4278190080,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "authorNameTextColor": 3003121664,
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
+             }
+            },
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
+            }
+           },
+           "timestampColor": 2147483648,
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
           }
          }
         }
-       ],
-       "videoOffsetTimeMsec": "11728"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "11728"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "11920"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "11920"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "12112"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "12112"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "12304"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "12304"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "12496"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "12496"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "12688"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "12688"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "12880"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "12880"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "13072"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "13072"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "13264"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "13264"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "13456"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "13456"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "13648"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "13648"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "13840"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "13840"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "14032"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "14032"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "14224"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "14224"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "14416"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "14416"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "14608"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "14608"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "14800"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "14800"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "14992"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "14992"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "15184"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "15184"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "15376"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "15376"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "15568"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "15568"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "15760"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "15760"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "15952"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "15952"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "16144"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "16144"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "16336"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "16336"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "16528"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "16528"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "16720"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "16720"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "16912"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "16912"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "17104"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "17104"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "17296"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "17296"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "17488"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatPaidMessageRenderer": {
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "purchaseAmountText": {
-             "simpleText": "￥300"
-            },
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "headerBackgroundColor": 4278237396,
-            "headerTextColor": 4278190080,
-            "bodyBackgroundColor": 4278248959,
-            "bodyTextColor": 4278190080,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "authorNameTextColor": 3003121664,
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "17488"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatPaidMessageRenderer": {
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "purchaseAmountText": {
+            "simpleText": "￥300"
+           },
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "headerBackgroundColor": 4278237396,
+           "headerTextColor": 4278190080,
+           "bodyBackgroundColor": 4278248959,
+           "bodyTextColor": 4278190080,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "authorNameTextColor": 3003121664,
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "timestampColor": 2147483648,
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "timestampColor": 2147483648,
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
           }
          }
         }
-       ],
-       "videoOffsetTimeMsec": "17680"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "17680"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "17872"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "17872"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "18064"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "18064"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "18256"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "18256"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
-          },
-          "clientId": "dummy_client_id"
-         }
+          }
+         },
+         "clientId": "dummy_client_id"
         }
-       ],
-       "videoOffsetTimeMsec": "18448"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatPaidMessageRenderer": {
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "purchaseAmountText": {
-             "simpleText": "￥500"
-            },
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "headerBackgroundColor": 4278239141,
-            "headerTextColor": 4278190080,
-            "bodyBackgroundColor": 4280150454,
-            "bodyTextColor": 4278190080,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "authorNameTextColor": 2315255808,
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "18448"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatPaidMessageRenderer": {
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "purchaseAmountText": {
+            "simpleText": "￥500"
+           },
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "headerBackgroundColor": 4278239141,
+           "headerTextColor": 4278190080,
+           "bodyBackgroundColor": 4280150454,
+           "bodyTextColor": 4278190080,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "authorNameTextColor": 2315255808,
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
              }
             },
-            "timestampColor": 2147483648,
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
             }
+           },
+           "timestampColor": 2147483648,
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
            }
           }
          }
         }
-       ],
-       "videoOffsetTimeMsec": "18640"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addLiveChatTickerItemAction": {
-          "item": {
-           "liveChatTickerPaidMessageItemRenderer": {
-            "id": "dummy_id",
-            "amount": {
-             "simpleText": "￥500"
-            },
-            "amountTextColor": 4278190080,
-            "startBackgroundColor": 4280150454,
-            "endBackgroundColor": 4278239141,
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "durationSec": 120,
-            "showItemEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
+       }
+      ],
+      "videoOffsetTimeMsec": "18640"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addLiveChatTickerItemAction": {
+         "item": {
+          "liveChatTickerPaidMessageItemRenderer": {
+           "id": "dummy_id",
+           "amount": {
+            "simpleText": "￥500"
+           },
+           "amountTextColor": 4278190080,
+           "startBackgroundColor": 4280150454,
+           "endBackgroundColor": 4278239141,
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
              },
-             "showLiveChatItemEndpoint": {
-              "renderer": {
-               "liveChatPaidMessageRenderer": {
-                "id": "dummy_id",
-                "timestampUsec": 0,
-                "authorName": {
-                 "simpleText": "author_name"
-                },
-                "authorPhoto": {
-                 "thumbnails": [
-                  {
-                   "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-                   "width": 32,
-                   "height": 32
-                  },
-                  {
-                   "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-                   "width": 64,
-                   "height": 64
-                  }
-                 ]
-                },
-                "purchaseAmountText": {
-                 "simpleText": "￥500"
-                },
-                "message": {
-                 "runs": [
-                  {
-                   "text": "dummy_message"
-                  }
-                 ]
-                },
-                "headerBackgroundColor": 4278239141,
-                "headerTextColor": 4278190080,
-                "bodyBackgroundColor": 4280150454,
-                "bodyTextColor": 4278190080,
-                "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-                "authorNameTextColor": 2315255808,
-                "contextMenuEndpoint": {
-                 "commandMetadata": {
-                  "webCommandMetadata": {
-                   "ignoreNavigation": true
-                  }
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "durationSec": 120,
+           "showItemEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
+             }
+            },
+            "showLiveChatItemEndpoint": {
+             "renderer": {
+              "liveChatPaidMessageRenderer": {
+               "id": "dummy_id",
+               "timestampUsec": 0,
+               "authorName": {
+                "simpleText": "author_name"
+               },
+               "authorPhoto": {
+                "thumbnails": [
+                 {
+                  "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+                  "width": 32,
+                  "height": 32
                  },
-                 "liveChatItemContextMenuEndpoint": {
-                  "params": "___params___"
+                 {
+                  "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+                  "width": 64,
+                  "height": 64
+                 }
+                ]
+               },
+               "purchaseAmountText": {
+                "simpleText": "￥500"
+               },
+               "message": {
+                "runs": [
+                 {
+                  "text": "dummy_message"
+                 }
+                ]
+               },
+               "headerBackgroundColor": 4278239141,
+               "headerTextColor": 4278190080,
+               "bodyBackgroundColor": 4280150454,
+               "bodyTextColor": 4278190080,
+               "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+               "authorNameTextColor": 2315255808,
+               "contextMenuEndpoint": {
+                "commandMetadata": {
+                 "webCommandMetadata": {
+                  "ignoreNavigation": true
                  }
                 },
-                "timestampColor": 2147483648,
-                "contextMenuAccessibility": {
-                 "accessibilityData": {
-                  "label": "コメントの操作"
-                 }
-                },
-                "timestampText": {
-                 "simpleText": "0:00"
+                "liveChatItemContextMenuEndpoint": {
+                 "params": "___params___"
                 }
+               },
+               "timestampColor": 2147483648,
+               "contextMenuAccessibility": {
+                "accessibilityData": {
+                 "label": "コメントの操作"
+                }
+               },
+               "timestampText": {
+                "simpleText": "0:00"
                }
               }
              }
-            },
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "fullDurationSec": 120
-           }
-          },
-          "durationSec": "120"
-         }
-        }
-       ],
-       "videoOffsetTimeMsec": "18832"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
-             },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
-             }
-            },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
             }
-           }
-          },
-          "clientId": "dummy_client_id"
-         }
+           },
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "fullDurationSec": 120
+          }
+         },
+         "durationSec": "120"
         }
-       ],
-       "videoOffsetTimeMsec": "19024"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
-             },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
-             }
-            },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
-            }
-           }
-          },
-          "clientId": "dummy_client_id"
-         }
-        }
-       ],
-       "videoOffsetTimeMsec": "19216"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
-             },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
-             }
-            },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
-            }
-           }
-          },
-          "clientId": "dummy_client_id"
-         }
-        }
-       ],
-       "videoOffsetTimeMsec": "19408"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
-             },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
-             }
-            },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
-            }
-           }
-          },
-          "clientId": "dummy_client_id"
-         }
-        }
-       ],
-       "videoOffsetTimeMsec": "19600"
-      }
-     },
-     {
-      "replayChatItemAction": {
-       "actions": [
-        {
-         "addChatItemAction": {
-          "item": {
-           "liveChatTextMessageRenderer": {
-            "message": {
-             "runs": [
-              {
-               "text": "dummy_message"
-              }
-             ]
-            },
-            "authorName": {
-             "simpleText": "author_name"
-            },
-            "authorPhoto": {
-             "thumbnails": [
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 32,
-               "height": 32
-              },
-              {
-               "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-               "width": 64,
-               "height": 64
-              }
-             ]
-            },
-            "contextMenuEndpoint": {
-             "commandMetadata": {
-              "webCommandMetadata": {
-               "ignoreNavigation": true
-              }
-             },
-             "liveChatItemContextMenuEndpoint": {
-              "params": "___params___"
-             }
-            },
-            "id": "dummy_id",
-            "timestampUsec": 0,
-            "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
-            "contextMenuAccessibility": {
-             "accessibilityData": {
-              "label": "コメントの操作"
-             }
-            },
-            "timestampText": {
-             "simpleText": "0:00"
-            }
-           }
-          },
-          "clientId": "dummy_client_id"
-         }
-        }
-       ],
-       "videoOffsetTimeMsec": "20000"
-      }
+       }
+      ],
+      "videoOffsetTimeMsec": "18832"
      }
-    ]
-   }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
+             },
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
+             }
+            },
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
+            }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
+           }
+          }
+         },
+         "clientId": "dummy_client_id"
+        }
+       }
+      ],
+      "videoOffsetTimeMsec": "19024"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
+             },
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
+             }
+            },
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
+            }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
+           }
+          }
+         },
+         "clientId": "dummy_client_id"
+        }
+       }
+      ],
+      "videoOffsetTimeMsec": "19216"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
+             },
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
+             }
+            },
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
+            }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
+           }
+          }
+         },
+         "clientId": "dummy_client_id"
+        }
+       }
+      ],
+      "videoOffsetTimeMsec": "19408"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
+             },
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
+             }
+            },
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
+            }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
+           }
+          }
+         },
+         "clientId": "dummy_client_id"
+        }
+       }
+      ],
+      "videoOffsetTimeMsec": "19600"
+     }
+    },
+    {
+     "replayChatItemAction": {
+      "actions": [
+       {
+        "addChatItemAction": {
+         "item": {
+          "liveChatTextMessageRenderer": {
+           "message": {
+            "runs": [
+             {
+              "text": "dummy_message"
+             }
+            ]
+           },
+           "authorName": {
+            "simpleText": "author_name"
+           },
+           "authorPhoto": {
+            "thumbnails": [
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 32,
+              "height": 32
+             },
+             {
+              "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+              "width": 64,
+              "height": 64
+             }
+            ]
+           },
+           "contextMenuEndpoint": {
+            "commandMetadata": {
+             "webCommandMetadata": {
+              "ignoreNavigation": true
+             }
+            },
+            "liveChatItemContextMenuEndpoint": {
+             "params": "___params___"
+            }
+           },
+           "id": "dummy_id",
+           "timestampUsec": 0,
+           "authorExternalChannelId": "http://www.youtube.com/channel/author_channel_url",
+           "contextMenuAccessibility": {
+            "accessibilityData": {
+             "label": "コメントの操作"
+            }
+           },
+           "timestampText": {
+            "simpleText": "0:00"
+           }
+          }
+         },
+         "clientId": "dummy_client_id"
+        }
+       }
+      ],
+      "videoOffsetTimeMsec": "20000"
+     }
+    }
+   ]
   }
  }
 }

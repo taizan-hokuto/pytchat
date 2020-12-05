@@ -1,1 +1,168 @@
-{"endpoint":{"commandMetadata":{"webCommandMetadata":{"url":"/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiAmpeOs-PkAjAAOABAAkorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CAmpeOs-PkAliAmpeOs-PkAmgBggEECAEQAIgBAKABgJqXjrPj5AI%253D"}},"urlEndpoint":{"url":"/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiAmpeOs-PkAjAAOABAAkorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CAmpeOs-PkAliAmpeOs-PkAmgBggEECAEQAIgBAKABgJqXjrPj5AI%253D"}},"xsrf_token":"QUFFLUhqbUxQV1djRnhRZFhmX1p2WklrX09xS3VFUHZsUXxBQ3Jtc0tuMkZIOUJkMlZubnVYRUlOa0RhYUhpUkpUN213NkJyajA0SGF4NmlKQVlYVkZ4QV85Wlc2MXlWcW1pZnBVcTJZRzgxcGQzTkw2ZEM1cTNUdEZuQlB5ckRfRFdGWkt1M3FGTWlIRFpjQkFuam9oOW44aGc0RXNIMWtyblRxQlhDQVBfVWxYaDVjd3NPRUloZkh3cFNqTXR4ZUxJN2c=","response":{"responseContext":{"serviceTrackingParams":[{"service":"CSI","params":[{"key":"GetLiveChat_rid","value":"0x83eb22f75e077d28"},{"key":"c","value":"WEB"},{"key":"cver","value":"2.20190920.05.01"},{"key":"yt_li","value":"0"}]},{"service":"GFEEDBACK","params":[{"key":"e","value":"23744176,23748146,23788851,23788875,23793834,23804281,23807353,23808952,23828082,23828243,23829333,23832544,23834418,23834656,23835020,23836434,23836965,23837742,23837772,23837993,23838301,23838576,23838576,23838742,23839360,23840216,23841655,23842986,23843288,23843533,23843743,23844780,24630231,9425362,9449243,9466592,9469037,9471235,9474358"},{"key":"logged_in","value":"0"}]},{"service":"GUIDED_HELP","params":[{"key":"logged_in","value":"0"}]},{"service":"ECATCHER","params":[{"key":"client.name","value":"WEB"},{"key":"client.version","value":"2.20190920"},{"key":"innertube.build.changelist","value":"270169303"},{"key":"innertube.build.experiments.source_version","value":"270377311"},{"key":"innertube.build.label","value":"youtube.ytfe.innertube_20190919_5_RC1"},{"key":"innertube.build.timestamp","value":"1568942548"},{"key":"innertube.build.variants.checksum","value":"392d499f55b5e2c240adde58886a8143"},{"key":"innertube.run.job","value":"ytfe-innertube-replica-only.ytfe"}]}],"webResponseContextExtensionData":{"ytConfigData":{"csn":"ld6GXdDdDqeDs8IP54Cz4AY","visitorData":"CgtKUldQeGJJRXhkcyiVvZvsBQ%3D%3D"}}},"continuationContents":{"liveChatContinuation":{"continuations":[{"timedContinuationData":{"timeoutMs":5035,"continuation":"0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiPz5-Os-PkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CRwciOs-PkAli3pNq1k-PkAmgBggEECAEQAIgBAKABjbfnjrPj5AI%3D"}}],"actions":[{"addChatItemAction":{"item":{"liveChatTextMessageRenderer":{"message":{"runs":[{"text":"伝説を見た！"}]},"authorName":{"simpleText":"2021 2526"},"authorPhoto":{"thumbnails":[{"url":"https://yt3.ggpht.com/-yTRb9pvMpGU/AAAAAAAAAAI/AAAAAAAAAAA/wZTSSVY3evw/s32-c-k-no-mo-rj-c0xffffff/photo.jpg","width":32,"height":32},{"url":"https://yt3.ggpht.com/-yTRb9pvMpGU/AAAAAAAAAAI/AAAAAAAAAAA/wZTSSVY3evw/s64-c-k-no-mo-rj-c0xffffff/photo.jpg","width":64,"height":64}]},"contextMenuEndpoint":{"commandMetadata":{"webCommandMetadata":{"ignoreNavigation":true}},"liveChatItemContextMenuEndpoint":{"params":"Q2owS093b2FRMGxQVlMwME1ubzBMVkZEUmxsdE0yZG5iMlIyZVUxRWIyY1NIVU5KYVhreVpWTjJOQzFSUTBaWE9VTm9VVzlrYUc1clNsVkJMVEV4RUFBYU9Bb05DZ3RyTkV0M1NWZFBTME4yTkNvbkNoaFZRMjlKY1c0eFdqVnBlRU5hZDJNd1JGZEtOM0pMUTJjU0MyczBTM2RKVjA5TFEzWTBJQUlvQVRJYUNoaFZRMDVzUm1KcVlXMU5SV1ZxU21sbVNVWldUMjU2VlZFJTNE"}},"id":"CjsKGkNJT1UtNDJ6NC1RQ0ZZbTNnZ29kdnlNRG9nEh1DSWl5MmVTdjQtUUNGVzlDaFFvZGhua0pVQS0xMQ%3D%3D","timestampUsec":"1569119891540483","authorExternalChannelId":"UCNlFbjamMEejJifIFVOnzUQ","contextMenuAccessibility":{"accessibilityData":{"label":"コメントの操作"}}}},"clientId":"CIiy2eSv4-QCFW9ChQodhnkJUA-11"}},{"addChatItemAction":{"item":{"liveChatTextMessageRenderer":{"message":{"runs":[{"text":"あかん、なんもできん。見たい。"}]},"authorName":{"simpleText":"takarakujihazure"},"authorPhoto":{"thumbnails":[{"url":"https://yt3.ggpht.com/-A7GmQ36IIjI/AAAAAAAAAAI/AAAAAAAAAAA/5NehWDlHx9Q/s32-c-k-no-mo-rj-c0xffffff/photo.jpg","width":32,"height":32},{"url":"https://yt3.ggpht.com/-A7GmQ36IIjI/AAAAAAAAAAI/AAAAAAAAAAA/5NehWDlHx9Q/s64-c-k-no-mo-rj-c0xffffff/photo.jpg","width":64,"height":64}]},"contextMenuEndpoint":{"commandMetadata":{"webCommandMetadata":{"ignoreNavigation":true}},"liveChatItemContextMenuEndpoint":{"params":"Q2p3S09nb2FRMGxmVUc0ME5ubzBMVkZEUmxFMmVXZG5iMlJSWkVWS00xRVNIRU5MUzB0M2NVZG9OQzFSUTBaWk1IUlpRVzlrTWtaalRGQm5NVGNRQUJvNENnMEtDMnMwUzNkSlYwOUxRM1kwS2ljS0dGVkRiMGx4YmpGYU5XbDRRMXAzWXpCRVYwbzNja3REWnhJTGF6UkxkMGxYVDB0RGRqUWdBaWdCTWhvS0dGVkRUa1JOYTNsV2NITkZTVEk0TFU1MmRFTnNhSFJrZHclM0QlM0Q="}},"id":"CjoKGkNJX1BuNDZ6NC1RQ0ZRNnlnZ29kUWRFSjNREhxDS0tLd3FHaDQtUUNGWTB0WUFvZDJGY0xQZzE3","timestampUsec":"1569119892137871","authorExternalChannelId":"UCNDMkyVpsEI28-NvtClhtdw","contextMenuAccessibility":{"accessibilityData":{"label":"コメントの操作"}}}},"clientId":"CKKKwqGh4-QCFY0tYAod2FcLPg17"}}]}}},"csn":"ld6GXdDdDqeDs8IP54Cz4AY","url":"\/live_chat\/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiAmpeOs-PkAjAAOABAAkorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CAmpeOs-PkAliAmpeOs-PkAmgBggEECAEQAIgBAKABgJqXjrPj5AI%253D","timing":{"info":{"st":91}}}
+{
+  "endpoint": {
+    "commandMetadata": {
+      "webCommandMetadata": {
+        "url": "/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiAmpeOs-PkAjAAOABAAkorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CAmpeOs-PkAliAmpeOs-PkAmgBggEECAEQAIgBAKABgJqXjrPj5AI%253D"
+      }
+    },
+    "urlEndpoint": {
+      "url": "/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiAmpeOs-PkAjAAOABAAkorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CAmpeOs-PkAliAmpeOs-PkAmgBggEECAEQAIgBAKABgJqXjrPj5AI%253D"
+    }
+  },
+  "xsrf_token": "QUFFLUhqbUxQV1djRnhRZFhmX1p2WklrX09xS3VFUHZsUXxBQ3Jtc0tuMkZIOUJkMlZubnVYRUlOa0RhYUhpUkpUN213NkJyajA0SGF4NmlKQVlYVkZ4QV85Wlc2MXlWcW1pZnBVcTJZRzgxcGQzTkw2ZEM1cTNUdEZuQlB5ckRfRFdGWkt1M3FGTWlIRFpjQkFuam9oOW44aGc0RXNIMWtyblRxQlhDQVBfVWxYaDVjd3NPRUloZkh3cFNqTXR4ZUxJN2c=",
+  "responseContext": {
+    "serviceTrackingParams": [
+      {
+        "service": "CSI",
+        "params": [
+          { "key": "GetLiveChat_rid", "value": "0x83eb22f75e077d28" },
+          { "key": "c", "value": "WEB" },
+          { "key": "cver", "value": "2.20190920.05.01" },
+          { "key": "yt_li", "value": "0" }
+        ]
+      },
+      {
+        "service": "GFEEDBACK",
+        "params": [
+          {
+            "key": "e",
+            "value": "23744176,23748146,23788851,23788875,23793834,23804281,23807353,23808952,23828082,23828243,23829333,23832544,23834418,23834656,23835020,23836434,23836965,23837742,23837772,23837993,23838301,23838576,23838576,23838742,23839360,23840216,23841655,23842986,23843288,23843533,23843743,23844780,24630231,9425362,9449243,9466592,9469037,9471235,9474358"
+          },
+          { "key": "logged_in", "value": "0" }
+        ]
+      },
+      {
+        "service": "GUIDED_HELP",
+        "params": [{ "key": "logged_in", "value": "0" }]
+      },
+      {
+        "service": "ECATCHER",
+        "params": [
+          { "key": "client.name", "value": "WEB" },
+          { "key": "client.version", "value": "2.20190920" },
+          { "key": "innertube.build.changelist", "value": "270169303" },
+          {
+            "key": "innertube.build.experiments.source_version",
+            "value": "270377311"
+          },
+          {
+            "key": "innertube.build.label",
+            "value": "youtube.ytfe.innertube_20190919_5_RC1"
+          },
+          { "key": "innertube.build.timestamp", "value": "1568942548" },
+          {
+            "key": "innertube.build.variants.checksum",
+            "value": "392d499f55b5e2c240adde58886a8143"
+          },
+          {
+            "key": "innertube.run.job",
+            "value": "ytfe-innertube-replica-only.ytfe"
+          }
+        ]
+      }
+    ],
+    "webResponseContextExtensionData": {
+      "ytConfigData": {
+        "csn": "ld6GXdDdDqeDs8IP54Cz4AY",
+        "visitorData": "CgtKUldQeGJJRXhkcyiVvZvsBQ%3D%3D"
+      }
+    }
+  },
+  "continuationContents": {
+    "liveChatContinuation": {
+      "continuations": [
+        {
+          "timedContinuationData": {
+            "timeoutMs": 5035,
+            "continuation": "0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiPz5-Os-PkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CRwciOs-PkAli3pNq1k-PkAmgBggEECAEQAIgBAKABjbfnjrPj5AI%3D"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": { "runs": [{ "text": "伝説を見た！" }] },
+                "authorName": { "simpleText": "2021 2526" },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://yt3.ggpht.com/-yTRb9pvMpGU/AAAAAAAAAAI/AAAAAAAAAAA/wZTSSVY3evw/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://yt3.ggpht.com/-yTRb9pvMpGU/AAAAAAAAAAI/AAAAAAAAAAA/wZTSSVY3evw/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": { "ignoreNavigation": true }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": "Q2owS093b2FRMGxQVlMwME1ubzBMVkZEUmxsdE0yZG5iMlIyZVUxRWIyY1NIVU5KYVhreVpWTjJOQzFSUTBaWE9VTm9VVzlrYUc1clNsVkJMVEV4RUFBYU9Bb05DZ3RyTkV0M1NWZFBTME4yTkNvbkNoaFZRMjlKY1c0eFdqVnBlRU5hZDJNd1JGZEtOM0pMUTJjU0MyczBTM2RKVjA5TFEzWTBJQUlvQVRJYUNoaFZRMDVzUm1KcVlXMU5SV1ZxU21sbVNVWldUMjU2VlZFJTNE"
+                  }
+                },
+                "id": "CjsKGkNJT1UtNDJ6NC1RQ0ZZbTNnZ29kdnlNRG9nEh1DSWl5MmVTdjQtUUNGVzlDaFFvZGhua0pVQS0xMQ%3D%3D",
+                "timestampUsec": "1569119891540483",
+                "authorExternalChannelId": "UCNlFbjamMEejJifIFVOnzUQ",
+                "contextMenuAccessibility": {
+                  "accessibilityData": { "label": "コメントの操作" }
+                }
+              }
+            },
+            "clientId": "CIiy2eSv4-QCFW9ChQodhnkJUA-11"
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [{ "text": "あかん、なんもできん。見たい。" }]
+                },
+                "authorName": { "simpleText": "takarakujihazure" },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://yt3.ggpht.com/-A7GmQ36IIjI/AAAAAAAAAAI/AAAAAAAAAAA/5NehWDlHx9Q/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://yt3.ggpht.com/-A7GmQ36IIjI/AAAAAAAAAAI/AAAAAAAAAAA/5NehWDlHx9Q/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": { "ignoreNavigation": true }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": "Q2p3S09nb2FRMGxmVUc0ME5ubzBMVkZEUmxFMmVXZG5iMlJSWkVWS00xRVNIRU5MUzB0M2NVZG9OQzFSUTBaWk1IUlpRVzlrTWtaalRGQm5NVGNRQUJvNENnMEtDMnMwUzNkSlYwOUxRM1kwS2ljS0dGVkRiMGx4YmpGYU5XbDRRMXAzWXpCRVYwbzNja3REWnhJTGF6UkxkMGxYVDB0RGRqUWdBaWdCTWhvS0dGVkRUa1JOYTNsV2NITkZTVEk0TFU1MmRFTnNhSFJrZHclM0QlM0Q="
+                  }
+                },
+                "id": "CjoKGkNJX1BuNDZ6NC1RQ0ZRNnlnZ29kUWRFSjNREhxDS0tLd3FHaDQtUUNGWTB0WUFvZDJGY0xQZzE3",
+                "timestampUsec": "1569119892137871",
+                "authorExternalChannelId": "UCNDMkyVpsEI28-NvtClhtdw",
+                "contextMenuAccessibility": {
+                  "accessibilityData": { "label": "コメントの操作" }
+                }
+              }
+            },
+            "clientId": "CKKKwqGh4-QCFY0tYAod2FcLPg17"
+          }
+        }
+      ]
+    }
+  },
+  "csn": "ld6GXdDdDqeDs8IP54Cz4AY",
+  "url": "/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiAmpeOs-PkAjAAOABAAkorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CAmpeOs-PkAliAmpeOs-PkAmgBggEECAEQAIgBAKABgJqXjrPj5AI%253D",
+  "timing": { "info": { "st": 91 } }
+}

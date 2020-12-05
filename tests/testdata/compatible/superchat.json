@@ -1,282 +1,281 @@
 {
-    "xsrf_token": "QUFFLUhqbWVqWVRTUjhBcGRkNWR5Q2F3VWhxcTd0RkF1UXxBQ3Jtc0trMThFVGVVNTFnWmZucnkwNlJJMEZ2bndUS1I3b2dpLUtTNE92dEgwX3Y0MkNZU2NXdGY1QTMtX09BUGphYUpDQlc1dFhiTm9jLS1sQXVCNHpsdllqcm1id0t1RFBCM3A1b2o3OGt0Yjd6TE5wcmxBbjNyQktjc1lWZ3hjM1RuYk83YkQ0VVN3MGUybjAwSE90SS1YNkxvMUV5YVE=",
-    "timing": {
-        "info": {
-            "st": 148
-        }
+  "xsrf_token": "QUFFLUhqbWVqWVRTUjhBcGRkNWR5Q2F3VWhxcTd0RkF1UXxBQ3Jtc0trMThFVGVVNTFnWmZucnkwNlJJMEZ2bndUS1I3b2dpLUtTNE92dEgwX3Y0MkNZU2NXdGY1QTMtX09BUGphYUpDQlc1dFhiTm9jLS1sQXVCNHpsdllqcm1id0t1RFBCM3A1b2o3OGt0Yjd6TE5wcmxBbjNyQktjc1lWZ3hjM1RuYk83YkQ0VVN3MGUybjAwSE90SS1YNkxvMUV5YVE=",
+  "timing": {
+    "info": {
+      "st": 148
+    }
+  },
+  "endpoint": {
+    "commandMetadata": {
+      "webCommandMetadata": {
+        "url": "/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xPREJQZW5SS2FIVTNOemdhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5T0RCUGVuUkthSFUzTnpnbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCja2bHMpPvkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQwJKPoqT75AJYA1DXxuTMpPvkAliL_fvZoPvkAmgBggEECAEQAIgBAKABxM3xzKT75AI%253D"
+      }
     },
-    "endpoint": {
-        "commandMetadata": {
-            "webCommandMetadata": {
-                "url": "/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xPREJQZW5SS2FIVTNOemdhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5T0RCUGVuUkthSFUzTnpnbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCja2bHMpPvkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQwJKPoqT75AJYA1DXxuTMpPvkAliL_fvZoPvkAmgBggEECAEQAIgBAKABxM3xzKT75AI%253D"
-            }
-        },
-        "urlEndpoint": {
-            "url": "/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xPREJQZW5SS2FIVTNOemdhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5T0RCUGVuUkthSFUzTnpnbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCja2bHMpPvkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQwJKPoqT75AJYA1DXxuTMpPvkAliL_fvZoPvkAmgBggEECAEQAIgBAKABxM3xzKT75AI%253D"
+    "urlEndpoint": {
+      "url": "/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xPREJQZW5SS2FIVTNOemdhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5T0RCUGVuUkthSFUzTnpnbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCja2bHMpPvkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQwJKPoqT75AJYA1DXxuTMpPvkAliL_fvZoPvkAmgBggEECAEQAIgBAKABxM3xzKT75AI%253D"
+    }
+  },
+  "url": "/live_chat/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xPREJQZW5SS2FIVTNOemdhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5T0RCUGVuUkthSFUzTnpnbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCja2bHMpPvkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQwJKPoqT75AJYA1DXxuTMpPvkAliL_fvZoPvkAmgBggEECAEQAIgBAKABxM3xzKT75AI%253D",
+  "csn": "n2STXd2iKZr2gAOt9qvgCg",
+
+  "responseContext": {
+    "serviceTrackingParams": [
+      {
+        "service": "CSI",
+        "params": [
+          {
+            "key": "GetLiveChat_rid",
+            "value": "0x9290108c05344647"
+          },
+          {
+            "key": "c",
+            "value": "WEB"
+          },
+          {
+            "key": "cver",
+            "value": "2.20191001.04.00"
+          },
+          {
+            "key": "yt_li",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "service": "GFEEDBACK",
+        "params": [
+          {
+            "key": "e",
+            "value": "23744176,23788875,23793834,23794620,23804281,23806159,23816483,23819244,23820768,23826780,23827354,23830392,23832125,23835020,23836965,23837741,23837772,23837993,23838235,23839362,23840155,23840217,23841118,23841454,23842630,23842662,23842883,23842986,23843289,23843534,23843767,23845644,9449243,9471239,9474360"
+          },
+          {
+            "key": "logged_in",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "service": "GUIDED_HELP",
+        "params": [
+          {
+            "key": "logged_in",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "service": "ECATCHER",
+        "params": [
+          {
+            "key": "client.name",
+            "value": "WEB"
+          },
+          {
+            "key": "client.version",
+            "value": "2.20191001"
+          },
+          {
+            "key": "innertube.build.changelist",
+            "value": "272006966"
+          },
+          {
+            "key": "innertube.build.experiments.source_version",
+            "value": "272166268"
+          },
+          {
+            "key": "innertube.build.label",
+            "value": "youtube.ytfe.innertube_20190930_5_RC0"
+          },
+          {
+            "key": "innertube.build.timestamp",
+            "value": "1569863426"
+          },
+          {
+            "key": "innertube.build.variants.checksum",
+            "value": "1a800c1a2396906f1cbb7f670d43b6f5"
+          },
+          {
+            "key": "innertube.run.job",
+            "value": "ytfe-innertube-replica-only.ytfe"
+          }
+        ]
+      }
+    ],
+    "webResponseContextExtensionData": {
+      "ytConfigData": {
+        "csn": "n2STXd2iKZr2gAOt9qvgCg",
+        "visitorData": "CgtPQm1xTmtvNm1Tcyifyc3sBQ%3D%3D"
+      }
+    }
+  },
+  "continuationContents": {
+    "liveChatContinuation": {
+      "continuations": [
+        {
+          "timedContinuationData": {
+            "timeoutMs": 8860,
+            "continuation": "0ofMyAPiARp8Q2c4S0RRb0xPREJQZW5SS2FIVTNOemdhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5T0RCUGVuUkthSFUzTnpnbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCid_ejQpPvkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQwJKPoqT75AJYA1DF-ovRpPvkAliL_fvZoPvkAmgBggEECAEQAIgBAKABtNic0aT75AI%3D"
+          }
         }
-    },
-    "url": "\/live_chat\/get_live_chat?continuation=0ofMyAPiARp8Q2c4S0RRb0xPREJQZW5SS2FIVTNOemdhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5T0RCUGVuUkthSFUzTnpnbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCja2bHMpPvkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQwJKPoqT75AJYA1DXxuTMpPvkAliL_fvZoPvkAmgBggEECAEQAIgBAKABxM3xzKT75AI%253D",
-    "csn": "n2STXd2iKZr2gAOt9qvgCg",
-    "response": {
-        "responseContext": {
-            "serviceTrackingParams": [
-                {
-                    "service": "CSI",
-                    "params": [
-                        {
-                            "key": "GetLiveChat_rid",
-                            "value": "0x9290108c05344647"
-                        },
-                        {
-                            "key": "c",
-                            "value": "WEB"
-                        },
-                        {
-                            "key": "cver",
-                            "value": "2.20191001.04.00"
-                        },
-                        {
-                            "key": "yt_li",
-                            "value": "0"
-                        }
-                    ]
+      ],
+      "actions": [
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatPaidMessageRenderer": {
+                "id": "ChwKGkNOblpoTXFrLS1RQ0ZRSU9ZQW9kclhrRXNn",
+                "timestampUsec": "1569940638420061",
+                "authorName": {
+                  "simpleText": "九十九 万"
                 },
-                {
-                    "service": "GFEEDBACK",
-                    "params": [
-                        {
-                            "key": "e",
-                            "value": "23744176,23788875,23793834,23794620,23804281,23806159,23816483,23819244,23820768,23826780,23827354,23830392,23832125,23835020,23836965,23837741,23837772,23837993,23838235,23839362,23840155,23840217,23841118,23841454,23842630,23842662,23842883,23842986,23843289,23843534,23843767,23845644,9449243,9471239,9474360"
-                        },
-                        {
-                            "key": "logged_in",
-                            "value": "0"
-                        }
-                    ]
-                },
-                {
-                    "service": "GUIDED_HELP",
-                    "params": [
-                        {
-                            "key": "logged_in",
-                            "value": "0"
-                        }
-                    ]
-                },
-                {
-                    "service": "ECATCHER",
-                    "params": [
-                        {
-                            "key": "client.name",
-                            "value": "WEB"
-                        },
-                        {
-                            "key": "client.version",
-                            "value": "2.20191001"
-                        },
-                        {
-                            "key": "innertube.build.changelist",
-                            "value": "272006966"
-                        },
-                        {
-                            "key": "innertube.build.experiments.source_version",
-                            "value": "272166268"
-                        },
-                        {
-                            "key": "innertube.build.label",
-                            "value": "youtube.ytfe.innertube_20190930_5_RC0"
-                        },
-                        {
-                            "key": "innertube.build.timestamp",
-                            "value": "1569863426"
-                        },
-                        {
-                            "key": "innertube.build.variants.checksum",
-                            "value": "1a800c1a2396906f1cbb7f670d43b6f5"
-                        },
-                        {
-                            "key": "innertube.run.job",
-                            "value": "ytfe-innertube-replica-only.ytfe"
-                        }
-                    ]
-                }
-            ],
-            "webResponseContextExtensionData": {
-                "ytConfigData": {
-                    "csn": "n2STXd2iKZr2gAOt9qvgCg",
-                    "visitorData": "CgtPQm1xTmtvNm1Tcyifyc3sBQ%3D%3D"
-                }
-            }
-        },
-        "continuationContents": {
-            "liveChatContinuation": {
-                "continuations": [
+                "authorPhoto": {
+                  "thumbnails": [
                     {
-                        "timedContinuationData": {
-                            "timeoutMs": 8860,
-                            "continuation": "0ofMyAPiARp8Q2c4S0RRb0xPREJQZW5SS2FIVTNOemdhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5T0RCUGVuUkthSFUzTnpnbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCid_ejQpPvkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQwJKPoqT75AJYA1DF-ovRpPvkAliL_fvZoPvkAmgBggEECAEQAIgBAKABtNic0aT75AI%3D"
-                        }
-                    }
-                ],
-                "actions": [
-                    {
-                        "addChatItemAction": {
-                            "item": {
-                                "liveChatPaidMessageRenderer": {
-                                    "id": "ChwKGkNOblpoTXFrLS1RQ0ZRSU9ZQW9kclhrRXNn",
-                                    "timestampUsec": "1569940638420061",
-                                    "authorName": {
-                                        "simpleText": "九十九 万"
-                                    },
-                                    "authorPhoto": {
-                                        "thumbnails": [
-                                            {
-                                                "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
-                                                "width": 32,
-                                                "height": 32
-                                            },
-                                            {
-                                                "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
-                                                "width": 64,
-                                                "height": 64
-                                            }
-                                        ]
-                                    },
-                                    "purchaseAmountText": {
-                                        "simpleText": "￥846"
-                                    },
-                                    "message": {
-                                        "runs": [
-                                            {
-                                                "text": "ボルガ博士お許しください代"
-                                            }
-                                        ]
-                                    },
-                                    "headerBackgroundColor": 4278239141,
-                                    "headerTextColor": 4278190080,
-                                    "bodyBackgroundColor": 4280150454,
-                                    "bodyTextColor": 4278190080,
-                                    "authorExternalChannelId": "UCoVtCMzg2vleAVsa7kw05AA",
-                                    "authorNameTextColor": 2315255808,
-                                    "contextMenuEndpoint": {
-                                        "commandMetadata": {
-                                            "webCommandMetadata": {
-                                                "ignoreNavigation": true
-                                            }
-                                        },
-                                        "liveChatItemContextMenuEndpoint": {
-                                            "params": "Q2g0S0hBb2FRMDV1V21oTmNXc3RMVkZEUmxGSlQxbEJiMlJ5V0d0RmMyY1FBQm80Q2cwS0N6Z3dUM3AwU21oMU56YzRLaWNLR0ZWRFNYbDBUbU52ZWpSd1YzcFlaa3hrWVRCRWIxVk1VUklMT0RCUGVuUkthSFUzTnpnZ0FpZ0JNaG9LR0ZWRGIxWjBRMDE2WnpKMmJHVkJWbk5oTjJ0M01EVkJRUSUzRCUzRA=="
-                                        }
-                                    },
-                                    "timestampColor": 2147483648,
-                                    "contextMenuAccessibility": {
-                                        "accessibilityData": {
-                                            "label": "コメントの操作"
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                      "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                      "width": 32,
+                      "height": 32
                     },
                     {
-                        "addLiveChatTickerItemAction": {
-                            "item": {
-                                "liveChatTickerPaidMessageItemRenderer": {
-                                    "id": "ChwKGkNOblpoTXFrLS1RQ0ZRSU9ZQW9kclhrRXNn",
-                                    "amount": {
-                                        "simpleText": "￥846"
-                                    },
-                                    "amountTextColor": 4278190080,
-                                    "startBackgroundColor": 4280150454,
-                                    "endBackgroundColor": 4278239141,
-                                    "authorPhoto": {
-                                        "thumbnails": [
-                                            {
-                                                "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
-                                                "width": 32,
-                                                "height": 32
-                                            },
-                                            {
-                                                "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
-                                                "width": 64,
-                                                "height": 64
-                                            }
-                                        ]
-                                    },
-                                    "durationSec": 120,
-                                    "showItemEndpoint": {
-                                        "commandMetadata": {
-                                            "webCommandMetadata": {
-                                                "ignoreNavigation": true
-                                            }
-                                        },
-                                        "showLiveChatItemEndpoint": {
-                                            "renderer": {
-                                                "liveChatPaidMessageRenderer": {
-                                                    "id": "ChwKGkNOblpoTXFrLS1RQ0ZRSU9ZQW9kclhrRXNn",
-                                                    "timestampUsec": "1569940638420061",
-                                                    "authorName": {
-                                                        "simpleText": "九十九 万"
-                                                    },
-                                                    "authorPhoto": {
-                                                        "thumbnails": [
-                                                            {
-                                                                "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
-                                                                "width": 32,
-                                                                "height": 32
-                                                            },
-                                                            {
-                                                                "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
-                                                                "width": 64,
-                                                                "height": 64
-                                                            }
-                                                        ]
-                                                    },
-                                                    "purchaseAmountText": {
-                                                        "simpleText": "￥846"
-                                                    },
-                                                    "message": {
-                                                        "runs": [
-                                                            {
-                                                                "text": "ボルガ博士お許しください代"
-                                                            }
-                                                        ]
-                                                    },
-                                                    "headerBackgroundColor": 4278239141,
-                                                    "headerTextColor": 4278190080,
-                                                    "bodyBackgroundColor": 4280150454,
-                                                    "bodyTextColor": 4278190080,
-                                                    "authorExternalChannelId": "UCoVtCMzg2vleAVsa7kw05AA",
-                                                    "authorNameTextColor": 2315255808,
-                                                    "contextMenuEndpoint": {
-                                                        "commandMetadata": {
-                                                            "webCommandMetadata": {
-                                                                "ignoreNavigation": true
-                                                            }
-                                                        },
-                                                        "liveChatItemContextMenuEndpoint": {
-                                                            "params": "Q2g0S0hBb2FRMDV1V21oTmNXc3RMVkZEUmxGSlQxbEJiMlJ5V0d0RmMyY1FBQm80Q2cwS0N6Z3dUM3AwU21oMU56YzRLaWNLR0ZWRFNYbDBUbU52ZWpSd1YzcFlaa3hrWVRCRWIxVk1VUklMT0RCUGVuUkthSFUzTnpnZ0FpZ0JNaG9LR0ZWRGIxWjBRMDE2WnpKMmJHVkJWbk5oTjJ0M01EVkJRUSUzRCUzRA=="
-                                                        }
-                                                    },
-                                                    "timestampColor": 2147483648,
-                                                    "contextMenuAccessibility": {
-                                                        "accessibilityData": {
-                                                            "label": "コメントの操作"
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "authorExternalChannelId": "UCoVtCMzg2vleAVsa7kw05AA",
-                                    "fullDurationSec": 120
-                                }
-                            },
-                            "durationSec": "120"
-                        }
+                      "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                      "width": 64,
+                      "height": 64
                     }
-                ]
+                  ]
+                },
+                "purchaseAmountText": {
+                  "simpleText": "￥846"
+                },
+                "message": {
+                  "runs": [
+                    {
+                      "text": "ボルガ博士お許しください代"
+                    }
+                  ]
+                },
+                "headerBackgroundColor": 4278239141,
+                "headerTextColor": 4278190080,
+                "bodyBackgroundColor": 4280150454,
+                "bodyTextColor": 4278190080,
+                "authorExternalChannelId": "UCoVtCMzg2vleAVsa7kw05AA",
+                "authorNameTextColor": 2315255808,
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": "Q2g0S0hBb2FRMDV1V21oTmNXc3RMVkZEUmxGSlQxbEJiMlJ5V0d0RmMyY1FBQm80Q2cwS0N6Z3dUM3AwU21oMU56YzRLaWNLR0ZWRFNYbDBUbU52ZWpSd1YzcFlaa3hrWVRCRWIxVk1VUklMT0RCUGVuUkthSFUzTnpnZ0FpZ0JNaG9LR0ZWRGIxWjBRMDE2WnpKMmJHVkJWbk5oTjJ0M01EVkJRUSUzRCUzRA=="
+                  }
+                },
+                "timestampColor": 2147483648,
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "コメントの操作"
+                  }
+                }
+              }
             }
+          }
+        },
+        {
+          "addLiveChatTickerItemAction": {
+            "item": {
+              "liveChatTickerPaidMessageItemRenderer": {
+                "id": "ChwKGkNOblpoTXFrLS1RQ0ZRSU9ZQW9kclhrRXNn",
+                "amount": {
+                  "simpleText": "￥846"
+                },
+                "amountTextColor": 4278190080,
+                "startBackgroundColor": 4280150454,
+                "endBackgroundColor": 4278239141,
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "durationSec": 120,
+                "showItemEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "showLiveChatItemEndpoint": {
+                    "renderer": {
+                      "liveChatPaidMessageRenderer": {
+                        "id": "ChwKGkNOblpoTXFrLS1RQ0ZRSU9ZQW9kclhrRXNn",
+                        "timestampUsec": "1569940638420061",
+                        "authorName": {
+                          "simpleText": "九十九 万"
+                        },
+                        "authorPhoto": {
+                          "thumbnails": [
+                            {
+                              "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                              "width": 32,
+                              "height": 32
+                            },
+                            {
+                              "url": "https://yt3.ggpht.com/-FoBvzoKhbZs/AAAAAAAAAAI/AAAAAAAAAAA/oyb-UCYFbfA/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
+                              "width": 64,
+                              "height": 64
+                            }
+                          ]
+                        },
+                        "purchaseAmountText": {
+                          "simpleText": "￥846"
+                        },
+                        "message": {
+                          "runs": [
+                            {
+                              "text": "ボルガ博士お許しください代"
+                            }
+                          ]
+                        },
+                        "headerBackgroundColor": 4278239141,
+                        "headerTextColor": 4278190080,
+                        "bodyBackgroundColor": 4280150454,
+                        "bodyTextColor": 4278190080,
+                        "authorExternalChannelId": "UCoVtCMzg2vleAVsa7kw05AA",
+                        "authorNameTextColor": 2315255808,
+                        "contextMenuEndpoint": {
+                          "commandMetadata": {
+                            "webCommandMetadata": {
+                              "ignoreNavigation": true
+                            }
+                          },
+                          "liveChatItemContextMenuEndpoint": {
+                            "params": "Q2g0S0hBb2FRMDV1V21oTmNXc3RMVkZEUmxGSlQxbEJiMlJ5V0d0RmMyY1FBQm80Q2cwS0N6Z3dUM3AwU21oMU56YzRLaWNLR0ZWRFNYbDBUbU52ZWpSd1YzcFlaa3hrWVRCRWIxVk1VUklMT0RCUGVuUkthSFUzTnpnZ0FpZ0JNaG9LR0ZWRGIxWjBRMDE2WnpKMmJHVkJWbk5oTjJ0M01EVkJRUSUzRCUzRA=="
+                          }
+                        },
+                        "timestampColor": 2147483648,
+                        "contextMenuAccessibility": {
+                          "accessibilityData": {
+                            "label": "コメントの操作"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "authorExternalChannelId": "UCoVtCMzg2vleAVsa7kw05AA",
+                "fullDurationSec": 120
+              }
+            },
+            "durationSec": "120"
+          }
         }
+      ]
     }
+  }
 }

@@ -15,7 +15,7 @@ def test_speed_1(mocker):
 
     _json = _open_file("tests/testdata/speed/speedtest_normal.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 10,
@@ -32,7 +32,7 @@ def test_speed_2(mocker):
 
     _json = _open_file("tests/testdata/speed/speedtest_undefined.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 10,
@@ -49,7 +49,7 @@ def test_speed_3(mocker):
 
     _json = _open_file("tests/testdata/speed/speedtest_empty.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 10,

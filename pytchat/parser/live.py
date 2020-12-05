@@ -28,11 +28,12 @@ class Parser:
     def get_contents(self, jsn):
         if jsn is None:
             self.raise_exception(exceptions.IllegalFunctionCall('Called with none JSON object.'))
-        if jsn['response']['responseContext'].get('errors'):
+        if jsn.get("error") or jsn.get("responseContext", {}).get("errors"):
             raise exceptions.ResponseContextError(
                 'The video_id would be wrong, or video is deleted or private.')
-        contents = jsn['response'].get('continuationContents')
-        return contents
+        contents = jsn.get('continuationContents')
+        visitor_data = jsn.get("responseContext", {}).get("visitorData")
+        return contents, visitor_data
 
     def parse(self, contents):
         """
@@ -85,6 +86,7 @@ class Parser:
             '''Broadcasting end or cannot fetch chat stream'''
             self.raise_exception(exceptions.NoContents('Chat data stream is empty.'))
         cont = contents['liveChatContinuation']['continuations'][0]
+
         if cont.get("liveChatReplayContinuationData"):
             # chat data exist.
             return None
@@ -97,23 +99,22 @@ class Parser:
     def _create_data(self, metadata, contents):
         actions = contents['liveChatContinuation'].get('actions')
         if self.is_replay:
-            interval = self._get_interval(actions)
-            metadata.setdefault("timeoutMs", interval)
+            last_offset_ms = self._get_lastoffset(actions)
+            metadata.setdefault("timeoutMs", 5000)
+            metadata.setdefault("last_offset_ms", last_offset_ms)
             """Archived chat has different structures than live chat,
             so make it the same format."""
             chatdata = [action["replayChatItemAction"]["actions"][0]
                         for action in actions]
         else:
-            metadata.setdefault('timeoutMs', 10000)
+            metadata.setdefault('timeoutMs', 5000)
             chatdata = actions
         return metadata, chatdata
 
-    def _get_interval(self, actions: list):
-        if actions is None:
-            return 0
-        start = int(actions[0]["replayChatItemAction"]["videoOffsetTimeMsec"])
-        last = int(actions[-1]["replayChatItemAction"]["videoOffsetTimeMsec"])
-        return (last - start)
+    def _get_lastoffset(self, actions: list):
+        if actions:
+            return int(actions[-1]["replayChatItemAction"]["videoOffsetTimeMsec"])
+        return 0
 
     def raise_exception(self, exception):
         if self.exception_holder is None:
