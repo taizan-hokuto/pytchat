@@ -1,6 +1,6 @@
 import pytchat
 from ..exceptions import ChatDataFinished, NoContents
-from ..util.extract_video_id import extract_video_id
+from ..util import extract_video_id
 
 
 class Echo:

@@ -12,7 +12,6 @@ from .. exceptions import InvalidVideoIdException, NoContents, PatternUnmatchErr
 from .. processors.html_archiver import HTMLArchiver
 from .. tool.extract.extractor import Extractor
 from .. tool.videoinfo import VideoInfo
-from .. util.extract_video_id import extract_video_id
 
 
 class CLIExtractor:
@@ -25,7 +24,7 @@ class CLIExtractor:
                 print(f"\n{'-' * 10} video:{counter + 1} of {len(Arguments().video_ids)} {'-' * 10}")
 
             try:
-                video_id = extract_video_id(video_id)
+                video_id = util.extract_video_id(video_id)
                 separated_path = str(Path(Arguments().output)) + os.path.sep
                 path = util.checkpath(separated_path + video_id + '.html')
                 try:

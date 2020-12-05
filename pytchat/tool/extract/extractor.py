@@ -4,7 +4,7 @@ from . import duplcheck
 from .. videoinfo import VideoInfo
 from ... import config
 from ... exceptions import InvalidVideoIdException
-from ... util.extract_video_id import extract_video_id
+from ... import util
 
 logger = config.logger(__name__)
 headers = config.headers
@@ -16,7 +16,7 @@ class Extractor:
             raise ValueError('div must be positive integer.')
         elif div > 10:
             div = 10
-        self.video_id = extract_video_id(video_id)
+        self.video_id = util.extract_video_id(video_id)
         self.div = div
         self.callback = callback
         self.processor = processor

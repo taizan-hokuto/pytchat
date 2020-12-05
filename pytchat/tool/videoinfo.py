@@ -4,7 +4,7 @@ import re
 import time
 from .. import config
 from ..exceptions import InvalidVideoIdException, PatternUnmatchError, UnknownConnectionError
-from ..util.extract_video_id import extract_video_id
+from ..util import extract_video_id
 
 
 headers = config.headers
