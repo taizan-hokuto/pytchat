@@ -26,7 +26,6 @@ from .exceptions import (
 )
 
 from .api import (
-    cli,
     config,
     LiveChat,
     LiveChatAsync,
@@ -34,14 +33,12 @@ from .api import (
     CompatibleProcessor,
     DummyProcessor,
     DefaultProcessor,
-    Extractor, 
     HTMLArchiver,
     TSVArchiver,
     JsonfileArchiver,
     SimpleDisplayProcessor,
     SpeedCalculator,
     SuperchatCalculator,
-    VideoInfo,
     create
 )
 # flake8: noqa

@@ -1,69 +1,46 @@
-from .pb.header_pb2 import Header
-from .pb.live_pb2 import Continuation
-from urllib.parse import quote
-import base64
 import random
 import time
-
-'''
-Generate continuation parameter of youtube live chat.
-
-Author: taizan-hokuto
-
-ver 0.0.1 2019.10.05 : Initial release.
-ver 0.0.2 2020.05.30 : Use Protocol Buffers.
-'''
+from . import enc
+from base64 import urlsafe_b64encode as b64enc
+from urllib.parse import quote
 
 
-def _gen_vid(video_id) -> str:
-    """generate video_id parameter.
-    Parameter
-    ---------
-        video_id : str
-
-    Return
-    ---------
-    str : base64 encoded video_id parameter.
-    """
-    header = Header()
-    header.info.video.id = video_id
-    header.terminator = 1
-    return base64.urlsafe_b64encode(header.SerializeToString()).decode()
+def _header(video_id) -> str:
+    return b64enc(enc.rs(1, enc.rs(1, enc.rs(1, video_id))) + enc.nm(4, 1))
 
 
 def _build(video_id, ts1, ts2, ts3, ts4, ts5, topchat_only) -> str:
-    chattype = 1
-    if topchat_only:
-        chattype = 4
-    continuation = Continuation()
-    entity = continuation.entity
+    chattype = 4 if topchat_only else 1
 
-    entity.header = _gen_vid(video_id)
-    entity.timestamp1 = ts1
-    entity.s6 = 0
-    entity.s7 = 0
-    entity.s8 = 1
-    entity.body.b1 = 0
-    entity.body.b2 = 0
-    entity.body.b3 = 0
-    entity.body.b4 = 0
-    entity.body.b7 = ''
-    entity.body.b8 = 0
-    entity.body.b9 = ''
-    entity.body.timestamp2 = ts2
-    entity.body.b11 = 3
-    entity.body.b15 = 0
-    entity.timestamp3 = ts3
-    entity.timestamp4 = ts4
-    entity.s13 = chattype
-    entity.chattype.value = chattype
-    entity.s17 = 0
-    entity.str19.value = 0
-    entity.timestamp5 = ts5
+    b1 = enc.nm(1, 0)
+    b2 = enc.nm(2, 0)
+    b3 = enc.nm(3, 0)
+    b4 = enc.nm(4, 0)
+    b7 = enc.rs(7, '')
+    b8 = enc.nm(8, 0)
+    b9 = enc.rs(9, '')
+    timestamp2 = enc.nm(10, ts2)
+    b11 = enc.nm(11, 3)
+    b15 = enc.nm(15, 0)
 
-    return quote(
-        base64.urlsafe_b64encode(continuation.SerializeToString()).decode()
-    )
+    header = enc.rs(3, _header(video_id))
+    timestamp1 = enc.nm(5, ts1)
+    s6 = enc.nm(6, 0)
+    s7 = enc.nm(7, 0)
+    s8 = enc.nm(8, 1)
+    body = enc.rs(9, b''.join(
+        (b1, b2, b3, b4, b7, b8, b9, timestamp2, b11, b15)))
+    timestamp3 = enc.nm(10, ts3)
+    timestamp4 = enc.nm(11, ts4)
+    s13 = enc.nm(13, chattype)
+    chattype = enc.rs(16, enc.nm(1, chattype))
+    s17 = enc.nm(17, 0)
+    str19 = enc.rs(19, enc.nm(1, 0))
+    timestamp5 = enc.nm(20, ts5)
+    entity = b''.join((header, timestamp1, s6, s7, s8, body, timestamp3,
+                       timestamp4, s13, chattype, s17, str19, timestamp5))
+    continuation = enc.rs(119693434, entity)
+    return quote(b64enc(continuation).decode())
 
 
 def _times(past_sec):

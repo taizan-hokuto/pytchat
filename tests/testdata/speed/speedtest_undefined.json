@@ -5,18 +5,19 @@
     }
   },
   "csn": "",
-  "response": {
-    "responseContext": {
-    },
-    "continuationContents": {
-      "liveChatContinuation": {
-        "continuations": [{
+  "responseContext": {},
+  "continuationContents": {
+    "liveChatContinuation": {
+      "continuations": [
+        {
           "timedContinuationData": {
             "timeoutMs": 10000,
             "continuation": "continuation"
           }
-        }],
-        "actions": [{
+        }
+      ],
+      "actions": [
+        {
           "addChatItemAction": {
             "liveChatPlaceholderItemRenderer": {
               "id": "",
@@ -28,15 +29,13 @@
           "addChatItemAction": {
             "item": {
               "liveChatPlaceholderItemRenderer": {
-                "id": "",                
+                "id": "",
                 "timestampUsec": "1500000030000000"
-
               }
             }
           }
         }
-      ]}
+      ]
     }
   }
 }
-    

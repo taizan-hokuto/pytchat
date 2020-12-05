@@ -11,7 +11,7 @@ def test_textmessage(mocker):
 
     _json = _open_file("tests/testdata/compatible/textmessage.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 7,
@@ -51,7 +51,7 @@ def test_newsponcer(mocker):
 
     _json = _open_file("tests/testdata/compatible/newSponsor.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 7,
@@ -88,7 +88,7 @@ def test_newsponcer_rev(mocker):
 
     _json = _open_file("tests/testdata/compatible/newSponsor_rev.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 7,
@@ -125,7 +125,7 @@ def test_superchat(mocker):
 
     _json = _open_file("tests/testdata/compatible/superchat.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
     data = {
         "video_id": "",
         "timeout": 7,
@@ -164,7 +164,7 @@ def test_unregistered_currency(mocker):
 
     _json = _open_file("tests/testdata/unregistered_currency.json")
 
-    _, chatdata = parser.parse(parser.get_contents(json.loads(_json)))
+    _, chatdata = parser.parse(parser.get_contents(json.loads(_json))[0])
 
     data = {
         "video_id": "",

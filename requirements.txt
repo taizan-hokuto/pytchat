@@ -1,4 +1,1 @@
-httpx[http2]
-protobuf==3.14.0
-pytz
-urllib3
+httpx[http2]==0.16.1

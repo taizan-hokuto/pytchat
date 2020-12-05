@@ -5,20 +5,17 @@
     }
   },
   "csn": "",
-  "response": {
-    "responseContext": {
-    },
-    "continuationContents": {
-      "liveChatContinuation": {
-        "continuations": [{
+  "responseContext": {},
+  "continuationContents": {
+    "liveChatContinuation": {
+      "continuations": [
+        {
           "timedContinuationData": {
             "timeoutMs": 10000,
             "continuation": "continuation"
           }
-        }]
-      }
+        }
+      ]
     }
   }
 }
-    
-

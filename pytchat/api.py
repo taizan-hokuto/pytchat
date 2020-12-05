@@ -1,4 +1,3 @@
-from . import cli
 from . import config
 from .core import create
 from .core_multithread.livechat import LiveChat
@@ -13,11 +12,9 @@ from .processors.jsonfile_archiver import JsonfileArchiver
 from .processors.simple_display_processor import SimpleDisplayProcessor
 from .processors.speed.calculator import SpeedCalculator
 from .processors.superchat.calculator import SuperchatCalculator
-from .tool.extract.extractor import Extractor
-from .tool.videoinfo import VideoInfo
+
 
 __all__ = [
-    cli,
     config,
     LiveChat,
     LiveChatAsync,
@@ -25,14 +22,12 @@ __all__ = [
     CompatibleProcessor,
     DummyProcessor,
     DefaultProcessor,
-    Extractor, 
     HTMLArchiver,
     TSVArchiver,
     JsonfileArchiver,
     SimpleDisplayProcessor,
     SpeedCalculator,
     SuperchatCalculator,
-    VideoInfo,
     create
 ]
 

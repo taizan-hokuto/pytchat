@@ -1,99 +1,97 @@
 {
-  "response": {
-    "responseContext": {
-      "webResponseContextExtensionData": ""
-    },
-    "continuationContents": {
-      "liveChatContinuation": {
-        "continuations": [
-          {
-            "invalidationContinuationData": {
-              "invalidationId": {
-                "objectSource": 1000,
-                "objectId": "___objectId___",
-                "topic": "chat~00000000000~0000000",
-                "subscribeToGcmTopics": true,
-                "protoCreationTimestampMs": "1577804400000"
-              },
-              "timeoutMs": 10000,
-              "continuation": "___continuation___"
-            }
+  "responseContext": {
+    "webResponseContextExtensionData": ""
+  },
+  "continuationContents": {
+    "liveChatContinuation": {
+      "continuations": [
+        {
+          "invalidationContinuationData": {
+            "invalidationId": {
+              "objectSource": 1000,
+              "objectId": "___objectId___",
+              "topic": "chat~00000000000~0000000",
+              "subscribeToGcmTopics": true,
+              "protoCreationTimestampMs": "1577804400000"
+            },
+            "timeoutMs": 10000,
+            "continuation": "___continuation___"
           }
-        ],
-        "actions": [
-          {
-            "addChatItemAction": {
-              "item": {
-                "liveChatPaidStickerRenderer": {
-                  "id": "dummy_id",
-                  "contextMenuEndpoint": {
-                    "commandMetadata": {
-                      "webCommandMetadata": {
-                        "ignoreNavigation": true
-                      }
+        }
+      ],
+      "actions": [
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatPaidStickerRenderer": {
+                "id": "dummy_id",
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": "___params___"
+                  }
+                },
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "コメントの操作"
+                  }
+                },
+                "timestampUsec": 1570678496000000,
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+                      "width": 32,
+                      "height": 32
                     },
-                    "liveChatItemContextMenuEndpoint": {
-                      "params": "___params___"
+                    {
+                      "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s64-x-x-xx-xx-xx-c0xffffff/photo.jpg",
+                      "width": 64,
+                      "height": 64
                     }
-                  },
-                  "contextMenuAccessibility": {
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "author_name"
+                },
+                "authorExternalChannelId": "author_channel_id",
+                "sticker": {
+                  "thumbnails": [
+                    {
+                      "url": "//lh3.googleusercontent.com/param_s=s72-rp",
+                      "width": 72,
+                      "height": 72
+                    },
+                    {
+                      "url": "//lh3.googleusercontent.com/param_s=s144-rp",
+                      "width": 144,
+                      "height": 144
+                    }
+                  ],
+                  "accessibility": {
                     "accessibilityData": {
-                      "label": "コメントの操作"
+                      "label": "___sticker_label___"
                     }
-                  },
-                  "timestampUsec": 1570678496000000,
-                  "authorPhoto": {
-                    "thumbnails": [
-                      {
-                        "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s32-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-                        "width": 32,
-                        "height": 32
-                      },
-                      {
-                        "url": "https://yt3.ggpht.com/------------/AAAAAAAAAAA/AAAAAAAAAAA/xxxxxxxxxxxx/s64-x-x-xx-xx-xx-c0xffffff/photo.jpg",
-                        "width": 64,
-                        "height": 64
-                      }
-                    ]
-                  },
-                  "authorName": {
-                    "simpleText": "author_name"
-                  },
-                  "authorExternalChannelId": "author_channel_id",
-                  "sticker": {
-                    "thumbnails": [
-                      {
-                        "url": "//lh3.googleusercontent.com/param_s=s72-rp",
-                        "width": 72,
-                        "height": 72
-                      },
-                      {
-                        "url": "//lh3.googleusercontent.com/param_s=s144-rp",
-                        "width": 144,
-                        "height": 144
-                      }
-                    ],
-                    "accessibility": {
-                      "accessibilityData": {
-                        "label": "___sticker_label___"
-                      }
-                    }
-                  },
-                  "moneyChipBackgroundColor": 4278248959,
-                  "moneyChipTextColor": 4278190080,
-                  "purchaseAmountText": {
-                    "simpleText": "￥200"
-                  },
-                  "stickerDisplayWidth": 72,
-                  "stickerDisplayHeight": 72,
-                  "backgroundColor": 4278237396,
-                  "authorNameTextColor": 3003121664
-                }
+                  }
+                },
+                "moneyChipBackgroundColor": 4278248959,
+                "moneyChipTextColor": 4278190080,
+                "purchaseAmountText": {
+                  "simpleText": "￥200"
+                },
+                "stickerDisplayWidth": 72,
+                "stickerDisplayHeight": 72,
+                "backgroundColor": 4278237396,
+                "authorNameTextColor": 3003121664
               }
             }
           }
-        ]
-      }
+        }
+      ]
     }
   }
 }
