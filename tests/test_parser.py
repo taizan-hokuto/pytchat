@@ -12,29 +12,23 @@ def _open_file(path):
 
 
 def test_finishedlive(*mock):
-    '''配信が終了した動画を正しく処理できるか'''
     _text = _open_file('tests/testdata/finished_live.json')
     _text = json.loads(_text)
 
     try:
-        parser.parse(parser.get_contents(_text))
+        parser.parse(parser.get_contents(_text)[0])
         assert False
     except NoContents:
         assert True
 
 
 def test_parsejson(*mock):
-    '''jsonを正常にパースできるか'''
     _text = _open_file('tests/testdata/paramgen_firstread.json')
     _text = json.loads(_text)
 
     try:
-        parser.parse(parser.get_contents(_text))
-        jsn = _text
-        timeout = jsn["response"]["continuationContents"]["liveChatContinuation"]["continuations"][0]["timedContinuationData"]["timeoutMs"]
-        continuation = jsn["response"]["continuationContents"]["liveChatContinuation"][
-            "continuations"][0]["timedContinuationData"]["continuation"]
-        assert timeout == 5035
-        assert continuation == "0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiPz5-Os-PkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CRwciOs-PkAli3pNq1k-PkAmgBggEECAEQAIgBAKABjbfnjrPj5AI%3D"
+        s, _ = parser.parse(parser.get_contents(_text)[0])
+        assert s['timeoutMs'] == 5035
+        assert s['continuation'] == "0ofMyAPiARp8Q2c4S0RRb0xhelJMZDBsWFQwdERkalFhUTZxNXdiMEJQUW83YUhSMGNITTZMeTkzZDNjdWVXOTFkSFZpWlM1amIyMHZiR2wyWlY5amFHRjBQM1k5YXpSTGQwbFhUMHREZGpRbWFYTmZjRzl3YjNWMFBURWdBZyUzRCUzRCiPz5-Os-PkAjAAOABAAUorCAAQABgAIAAqDnN0YXRpY2NoZWNrc3VtOgBAAEoCCAFQgJqXjrPj5AJYA1CRwciOs-PkAli3pNq1k-PkAmgBggEECAEQAIgBAKABjbfnjrPj5AI%3D"
     except Exception:
         assert False

@@ -1,4 +1,4 @@
-from pytchat.util.extract_video_id import extract_video_id
+from pytchat.util import extract_video_id
 from pytchat.exceptions import InvalidVideoIdException
 
 VALID_TEST_PATTERNS = (

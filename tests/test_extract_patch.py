@@ -40,18 +40,18 @@ def test_split_0():
      
                             |
                             |
-                            V 
+                            V
 
     ~~~~~~ after ~~~~~~
     
 
      @parent_block
     
-     first    last         end (after split)   
+     first    last         end (after split)
        |########------------|
     
      @child_block
-                          first       last            end            
+                          first       last            end
                             |###########---------------|
     
      @fetched patch
@@ -79,11 +79,11 @@ def test_split_1():
     """patch.first <= parent_block.last
 
     While awaiting at run()->asyncdl._fetch()
-    fetching parent_block proceeds, 
+    fetching parent_block proceeds,
     and parent.block.last exceeds patch.first.
 
     In this case, fetched patch is all discarded,
-    and worker searches other processing block again. 
+    and worker searches other processing block again.
 
     ~~~~~~ before ~~~~~~
 
@@ -101,7 +101,7 @@ def test_split_1():
      
                             |
                             |
-                            V 
+                            V
     
     ~~~~~~ after ~~~~~~
 
@@ -152,21 +152,21 @@ def test_split_2():
      
                             |
                             |
-                            V 
+                            V
 
     ~~~~~~ after ~~~~~~
 
      @parent_block
-     first    last         end (after split)   
+     first    last         end (after split)
        |########------------|
 
-     @child_block                                  old patch.end            
+     @child_block                                  old patch.end
                           first            last=end |
                             |#################|......   cut extra data.
                                                     ^
     continuation : None (extract complete)
 
-     @fetched patch                                 
+     @fetched patch
                             |-------- patch --------|
     """
     parent = Block(first=0, last=4000, end=33500, continuation='parent', during_split=True)
@@ -190,7 +190,7 @@ def test_split_none():
     """patch.last <= parent_block.last
 
     While awaiting at run()->asyncdl._fetch()
-    fetching parent_block proceeds, 
+    fetching parent_block proceeds,
     and parent.block.last exceeds patch.first.
 
     In this case, fetched patch is all discarded,
@@ -208,11 +208,11 @@ def test_split_none():
      
      @fetched patch
                             |-- patch --|
-                                      patch.last < parent_block.last                       .
+                                      patch.last < parent_block.last.
      
                             |
                             |
-                            V 
+                            V
     
     ~~~~~~ after ~~~~~~
 

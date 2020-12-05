@@ -64,7 +64,7 @@ def test_duplicate_head():
         )[1]
 
     """
-    test duplicate head data 
+    test duplicate head data
         operation : [0] , [1]  -> discard [0]
                     [1] , [2]  -> discard [1]
                     [2] , [3]  -> append  [2]
@@ -72,7 +72,7 @@ def test_duplicate_head():
                     [4] , [5]  -> append  [4]
                     append [5]
 
-        result    : [2] , [4] , [5] 
+        result    : [2] , [4] , [5]
     """
 
     # chat data offsets are ignored.
@@ -98,7 +98,7 @@ def test_duplicate_head():
 
 def test_duplicate_tail():
     """
-    test duplicate tail data 
+    test duplicate tail data
         operation : append [0]
                     [0] , [1]  -> discard [1]
                     [1] , [2]  -> append  [2]
@@ -106,7 +106,7 @@ def test_duplicate_tail():
                     [3] , [4]  -> append  [4]
                     [4] , [5]  -> discard [5]
 
-        result    : [0] , [2] , [4] 
+        result    : [0] , [2] , [4]
     """
     def load_chatdata(filename):
         return parser.parse(
