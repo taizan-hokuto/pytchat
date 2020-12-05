@@ -4,8 +4,17 @@ import json
 import os
 import re
 from .. import config
+from .. exceptions import InvalidVideoIdException
 
 PATTERN = re.compile(r"(.*)\(([0-9]+)\)$")
+
+PATTERN_YTURL = re.compile(r"((?<=(v|V)/)|(?<=be/)|(?<=(\?|\&)v=)|(?<=embed/))([\w-]+)")
+
+YT_VIDEO_ID_LENGTH = 11
+
+CLIENT_VERSION = ''.join(("2.", (datetime.datetime.today() - datetime.timedelta(days=1)).strftime("%Y%m%d"), ".01.00"))
+
+UA = config.headers["user-agent"]
 
 
 def extract(url):
@@ -17,8 +26,9 @@ def extract(url):
 
 
 def save(data, filename, extention) -> str:
-    save_filename = filename + "_" + (datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')) + extention
-    with open(save_filename ,mode='w', encoding='utf-8') as f:
+    save_filename = filename + "_" + \
+        (datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')) + extention
+    with open(save_filename, mode='w', encoding='utf-8') as f:
         f.writelines(data)
     return save_filename
 
@@ -39,3 +49,46 @@ def checkpath(filepath):
             body = f'{body}({str(counter)})'
         newpath = os.path.join(os.path.dirname(filepath), body + extention)
     return newpath
+
+
+def get_param(continuation, replay=False, offsetms: int = 0, dat=''):
+    if offsetms < 0:
+        offsetms = 0
+    ret = {
+        "context": {
+            "client": {
+                "visitorData": dat,
+                "userAgent": UA,
+                "clientName": "WEB",
+                "clientVersion": CLIENT_VERSION,
+            },
+
+        },
+        "continuation": continuation,
+    }
+    if replay:
+        ret.setdefault("currentPlayerState", {
+                       "playerOffsetMs": str(int(offsetms))})
+    return ret
+
+
+def extract_video_id(url_or_id: str) -> str:
+    ret = ''
+    if '[' in url_or_id:
+        url_or_id = url_or_id.replace('[', '').replace(']', '')
+
+    if type(url_or_id) != str:
+        raise TypeError(f"{url_or_id}: URL or VideoID must be str, but {type(url_or_id)} is passed.")
+    if len(url_or_id) == YT_VIDEO_ID_LENGTH:
+        return url_or_id
+    match = re.search(PATTERN_YTURL, url_or_id)
+    if match is None:
+        raise InvalidVideoIdException(f"Invalid video id: {url_or_id}")
+    try:
+        ret = match.group(4)
+    except IndexError:
+        raise InvalidVideoIdException(f"Invalid video id: {url_or_id}")
+
+    if ret is None or len(ret) != YT_VIDEO_ID_LENGTH:
+        raise InvalidVideoIdException(f"Invalid video id: {url_or_id}")
+    return ret

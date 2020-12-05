@@ -38,7 +38,7 @@ class ExtractWorker:
     async def run(self, session):
         while self.block.continuation:
             patch = await self.fetch(
-                self.block.continuation, session)
+                self.block.continuation, self.block.last, session)
             if patch.continuation is None:
                 """TODO : make the worker assigned to the last block
                 to work more than twice as possible.

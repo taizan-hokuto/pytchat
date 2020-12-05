@@ -1,12 +1,12 @@
 '''
-YouTubeスーパーチャットで使用される通貨の記号とレート検索用の略号の
-対応表
+Table of symbols for the currencies used in YouTube Superchat.
+
 Key：
-    YouTubeスーパーチャットで使用される通貨の記号
-    （アルファベットで終わる場合、0xA0(&npsp)が付く）
+     Currency symbols used in YouTube Super Chat
+     If it ends with an alphabet, it will be followed by 0xA0(&npsp).
 Value:
-    fxtext: 3文字の通貨略称
-    jptest: 日本語テキスト
+    fxtext: ISO 4217 currency code
+    jptest: japanese text
 '''
 symbols = {
     "$": {"fxtext": "USD", "jptext": "米・ドル"},

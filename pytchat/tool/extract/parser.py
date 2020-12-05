@@ -19,10 +19,10 @@ def parse(jsn):
     """
     if jsn is None:
         raise ValueError("parameter JSON is None")
-    if jsn['response']['responseContext'].get('errors'):
+    if jsn.get("error") or jsn.get("responseContext", {}).get("errors"):
         raise exceptions.ResponseContextError(
             'video_id is invalid or private/deleted.')
-    contents = jsn['response'].get('continuationContents')
+    contents = jsn.get('continuationContents')
     if contents is None:
         raise exceptions.NoContents('No chat data.')
 
@@ -31,13 +31,15 @@ def parse(jsn):
         raise exceptions.NoContinuation('No Continuation')
     metadata = cont.get('liveChatReplayContinuationData')
     if metadata:
+        visitor_data = jsn.get("responseContext", {}).get("visitorData", '')
         continuation = metadata.get("continuation")
-        actions = contents['liveChatContinuation'].get('actions')
-        return continuation, actions
-    return None, []
+        actions: list = contents['liveChatContinuation'].get('actions')
+        last_offset: int = get_offset(actions[-1]) if actions else 0
+        return continuation, actions, last_offset, visitor_data
+    return None, [], 0, ''
 
 
-def get_offset(item):
+def get_offset(item) -> int:
     return int(item['replayChatItemAction']["videoOffsetTimeMsec"])
 
 
