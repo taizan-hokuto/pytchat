@@ -86,7 +86,7 @@ class HTMLArchiver(ChatProcessor):
                 Count of total lines written to the file.
         """
         if chat_components is None or len(chat_components) == 0:
-            return self.save_path ,self.counter
+            return self.save_path, self.counter
         for c in self.processor.process(chat_components).items:
             self.tmp_fp.write(
                 self._parse_html_line((
@@ -159,7 +159,7 @@ class HTMLArchiver(ChatProcessor):
             # write header
             outfile.writelines((
                 HEADER_HTML, self._create_styles(), '</head>\n',
-                '<body>\n', '<table class="css">\n', 
+                '<body>\n', '<table class="css">\n',
                 self._parse_table_header(fmt_headers)))
             # write body
             fp = open(self.tmp_filename, mode="r", encoding="utf-8")
