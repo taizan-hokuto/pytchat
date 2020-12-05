@@ -55,11 +55,6 @@ setup(
         'License :: OSI Approved :: MIT License',
     ],
     description="a python library for fetching youtube live chat.",
-    entry_points=
-    '''
-        [console_scripts]
-        pytchat=pytchat.cli:main
-    ''',
     install_requires=_requirements(),
     keywords='youtube livechat asyncio',
     license=license,
