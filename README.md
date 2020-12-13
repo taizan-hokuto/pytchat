@@ -188,19 +188,3 @@ Structure of author object.
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 
-## Contributes
-Great thanks:
-
-Most of source code of CLI refer to:
-
-[PetterKraabol / Twitch-Chat-Downloader](https://github.com/PetterKraabol/Twitch-Chat-Downloader)
-
-Progress bar in CLI is based on:
-
-[vladignatyev/progress.py](https://gist.github.com/vladignatyev/06860ec2040cb497f0f3)
-
-## Author
-
-[taizan-hokuto](https://github.com/taizan-hokuto)
-
-[twitter:@taizan205](https://twitter.com/taizan205)
