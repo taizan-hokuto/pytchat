@@ -168,7 +168,7 @@ class PytchatCore:
             with httpx.Client(http2=True) as client:
                 try:
                     response = client.post(self._fetch_url, json=param)
-                    livechat_json = json.loads(response.text, encoding='utf-8')
+                    livechat_json = json.loads(response.text)
                     break
                 except (json.JSONDecodeError, httpx.ConnectTimeout, httpx.ReadTimeout, httpx.ConnectError) as e:
                     err = e
