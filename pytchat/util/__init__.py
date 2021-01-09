@@ -112,7 +112,6 @@ async def get_channelid_async(client, video_id):
     resp = await client.get("https://www.youtube.com/embed/{}".format(quote(video_id)), headers=config.headers)  
     match = re.search(PATTERN_CHANNEL, resp.text)
     if match is None:
-        # return ""
         raise InvalidVideoIdException(f"Cannot find channel id for video id:{video_id}. This video id seems to be invalid.")
     try:
         ret = match.group(1)
