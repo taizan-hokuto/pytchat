@@ -208,7 +208,7 @@ class LiveChat:
           -------
             'continuationContents' which includes metadata & chat data.
         '''
-        livechat_json = self._get_livechat_json(continuation, client, headers)
+        livechat_json = self._get_livechat_json(continuation, client, replay=self._is_replay, offset_ms=self._last_offset_ms)
         contents, dat = self._parser.get_contents(livechat_json)
         if self._dat == '' and dat:
             self._dat = dat
@@ -218,7 +218,7 @@ class LiveChat:
                 self._parser.is_replay = True
                 self._fetch_url = config._smr
                 continuation = arcparam.getparam(
-                    self._video_id, self.seektime, self._topchat_only)
+                    self._video_id, self.seektime, self._topchat_only, util.get_channelid(client, self._video_id))
                 livechat_json = (self._get_livechat_json(
                                  continuation, client, replay=True, offset_ms=self.seektime * 1000))
                 reload_continuation = self._parser.reload_continuation(
@@ -242,8 +242,8 @@ class LiveChat:
         param = util.get_param(continuation, dat=self._dat, replay=replay, offsetms=offset_ms)
         for _ in range(MAX_RETRY + 1):
             try:
-                resp = client.post(self._fetch_url, json=param)
-                livechat_json = resp.json()
+                response = client.post(self._fetch_url, json=param)
+                livechat_json = response.json()
                 break
             except (json.JSONDecodeError, httpx.HTTPError):
                 time.sleep(2)

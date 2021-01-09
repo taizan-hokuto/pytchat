@@ -14,7 +14,6 @@ from .. import util
 headers = config.headers
 MAX_RETRY = 10
 
-
 class PytchatCore:
     '''
 
@@ -89,7 +88,7 @@ class PytchatCore:
         """Fetch first continuation parameter,
         create and start _listen loop.
         """
-        self.continuation = liveparam.getparam(self._video_id, 3)
+        self.continuation = liveparam.getparam(self._video_id, past_sec=3)
         
     def _get_chat_component(self):
         
@@ -143,8 +142,8 @@ class PytchatCore:
                 self._parser.is_replay = True
                 self._fetch_url = config._smr
                 continuation = arcparam.getparam(
-                    self._video_id, self.seektime, self._topchat_only)
-                livechat_json = (self._get_livechat_json(continuation, client, replay=True, offset_ms=self.seektime * 1000))
+                    self._video_id, self.seektime, self._topchat_only, util.get_channelid(client, self._video_id))
+                livechat_json = self._get_livechat_json(continuation, client, replay=True, offset_ms=self.seektime * 1000)
                 reload_continuation = self._parser.reload_continuation(
                     self._parser.get_contents(livechat_json)[0])
                 if reload_continuation:
