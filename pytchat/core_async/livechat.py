@@ -81,7 +81,7 @@ class LiveChatAsync:
                  direct_mode=False,
                  force_replay=False,
                  topchat_only=False,
-                 logger=config.logger(__name__),
+                 logger=config.logger(__name__)
                  ):
         self._video_id = util.extract_video_id(video_id)
         self.seektime = seektime
@@ -223,8 +223,9 @@ class LiveChatAsync:
                 '''Try to fetch archive chat data.'''
                 self._parser.is_replay = True
                 self._fetch_url = config._smr
+                channelid = await util.get_channelid_async(client, self._video_id)
                 continuation = arcparam.getparam(
-                    self._video_id, self.seektime, self._topchat_only)
+                    self._video_id, self.seektime, self._topchat_only, channelid)
                 livechat_json = (await self._get_livechat_json(
                                  continuation, client, replay=True, offset_ms=self.seektime * 1000))
                 reload_continuation = self._parser.reload_continuation(

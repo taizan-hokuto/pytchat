@@ -28,7 +28,7 @@ class Parser:
     def get_contents(self, jsn):
         if jsn is None:
             self.raise_exception(exceptions.IllegalFunctionCall('Called with none JSON object.'))
-        if jsn.get("error") or jsn.get("responseContext", {}).get("errors"):
+        if jsn.get("responseContext", {}).get("errors"):
             raise exceptions.ResponseContextError(
                 'The video_id would be wrong, or video is deleted or private.')
         contents = jsn.get('continuationContents')

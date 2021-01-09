@@ -46,48 +46,6 @@ def test_async_live_stream(httpx_mock: HTTPXMock):
         assert True
 
 
-def test_async_replay_stream(httpx_mock: HTTPXMock):
-    add_response_file(httpx_mock, 'tests/testdata/finished_live.json')
-    add_response_file(httpx_mock, 'tests/testdata/chatreplay.json')
-
-    async def test_loop():
-        chat = LiveChatAsync(video_id='__test_id__', processor=DummyProcessor())
-        chats = await chat.get()
-        rawdata = chats[0]["chatdata"]
-        # assert fetching replaychat data
-        assert list(rawdata[0]["addChatItemAction"]["item"].keys())[
-            0] == "liveChatTextMessageRenderer"
-        assert list(rawdata[14]["addChatItemAction"]["item"].keys())[
-            0] == "liveChatPaidMessageRenderer"
-
-    loop = asyncio.get_event_loop()
-    try:
-        loop.run_until_complete(test_loop())
-    except CancelledError:
-        assert True
-
-
-def test_async_force_replay(httpx_mock: HTTPXMock):
-    add_response_file(httpx_mock, 'tests/testdata/test_stream.json')
-    add_response_file(httpx_mock, 'tests/testdata/chatreplay.json')
-
-    async def test_loop():
-        chat = LiveChatAsync(
-            video_id='__test_id__', processor=DummyProcessor(), force_replay=True)
-        chats = await chat.get()
-        rawdata = chats[0]["chatdata"]
-        # assert fetching replaychat data
-        assert list(rawdata[14]["addChatItemAction"]["item"].keys())[
-            0] == "liveChatPaidMessageRenderer"
-        # assert not mix livechat data
-        assert list(rawdata[2]["addChatItemAction"]["item"].keys())[
-            0] != "liveChatPlaceholderItemRenderer"
-
-    loop = asyncio.get_event_loop()
-    try:
-        loop.run_until_complete(test_loop())
-    except CancelledError:
-        assert True
 
 
 def test_multithread_live_stream(httpx_mock: HTTPXMock):
