@@ -3,12 +3,15 @@ import httpx
 import json
 import os
 import re
+from urllib.parse import quote
 from .. import config
 from .. exceptions import InvalidVideoIdException
 
 PATTERN = re.compile(r"(.*)\(([0-9]+)\)$")
 
 PATTERN_YTURL = re.compile(r"((?<=(v|V)/)|(?<=be/)|(?<=(\?|\&)v=)|(?<=embed/))([\w-]+)")
+
+PATTERN_CHANNEL = re.compile(r"\\\"channelId\\\":\\\"(.{24})\\\"")
 
 YT_VIDEO_ID_LENGTH = 11
 
@@ -91,4 +94,28 @@ def extract_video_id(url_or_id: str) -> str:
 
     if ret is None or len(ret) != YT_VIDEO_ID_LENGTH:
         raise InvalidVideoIdException(f"Invalid video id: {url_or_id}")
+    return ret
+
+
+def get_channelid(client, video_id):
+    resp = client.get("https://www.youtube.com/embed/{}".format(quote(video_id)), headers=config.headers)  
+    match = re.search(PATTERN_CHANNEL, resp.text)
+    if match is None:
+        raise InvalidVideoIdException(f"Cannot find channel id for video id:{video_id}. This video id seems to be invalid.")
+    try:
+        ret = match.group(1)
+    except IndexError:
+        raise InvalidVideoIdException(f"Invalid video id: {video_id}")
+    return ret
+
+async def get_channelid_async(client, video_id):
+    resp = await client.get("https://www.youtube.com/embed/{}".format(quote(video_id)), headers=config.headers)  
+    match = re.search(PATTERN_CHANNEL, resp.text)
+    if match is None:
+        # return ""
+        raise InvalidVideoIdException(f"Cannot find channel id for video id:{video_id}. This video id seems to be invalid.")
+    try:
+        ret = match.group(1)
+    except IndexError:
+        raise InvalidVideoIdException(f"Invalid video id: {video_id}")
     return ret
