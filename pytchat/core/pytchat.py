@@ -44,6 +44,10 @@ class PytchatCore:
         If True, when exceptions occur, the exception is held internally,
         and can be raised by raise_for_status().
 
+    replay_continuation : str
+        If this parameter is not None, the processor will attempt to get chat data from continuation.
+        This parameter is only allowed in archived mode.
+
     Attributes
     ---------
     _is_alive : bool
@@ -58,6 +62,7 @@ class PytchatCore:
                  topchat_only=False,
                  hold_exception=True,
                  logger=config.logger(__name__),
+                 replay_continuation=None
                  ):
         self._video_id = util.extract_video_id(video_id)
         self.seektime = seektime
@@ -66,32 +71,33 @@ class PytchatCore:
         else:
             self.processor = processor
         self._is_alive = True
-        self._is_replay = force_replay
+        self._is_replay = force_replay or (replay_continuation is not None)
         self._hold_exception = hold_exception
         self._exception_holder = None
         self._parser = Parser(
             is_replay=self._is_replay,
             exception_holder=self._exception_holder
         )
-        self._first_fetch = True
-        self._fetch_url = config._sml
+        self._first_fetch = replay_continuation is None
+        self._fetch_url = config._sml if replay_continuation is None else config._smr
         self._topchat_only = topchat_only
         self._dat = ''
         self._last_offset_ms = 0
         self._logger = logger
+        self.continuation = replay_continuation
         if interruptable:
             signal.signal(signal.SIGINT, lambda a, b: self.terminate())
         self._setup()
 
     def _setup(self):
-        time.sleep(0.1)  # sleep shortly to prohibit skipping fetching data
-        """Fetch first continuation parameter,
-        create and start _listen loop.
-        """
-        self.continuation = liveparam.getparam(self._video_id, past_sec=3)
-        
+        if not self.continuation:
+            time.sleep(0.1)  # sleep shortly to prohibit skipping fetching data
+            """Fetch first continuation parameter,
+            create and start _listen loop.
+            """
+            self.continuation = liveparam.getparam(self._video_id, past_sec=3)
+
     def _get_chat_component(self):
-        
         ''' Fetch chat data and store them into buffer,
         get next continuaiton parameter and loop.
 
@@ -178,7 +184,7 @@ class PytchatCore:
                                f"Exceeded retry count. Last error: {str(err)}")
             self._raise_exception(exceptions.RetryExceedMaxCount())
         return livechat_json
-    
+
     def get(self):
         if self.is_alive():
             chat_component = self._get_chat_component()
