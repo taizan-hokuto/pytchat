@@ -62,6 +62,10 @@ class LiveChatAsync:
     topchat_only : bool
         If True, get only top chat.
 
+    replay_continuation : str
+        If this parameter is not None, the processor will attempt to get chat data from continuation.
+        This parameter is only allowed in archived mode.
+
     Attributes
     ---------
     _is_alive : bool
@@ -81,7 +85,8 @@ class LiveChatAsync:
                  direct_mode=False,
                  force_replay=False,
                  topchat_only=False,
-                 logger=config.logger(__name__)
+                 logger=config.logger(__name__),
+                replay_continuation=None
                  ):
         self._video_id = util.extract_video_id(video_id)
         self.seektime = seektime
@@ -95,17 +100,18 @@ class LiveChatAsync:
         self._exception_handler = exception_handler
         self._direct_mode = direct_mode
         self._is_alive = True
-        self._is_replay = force_replay
+        self._is_replay = force_replay or (replay_continuation is not None)
         self._parser = Parser(is_replay=self._is_replay)
         self._pauser = Queue()
         self._pauser.put_nowait(None)
-        self._first_fetch = True
-        self._fetch_url = config._sml
+        self._first_fetch = replay_continuation is None
+        self._fetch_url = config._sml if replay_continuation is None else config._smr
         self._topchat_only = topchat_only
         self._dat = ''
         self._last_offset_ms = 0
         self._logger = logger
         self.exception = None
+        self.continuation = replay_continuation
         LiveChatAsync._logger = logger
 
         if exception_handler:
