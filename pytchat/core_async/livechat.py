@@ -86,7 +86,7 @@ class LiveChatAsync:
                  force_replay=False,
                  topchat_only=False,
                  logger=config.logger(__name__),
-                replay_continuation=None
+                 replay_continuation=None
                  ):
         self._video_id = util.extract_video_id(video_id)
         self.seektime = seektime
@@ -151,8 +151,9 @@ class LiveChatAsync:
         """Fetch first continuation parameter,
         create and start _listen loop.
         """
-        initial_continuation = liveparam.getparam(self._video_id, 3)
-        await self._listen(initial_continuation)
+        if not self.continuation:
+            self.continuation = liveparam.getparam(self._video_id, 3)
+        await self._listen(self.continuation)
 
     async def _listen(self, continuation):
         ''' Fetch chat data and store them into buffer,
@@ -169,6 +170,9 @@ class LiveChatAsync:
                     continuation = await self._check_pause(continuation)
                     contents = await self._get_contents(continuation, client, headers)
                     metadata, chatdata = self._parser.parse(contents)
+                    continuation = metadata.get('continuation')
+                    if continuation:
+                        self.continuation = continuation
                     timeout = metadata['timeoutMs'] / 1000
                     chat_component = {
                         "video_id": self._video_id,
@@ -187,7 +191,6 @@ class LiveChatAsync:
                         await self._buffer.put(chat_component)
                     diff_time = timeout - (time.time() - time_mark)
                     await asyncio.sleep(diff_time)
-                    continuation = metadata.get('continuation')
                     self._last_offset_ms = metadata.get('last_offset_ms', 0)
         except exceptions.ChatParseException as e:
             self._logger.debug(f"[{self._video_id}]{str(e)}")
@@ -248,7 +251,6 @@ class LiveChatAsync:
         '''
         Get json which includes chat data.
         '''
-        # continuation = urllib.parse.quote(continuation)
         livechat_json = None
         if offset_ms < 0:
             offset_ms = 0
