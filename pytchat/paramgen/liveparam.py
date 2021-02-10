@@ -5,11 +5,16 @@ from base64 import urlsafe_b64encode as b64enc
 from urllib.parse import quote
 
 
-def _header(video_id) -> str:
-    return b64enc(enc.rs(1, enc.rs(1, enc.rs(1, video_id))) + enc.nm(4, 1))
+def _header(video_id, channel_id) -> str:
+    S1_3 = enc.rs(1, video_id)
+    S1_5 = enc.rs(1, channel_id) + enc.rs(2, video_id)
+    S1 = enc.rs(3, S1_3) + enc.rs(5, S1_5)
+    S3 = enc.rs(48687757, enc.rs(1, video_id))
+    header_replay = enc.rs(1, S1) + enc.rs(3, S3) + enc.nm(4, 1)
+    return b64enc(header_replay)
 
 
-def _build(video_id, ts1, ts2, ts3, ts4, ts5, topchat_only) -> str:
+def _build(video_id, channel_id, ts1, ts2, ts3, ts4, ts5, topchat_only) -> str:
     chattype = 4 if topchat_only else 1
 
     b1 = enc.nm(1, 0)
@@ -23,7 +28,7 @@ def _build(video_id, ts1, ts2, ts3, ts4, ts5, topchat_only) -> str:
     b11 = enc.nm(11, 3)
     b15 = enc.nm(15, 0)
 
-    header = enc.rs(3, _header(video_id))
+    header = enc.rs(3, _header(video_id, channel_id))
     timestamp1 = enc.nm(5, ts1)
     s6 = enc.nm(6, 0)
     s7 = enc.nm(7, 0)
@@ -53,7 +58,7 @@ def _times(past_sec):
     return list(map(lambda x: int(x * 1000000), [_ts1, _ts2, _ts3, _ts4, _ts5]))
 
 
-def getparam(video_id, past_sec=0, topchat_only=False) -> str:
+def getparam(video_id, channel_id, past_sec=0, topchat_only=False) -> str:
     '''
     Parameter
     ---------
@@ -62,4 +67,4 @@ def getparam(video_id, past_sec=0, topchat_only=False) -> str:
     topchat_only : bool
         if True, fetch only 'top chat'
     '''
-    return _build(video_id, *_times(past_sec), topchat_only)
+    return _build(video_id, channel_id, *_times(past_sec), topchat_only)

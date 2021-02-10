@@ -152,7 +152,11 @@ class LiveChatAsync:
         create and start _listen loop.
         """
         if not self.continuation:
-            self.continuation = liveparam.getparam(self._video_id, 3)
+            self.continuation = liveparam.getparam(
+                self._video_id,
+                channel_id=util.get_channelid(httpx.Client(http2=True), self._video_id),
+                past_sec=3)
+
         await self._listen(self.continuation)
 
     async def _listen(self, continuation):
@@ -210,8 +214,11 @@ class LiveChatAsync:
             '''
             self._pauser.put_nowait(None)
             if not self._is_replay:
-                continuation = liveparam.getparam(
-                    self._video_id, 3, self._topchat_only)
+                async with httpx.AsyncClient(http2=True) as client:
+                    continuation = await liveparam.getparam(self._video_id, 
+                                    channel_id=util.get_channelid_async(client, self.video_id),
+                                    past_sec=3)
+                    
         return continuation
 
     async def _get_contents(self, continuation, client, headers):
