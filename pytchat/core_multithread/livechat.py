@@ -148,7 +148,10 @@ class LiveChat:
         create and start _listen loop.
         """
         if not self.continuation:
-            self.continuation = liveparam.getparam(self._video_id, 3)
+            self.continuation = liveparam.getparam(
+                self._video_id,
+                channel_id=util.get_channelid(httpx.Client(http2=True), self._video_id),
+                past_sec=3)
         self._listen(self.continuation)
 
     def _listen(self, continuation):
@@ -207,7 +210,9 @@ class LiveChat:
             self._pauser.put_nowait(None)
             if not self._is_replay:
                 continuation = liveparam.getparam(
-                    self._video_id, 3, self._topchat_only)
+                    self._video_id, channel_id=util.get_channelid(httpx.Client(http2=True), self._video_id),
+                    past_sec=3, topchat_only=self._topchat_only)
+
         return continuation
 
     def _get_contents(self, continuation, client, headers):

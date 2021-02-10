@@ -95,7 +95,10 @@ class PytchatCore:
             """Fetch first continuation parameter,
             create and start _listen loop.
             """
-            self.continuation = liveparam.getparam(self._video_id, past_sec=3)
+            self.continuation = liveparam.getparam(
+                self._video_id,
+                channel_id=util.get_channelid(httpx.Client(http2=True), self._video_id),
+                past_sec=3)
 
     def _get_chat_component(self):
         ''' Fetch chat data and store them into buffer,
