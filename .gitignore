@@ -1,0 +1,39 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.pytest_cache/
+
+#logs
+log.txt
+*.log
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+
+# VSCode
+.vscode
+
+# develop
+*.egg-info/
+
+# Pypi dist
+dist/
+README.rst
+temporary/
+# Pypi wheel
+build/
+exclude/
