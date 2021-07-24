@@ -78,6 +78,7 @@ class LiveChat:
     def __init__(self, video_id,
                  seektime=-1,
                  processor=DefaultProcessor(),
+                 client = httpx.Client(http2=True),
                  buffer=None,
                  interruptable=True,
                  callback=None,
@@ -88,6 +89,7 @@ class LiveChat:
                  logger=config.logger(__name__),
                  replay_continuation=None
                  ):
+        self._client = client
         self._video_id = util.extract_video_id(video_id)
         self.seektime = seektime
         if isinstance(processor, tuple):
@@ -150,7 +152,7 @@ class LiveChat:
         if not self.continuation:
             self.continuation = liveparam.getparam(
                 self._video_id,
-                channel_id=util.get_channelid(httpx.Client(http2=True), self._video_id),
+                channel_id=util.get_channelid(self._client, self._video_id),
                 past_sec=3)
         self._listen(self.continuation)
 
@@ -164,7 +166,7 @@ class LiveChat:
             parameter for next chat data
         '''
         try:
-            with httpx.Client(http2=True) as client:
+            with self._client as client:
                 while(continuation and self._is_alive):
                     continuation = self._check_pause(continuation)
                     contents = self._get_contents(continuation, client, headers)
@@ -224,7 +226,8 @@ class LiveChat:
           -------
             'continuationContents' which includes metadata & chat data.
         '''
-        livechat_json = self._get_livechat_json(continuation, client, replay=self._is_replay, offset_ms=self._last_offset_ms)
+        livechat_json = self._get_livechat_json(
+            continuation, client, replay=self._is_replay, offset_ms=self._last_offset_ms)
         contents, dat = self._parser.get_contents(livechat_json)
         if self._dat == '' and dat:
             self._dat = dat
@@ -235,8 +238,8 @@ class LiveChat:
                 self._fetch_url = config._smr
                 continuation = arcparam.getparam(
                     self._video_id, self.seektime, self._topchat_only, util.get_channelid(client, self._video_id))
-                livechat_json = (self._get_livechat_json(
-                                 continuation, client, replay=True, offset_ms=self.seektime * 1000))
+                livechat_json = self._get_livechat_json(
+                    continuation, client, replay=True, offset_ms=self.seektime * 1000)
                 reload_continuation = self._parser.reload_continuation(
                     self._parser.get_contents(livechat_json)[0])
                 if reload_continuation:
@@ -331,6 +334,8 @@ class LiveChat:
             self._logger.debug(f'[{self._video_id}] cancelled:{sender}')
 
     def terminate(self):
+        if not self.is_alive():
+            return
         if self._pauser.empty():
             self._pauser.put_nowait(None)
         self._is_alive = False

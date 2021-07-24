@@ -82,16 +82,17 @@ class RingQueue:
 
 class SpeedCalculator(ChatProcessor, RingQueue):
     """
-    チャットの勢いを計算する。
+    Calculate the momentum of the chat.
 
-    一定期間のチャットデータのうち、最初のチャットの投稿時刻と
-    最後のチャットの投稿時刻の差を、チャット数で割り返し
-    1分あたりの速度に換算する。
+    Divide the difference between the time of the first chat and 
+    the time of the last chat in the chat data over a period of 
+    time by the number of chats and convert it to speed per minute.
 
     Parameter
     ----------
     capacity : int
-        RingQueueに格納するチャット勢い算出用データの最大数
+        Maximum number of data for calculating chat momentum 
+        to be stored in RingQueue.
     """
 
     def __init__(self, capacity=10):
@@ -111,17 +112,17 @@ class SpeedCalculator(ChatProcessor, RingQueue):
 
     def _calc_speed(self):
         """
-        RingQueue内のチャット勢い算出用データリストを元に、
-        チャット速度を計算して返す
+        Calculates the chat speed based on the data list for calculating
+        the chat momentum in RingQueue.
 
         Return
         ---------------------------
-            チャット速度（１分間で換算したチャット数）
+            Chat speed (number of chats converted per minute)
         """
         try:
-            # キュー内の総チャット数
+            # Total number of chats in the queue
             total = sum(item['chat_count'] for item in self.items)
-            # キュー内の最初と最後のチャットの時間差
+            # Interval between the first and last chats in the queue
             duration = (self.items[self.last_pos]['endtime'] - self.items[self.first_pos]['starttime'])
             if duration != 0:
                 return int(total * 60 / duration)
@@ -131,19 +132,12 @@ class SpeedCalculator(ChatProcessor, RingQueue):
 
     def _put_chatdata(self, actions):
         """
-        チャットデータからタイムスタンプを読み取り、勢い測定用のデータを組み立て、
-        RingQueueに投入する。
-        200円以上のスパチャはtickerとmessageの2つのデータが生成されるが、
-        tickerの方は時刻データの場所が異なることを利用し、勢いの集計から除外している。
         Parameter
         ---------
         actions : List[dict]
-            チャットデータ(addChatItemAction) のリスト
+            List of addChatItemActions
         """
         def _put_emptydata():
-            '''
-            チャットデータがない場合に空のデータをキューに投入する。
-            '''
             timestamp_now = int(time.time())
             self.put({
                 'chat_count': 0,
@@ -152,9 +146,6 @@ class SpeedCalculator(ChatProcessor, RingQueue):
             })
 
         def _get_timestamp(action: dict):
-            """
-            チャットデータから時刻データを取り出す。
-            """
             try:
                 item = action['addChatItemAction']['item']
                 timestamp = int(item[list(item.keys())[0]]['timestampUsec'])
@@ -166,32 +157,24 @@ class SpeedCalculator(ChatProcessor, RingQueue):
             _put_emptydata()
             return
 
-        # actions内の時刻データを持つチャットデータの数
         counter = 0
-        # actions内の最初のチャットデータの時刻
         starttime = None
-        # actions内の最後のチャットデータの時刻
         endtime = None
 
         for action in actions:
-            # チャットデータからtimestampUsecを読み取る
+            # Get timestampUsec from chatdata
             gettime = _get_timestamp(action)
 
-            # 時刻のないデータだった場合は次の行のデータで読み取り試行
             if gettime is None:
                 continue
 
-            # 最初に有効な時刻を持つデータのtimestampをstarttimeに設定
             if starttime is None:
                 starttime = gettime
 
-            # 最後のtimestampを設定(途中で時刻のないデータの場合もあるので上書きしていく)
             endtime = gettime
 
-            # チャットの数をインクリメント
             counter += 1
 
-        # チャット速度用のデータをRingQueueに送る
         if starttime is None or endtime is None:
             _put_emptydata()
             return

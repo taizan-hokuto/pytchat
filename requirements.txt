@@ -1,1 +1,1 @@
-httpx[http2]==0.16.1
+httpx[http2]

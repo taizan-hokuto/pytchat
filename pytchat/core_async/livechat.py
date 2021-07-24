@@ -78,6 +78,7 @@ class LiveChatAsync:
                  seektime=-1,
                  processor=DefaultProcessor(),
                  buffer=None,
+                 client = httpx.AsyncClient(http2=True),
                  interruptable=True,
                  callback=None,
                  done_callback=None,
@@ -88,6 +89,7 @@ class LiveChatAsync:
                  logger=config.logger(__name__),
                  replay_continuation=None
                  ):
+        self._client:httpx.AsyncClient = client
         self._video_id = util.extract_video_id(video_id)
         self.seektime = seektime
         if isinstance(processor, tuple):
@@ -152,9 +154,10 @@ class LiveChatAsync:
         create and start _listen loop.
         """
         if not self.continuation:
+            channel_id = await util.get_channelid_async(self._client, self._video_id)
             self.continuation = liveparam.getparam(
                 self._video_id,
-                channel_id=util.get_channelid(httpx.Client(http2=True), self._video_id),
+                channel_id,
                 past_sec=3)
 
         await self._listen(self.continuation)
@@ -169,10 +172,10 @@ class LiveChatAsync:
             parameter for next chat data
         '''
         try:
-            async with httpx.AsyncClient(http2=True) as client:
+            async with self._client as client:
                 while(continuation and self._is_alive):
                     continuation = await self._check_pause(continuation)
-                    contents = await self._get_contents(continuation, client, headers)
+                    contents = await self._get_contents(continuation, client, headers) #Q#
                     metadata, chatdata = self._parser.parse(contents)
                     continuation = metadata.get('continuation')
                     if continuation:
@@ -214,9 +217,10 @@ class LiveChatAsync:
             '''
             self._pauser.put_nowait(None)
             if not self._is_replay:
-                async with httpx.AsyncClient(http2=True) as client:
-                    continuation = await liveparam.getparam(self._video_id, 
-                                    channel_id=util.get_channelid_async(client, self.video_id),
+                async with self._client as client:
+                    channel_id = await util.get_channelid_async(client, self.video_id)
+                    continuation = liveparam.getparam(self._video_id, 
+                                    channel_id,
                                     past_sec=3)
                     
         return continuation
@@ -338,12 +342,14 @@ class LiveChatAsync:
             self._logger.debug(f'[{self._video_id}] cancelled:{sender}')
 
     def terminate(self):
+        if not self.is_alive():
+            return 
         if self._pauser.empty():
             self._pauser.put_nowait(None)
         self._is_alive = False
         self._buffer.put_nowait({})
         self.processor.finalize()
-    
+
     def _keyboard_interrupt(self):
         self.exception = exceptions.ChatDataFinished()
         self.terminate()
