@@ -67,6 +67,5 @@ def test_process_2():
             'chatdata': load_chatdata(r"tests/testdata/calculator/replay_end.json")
         }
         assert False
-        SuperchatCalculator().process([chat_component])
     except ChatParseException:
         assert True
