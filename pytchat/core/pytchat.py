@@ -29,9 +29,13 @@ class PytchatCore:
 
     processor : ChatProcessor
 
+    client : httpx.Client
+        The client for connecting youtube.
+        You can specify any customized httpx client (e.g. coolies, user agent).
+
     interruptable : bool
         Allows keyboard interrupts.
-        Set this parameter to False if your own threading program causes
+        Set this parameter to False if your own multi-threading program causes
         the problem.
 
     force_replay : bool
@@ -57,6 +61,7 @@ class PytchatCore:
     def __init__(self, video_id,
                  seektime=-1,
                  processor=DefaultProcessor(),
+                 client = httpx.Client(http2=True),
                  interruptable=True,
                  force_replay=False,
                  topchat_only=False,
@@ -64,6 +69,7 @@ class PytchatCore:
                  logger=config.logger(__name__),
                  replay_continuation=None
                  ):
+        self._client = client
         self._video_id = util.extract_video_id(video_id)
         self.seektime = seektime
         if isinstance(processor, tuple):
@@ -97,7 +103,7 @@ class PytchatCore:
             """
             self.continuation = liveparam.getparam(
                 self._video_id,
-                channel_id=util.get_channelid(httpx.Client(http2=True), self._video_id),
+                channel_id=util.get_channelid(self._client, self._video_id),
                 past_sec=3)
 
     def _get_chat_component(self):
@@ -110,19 +116,18 @@ class PytchatCore:
             parameter for next chat data
         '''
         try:
-            with httpx.Client(http2=True) as client:
-                if self.continuation and self._is_alive:
-                    contents = self._get_contents(self.continuation, client, headers)
-                    metadata, chatdata = self._parser.parse(contents)
-                    timeout = metadata['timeoutMs'] / 1000
-                    chat_component = {
-                        "video_id": self._video_id,
-                        "timeout": timeout,
-                        "chatdata": chatdata
-                    }
-                    self.continuation = metadata.get('continuation')
-                    self._last_offset_ms = metadata.get('last_offset_ms', 0)
-                    return chat_component
+            if self.continuation and self._is_alive:
+                contents = self._get_contents(self.continuation, self._client, headers)
+                metadata, chatdata = self._parser.parse(contents)
+                timeout = metadata['timeoutMs'] / 1000
+                chat_component = {
+                    "video_id": self._video_id,
+                    "timeout": timeout,
+                    "chatdata": chatdata
+                }
+                self.continuation = metadata.get('continuation')
+                self._last_offset_ms = metadata.get('last_offset_ms', 0)
+                return chat_component
         except exceptions.ChatParseException as e:
             self._logger.debug(f"[{self._video_id}]{str(e)}")
             self._raise_exception(e)
@@ -139,9 +144,8 @@ class PytchatCore:
           -------
             'continuationContents' which includes metadata & chat data.
         '''
-        livechat_json = (
-            self._get_livechat_json(continuation, client, replay=self._is_replay, offset_ms=self._last_offset_ms)
-        )
+        livechat_json = self._get_livechat_json(
+            continuation, client, replay=self._is_replay, offset_ms=self._last_offset_ms)
         contents, dat = self._parser.get_contents(livechat_json)
         if self._dat == '' and dat:
             self._dat = dat
@@ -152,7 +156,8 @@ class PytchatCore:
                 self._fetch_url = config._smr
                 continuation = arcparam.getparam(
                     self._video_id, self.seektime, self._topchat_only, util.get_channelid(client, self._video_id))
-                livechat_json = self._get_livechat_json(continuation, client, replay=True, offset_ms=self.seektime * 1000)
+                livechat_json = self._get_livechat_json(
+                    continuation, client, replay=True, offset_ms=self.seektime * 1000)
                 reload_continuation = self._parser.reload_continuation(
                     self._parser.get_contents(livechat_json)[0])
                 if reload_continuation:
@@ -173,15 +178,14 @@ class PytchatCore:
             offset_ms = 0
         param = util.get_param(continuation, dat=self._dat, replay=replay, offsetms=offset_ms)
         for _ in range(MAX_RETRY + 1):
-            with httpx.Client(http2=True) as client:
-                try:
-                    response = client.post(self._fetch_url, json=param)
-                    livechat_json = json.loads(response.text)
-                    break
-                except (json.JSONDecodeError, httpx.ConnectTimeout, httpx.ReadTimeout, httpx.ConnectError) as e:
-                    err = e
-                    time.sleep(2)
-                    continue
+            try:
+                response = client.post(self._fetch_url, json=param)
+                livechat_json = response.json()
+                break
+            except (json.JSONDecodeError, httpx.ConnectTimeout, httpx.ReadTimeout, httpx.ConnectError) as e:
+                err = e
+                time.sleep(2)
+                continue
         else:
             self._logger.error(f"[{self._video_id}]"
                                f"Exceeded retry count. Last error: {str(err)}")
@@ -202,6 +206,8 @@ class PytchatCore:
         return self._is_alive
 
     def terminate(self):
+        if not self.is_alive():
+            return
         self._is_alive = False
         self.processor.finalize()
 

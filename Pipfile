@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-httpx = {extras = ["http2"], version = "0.16.1"}
+httpx = {extras = ["http2"]}
 
 [dev-packages]
 pytest-mock = "*"
