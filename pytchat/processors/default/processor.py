@@ -7,6 +7,7 @@ from .renderer.paidmessage import LiveChatPaidMessageRenderer
 from .renderer.paidsticker import LiveChatPaidStickerRenderer
 from .renderer.legacypaid import LiveChatLegacyPaidMessageRenderer
 from .renderer.membership import LiveChatMembershipItemRenderer
+from .renderer.donation import LiveChatDonationAnnouncementRenderer
 from .. chat_processor import ChatProcessor
 from ... import config
 
@@ -124,7 +125,8 @@ class DefaultProcessor(ChatProcessor):
             "liveChatPaidMessageRenderer": LiveChatPaidMessageRenderer(),
             "liveChatPaidStickerRenderer": LiveChatPaidStickerRenderer(),
             "liveChatLegacyPaidMessageRenderer": LiveChatLegacyPaidMessageRenderer(),
-            "liveChatMembershipItemRenderer": LiveChatMembershipItemRenderer()
+            "liveChatMembershipItemRenderer": LiveChatMembershipItemRenderer(),
+            "liveChatDonationAnnouncementRenderer": LiveChatDonationAnnouncementRenderer(),
         }
 
     def process(self, chat_components: list):
